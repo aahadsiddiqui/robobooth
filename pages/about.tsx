@@ -28,7 +28,7 @@ export default function About() {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.3 }}
               >
-                Robo Booth is an innovative fusion of robotics and photography, creating an 
+                Robo Booth is an innovative fusion of robotics, photography, and 360° video technology, creating an 
                 interactive photo experience unlike any other.
               </motion.p>
               <motion.p
@@ -38,7 +38,7 @@ export default function About() {
               >
                 Our AI-powered robot doesn't just 
                 take photos - it engages with your guests, suggests poses, and creates memorable 
-                moments.
+                moments. Plus, our 360° Video Booth captures stunning slow-motion videos from every angle.
               </motion.p>
               <motion.p
                 initial={{ opacity: 0, y: 20 }}
@@ -155,6 +155,11 @@ const techFeatures = [
   },
   {
     icon: '🎥',
+    title: '360° Booth',
+    description: 'Cinematic 360-degree slow-motion videos that capture every angle of your moment'
+  },
+  {
+    icon: '📸',
     title: 'Pro Camera System',
     description: 'High-end DSLR cameras with professional lighting setup for studio-quality photos'
   },
@@ -167,6 +172,11 @@ const techFeatures = [
     icon: '📱',
     title: 'Instant Sharing',
     description: 'Immediate digital delivery with social media integration'
+  },
+  {
+    icon: '🎮',
+    title: 'Interactive Experience',
+    description: 'Combine our Robot Photo Booth with the 360° Video Booth for the ultimate party package'
   }
 ]
 
@@ -210,10 +220,11 @@ const eventTypes = [
 const benefits = [
   'Unique and memorable experience for your guests',
   'Professional-grade photos with perfect lighting',
+  'Stunning 360-degree slow-motion videos',
   'Instant social media sharing capabilities',
   'Customizable branding and themes',
   'Friendly and engaging AI personality',
   'Full event support and technical assistance',
-  'High-capacity photo storage and backup',
+  'High-capacity photo and video storage',
   'Digital gallery for post-event sharing'
 ] 

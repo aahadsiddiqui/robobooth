@@ -6,6 +6,8 @@ type Message = {
   type: 'user' | 'bot'
   text: string
   timestamp: Date
+  isQuestion?: boolean
+  field?: 'name' | 'phone' | 'email' | 'boothType'
 }
 
 type QuickReply = {
@@ -15,6 +17,25 @@ type QuickReply = {
 
 type InteractiveContent = {
   type: 'calendar' | 'pricing' | 'features' | null
+}
+
+type UserInfo = {
+  name: string
+  phone: string
+  email: string
+}
+
+interface PackageOption {
+  name: string
+  price: string
+  regularPrice?: string
+  description?: string
+  features: string[]
+}
+
+interface PackageType {
+  title: string
+  options: PackageOption[]
 }
 
 export default function Chatbot() {
@@ -31,15 +52,20 @@ export default function Chatbot() {
   const messagesEndRef = useRef<HTMLDivElement>(null)
   const inputRef = useRef<HTMLInputElement>(null)
   const [interactiveContent, setInteractiveContent] = useState<InteractiveContent>({ type: null })
+  const [userInfo, setUserInfo] = useState<UserInfo>({ name: '', phone: '', email: '' })
+  const [collectingInfo, setCollectingInfo] = useState(false)
+  const [currentQuestion, setCurrentQuestion] = useState<'name' | 'phone' | 'email' | null>(null)
+  const [showingPricing, setShowingPricing] = useState(false)
 
   const quickReplies: QuickReply[] = [
     { text: '📅 Check Availability', action: 'availability' },
-    { text: '💰 View Pricing', action: 'pricing' },
+    { text: '💰 View Pricing for Robo Booth', action: 'pricing_robo' },
+    { text: '🎥 View Pricing for 360° Booth', action: 'pricing_360' },
     { text: '📸 Features', action: 'features' },
     { text: '📞 Contact Sales', action: 'contact' }
   ]
 
-  const pricingOptions = [
+  const pricingOptionsRobo = [
     {
       name: 'Essential',
       price: '$899',
@@ -54,6 +80,41 @@ export default function Chatbot() {
       name: 'Ultimate',
       price: '$1,799',
       features: ['7 Hours', 'Unlimited Photos', 'Luxury Props', 'Video Messages']
+    }
+  ]
+
+  const pricingOptions360 = [
+    {
+      name: '360° Essential',
+      price: '$250',
+      regularPrice: '$450',
+      description: 'Experience the viral 360° booth trend',
+      features: [
+        '2 Hours of Service',
+        'Unlimited Videos',
+        'Slow Motion Effects',
+        'Digital Gallery',
+        'Social Media Sharing',
+        'On-site Attendant',
+        'Save $200 Today!'
+      ]
+    },
+    {
+      name: '360° Premium',
+      price: '$350',
+      regularPrice: '$599',
+      description: 'The complete 360° experience',
+      features: [
+        '3 Hours of Service',
+        'Unlimited Videos',
+        'Slow Motion Effects',
+        'Custom Music Selection',
+        'LED Platform',
+        'Digital Gallery',
+        'Social Media Sharing',
+        'Custom Branding',
+        'Save $249 Today!'
+      ]
     }
   ]
 
@@ -97,7 +158,10 @@ export default function Chatbot() {
       case 'availability':
         setInteractiveContent({ type: 'calendar' })
         break
-      case 'pricing':
+      case 'pricing_robo':
+        setInteractiveContent({ type: 'pricing' })
+        break
+      case 'pricing_360':
         setInteractiveContent({ type: 'pricing' })
         break
       case 'features':
@@ -157,7 +221,7 @@ export default function Chatbot() {
             animate={{ opacity: 1, y: 0 }}
             className="my-4 space-y-2"
           >
-            {pricingOptions.map((option, index) => (
+            {pricingOptionsRobo.map((option, index) => (
               <motion.div
                 key={index}
                 whileHover={{ scale: 1.02 }}
@@ -228,12 +292,12 @@ export default function Chatbot() {
     switch (action) {
       case 'date_selected':
         return "Great choice! This date is available. Would you like to see our packages to complete your booking? 📅"
-      case 'package_selected':
-        return "Excellent choice! Would you like to proceed with the booking? I can help you with that! 🎉"
       case 'availability':
         return 'I can help you check our availability! What date are you looking at for your event? 📅'
-      case 'pricing':
-        return 'Our packages start from $899. Would you like to see our detailed pricing and packages? I can share the link! 💰'
+      case 'pricing_robo':
+        return `Essential\n$899\n\n✓ 3 Hours\n✓ Unlimited Photos\n✓ Basic Props\n✓ Digital Gallery\n\nSelect Package\n\n─────────────\n\nPremium\n$1,299\n\n✓ 5 Hours\n✓ Unlimited Photos\n✓ Premium Props\n✓ Digital Gallery\n✓ Custom Branding\n✓ Video Messages\n\nSelect Package`
+      case 'pricing_360':
+        return `360° Essential\n$250 $450 /event\n\nExperience the viral 360° booth trend\n\n✓ 2 Hours of Service\n✓ Unlimited Videos\n✓ Slow Motion Effects\n✓ Digital Gallery\n✓ Social Media Sharing\n✓ On-site Attendant\n✓ Save $200 Today!\n\nSelect Package\n\n─────────────\n\n360° Premium\n$350 $599 /event\n\nThe complete 360° experience\n\n✓ 3 Hours of Service\n✓ Unlimited Videos\n✓ Slow Motion Effects\n✓ Custom Music Selection\n✓ LED Platform\n✓ Digital Gallery\n✓ Social Media Sharing\n✓ Custom Branding\n✓ Save $249 Today!\n\nSelect Package`
       case 'features':
         return 'Robo Booth comes with AI-powered interactions, instant photo sharing, custom branding, and much more! Want to see all features? 🤖'
       case 'contact':
@@ -243,6 +307,54 @@ export default function Chatbot() {
     }
   }
 
+  const handleUserResponse = (text: string) => {
+    // Check if user said "yes" to viewing packages
+    if (text.toLowerCase() === 'yes' && messages[messages.length - 1].text.includes("Would you like to see our packages")) {
+      setMessages(prev => [...prev, {
+        type: 'bot',
+        text: 'Which service are you interested in? The 360° Booth or the Robo Booth?',
+        timestamp: new Date(),
+        isQuestion: true,
+        field: 'boothType'
+      }])
+      return true
+    }
+    
+    // Handle booth type selection
+    if (messages[messages.length - 1].field === 'boothType') {
+      const is360 = text.toLowerCase().includes('360')
+      const isRobo = text.toLowerCase().includes('robo')
+      
+      if (is360 || isRobo) {
+        const packages: PackageType = is360 ? {
+          title: "360° Booth Packages",
+          options: pricingOptions360
+        } : {
+          title: "Robo Booth Packages",
+          options: pricingOptionsRobo
+        }
+
+        const packageText = packages.options.map(pkg => (
+          `${pkg.name}\n` +
+          `$${pkg.price}${pkg.regularPrice ? ` $${pkg.regularPrice}` : ''}\n` +
+          `${pkg.description}\n\n` +
+          pkg.features.map(f => `✓ ${f}`).join('\n') +
+          '\n\nSelect Package'
+        )).join('\n\n─────────────\n\n')
+
+        setMessages(prev => [...prev, {
+          type: 'bot',
+          text: packageText,
+          timestamp: new Date(),
+          isQuestion: true
+        }])
+        return true
+      }
+    }
+    
+    return false
+  }
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
     if (!input.trim()) return
@@ -250,7 +362,129 @@ export default function Chatbot() {
     const userMessage = { type: 'user' as const, text: input, timestamp: new Date() }
     setMessages(prev => [...prev, userMessage])
     setInput('')
-    simulateBotResponse('default')
+    
+    // Check if it's a response to a specific question
+    if (!handleUserResponse(input)) {
+      simulateBotResponse('default')
+    }
+  }
+
+  const handleSendMessage = async (text: string) => {
+    // Add user message
+    const userMessage: Message = { type: 'user', text, timestamp: new Date() }
+    setMessages(prev => [...prev, userMessage])
+
+    // Handle pricing inquiry
+    if (showingPricing) {
+      if (text.toLowerCase().includes('360') || text.toLowerCase().includes('robo')) {
+        const boothType = text.toLowerCase().includes('360') ? '360' : 'robo'
+        const pricingCards = boothType === '360' ? 
+          `Here are our 360° Booth packages:\n
+          1. Essential Package - $250 (Regular $450)
+          • 2 Hours of Service
+          • Unlimited Videos
+          • Slow Motion Effects
+          • Digital Gallery
+          • Social Media Sharing
+          • On-site Attendant\n
+          2. Premium Package - $350 (Regular $599)
+          • 3 Hours of Service
+          • Custom Music Selection
+          • LED Platform
+          • Custom Branding
+          • And more!` :
+          `Here are our Robo Booth packages:\n
+          [Insert Robo Booth pricing cards here]`
+        
+        setMessages(prev => [...prev, { 
+          type: 'bot', 
+          text: pricingCards,
+          timestamp: new Date()
+        }])
+        setShowingPricing(false)
+        return
+      }
+    }
+
+    // Handle user info collection
+    if (collectingInfo) {
+      if (currentQuestion === 'name') {
+        setUserInfo(prev => ({ ...prev, name: text }))
+        setCurrentQuestion('email')
+        setMessages(prev => [...prev, {
+          type: 'bot',
+          text: 'Great! What\'s your email address?',
+          timestamp: new Date(),
+          isQuestion: true,
+          field: 'email'
+        }])
+        return
+      }
+      if (currentQuestion === 'email') {
+        setUserInfo(prev => ({ ...prev, email: text }))
+        setCurrentQuestion('phone')
+        setMessages(prev => [...prev, {
+          type: 'bot',
+          text: 'Almost done! What\'s your phone number?',
+          timestamp: new Date(),
+          isQuestion: true,
+          field: 'phone'
+        }])
+        return
+      }
+      if (currentQuestion === 'phone') {
+        setUserInfo(prev => ({ ...prev, phone: text }))
+        setCollectingInfo(false)
+        setCurrentQuestion(null)
+        
+        // Send email with user info
+        const emailBody = `
+          New Chat Inquiry:
+          Name: ${userInfo.name}
+          Email: ${text}
+          Phone: ${userInfo.phone}
+          Chat History:
+          ${messages.map(m => `${m.type}: ${m.text}`).join('\n')}
+        `
+        
+        // Open default email client
+        window.location.href = `mailto:info@robobooth.ca?subject=New Chat Inquiry&body=${encodeURIComponent(emailBody)}`
+
+        setMessages(prev => [...prev, {
+          type: 'bot',
+          text: 'Thanks! I\'ve sent your information to our team. They\'ll be in touch soon!',
+          timestamp: new Date()
+        }])
+        return
+      }
+    }
+
+    // Handle initial messages
+    if (text.toLowerCase().includes('pricing') || text.toLowerCase().includes('cost')) {
+      setShowingPricing(true)
+      setMessages(prev => [...prev, {
+        type: 'bot',
+        text: 'Which service are you interested in? The 360° Booth or the Robo Booth?',
+        timestamp: new Date(),
+        isQuestion: true,
+        field: 'boothType'
+      }])
+      return
+    }
+
+    // Start collecting info if not already doing so
+    if (!collectingInfo) {
+      setCollectingInfo(true)
+      setCurrentQuestion('name')
+      setMessages(prev => [...prev, {
+        type: 'bot',
+        text: 'I\'d be happy to help! First, could you tell me your name?',
+        timestamp: new Date(),
+        isQuestion: true,
+        field: 'name'
+      }])
+      return
+    }
   }
 
   return (

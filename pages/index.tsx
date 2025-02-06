@@ -4,6 +4,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion'
 import { useEffect, useState } from 'react'
+import confetti from 'canvas-confetti'
 
 type LeadFormData = {
   name: string
@@ -58,6 +59,19 @@ export default function Home() {
     await new Promise(resolve => setTimeout(resolve, 1500))
     setSubmitted(true)
     setIsSubmitting(false)
+  }
+
+  const handleLeadSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    setIsSubmitting(true)
+    
+    const emailBody = `
+      New Free Add-On Claim:
+      Name: ${formData.name}
+      Phone: ${formData.phone}
+      Event Type: ${formData.eventType}
+      Promotion: Free 1-hour 360° Photo Booth Add-On (Worth $599)
+    `
   }
 
   return (
@@ -132,22 +146,100 @@ export default function Home() {
           />
         </div>
 
-        {/* Welcome Message */}
-        <AnimatePresence>
-          {showWelcome && (
-            <motion.div
-              initial={{ opacity: 0, y: -50 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: 50 }}
-              className="absolute top-24 right-8 bg-white/90 backdrop-blur-sm px-8 py-4 rounded-full shadow-lg z-20"
+        {/* Welcome Pill */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          whileHover={{ 
+            scale: 1.05,
+            backgroundColor: "rgba(255, 255, 255, 0.2)",
+            transition: { type: "spring", stiffness: 400, damping: 10 }
+          }}
+          whileTap={{ scale: 0.95 }}
+          className={`
+            absolute top-[5%] md:top-[8%]
+            px-6 py-2 
+            text-sm md:text-base
+            bg-white/10 backdrop-blur-md
+            rounded-full border border-white/20
+            text-white font-medium
+            transform -translate-y-0
+            max-w-[90%] md:max-w-fit
+            whitespace-nowrap
+            z-20
+            cursor-pointer
+            hover:border-white/40
+            hover:shadow-lg hover:shadow-white/10
+            transition-all duration-300
+            overflow-hidden
+            group
+          `}
+          onClick={() => {
+            // Add a fun confetti effect when clicked
+            const colors = ['#FF69B4', '#4169E1', '#9400D3', '#00CED1'];
+            confetti({
+              particleCount: 100,
+              spread: 70,
+              origin: { y: 0.1 },
+              colors: colors,
+            });
+          }}
+        >
+          {/* Animated background gradient */}
+          <motion.div
+            className="absolute inset-0 -z-10 bg-gradient-to-r from-blue-500/20 via-purple-500/20 to-blue-500/20"
+            animate={{
+              x: ["0%", "100%", "0%"],
+            }}
+            transition={{
+              duration: 5,
+              repeat: Infinity,
+              ease: "linear"
+            }}
+          />
+
+          {/* Welcome text with wave animation */}
+          <div className="flex items-center gap-2">
+            Welcome to Robo Booth!
+            <motion.span
+              animate={{ rotate: [0, -10, 10, -10, 0] }}
+              transition={{
+                duration: 1.5,
+                repeat: Infinity,
+                repeatDelay: 2
+              }}
             >
-              <p className="text-blue-600 font-semibold flex items-center gap-2">
-                <span className="animate-wave">👋</span> 
-                Welcome to Robo Booth!
-              </p>
-            </motion.div>
-          )}
-        </AnimatePresence>
+              👋
+            </motion.span>
+          </div>
+
+          {/* Sparkle effects */}
+          <motion.div
+            className="absolute inset-0 pointer-events-none"
+            initial="hidden"
+            animate="visible"
+          >
+            {[...Array(3)].map((_, i) => (
+              <motion.div
+                key={i}
+                className="absolute w-1 h-1 bg-white rounded-full"
+                initial={{ opacity: 0, scale: 0 }}
+                animate={{
+                  opacity: [0, 1, 0],
+                  scale: [0, 1, 0],
+                  x: [0, Math.random() * 100 - 50],
+                  y: [0, Math.random() * 100 - 50],
+                }}
+                transition={{
+                  duration: 1,
+                  repeat: Infinity,
+                  delay: i * 0.4,
+                  repeatDelay: 2
+                }}
+              />
+            ))}
+          </motion.div>
+        </motion.div>
 
         {/* Main Content */}
         <motion.div 
@@ -300,7 +392,17 @@ export default function Home() {
                       Get a complimentary 1-hour 360° Photo Booth experience with your booking
                       (Worth $599)
                     </p>
-                    <form onSubmit={handleSubmit} className="space-y-4">
+                    <form 
+                      action="https://formsubmit.co/info@robobooth.ca" 
+                      method="POST"
+                      className="space-y-4"
+                    >
+                      {/* FormSubmit configuration */}
+                      <input type="hidden" name="_subject" value="New Free Add-On Claim!" />
+                      <input type="hidden" name="_template" value="table" />
+                      <input type="hidden" name="_captcha" value="false" />
+                      <input type="hidden" name="_next" value="https://robobooth.ca/thank-you" />
+
                       <div>
                         <label className="block text-sm font-medium text-gray-700 mb-1">
                           Name
@@ -308,8 +410,7 @@ export default function Home() {
                         <input
                           type="text"
                           required
-                          value={formData.name}
-                          onChange={(e) => setFormData({...formData, name: e.target.value})}
+                          name="name"
                           className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                         />
                       </div>
@@ -320,8 +421,7 @@ export default function Home() {
                         <input
                           type="tel"
                           required
-                          value={formData.phone}
-                          onChange={(e) => setFormData({...formData, phone: e.target.value})}
+                          name="phone"
                           className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                         />
                       </div>
@@ -331,8 +431,7 @@ export default function Home() {
                         </label>
                         <select
                           required
-                          value={formData.eventType}
-                          onChange={(e) => setFormData({...formData, eventType: e.target.value})}
+                          name="eventType"
                           className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                         >
                           <option value="">Select event type</option>
@@ -343,6 +442,7 @@ export default function Home() {
                           <option value="other">Other</option>
                         </select>
                       </div>
+                      <input type="hidden" name="Promotion" value="Free 1-hour 360° Photo Booth Add-On (Worth $599)" />
                       <motion.button
                         type="submit"
                         disabled={isSubmitting}
