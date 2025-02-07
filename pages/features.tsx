@@ -29,402 +29,368 @@ const carouselImages = [
 ]
 
 export default function Features() {
-  const [currentImage, setCurrentImage] = useState(0)
-  
-  const nextImage = () => {
-    setCurrentImage((prev) => (prev + 1) % carouselImages.length)
-  }
-  
-  const prevImage = () => {
-    setCurrentImage((prev) => (prev - 1 + carouselImages.length) % carouselImages.length)
-  }
-
-  const LimitedTimeOffer = () => (
-    <div className="max-w-4xl mx-auto mb-8 text-center relative z-10">
-      <motion.div
-        initial={{ scale: 0.9, opacity: 0 }}
-        animate={{ scale: 1, opacity: 1 }}
-        whileHover={{ scale: 1.02 }}
-        transition={{ 
-          type: "spring",
-          stiffness: 300,
-          damping: 15 
-        }}
-        className={`
-          bg-gradient-to-r from-blue-600 via-purple-600 to-blue-600 
-          bg-size-200 animate-gradient
-          text-white px-8 py-3 
-          rounded-full inline-block shadow-xl
-          border border-white/10 backdrop-blur-sm
-          hover:shadow-2xl hover:shadow-purple-500/20
-          transition-all duration-300
-        `}
-      >
-        <div className="flex items-center gap-3">
-          <motion.div
-            animate={{ rotate: [0, -10, 10, -10, 0] }}
-            transition={{ 
-              duration: 1.5,
-              repeat: Infinity,
-              repeatDelay: 3
-            }}
-            className="flex gap-1 text-xl"
-          >
-            <span>💫</span><span>✨</span>
-          </motion.div>
-          <div>
-            <span className="font-bold text-lg">Limited Time Offer</span>
-            <span className="ml-2 text-white/90">
-              Save up to <span className="font-bold text-yellow-300">$249</span> today! 🎉
-            </span>
-          </div>
-        </div>
-      </motion.div>
-    </div>
-  )
+  const [activeTab, setActiveTab] = useState('robo')
+  const [hoveredFeature, setHoveredFeature] = useState<string | null>(null)
 
   return (
-    <div className="min-h-screen py-20 px-4 bg-gradient-to-br from-blue-50 to-purple-50">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-indigo-50 py-32 px-4 relative overflow-hidden">
       <Head>
-        <title>Features & Packages - Robo Booth</title>
-        <meta name="description" content="Explore our innovative features and flexible packages for your next event" />
+        <title>Features - Robo Booth</title>
+        <meta name="description" content="Explore the amazing features of our photo booths" />
       </Head>
 
-      {/* Interactive Features Section */}
-      <div className="max-w-6xl mx-auto mb-20">
+      <div className="max-w-6xl mx-auto relative">
+        {/* Enhanced Hero Section */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="text-center mb-12"
+          className="text-center mb-20 relative"
         >
-          <h1 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 text-transparent bg-clip-text mb-4">
-            Interactive Features
-          </h1>
-          <p className="text-gray-600 text-lg">
-            Experience the future of event photography with our cutting-edge technology
-          </p>
-        </motion.div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {features.map((feature, index) => (
+          {/* Modern, focused hero background */}
+          <div className="absolute inset-0 -z-10">
+            {/* Subtle animated rings */}
             <motion.div
-              key={index}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: index * 0.1 }}
-              whileHover={{ scale: 1.05 }}
-              className="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-all"
-            >
-              <motion.div
-                className="text-4xl mb-4"
-                animate={{ rotate: [0, 360] }}
-                transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
-              >
-                {feature.icon}
-              </motion.div>
-              <h3 className="text-xl font-bold mb-2">{feature.title}</h3>
-              <p className="text-gray-600">{feature.description}</p>
-            </motion.div>
-          ))}
-        </div>
-      </div>
+              animate={{
+                scale: [1, 1.2, 1],
+                opacity: [0.1, 0.3, 0.1],
+              }}
+              transition={{
+                duration: 8,
+                repeat: Infinity,
+                ease: "easeInOut"
+              }}
+              className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] 
+                bg-gradient-to-r from-blue-400/20 to-purple-400/20 rounded-full blur-3xl"
+            />
+            <motion.div
+              animate={{
+                scale: [1.2, 1, 1.2],
+                opacity: [0.1, 0.2, 0.1],
+              }}
+              transition={{
+                duration: 10,
+                repeat: Infinity,
+                ease: "easeInOut"
+              }}
+              className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px]
+                bg-gradient-to-r from-purple-400/20 to-pink-400/20 rounded-full blur-3xl"
+            />
+          </div>
 
-      {/* Add a new section specifically for 360 Booth */}
-      <div className="max-w-6xl mx-auto mb-20">
+          {/* Floating elements */}
+          <div className="absolute inset-0 -z-10 overflow-hidden">
+            <motion.div
+              animate={{
+                y: [-10, 10, -10],
+                opacity: [0.3, 0.5, 0.3],
+              }}
+              transition={{
+                duration: 5,
+                repeat: Infinity,
+                ease: "easeInOut"
+              }}
+              className="absolute top-20 left-1/4 w-2 h-2 bg-blue-400 rounded-full blur-sm"
+            />
+            <motion.div
+              animate={{
+                y: [10, -10, 10],
+                opacity: [0.3, 0.5, 0.3],
+              }}
+              transition={{
+                duration: 7,
+                repeat: Infinity,
+                ease: "easeInOut"
+              }}
+              className="absolute top-40 right-1/4 w-2 h-2 bg-purple-400 rounded-full blur-sm"
+            />
+          </div>
+
+          <span className="inline-block text-sm font-semibold text-blue-600 mb-4 bg-blue-100/80 backdrop-blur-sm 
+            px-4 py-1 rounded-full shadow-sm">
+            Discover Our Features
+          </span>
+          <h1 className="text-6xl font-bold mb-6 relative">
+            <span className="bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 text-transparent 
+              bg-clip-text animate-gradient bg-300% inline-block">
+              Experience the Future
+            </span>
+          </h1>
+          <p className="text-gray-600 text-xl max-w-2xl mx-auto mb-12">
+            Cutting-edge technology meets unforgettable moments
+          </p>
+
+          {/* Enhanced Tab Switcher */}
+          <div className="flex justify-center gap-4 mb-16">
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              onClick={() => setActiveTab('robo')}
+              className={`px-8 py-3 rounded-full font-semibold transition-all duration-300 backdrop-blur-sm ${
+                activeTab === 'robo'
+                  ? 'bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-lg'
+                  : 'bg-white/80 text-gray-600 hover:bg-gray-50'
+              }`}
+            >
+              Robo Booth
+            </motion.button>
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              onClick={() => setActiveTab('360')}
+              className={`px-8 py-3 rounded-full font-semibold transition-all duration-300 backdrop-blur-sm ${
+                activeTab === '360'
+                  ? 'bg-gradient-to-r from-purple-600 to-pink-600 text-white shadow-lg'
+                  : 'bg-white/80 text-gray-600 hover:bg-gray-50'
+              }`}
+            >
+              360° Booth
+            </motion.button>
+          </div>
+        </motion.div>
+
+        {/* Feature Sections with AnimatePresence */}
+        <AnimatePresence mode="wait">
+          {activeTab === 'robo' ? (
+            <motion.div
+              key="robo"
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: 20 }}
+              className="grid grid-cols-1 md:grid-cols-2 gap-8 auto-rows-fr"
+            >
+              {roboFeatures.map((feature, index) => (
+                <motion.div
+                  key={feature.title}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: index * 0.1 }}
+                  whileHover={{ scale: 1.02 }}
+                  onHoverStart={() => setHoveredFeature(feature.title)}
+                  onHoverEnd={() => setHoveredFeature(null)}
+                  className="relative group h-full"
+                >
+                  <div className="bg-white/80 backdrop-blur-sm rounded-3xl p-8 shadow-lg 
+                    border border-transparent hover:border-blue-200 hover:shadow-2xl h-full flex flex-col">
+                    <div className="flex items-start gap-6 h-full">
+                      <div className="bg-gradient-to-br from-blue-100 to-purple-100 
+                        p-4 rounded-2xl group-hover:scale-110 transition-transform duration-300">
+                        <span className="text-3xl">{feature.icon}</span>
+                      </div>
+                      <div className="flex flex-col flex-grow">
+                        <h3 className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 
+                          text-transparent bg-clip-text mb-3">
+                          {feature.title}
+                        </h3>
+                        <p className="text-gray-600 mb-4">{feature.description}</p>
+                        <div className="grid grid-cols-2 gap-3 mt-auto">
+                          {feature.benefits.map((benefit, i) => (
+                            <motion.div
+                              key={i}
+                              initial={{ opacity: 0.6 }}
+                              animate={{ 
+                                opacity: hoveredFeature === feature.title ? 1 : 0.6,
+                                x: hoveredFeature === feature.title ? 10 : 0
+                              }}
+                              transition={{ delay: i * 0.1 }}
+                              className="flex items-center gap-2"
+                            >
+                              <svg className="w-5 h-5 text-green-500 flex-shrink-0" fill="none" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7"/>
+                              </svg>
+                              <span className="text-gray-600">{benefit}</span>
+                            </motion.div>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </motion.div>
+              ))}
+            </motion.div>
+          ) : (
+            <motion.div
+              key="360"
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: 20 }}
+              className="grid grid-cols-1 md:grid-cols-2 gap-8 auto-rows-fr"
+            >
+              {booth360Features.map((feature, index) => (
+                <motion.div
+                  key={feature.title}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: index * 0.1 }}
+                  whileHover={{ scale: 1.02 }}
+                  onHoverStart={() => setHoveredFeature(feature.title)}
+                  onHoverEnd={() => setHoveredFeature(null)}
+                  className="relative group h-full"
+                >
+                  <div className="bg-white/80 backdrop-blur-sm rounded-3xl p-8 shadow-lg transition-all duration-300
+                    border border-transparent hover:border-purple-200 hover:shadow-2xl h-full flex flex-col">
+                    <div className="flex items-start gap-6 h-full">
+                      <div className="bg-gradient-to-br from-purple-100 to-pink-100 
+                        p-4 rounded-2xl group-hover:scale-110 transition-transform duration-300">
+                        <span className="text-3xl">{feature.icon}</span>
+                      </div>
+                      <div className="flex flex-col flex-grow">
+                        <h3 className="text-2xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 
+                          text-transparent bg-clip-text mb-3">
+                          {feature.title}
+                        </h3>
+                        <p className="text-gray-600 mb-4">{feature.description}</p>
+                        <div className="grid grid-cols-2 gap-3 mt-auto">
+                          {feature.benefits.map((benefit, i) => (
+                            <motion.div
+                              key={i}
+                              initial={{ opacity: 0.6 }}
+                              animate={{ 
+                                opacity: hoveredFeature === feature.title ? 1 : 0.6,
+                                x: hoveredFeature === feature.title ? 10 : 0
+                              }}
+                              transition={{ delay: i * 0.1 }}
+                              className="flex items-center gap-2"
+                            >
+                              <svg className="w-5 h-5 text-green-500 flex-shrink-0" fill="none" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7"/>
+                              </svg>
+                              <span className="text-gray-600">{benefit}</span>
+                            </motion.div>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </motion.div>
+              ))}
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        {/* Call to Action */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="text-center mb-12"
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="mt-32 text-center"
         >
-          <h2 className="text-4xl md:text-5xl font-bold mb-4">360° Video Booth</h2>
-          <p className="text-gray-600 text-lg">
-            Create viral-worthy slow-motion videos that capture every angle
-          </p>
-        </motion.div>
-        
-        <div className="aspect-video w-full max-w-3xl mx-auto mb-12 bg-gray-900 rounded-xl overflow-hidden">
-          <div className="relative aspect-[16/9] rounded-xl overflow-hidden group">
-            <AnimatePresence mode='wait'>
-              <motion.div
-                key={currentImage}
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.5 }}
-                className="relative w-full h-full"
-              >
-                <Image
-                  src={`/images/${carouselImages[currentImage].src}`}
-                  alt={carouselImages[currentImage].alt}
-                  fill
-                  className="object-contain p-4 bg-gradient-to-r from-blue-900 via-purple-900 to-blue-900"
-                  priority
-                />
-              </motion.div>
-            </AnimatePresence>
-            
-            {/* Navigation Arrows */}
-            <div className="absolute inset-0 flex items-center justify-between p-4 opacity-0 group-hover:opacity-100 transition-opacity">
-              <button
-                onClick={prevImage}
-                className="p-2 rounded-full bg-black/50 text-white hover:bg-black/70 transition-colors"
-              >
-                ←
-              </button>
-              <button
-                onClick={nextImage}
-                className="p-2 rounded-full bg-black/50 text-white hover:bg-black/70 transition-colors"
-              >
-                →
-              </button>
-            </div>
-            
-            {/* Dots Navigation */}
-            <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2">
-              {carouselImages.map((_, index) => (
-                <button
-                  key={index}
-                  onClick={() => setCurrentImage(index)}
-                  className={`w-2 h-2 rounded-full transition-all ${
-                    currentImage === index ? 'bg-white w-4' : 'bg-white/50'
-                  }`}
-                />
-              ))}
+          <div className="bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-3xl p-12">
+            <h3 className="text-3xl font-bold mb-4">Ready to Book Your Experience?</h3>
+            <p className="text-xl mb-8 opacity-90">Choose from our range of packages and make your event unforgettable</p>
+            <div className="flex justify-center gap-4 flex-wrap">
+              <a href="/packages" className="bg-white text-blue-600 px-8 py-3 rounded-full font-semibold hover:bg-blue-50 transition-colors">
+                View Packages
+              </a>
+              <a href="/contact" className="bg-blue-500 text-white px-8 py-3 rounded-full font-semibold hover:bg-blue-400 transition-colors">
+                Contact Us
+              </a>
             </div>
           </div>
-        </div>
-        
-        <LimitedTimeOffer />
-        
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-          {packages.slice(0, 2).map((pkg, index) => (
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: index * 0.1 }}
-              className="relative"
-            >
-              {pkg.popular && (
-                <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
-                  <span className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-4 py-1 rounded-full text-sm font-semibold">
-                    Most Popular
-                  </span>
-                </div>
-              )}
-              
-              <motion.div
-                whileHover={{ y: -10 }}
-                className={`bg-white p-8 rounded-xl shadow-lg h-full flex flex-col ${
-                  pkg.popular ? 'border-2 border-blue-500' : ''
-                }`}
-              >
-                <h3 className="text-2xl font-bold mb-2">{pkg.name}</h3>
-                <div className="mb-4 flex items-baseline gap-2">
-                  <span className="text-3xl font-bold">
-                    {pkg.name === '360° Premium' ? '$350' : 
-                     pkg.name === '360° Essential' ? '$250' : pkg.price}
-                  </span>
-                  {pkg.name === '360° Premium' && (
-                    <span className="text-lg text-gray-400 line-through">$599</span>
-                  )}
-                  {pkg.name === '360° Essential' && (
-                    <span className="text-lg text-gray-400 line-through">$450</span>
-                  )}
-                  <span className="text-gray-600">/event</span>
-                </div>
-                <p className="text-gray-600 mb-6">{pkg.description}</p>
-                <ul className="space-y-3 mb-8 flex-grow">
-                  {pkg.features.map((feature, i) => (
-                    <li key={i} className="flex items-center text-gray-600">
-                      <motion.span
-                        className="text-green-500 mr-2"
-                        initial={{ opacity: 0, scale: 0 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        transition={{ delay: i * 0.1 }}
-                      >
-                        ✓
-                      </motion.span>
-                      {feature}
-                    </li>
-                  ))}
-                </ul>
-                <motion.div
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                >
-                  <Link
-                    href="/contact"
-                    className={`block text-center py-3 px-6 rounded-lg text-white font-semibold transition-colors ${
-                      pkg.popular 
-                        ? 'bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700'
-                        : 'bg-gray-800 hover:bg-gray-900'
-                    }`}
-                  >
-                    Book Now
-                  </Link>
-                </motion.div>
-              </motion.div>
-            </motion.div>
-          ))}
-        </div>
-      </div>
-
-      {/* Existing Photo Booth Packages Section */}
-      <div className="max-w-6xl mx-auto mt-20">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="text-center mb-12"
-        >
-          <h2 className="text-4xl md:text-5xl font-bold mb-4">Robot Photo Booth Packages</h2>
-          <p className="text-gray-600 text-lg">
-            Experience both our AI-powered Robot Photo Booth and 360° Video Booth packages
-          </p>
         </motion.div>
-
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {packages.slice(2).map((pkg, index) => (
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: index * 0.1 }}
-              className="relative"
-            >
-              {pkg.popular && (
-                <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
-                  <span className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-4 py-1 rounded-full text-sm font-semibold">
-                    Most Popular
-                  </span>
-                </div>
-              )}
-              
-              <motion.div
-                whileHover={{ y: -10 }}
-                className={`bg-white p-8 rounded-xl shadow-lg h-full flex flex-col ${
-                  pkg.popular ? 'border-2 border-blue-500' : ''
-                }`}
-              >
-                <h3 className="text-2xl font-bold mb-2">{pkg.name}</h3>
-                <div className="mb-4">
-                  <span className="text-3xl font-bold">{pkg.price}</span>
-                  <span className="text-gray-600">/event</span>
-                </div>
-                <p className="text-gray-600 mb-6">{pkg.description}</p>
-                <ul className="space-y-3 mb-8 flex-grow">
-                  {pkg.features.map((feature, i) => (
-                    <li key={i} className="flex items-center text-gray-600">
-                      <motion.span
-                        className="text-green-500 mr-2"
-                        initial={{ opacity: 0, scale: 0 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        transition={{ delay: i * 0.1 }}
-                      >
-                        ✓
-                      </motion.span>
-                      {feature}
-                    </li>
-                  ))}
-                </ul>
-                <motion.div
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                >
-                  <Link
-                    href="/contact"
-                    className={`block text-center py-3 px-6 rounded-lg text-white font-semibold transition-colors ${
-                      pkg.popular 
-                        ? 'bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700'
-                        : 'bg-gray-800 hover:bg-gray-900'
-                    }`}
-                  >
-                    Book Now
-                  </Link>
-                </motion.div>
-              </motion.div>
-            </motion.div>
-          ))}
-        </div>
-      </div>
-
-      {/* FAQ Section */}
-      <div className="max-w-3xl mx-auto mt-20">
-        <motion.h2
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="text-3xl font-bold text-center mb-8"
-        >
-          Frequently Asked Questions
-        </motion.h2>
-        <div className="space-y-4">
-          {faqs.map((faq, index) => (
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: index * 0.1 }}
-              className="bg-white rounded-lg shadow-md overflow-hidden"
-            >
-              <details className="group">
-                <summary className="flex justify-between items-center p-6 cursor-pointer">
-                  <h3 className="font-semibold text-lg">{faq.question}</h3>
-                  <span className="transform group-open:rotate-180 transition-transform">
-                    ↓
-                  </span>
-                </summary>
-                <div className="px-6 pb-6 text-gray-600">
-                  {faq.answer}
-                </div>
-              </details>
-            </motion.div>
-          ))}
-        </div>
       </div>
     </div>
   )
 }
 
-const features: Feature[] = [
+const roboFeatures = [
   {
     icon: '🤖',
     title: 'AI-Powered Interaction',
-    description: 'Natural voice commands and gesture recognition for an intuitive experience',
-    animation: 'spin'
+    description: 'Experience seamless interaction with our advanced AI system that guides and enhances your photo session.',
+    benefits: [
+      'Voice command recognition',
+      'Gesture controls',
+      'Smart pose suggestions',
+      'Real-time feedback',
+      'Automated session flow'
+    ]
   },
   {
-    icon: '🎭',
-    title: 'Smart Pose Guidance',
-    description: 'Real-time suggestions and positioning help for perfect shots',
-    animation: 'bounce'
-  },
-  {
-    icon: '✨',
-    title: 'Premium Effects',
-    description: 'Professional lighting and real-time filters for stunning results',
-    animation: 'pulse'
+    icon: '📸',
+    title: 'Professional Photography',
+    description: 'Capture studio-quality photos with our advanced camera system and lighting setup.',
+    benefits: [
+      'High-resolution images',
+      'Perfect lighting every time',
+      'Multiple angle captures',
+      'Instant retouching',
+      'Professional-grade equipment'
+    ]
   },
   {
     icon: '🎨',
-    title: 'Custom Branding',
-    description: 'Personalized overlays and designs matching your event theme',
-    animation: 'float'
+    title: 'Customization Options',
+    description: 'Make your event unique with our extensive customization features.',
+    benefits: [
+      'Branded overlays',
+      'Custom backgrounds',
+      'Personalized messages',
+      'Theme integration',
+      'Custom prop selection'
+    ]
   },
   {
-    icon: '📱',
+    icon: '🚀',
     title: 'Instant Sharing',
-    description: 'Direct to social media or email with custom hashtags',
-    animation: 'slide'
+    description: 'Share your memories instantly with our quick sharing features.',
+    benefits: [
+      'Social media sharing',
+      'QR code gallery access',
+      'Email delivery',
+      'Digital gallery creation',
+      'Print station integration'
+    ]
+  }
+]
+
+const booth360Features = [
+  {
+    icon: '🎥',
+    title: 'Cinematic Experience',
+    description: 'Create stunning 360-degree videos that capture every angle of your special moment.',
+    benefits: [
+      'Full 360° coverage',
+      'Slow motion effects',
+      'Smooth camera movement',
+      'High-quality video',
+      'Multiple speed options'
+    ]
+  },
+  {
+    icon: '🎵',
+    title: 'Audio Integration',
+    description: 'Add another dimension to your videos with our audio features.',
+    benefits: [
+      'Custom music selection',
+      'Voice recording',
+      'Sound effects library',
+      'Background music',
+      'Audio quality control'
+    ]
+  },
+  {
+    icon: '💫',
+    title: 'Special Effects',
+    description: 'Enhance your videos with our range of special effects and filters.',
+    benefits: [
+      'Digital overlays',
+      'Motion graphics',
+      'Color grading',
+      'Visual effects',
+      'Custom filters'
+    ]
   },
   {
     icon: '🎪',
-    title: '360° Experience',
-    description: 'Immersive photo capture from every angle',
-    animation: 'rotate'
+    title: 'Premium Setup',
+    description: 'Professional grade equipment and setup for the perfect 360° experience.',
+    benefits: [
+      'LED platform',
+      'Safety features',
+      'Professional lighting',
+      'Spacious recording',
+      'Easy access design'
+    ]
   }
 ]
 

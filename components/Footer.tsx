@@ -30,7 +30,7 @@ export default function Footer() {
           <div>
             <h4 className="text-lg font-bold mb-4">Contact</h4>
             <ul className="text-gray-400 space-y-2">
-              <li>Email: support@robobooth.ca</li>
+              <li>Email: info@robobooth.ca</li>
               <li>Phone: (647) 877-7699</li>
             </ul>
           </div>
@@ -64,7 +64,8 @@ export default function Footer() {
 const footerLinks = [
   { href: '/', label: 'Home' },
   { href: '/about', label: 'About' },
-  { href: '/features', label: 'Features & Packages' },
+  { href: '/features', label: 'Features' },
+  { href: '/packages', label: 'Packages' },
   { href: '/contact', label: 'Contact' }
 ]
 
