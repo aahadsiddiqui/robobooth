@@ -7,12 +7,13 @@ export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false)
   const router = useRouter()
 
-  const navLinks = [
-    { href: '/', label: 'Home' },
-    { href: '/about', label: 'About' },
-    { href: '/features', label: 'Features' },
-    { href: '/packages', label: 'Packages' },
-    { href: '/contact', label: 'Contact' }
+  const navigation = [
+    { name: 'Home', href: '/' },
+    { name: 'About', href: '/about' },
+    { name: 'Products', href: '/products' },
+    { name: 'Features', href: '/features' },
+    { name: 'Packages', href: '/packages' },
+    { name: 'Contact', href: '/contact' },
   ]
 
   return (
@@ -28,7 +29,7 @@ export default function Navbar() {
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-8">
-            {navLinks.map((link) => (
+            {navigation.map((link) => (
               <Link
                 key={link.href}
                 href={link.href}
@@ -38,7 +39,7 @@ export default function Navbar() {
                     : 'text-gray-600'
                 }`}
               >
-                {link.label}
+                {link.name}
               </Link>
             ))}
           </div>
@@ -75,7 +76,7 @@ export default function Navbar() {
             className="md:hidden bg-white border-t"
           >
             <div className="px-4 py-2 space-y-1">
-              {navLinks.map((link) => (
+              {navigation.map((link) => (
                 <Link
                   key={link.href}
                   href={link.href}
@@ -86,7 +87,7 @@ export default function Navbar() {
                   }`}
                   onClick={() => setIsOpen(false)}
                 >
-                  {link.label}
+                  {link.name}
                 </Link>
               ))}
             </div>

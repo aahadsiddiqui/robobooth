@@ -64,6 +64,7 @@ export default function Footer() {
 const footerLinks = [
   { href: '/', label: 'Home' },
   { href: '/about', label: 'About' },
+  { href: '/products', label: 'Products' },
   { href: '/features', label: 'Features' },
   { href: '/packages', label: 'Packages' },
   { href: '/contact', label: 'Contact' }

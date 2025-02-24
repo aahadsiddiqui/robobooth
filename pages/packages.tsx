@@ -42,16 +42,16 @@ export default function Packages() {
           {/* Quick Navigation */}
           <div className="flex flex-wrap justify-center gap-4">
             <button
-              onClick={() => document.getElementById('robo-booth')?.scrollIntoView({ behavior: 'smooth' })}
-              className="px-6 py-2 bg-white rounded-full shadow-md hover:shadow-lg transition-shadow"
-            >
-              Robo Photo Booth →
-            </button>
-            <button
               onClick={() => document.getElementById('360-booth')?.scrollIntoView({ behavior: 'smooth' })}
               className="px-6 py-2 bg-white rounded-full shadow-md hover:shadow-lg transition-shadow"
             >
               360° Photo Booth →
+            </button>
+            <button
+              onClick={() => document.getElementById('robo-booth')?.scrollIntoView({ behavior: 'smooth' })}
+              className="px-6 py-2 bg-white rounded-full shadow-md hover:shadow-lg transition-shadow"
+            >
+              Robo Photo Booth →
             </button>
           </div>
         </motion.div>
@@ -72,176 +72,8 @@ export default function Packages() {
           </p>
         </motion.div>
 
-        {/* Robo Booth Packages */}
-        <section id="robo-booth" className="mb-32 scroll-mt-32">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold mb-4">Robo Photo Booth Packages</h2>
-            <p className="text-gray-600 max-w-2xl mx-auto">
-              Experience the future of photo booths with our AI-powered Robo Booth. 
-              Perfect for any event, from intimate gatherings to large celebrations.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {/* Essential Package */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.1 }}
-              className="bg-white rounded-3xl shadow-xl overflow-hidden hover:shadow-2xl transition-shadow flex flex-col"
-            >
-              <div className="p-8 flex-grow">
-                <h3 className="text-2xl font-bold mb-2">Photo Booth Essential</h3>
-                <div className="flex items-baseline gap-2 mb-2">
-                  <span className="text-4xl font-bold">$899</span>
-                  <span className="text-gray-500">/event</span>
-                </div>
-                <div className="flex items-center gap-2 mb-4">
-                  <span className="text-gray-400 line-through">$1,299</span>
-                  <span className="text-green-500 font-semibold">Save $400!</span>
-                </div>
-                <p className="text-gray-600 mb-8">
-                  Perfect for intimate gatherings and small events
-                </p>
-                <ul className="space-y-4 mb-8">
-                  {[
-                    '3 Hours of Service',
-                    'Unlimited Photos',
-                    'Basic Props Package',
-                    'Digital Gallery',
-                    'Social Media Sharing',
-                    'On-site Attendant'
-                  ].map((feature, i) => (
-                    <li key={i} className="flex items-center gap-3 text-gray-600">
-                      <svg className="w-5 h-5 text-green-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                      </svg>
-                      {feature}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-              <div className="p-8 pt-0">
-                <Link 
-                  href="/contact"
-                  className="block w-full py-3 px-6 text-center text-white font-semibold bg-gray-900 rounded-xl hover:bg-gray-800 transition-colors"
-                >
-                  Book Now
-                </Link>
-              </div>
-            </motion.div>
-
-            {/* Premium Package */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2 }}
-              className="bg-white rounded-3xl shadow-xl overflow-hidden hover:shadow-2xl transition-shadow flex flex-col relative"
-            >
-              <div className="absolute top-0 left-1/2 -translate-x-1/2">
-                <div className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-8 py-2 rounded-b-xl">
-                  Most Popular
-                </div>
-              </div>
-              <div className="p-8 pt-16 flex-grow">
-                <h3 className="text-2xl font-bold mb-2">Premium</h3>
-                <div className="flex items-baseline gap-2 mb-2">
-                  <span className="text-4xl font-bold">$1,299</span>
-                  <span className="text-gray-500">/event</span>
-                </div>
-                <div className="flex items-center gap-2 mb-4">
-                  <span className="text-gray-400 line-through">$1,799</span>
-                  <span className="text-green-500 font-semibold">Save $500!</span>
-                </div>
-                <p className="text-gray-600 mb-8">
-                  Our most popular package for medium to large events
-                </p>
-                <ul className="space-y-4 mb-8">
-                  {[
-                    '5 Hours of Service',
-                    'Unlimited Photos',
-                    'Premium Props Package',
-                    'Digital Gallery',
-                    'Social Media Sharing',
-                    'Custom Branding',
-                    '360° Photo Booth',
-                    'Guest Book Album'
-                  ].map((feature, i) => (
-                    <li key={i} className="flex items-center gap-3 text-gray-600">
-                      <svg className="w-5 h-5 text-green-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                      </svg>
-                      {feature}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-              <div className="p-8 pt-0">
-                <Link 
-                  href="/contact"
-                  className="block w-full py-3 px-6 text-center text-white font-semibold bg-gradient-to-r from-blue-600 to-purple-600 rounded-xl hover:opacity-90 transition-opacity"
-                >
-                  Book Now
-                </Link>
-              </div>
-            </motion.div>
-
-            {/* Ultimate Package */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.3 }}
-              className="bg-white rounded-3xl shadow-xl overflow-hidden hover:shadow-2xl transition-shadow flex flex-col"
-            >
-              <div className="p-8 flex-grow">
-                <h3 className="text-2xl font-bold mb-2">Ultimate</h3>
-                <div className="flex items-baseline gap-2 mb-2">
-                  <span className="text-4xl font-bold">$1,799</span>
-                  <span className="text-gray-500">/event</span>
-                </div>
-                <div className="flex items-center gap-2 mb-4">
-                  <span className="text-gray-400 line-through">$2,499</span>
-                  <span className="text-green-500 font-semibold">Save $700!</span>
-                </div>
-                <p className="text-gray-600 mb-8">
-                  The complete experience for luxury events
-                </p>
-                <ul className="space-y-4 mb-8">
-                  {[
-                    '7 Hours of Service',
-                    'Unlimited Photos',
-                    'Luxury Props Package',
-                    'Digital Gallery',
-                    'Social Media Sharing',
-                    'Custom Branding',
-                    '360° Photo Booth',
-                    'Guest Book Album',
-                    'Video Messages',
-                    'Priority Support'
-                  ].map((feature, i) => (
-                    <li key={i} className="flex items-center gap-3 text-gray-600">
-                      <svg className="w-5 h-5 text-green-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                      </svg>
-                      {feature}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-              <div className="p-8 pt-0">
-                <Link 
-                  href="/contact"
-                  className="block w-full py-3 px-6 text-center text-white font-semibold bg-gray-900 rounded-xl hover:bg-gray-800 transition-colors"
-                >
-                  Book Now
-                </Link>
-              </div>
-            </motion.div>
-          </div>
-        </section>
-
-        {/* 360° Booth Section */}
-        <section id="360-booth" className="scroll-mt-32">
+        {/* Move 360° Booth Section to be first */}
+        <section id="360-booth" className="mb-32 scroll-mt-32">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold mb-4">360° Photo Booth Packages</h2>
             <p className="text-gray-600 max-w-2xl mx-auto">
@@ -292,7 +124,8 @@ export default function Packages() {
               <div className="p-8 pt-0">
                 <Link 
                   href="/contact"
-                  className="block w-full py-3 px-6 text-center text-white font-semibold bg-gray-900 rounded-xl hover:bg-gray-800 transition-colors"
+                  className="block w-full py-3 px-6 text-center text-white font-semibold bg-gray-900 rounded-xl 
+                    hover:bg-gray-800 hover:scale-105 hover:shadow-lg transform transition-all duration-200"
                 >
                   Book Now
                 </Link>
@@ -347,7 +180,9 @@ export default function Packages() {
               <div className="p-8 pt-0">
                 <Link 
                   href="/contact"
-                  className="block w-full py-3 px-6 text-center text-white font-semibold bg-gradient-to-r from-blue-600 to-purple-600 rounded-xl hover:opacity-90 transition-opacity"
+                  className="block w-full py-3 px-6 text-center text-white font-semibold 
+                    bg-gradient-to-r from-blue-600 to-purple-600 rounded-xl 
+                    hover:opacity-90 hover:scale-105 hover:shadow-lg transform transition-all duration-200"
                 >
                   Book Now
                 </Link>
@@ -398,7 +233,180 @@ export default function Packages() {
               <div className="p-8 pt-0">
                 <Link 
                   href="/contact"
-                  className="block w-full py-3 px-6 text-center text-white font-semibold bg-gray-900 rounded-xl hover:bg-gray-800 transition-colors"
+                  className="block w-full py-3 px-6 text-center text-white font-semibold bg-gray-900 rounded-xl 
+                    hover:bg-gray-800 hover:scale-105 hover:shadow-lg transform transition-all duration-200"
+                >
+                  Book Now
+                </Link>
+              </div>
+            </motion.div>
+          </div>
+        </section>
+
+        {/* Move Robo Booth section to be second */}
+        <section id="robo-booth" className="scroll-mt-32">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-bold mb-4">Robo Photo Booth Packages</h2>
+            <p className="text-gray-600 max-w-2xl mx-auto">
+              Experience the future of photo booths with our AI-powered Robo Booth. 
+              Perfect for any event, from intimate gatherings to large celebrations.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {/* Essential Package */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.1 }}
+              className="bg-white rounded-3xl shadow-xl overflow-hidden hover:shadow-2xl transition-shadow flex flex-col"
+            >
+              <div className="p-8 flex-grow">
+                <h3 className="text-2xl font-bold mb-2">Photo Booth Essential</h3>
+                <div className="flex items-baseline gap-2 mb-2">
+                  <span className="text-4xl font-bold">$899</span>
+                  <span className="text-gray-500">/event</span>
+                </div>
+                <div className="flex items-center gap-2 mb-4">
+                  <span className="text-gray-400 line-through">$1,299</span>
+                  <span className="text-green-500 font-semibold">Save $400!</span>
+                </div>
+                <p className="text-gray-600 mb-8">
+                  Perfect for intimate gatherings and small events
+                </p>
+                <ul className="space-y-4 mb-8">
+                  {[
+                    '3 Hours of Service',
+                    'Unlimited Photos',
+                    'Basic Props Package',
+                    'Digital Gallery',
+                    'Social Media Sharing',
+                    'On-site Attendant'
+                  ].map((feature, i) => (
+                    <li key={i} className="flex items-center gap-3 text-gray-600">
+                      <svg className="w-5 h-5 text-green-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                      </svg>
+                      {feature}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              <div className="p-8 pt-0">
+                <Link 
+                  href="/contact"
+                  className="block w-full py-3 px-6 text-center text-white font-semibold bg-gray-900 rounded-xl 
+                    hover:bg-gray-800 hover:scale-105 hover:shadow-lg transform transition-all duration-200"
+                >
+                  Book Now
+                </Link>
+              </div>
+            </motion.div>
+
+            {/* Premium Package */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2 }}
+              className="bg-white rounded-3xl shadow-xl overflow-hidden hover:shadow-2xl transition-shadow flex flex-col relative"
+            >
+              <div className="absolute top-0 left-1/2 -translate-x-1/2">
+                <div className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-8 py-2 rounded-b-xl">
+                  Most Popular
+                </div>
+              </div>
+              <div className="p-8 pt-16 flex-grow">
+                <h3 className="text-2xl font-bold mb-2">Premium</h3>
+                <div className="flex items-baseline gap-2 mb-2">
+                  <span className="text-4xl font-bold">$1,299</span>
+                  <span className="text-gray-500">/event</span>
+                </div>
+                <div className="flex items-center gap-2 mb-4">
+                  <span className="text-gray-400 line-through">$1,799</span>
+                  <span className="text-green-500 font-semibold">Save $500!</span>
+                </div>
+                <p className="text-gray-600 mb-8">
+                  Our most popular package for medium to large events
+                </p>
+                <ul className="space-y-4 mb-8">
+                  {[
+                    '5 Hours of Service',
+                    'Unlimited Photos',
+                    'Premium Props Package',
+                    'Digital Gallery',
+                    'Social Media Sharing',
+                    'Custom Branding',
+                    '360° Photo Booth',
+                    'Guest Book Album'
+                  ].map((feature, i) => (
+                    <li key={i} className="flex items-center gap-3 text-gray-600">
+                      <svg className="w-5 h-5 text-green-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                      </svg>
+                      {feature}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              <div className="p-8 pt-0">
+                <Link 
+                  href="/contact"
+                  className="block w-full py-3 px-6 text-center text-white font-semibold 
+                    bg-gradient-to-r from-blue-600 to-purple-600 rounded-xl 
+                    hover:opacity-90 hover:scale-105 hover:shadow-lg transform transition-all duration-200"
+                >
+                  Book Now
+                </Link>
+              </div>
+            </motion.div>
+
+            {/* Ultimate Package */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3 }}
+              className="bg-white rounded-3xl shadow-xl overflow-hidden hover:shadow-2xl transition-shadow flex flex-col"
+            >
+              <div className="p-8 flex-grow">
+                <h3 className="text-2xl font-bold mb-2">Ultimate</h3>
+                <div className="flex items-baseline gap-2 mb-2">
+                  <span className="text-4xl font-bold">$1,799</span>
+                  <span className="text-gray-500">/event</span>
+                </div>
+                <div className="flex items-center gap-2 mb-4">
+                  <span className="text-gray-400 line-through">$2,499</span>
+                  <span className="text-green-500 font-semibold">Save $700!</span>
+                </div>
+                <p className="text-gray-600 mb-8">
+                  The complete experience for luxury events
+                </p>
+                <ul className="space-y-4 mb-8">
+                  {[
+                    '7 Hours of Service',
+                    'Unlimited Photos',
+                    'Luxury Props Package',
+                    'Digital Gallery',
+                    'Social Media Sharing',
+                    'Custom Branding',
+                    '360° Photo Booth',
+                    'Guest Book Album',
+                    'Video Messages',
+                    'Priority Support'
+                  ].map((feature, i) => (
+                    <li key={i} className="flex items-center gap-3 text-gray-600">
+                      <svg className="w-5 h-5 text-green-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                      </svg>
+                      {feature}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              <div className="p-8 pt-0">
+                <Link 
+                  href="/contact"
+                  className="block w-full py-3 px-6 text-center text-white font-semibold bg-gray-900 rounded-xl 
+                    hover:bg-gray-800 hover:scale-105 hover:shadow-lg transform transition-all duration-200"
                 >
                   Book Now
                 </Link>

@@ -1,6 +1,5 @@
 import React from 'react'
 import Head from 'next/head'
-import Image from 'next/image'
 import Link from 'next/link'
 import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion'
 import { useEffect, useState } from 'react'
@@ -735,9 +734,9 @@ const testimonials = [
 ]
 
 const stats = [
-  { value: '250+', label: 'Events Covered' },
-  { value: '50K+', label: 'Photos Taken' },
-  { value: '95%', label: 'Happy Clients' }
+  { value: '50+', label: 'Events Covered' },
+  { value: '1K+', label: 'Photos Taken' },
+  { value: '99%', label: 'Happy Clients' }
 ]
 
 const whyChooseUs = [
