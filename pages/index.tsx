@@ -734,7 +734,7 @@ const testimonials = [
 ]
 
 const stats = [
-  { value: '50+', label: 'Events Covered' },
+  { value: '10+', label: 'Events Covered' },
   { value: '1K+', label: 'Photos Taken' },
   { value: '99%', label: 'Happy Clients' }
 ]
