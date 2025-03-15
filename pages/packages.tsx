@@ -91,15 +91,7 @@ export default function Packages() {
               className="bg-white rounded-3xl shadow-xl overflow-hidden hover:shadow-2xl transition-shadow flex flex-col"
             >
               <div className="p-8 flex-grow">
-                <h3 className="text-2xl font-bold mb-2">360° Essential</h3>
-                <div className="flex items-baseline gap-2 mb-2">
-                  <span className="text-4xl font-bold">$250</span>
-                  <span className="text-gray-500">/event</span>
-                </div>
-                <div className="flex items-center gap-2 mb-4">
-                  <span className="text-gray-400 line-through">$450</span>
-                  <span className="text-green-500 font-semibold">Save $200!</span>
-                </div>
+                <h3 className="text-2xl font-bold mb-6">360° Essential</h3>
                 <p className="text-gray-600 mb-8">
                   Experience the viral 360° booth trend
                 </p>
@@ -124,8 +116,9 @@ export default function Packages() {
               <div className="p-8 pt-0">
                 <Link 
                   href="/contact"
-                  className="block w-full py-3 px-6 text-center text-white font-semibold bg-gray-900 rounded-xl 
-                    hover:bg-gray-800 hover:scale-105 hover:shadow-lg transform transition-all duration-200"
+                  className="block w-full py-3 px-6 text-center text-white font-semibold 
+                    bg-gray-900 rounded-xl hover:opacity-90 hover:scale-105 hover:shadow-lg 
+                    transform transition-all duration-200"
                 >
                   Book Now
                 </Link>
@@ -145,15 +138,7 @@ export default function Packages() {
                 </div>
               </div>
               <div className="p-8 pt-16 flex-grow">
-                <h3 className="text-2xl font-bold mb-2">360° Premium</h3>
-                <div className="flex items-baseline gap-2 mb-2">
-                  <span className="text-4xl font-bold">$350</span>
-                  <span className="text-gray-500">/event</span>
-                </div>
-                <div className="flex items-center gap-2 mb-4">
-                  <span className="text-gray-400 line-through">$599</span>
-                  <span className="text-green-500 font-semibold">Save $249!</span>
-                </div>
+                <h3 className="text-2xl font-bold mb-6">360° Premium</h3>
                 <p className="text-gray-600 mb-8">
                   The complete 360° experience
                 </p>
@@ -182,7 +167,8 @@ export default function Packages() {
                   href="/contact"
                   className="block w-full py-3 px-6 text-center text-white font-semibold 
                     bg-gradient-to-r from-blue-600 to-purple-600 rounded-xl 
-                    hover:opacity-90 hover:scale-105 hover:shadow-lg transform transition-all duration-200"
+                    hover:opacity-90 hover:scale-105 hover:shadow-lg 
+                    transform transition-all duration-200"
                 >
                   Book Now
                 </Link>
@@ -197,15 +183,7 @@ export default function Packages() {
               className="bg-white rounded-3xl shadow-xl overflow-hidden hover:shadow-2xl transition-shadow flex flex-col"
             >
               <div className="p-8 flex-grow">
-                <h3 className="text-2xl font-bold mb-2">360° Pro</h3>
-                <div className="flex items-baseline gap-2 mb-2">
-                  <span className="text-4xl font-bold">$450</span>
-                  <span className="text-gray-500">/event</span>
-                </div>
-                <div className="flex items-center gap-2 mb-4">
-                  <span className="text-gray-400 line-through">$749</span>
-                  <span className="text-green-500 font-semibold">Save $299!</span>
-                </div>
+                <h3 className="text-2xl font-bold mb-6">360° Pro</h3>
                 <p className="text-gray-600 mb-8">
                   Perfect for larger events
                 </p>
@@ -233,8 +211,9 @@ export default function Packages() {
               <div className="p-8 pt-0">
                 <Link 
                   href="/contact"
-                  className="block w-full py-3 px-6 text-center text-white font-semibold bg-gray-900 rounded-xl 
-                    hover:bg-gray-800 hover:scale-105 hover:shadow-lg transform transition-all duration-200"
+                  className="block w-full py-3 px-6 text-center text-white font-semibold 
+                    bg-gray-900 rounded-xl hover:opacity-90 hover:scale-105 hover:shadow-lg 
+                    transform transition-all duration-200"
                 >
                   Book Now
                 </Link>
@@ -262,15 +241,7 @@ export default function Packages() {
               className="bg-white rounded-3xl shadow-xl overflow-hidden hover:shadow-2xl transition-shadow flex flex-col"
             >
               <div className="p-8 flex-grow">
-                <h3 className="text-2xl font-bold mb-2">Photo Booth Essential</h3>
-                <div className="flex items-baseline gap-2 mb-2">
-                  <span className="text-4xl font-bold">$899</span>
-                  <span className="text-gray-500">/event</span>
-                </div>
-                <div className="flex items-center gap-2 mb-4">
-                  <span className="text-gray-400 line-through">$1,299</span>
-                  <span className="text-green-500 font-semibold">Save $400!</span>
-                </div>
+                <h3 className="text-2xl font-bold mb-6">Photo Booth Essential</h3>
                 <p className="text-gray-600 mb-8">
                   Perfect for intimate gatherings and small events
                 </p>
@@ -295,8 +266,9 @@ export default function Packages() {
               <div className="p-8 pt-0">
                 <Link 
                   href="/contact"
-                  className="block w-full py-3 px-6 text-center text-white font-semibold bg-gray-900 rounded-xl 
-                    hover:bg-gray-800 hover:scale-105 hover:shadow-lg transform transition-all duration-200"
+                  className="block w-full py-3 px-6 text-center text-white font-semibold 
+                    bg-gray-900 rounded-xl hover:opacity-90 hover:scale-105 hover:shadow-lg 
+                    transform transition-all duration-200"
                 >
                   Book Now
                 </Link>
@@ -316,15 +288,7 @@ export default function Packages() {
                 </div>
               </div>
               <div className="p-8 pt-16 flex-grow">
-                <h3 className="text-2xl font-bold mb-2">Premium</h3>
-                <div className="flex items-baseline gap-2 mb-2">
-                  <span className="text-4xl font-bold">$1,299</span>
-                  <span className="text-gray-500">/event</span>
-                </div>
-                <div className="flex items-center gap-2 mb-4">
-                  <span className="text-gray-400 line-through">$1,799</span>
-                  <span className="text-green-500 font-semibold">Save $500!</span>
-                </div>
+                <h3 className="text-2xl font-bold mb-6">Premium</h3>
                 <p className="text-gray-600 mb-8">
                   Our most popular package for medium to large events
                 </p>
@@ -353,7 +317,8 @@ export default function Packages() {
                   href="/contact"
                   className="block w-full py-3 px-6 text-center text-white font-semibold 
                     bg-gradient-to-r from-blue-600 to-purple-600 rounded-xl 
-                    hover:opacity-90 hover:scale-105 hover:shadow-lg transform transition-all duration-200"
+                    hover:opacity-90 hover:scale-105 hover:shadow-lg 
+                    transform transition-all duration-200"
                 >
                   Book Now
                 </Link>
@@ -368,15 +333,7 @@ export default function Packages() {
               className="bg-white rounded-3xl shadow-xl overflow-hidden hover:shadow-2xl transition-shadow flex flex-col"
             >
               <div className="p-8 flex-grow">
-                <h3 className="text-2xl font-bold mb-2">Ultimate</h3>
-                <div className="flex items-baseline gap-2 mb-2">
-                  <span className="text-4xl font-bold">$1,799</span>
-                  <span className="text-gray-500">/event</span>
-                </div>
-                <div className="flex items-center gap-2 mb-4">
-                  <span className="text-gray-400 line-through">$2,499</span>
-                  <span className="text-green-500 font-semibold">Save $700!</span>
-                </div>
+                <h3 className="text-2xl font-bold mb-6">Ultimate</h3>
                 <p className="text-gray-600 mb-8">
                   The complete experience for luxury events
                 </p>
@@ -405,8 +362,9 @@ export default function Packages() {
               <div className="p-8 pt-0">
                 <Link 
                   href="/contact"
-                  className="block w-full py-3 px-6 text-center text-white font-semibold bg-gray-900 rounded-xl 
-                    hover:bg-gray-800 hover:scale-105 hover:shadow-lg transform transition-all duration-200"
+                  className="block w-full py-3 px-6 text-center text-white font-semibold 
+                    bg-gray-900 rounded-xl hover:opacity-90 hover:scale-105 hover:shadow-lg 
+                    transform transition-all duration-200"
                 >
                   Book Now
                 </Link>

@@ -17,61 +17,15 @@ export default function Home() {
   const scale = useTransform(scrollY, [0, 300], [1, 0.8])
 
   const [showWelcome, setShowWelcome] = useState(false)
-  const [showLeadModal, setShowLeadModal] = useState(false)
-  const [formData, setFormData] = useState<LeadFormData>({
-    name: '',
-    phone: '',
-    eventType: ''
-  })
-  const [isSubmitting, setIsSubmitting] = useState(false)
-  const [submitted, setSubmitted] = useState(false)
 
   useEffect(() => {
-    // Check if it's the first visit
-    const hasVisited = localStorage.getItem('hasVisitedBefore')
-
-    // Show welcome message
+    // Show welcome message only
     const welcomeTimer = setTimeout(() => {
       setShowWelcome(true)
     }, 1000)
 
-    // Show lead modal only on first visit
-    if (!hasVisited) {
-      const modalTimer = setTimeout(() => {
-        setShowLeadModal(true)
-        // Set flag in localStorage
-        localStorage.setItem('hasVisitedBefore', 'true')
-      }, 2500)
-
-      return () => {
-        clearTimeout(welcomeTimer)
-        clearTimeout(modalTimer)
-      }
-    }
-
     return () => clearTimeout(welcomeTimer)
   }, [])
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setIsSubmitting(true)
-    await new Promise(resolve => setTimeout(resolve, 1500))
-    setSubmitted(true)
-    setIsSubmitting(false)
-  }
-
-  const handleLeadSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setIsSubmitting(true)
-    
-    const emailBody = `
-      New Free Add-On Claim:
-      Name: ${formData.name}
-      Phone: ${formData.phone}
-      Event Type: ${formData.eventType}
-      Promotion: Free 1-hour 360° Photo Booth Add-On (Worth $599)
-    `
-  }
 
   return (
     <div className="min-h-screen">
@@ -307,7 +261,7 @@ export default function Home() {
                 className="space-y-4"
               >
                 <Link href="/contact" 
-                  className="group relative inline-flex items-center px-12 py-4 overflow-hidden rounded-full bg-white font-bold text-lg transition-all duration-300 mr-4"
+                  className="group relative inline-flex items-center px-12 py-4 overflow-hidden rounded-full bg-white font-bold text-lg transition-all duration-300"
                 >
                   <span className="absolute left-0 w-full h-0 transition-all bg-gradient-to-r from-blue-600 to-purple-600 opacity-100 group-hover:h-full group-hover:top-0 duration-400 ease"></span>
                   <span className="relative text-blue-600 group-hover:text-white transition-colors duration-300 flex items-center">
@@ -321,15 +275,6 @@ export default function Home() {
                     </motion.span>
                   </span>
                 </Link>
-
-                <motion.button
-                  onClick={() => setShowLeadModal(true)}
-                  className="inline-flex items-center px-8 py-3 rounded-full bg-purple-600 hover:bg-purple-700 text-white font-semibold transition-all duration-300"
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                >
-                  🎁 Claim Free 360° Photo Booth Add-On
-                </motion.button>
               </motion.div>
 
               {/* Scroll Indicator */}
@@ -360,126 +305,6 @@ export default function Home() {
             </div>
           </motion.div>
         </motion.div>
-
-        {/* Lead Capture Modal */}
-        <AnimatePresence>
-          {showLeadModal && (
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4"
-              onClick={() => !isSubmitting && setShowLeadModal(false)}
-            >
-              <motion.div
-                initial={{ scale: 0.9, opacity: 0 }}
-                animate={{ scale: 1, opacity: 1 }}
-                exit={{ scale: 0.9, opacity: 0 }}
-                className="bg-white rounded-2xl p-8 max-w-md w-full relative"
-                onClick={e => e.stopPropagation()}
-              >
-                {!submitted ? (
-                  <>
-                    <button
-                      onClick={() => setShowLeadModal(false)}
-                      className="absolute top-4 right-4 text-gray-400 hover:text-gray-600"
-                    >
-                      ×
-                    </button>
-                    <h3 className="text-2xl font-bold mb-2">Claim Your Free Add-On!</h3>
-                    <p className="text-gray-600 mb-6">
-                      Get a complimentary 1-hour 360° Photo Booth experience with your booking
-                      (Worth $599)
-                    </p>
-                    <form 
-                      action="https://formsubmit.co/info@robobooth.ca" 
-                      method="POST"
-                      className="space-y-4"
-                    >
-                      {/* FormSubmit configuration */}
-                      <input type="hidden" name="_subject" value="New Free Add-On Claim!" />
-                      <input type="hidden" name="_template" value="table" />
-                      <input type="hidden" name="_captcha" value="false" />
-                      <input type="hidden" name="_next" value="https://robobooth.ca/thank-you" />
-
-                      <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1">
-                          Name
-                        </label>
-                        <input
-                          type="text"
-                          required
-                          name="name"
-                          className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                        />
-                      </div>
-                      <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1">
-                          Phone Number
-                        </label>
-                        <input
-                          type="tel"
-                          required
-                          name="phone"
-                          className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                        />
-                      </div>
-                      <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1">
-                          Event Type
-                        </label>
-                        <select
-                          required
-                          name="eventType"
-                          className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                        >
-                          <option value="">Select event type</option>
-                          <option value="wedding">Wedding</option>
-                          <option value="corporate">Corporate Event</option>
-                          <option value="birthday">Birthday Party</option>
-                          <option value="graduation">Graduation</option>
-                          <option value="other">Other</option>
-                        </select>
-                      </div>
-                      <input type="hidden" name="Promotion" value="Free 1-hour 360° Photo Booth Add-On (Worth $599)" />
-                      <motion.button
-                        type="submit"
-                        disabled={isSubmitting}
-                        className={`w-full py-3 rounded-lg text-white font-bold ${
-                          isSubmitting ? 'bg-gray-400' : 'bg-blue-600 hover:bg-blue-700'
-                        }`}
-                        whileHover={{ scale: 1.02 }}
-                        whileTap={{ scale: 0.98 }}
-                      >
-                        {isSubmitting ? 'Submitting...' : 'Claim Now'}
-                      </motion.button>
-                    </form>
-                  </>
-                ) : (
-                  <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    className="text-center py-8"
-                  >
-                    <div className="text-5xl mb-4">🎉</div>
-                    <h3 className="text-2xl font-bold mb-2">Thank You!</h3>
-                    <p className="text-gray-600 mb-6">
-                      Your free 360° Photo Booth add-on has been reserved. We'll contact you shortly!
-                    </p>
-                    <motion.button
-                      onClick={() => setShowLeadModal(false)}
-                      className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
-                      whileHover={{ scale: 1.05 }}
-                      whileTap={{ scale: 0.95 }}
-                    >
-                      Close
-                    </motion.button>
-                  </motion.div>
-                )}
-              </motion.div>
-            </motion.div>
-          )}
-        </AnimatePresence>
 
         {/* Enhanced Stats Section */}
         <motion.div 
@@ -734,8 +559,8 @@ const testimonials = [
 ]
 
 const stats = [
-  { value: '10+', label: 'Events Covered' },
-  { value: '1K+', label: 'Photos Taken' },
+  { value: '20+', label: 'Events Covered' },
+  { value: '1K+', label: 'Photos & VideosTaken' },
   { value: '99%', label: 'Happy Clients' }
 ]
 
