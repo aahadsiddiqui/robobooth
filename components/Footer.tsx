@@ -67,7 +67,8 @@ const footerLinks = [
   { href: '/products', label: 'Products' },
   { href: '/features', label: 'Features' },
   { href: '/packages', label: 'Packages' },
-  { href: '/contact', label: 'Contact' }
+  { href: '/contact', label: 'Contact' },
+  { href: '/privacy-policy', label: 'Privacy Policy' }
 ]
 
 const socialLinks = [
