@@ -7,7 +7,10 @@ const DragShuffleHero = () => {
 
   const handleShuffle = () => {
     const orderCopy = [...order];
-    orderCopy.unshift(orderCopy.pop());
+    const popped = orderCopy.pop();
+    if (popped !== undefined) {
+      orderCopy.unshift(popped);
+    }
     setOrder(orderCopy);
   };
 
