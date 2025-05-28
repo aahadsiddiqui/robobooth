@@ -120,7 +120,7 @@ export default function PrivacyPolicy() {
             <div className="mt-4 text-gray-600">
               <p>Email: info@robobooth.ca</p>
               <p>Phone: 647-877-7699</p>
-            </div>
+            </div>s
           </section>
         </motion.div>
       </div>

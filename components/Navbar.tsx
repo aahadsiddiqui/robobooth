@@ -17,12 +17,12 @@ export default function Navbar() {
   ]
 
   return (
-    <nav className="fixed top-0 w-full bg-white/80 backdrop-blur-lg z-50 shadow-sm">
+    <nav className="fixed top-0 w-full bg-black/80 backdrop-blur-lg z-50 shadow-sm border-b border-[#a49056]/20">
       <div className="max-w-6xl mx-auto px-4">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <Link href="/" className="flex items-center">
-            <span className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 text-transparent bg-clip-text">
+            <span className="text-2xl font-bold bg-gradient-to-r from-[#fce4a6] to-[#a49056] text-transparent bg-clip-text">
               Robo Booth
             </span>
           </Link>
@@ -33,20 +33,25 @@ export default function Navbar() {
               <Link
                 key={link.href}
                 href={link.href}
-                className={`text-sm font-medium transition-colors hover:text-blue-600 ${
+                className={`text-sm font-medium transition-colors hover:text-[#fce4a6] ${
                   router.pathname === link.href 
-                    ? 'text-blue-600' 
-                    : 'text-gray-600'
+                    ? 'text-[#fce4a6]' 
+                    : 'text-[#fce4a6]/70'
                 }`}
               >
                 {link.name}
               </Link>
             ))}
+            <Link href="/contact">
+              <button className="flex items-center gap-2 rounded-md bg-[#fce4a6] px-4 py-2 font-medium text-black transition-colors hover:bg-[#fce4a6]/80">
+                Book Now
+              </button>
+            </Link>
           </div>
 
           {/* Mobile Menu Button */}
           <button
-            className="md:hidden p-2"
+            className="md:hidden p-2 text-[#fce4a6]"
             onClick={() => setIsOpen(!isOpen)}
           >
             <svg
@@ -73,7 +78,7 @@ export default function Navbar() {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
-            className="md:hidden bg-white border-t"
+            className="md:hidden bg-black border-t border-[#a49056]/20"
           >
             <div className="px-4 py-2 space-y-1">
               {navigation.map((link) => (
@@ -82,8 +87,8 @@ export default function Navbar() {
                   href={link.href}
                   className={`block px-3 py-2 rounded-md text-base font-medium ${
                     router.pathname === link.href
-                      ? 'text-blue-600 bg-blue-50'
-                      : 'text-gray-600 hover:text-blue-600 hover:bg-blue-50'
+                      ? 'text-[#fce4a6] bg-black'
+                      : 'text-[#fce4a6]/70 hover:text-[#fce4a6] hover:bg-black'
                   }`}
                   onClick={() => setIsOpen(false)}
                 >
