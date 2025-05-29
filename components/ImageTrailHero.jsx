@@ -105,13 +105,12 @@ const MouseImageTrail = ({
   rotationRange,
 }) => {
   const [scope, animate] = useAnimate();
-
   const lastRenderPosition = useRef({ x: 0, y: 0 });
   const imageRenderCount = useRef(0);
+  const isTouching = useRef(false);
 
   const handleMouseMove = (e) => {
     const { clientX, clientY } = e;
-
     const distance = calculateDistance(
       clientX,
       clientY,
@@ -122,16 +121,44 @@ const MouseImageTrail = ({
     if (distance >= renderImageBuffer) {
       lastRenderPosition.current.x = clientX;
       lastRenderPosition.current.y = clientY;
-
       renderNextImage();
     }
+  };
+
+  const handleTouchStart = (e) => {
+    isTouching.current = true;
+    const touch = e.touches[0];
+    lastRenderPosition.current.x = touch.clientX;
+    lastRenderPosition.current.y = touch.clientY;
+    renderNextImage();
+  };
+
+  const handleTouchMove = (e) => {
+    if (isTouching.current) {
+      const touch = e.touches[0];
+      const distance = calculateDistance(
+        touch.clientX,
+        touch.clientY,
+        lastRenderPosition.current.x,
+        lastRenderPosition.current.y
+      );
+
+      if (distance >= renderImageBuffer) {
+        lastRenderPosition.current.x = touch.clientX;
+        lastRenderPosition.current.y = touch.clientY;
+        renderNextImage();
+      }
+    }
+  };
+
+  const handleTouchEnd = () => {
+    isTouching.current = false;
   };
 
   const calculateDistance = (x1, y1, x2, y2) => {
     const deltaX = x2 - x1;
     const deltaY = y2 - y1;
-    const distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
-    return distance;
+    return Math.sqrt(deltaX * deltaX + deltaY * deltaY);
   };
 
   const renderNextImage = () => {
@@ -180,6 +207,10 @@ const MouseImageTrail = ({
       ref={scope}
       className="relative overflow-hidden overflow-x-hidden"
       onMouseMove={handleMouseMove}
+      onTouchStart={handleTouchStart}
+      onTouchMove={handleTouchMove}
+      onTouchEnd={handleTouchEnd}
+      onTouchCancel={handleTouchEnd}
     >
       {children}
 
