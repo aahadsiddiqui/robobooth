@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react'
 import Head from 'next/head'
-import Link from 'next/link'
 import Image from 'next/image'
 import { motion, useScroll, useTransform } from 'framer-motion'
 import { FiArrowRight, FiCheck, FiDownload, FiMail, FiPhone, FiCalendar, FiUsers } from 'react-icons/fi'
@@ -23,7 +22,7 @@ export default function Corporate() {
 
   const [showForm, setShowForm] = useState(false)
   const [showLookbook, setShowLookbook] = useState(false)
-  const [showLeadModal, setShowLeadModal] = useState(true)
+  const [showLeadModal, setShowLeadModal] = useState(false)
   const [leadForm, setLeadForm] = useState({
     email: '',
     phone: '',
@@ -38,6 +37,21 @@ export default function Corporate() {
     const timer = setTimeout(() => setShowLeadModal(true), 5000)
     return () => clearTimeout(timer)
   }, [])
+
+  // Show popup when user scrolls to bottom
+  useEffect(() => {
+    const handleScroll = () => {
+      if (!showLeadModal) {
+        const scrollPosition = window.innerHeight + window.scrollY;
+        const threshold = document.body.offsetHeight - 100;
+        if (scrollPosition >= threshold) {
+          setShowLeadModal(true);
+        }
+      }
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [showLeadModal]);
 
   // Disable scroll when modal is open
   useEffect(() => {
@@ -139,16 +153,8 @@ export default function Corporate() {
                     onClick={() => setShowForm(true)}
                     className="bg-[#fce4a6] text-black px-8 py-4 rounded-full font-bold text-lg shadow-lg hover:shadow-xl transition-all group"
                   >
-                    Get Pricing
+                    Book Now
                     <FiArrowRight className="inline ml-2 group-hover:translate-x-1 transition-transform" />
-                  </motion.button>
-                  <motion.button
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                    onClick={() => setShowLookbook(true)}
-                    className="border-2 border-[#fce4a6] text-[#fce4a6] px-8 py-4 rounded-full font-bold text-lg hover:bg-[#fce4a6] hover:text-black transition-all"
-                  >
-                    Download Event Lookbook
                   </motion.button>
                 </div>
               </motion.div>
