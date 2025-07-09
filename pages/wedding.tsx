@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from 'react'
 import Head from 'next/head'
-import Link from 'next/link'
-import Image from 'next/image'
 import { motion, useScroll, useTransform } from 'framer-motion'
 import { FiArrowRight, FiCheck, FiDownload, FiMail, FiPhone, FiCalendar, FiUsers } from 'react-icons/fi'
 import { useRouter } from 'next/router'
@@ -124,7 +122,7 @@ export default function Wedding() {
                 transition={{ duration: 0.8 }}
               >
                 <h1 className="text-5xl md:text-7xl font-black leading-tight text-white mb-6">
-                  Toronto's Most Magical <span className="text-[#fce4a6]">Robot Photobooth</span> & 360 Photo Booth
+                  GTA's First <span className="text-[#fce4a6]">Robot Photobooth</span> & 360 Photo Booth
                 </h1>
                 <p className="text-xl md:text-2xl text-white/90 mb-8 max-w-4xl mx-auto">
                   Make your wedding unforgettable with interactive photo booths that wow your guests and capture magical memories instantly.
@@ -526,7 +524,7 @@ const testimonials = [
   },
   {
     couple: 'Jessica & Mark',
-    title: 'Groom & Groom',
+    title: 'Bride & Groom',
     text: 'Our guests are still talking about the robot photobooth! The team was professional and made everything seamless.'
   }
 ]
