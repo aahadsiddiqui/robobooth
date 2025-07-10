@@ -101,9 +101,17 @@ export default function Wedding() {
       <div className={showLeadModal ? 'blur-sm pointer-events-none select-none' : ''}>
         <div className="min-h-screen overflow-x-hidden">
           <Head>
-            <title>Wedding Photo Booth - Robo Booth | Toronto's Premier Wedding Robot Photo Booth</title>
-            <meta name="description" content="Toronto's only robot photobooth & 360 photo booth for weddings. Make your wedding unforgettable with interactive photo booths that wow your guests and capture magical memories instantly." />
-            <meta name="keywords" content="wedding photo booth, robot photo booth, Toronto, wedding, reception, bridal, party" />
+                    <title>Wedding Photobooth Rental Toronto GTA | Robot Photobooth & 360 Photo Booth for Weddings</title>
+        <meta name="description" content="Toronto's premier wedding photobooth rental featuring robot photobooth & 360 photo booth. Serving Ajax, Oshawa, Whitby, Markham, Vaughan, Courtice, Etobicoke, King City, Pickering, North York, Bowmanville, Mississauga, Richmond Hill, East Gwillimbury, Barrie, Whitchurch-Stouffville. Interactive wedding photobooth that wows your guests and captures magical memories instantly." />
+        <meta name="keywords" content="wedding photobooth rental, wedding robot photobooth, wedding 360 photo booth, Toronto wedding photobooth, GTA wedding photobooth, Ajax wedding photobooth, Oshawa wedding photobooth, Whitby wedding photobooth, Markham wedding photobooth, Vaughan wedding photobooth, Courtice wedding photobooth, Etobicoke wedding photobooth, King City wedding photobooth, Pickering wedding photobooth, North York wedding photobooth, Bowmanville wedding photobooth, Mississauga wedding photobooth, Richmond Hill wedding photobooth, East Gwillimbury wedding photobooth, Barrie wedding photobooth, Whitchurch-Stouffville wedding photobooth, interactive wedding photobooth, robotic wedding photobooth, 360 degree wedding photobooth, wedding reception photobooth, bridal party photobooth" />
+        <meta property="og:title" content="Wedding Photobooth Rental Toronto GTA | Robot Photobooth & 360 Photo Booth for Weddings" />
+        <meta property="og:description" content="Toronto's premier wedding photobooth rental featuring robot photobooth & 360 photo booth. Interactive wedding photobooth that wows your guests and captures magical memories instantly." />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://robobooth.ca/wedding" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Wedding Photobooth Rental Toronto GTA | Robot Photobooth & 360 Photo Booth for Weddings" />
+        <meta name="twitter:description" content="Toronto's premier wedding photobooth rental featuring robot photobooth & 360 photo booth. Interactive wedding photobooth that wows your guests and captures magical memories instantly." />
+        <link rel="canonical" href="https://robobooth.ca/wedding" />
           </Head>
 
           {/* Hero Section */}
@@ -122,10 +130,10 @@ export default function Wedding() {
                 transition={{ duration: 0.8 }}
               >
                 <h1 className="text-5xl md:text-7xl font-black leading-tight text-white mb-6">
-                  GTA's First <span className="text-[#fce4a6]">Robot Photobooth</span> & 360 Photo Booth
+                  Toronto's Premier <span className="text-[#fce4a6]">Robot Photobooth</span> & 360 Photo Booth for Weddings
                 </h1>
                 <p className="text-xl md:text-2xl text-white/90 mb-8 max-w-4xl mx-auto">
-                  Make your wedding unforgettable with interactive photo booths that wow your guests and capture magical memories instantly.
+                  Make your wedding unforgettable with interactive robot photobooth and 360 photo booth that wow your guests and capture magical memories instantly. Serving Ajax, Oshawa, Whitby, Markham, Vaughan, Courtice, Etobicoke, King City, Pickering, North York, Bowmanville, Mississauga, Richmond Hill, East Gwillimbury, Barrie, and Whitchurch-Stouffville.
                 </p>
                 {/* CTA Buttons */}
                 <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
@@ -160,9 +168,9 @@ export default function Wedding() {
                 viewport={{ once: true }}
                 className="text-center mb-12"
               >
-                <h2 className="text-4xl md:text-5xl font-bold mb-4 text-black">Wedding Photobooth in Action</h2>
+                <h2 className="text-4xl md:text-5xl font-bold mb-4 text-black">Wedding Robot Photobooth & 360 Photo Booth in Action</h2>
                 <p className="text-black/80 text-lg max-w-3xl mx-auto">
-                  See how our interactive robot photobooth creates magical moments at weddings
+                  See how our interactive robot photobooth and 360 photo booth create magical moments at weddings across Toronto and the GTA
                 </p>
               </motion.div>
               <motion.div
@@ -195,9 +203,9 @@ export default function Wedding() {
                 viewport={{ once: true }}
                 className="text-center mb-16"
               >
-                <h2 className="text-4xl md:text-5xl font-bold mb-4 text-black">Why Couples Love Robo Booth</h2>
+                <h2 className="text-4xl md:text-5xl font-bold mb-4 text-black">Why Couples Love Our Robot Photobooth & 360 Photo Booth</h2>
                 <p className="text-black/80 text-lg max-w-3xl mx-auto">
-                  Elegant, interactive, and unforgettable experiences that make your wedding day truly special
+                  Elegant, interactive, and unforgettable robot photobooth and 360 photo booth experiences that make your wedding day truly special across Toronto, Ajax, Oshawa, Whitby, Markham, Vaughan, Courtice, Etobicoke, King City, Pickering, North York, Bowmanville, Mississauga, Richmond Hill, East Gwillimbury, Barrie, and Whitchurch-Stouffville.
                 </p>
               </motion.div>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -519,7 +527,7 @@ const testimonials = [
   },
   {
     couple: 'Samantha & Alex',
-    title: 'Bride & Bride',
+    title: 'Bride & Groom',
     text: 'We wanted something unique for our wedding and Robo Booth delivered. The custom overlays were beautiful.'
   },
   {

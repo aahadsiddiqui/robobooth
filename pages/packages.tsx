@@ -186,8 +186,17 @@ export default function Packages() {
   return (
     <div className="min-h-screen w-full bg-black text-white">
       <Head>
-        <title>Packages - Robo Booth</title>
-        <meta name="description" content="Experience Canada's First Robot Photo Booth and 360° Photo Booth - Choose your perfect experience" />
+        <title>Robot Photobooth & 360 Photo Booth Packages | Toronto GTA Photo Booth Rental</title>
+        <meta name="description" content="Robot photobooth and 360 photo booth packages for Toronto, GTA, Ajax, Oshawa, Whitby, Markham, Vaughan, Courtice, Etobicoke, King City, Pickering, North York, Bowmanville, Mississauga, Richmond Hill, East Gwillimbury, Barrie, Whitchurch-Stouffville. Wedding photobooth, corporate photobooth, party photobooth rental." />
+        <meta name="keywords" content="robot photobooth packages, 360 photo booth packages, Toronto photobooth rental, GTA photo booth packages, Ajax photobooth rental, Oshawa photobooth rental, Whitby photobooth rental, Markham photobooth rental, Vaughan photobooth rental, Courtice photobooth rental, Etobicoke photobooth rental, King City photobooth rental, Pickering photobooth rental, North York photobooth rental, Bowmanville photobooth rental, Mississauga photobooth rental, Richmond Hill photobooth rental, East Gwillimbury photobooth rental, Barrie photobooth rental, Whitchurch-Stouffville photobooth rental, wedding photobooth packages, corporate photobooth packages, party photobooth packages, interactive photobooth rental, robotic photobooth rental, 360 degree photobooth rental" />
+        <meta property="og:title" content="Robot Photobooth & 360 Photo Booth Packages | Toronto GTA" />
+        <meta property="og:description" content="Robot photobooth and 360 photo booth packages for Toronto, GTA, Ajax, Oshawa, Whitby, Markham, Vaughan, Courtice, Etobicoke, King City, Pickering, North York, Bowmanville, Mississauga, Richmond Hill, East Gwillimbury, Barrie, Whitchurch-Stouffville." />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://robobooth.ca/packages" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Robot Photobooth & 360 Photo Booth Packages | Toronto GTA" />
+        <meta name="twitter:description" content="Robot photobooth and 360 photo booth packages for Toronto, GTA, Ajax, Oshawa, Whitby, Markham, Vaughan, Courtice, Etobicoke, King City, Pickering, North York, Bowmanville, Mississauga, Richmond Hill, East Gwillimbury, Barrie, Whitchurch-Stouffville." />
+        <link rel="canonical" href="https://robobooth.ca/packages" />
       </Head>
 
       <CornerNav active={active} setActive={setActive} />
@@ -200,10 +209,10 @@ export default function Packages() {
           className="text-center mb-16"
         >
           <h1 className="text-4xl md:text-6xl font-bold mb-6 text-[#fce4a6]">
-            Choose Your Experience
+            Robot Photobooth & 360 Photo Booth Packages
           </h1>
           <p className="text-white/80 text-xl max-w-2xl mx-auto">
-            Experience Canada's First Robot Photo Booth and 360° Photo Booth
+            Experience Canada's First Robot Photo Booth and 360° Photo Booth. Serving Toronto, GTA, Ajax, Oshawa, Whitby, Markham, Vaughan, Courtice, Etobicoke, King City, Pickering, North York, Bowmanville, Mississauga, Richmond Hill, East Gwillimbury, Barrie, and Whitchurch-Stouffville.
           </p>
         </motion.div>
 
@@ -215,9 +224,9 @@ export default function Packages() {
           className="max-w-6xl mx-auto mb-32"
         >
           <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-[#fce4a6]">Robo Booth Experience</h2>
+            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-[#fce4a6]">Interactive Robot Photobooth Experience</h2>
             <p className="text-white/80 text-lg">
-              The complete robot photo booth experience for your event
+              The complete robot photobooth experience for your wedding, corporate event, or party in Toronto and the GTA
             </p>
           </div>
 
@@ -241,7 +250,7 @@ export default function Packages() {
             <h3 className="text-2xl font-semibold text-[#fce4a6] mb-6">What's Included</h3>
             <ul className="grid md:grid-cols-2 gap-6">
               {[
-                'Roaming DSLR Robot Photobooth',
+                'Roaming Robot Photobooth',
                 'Professional Studio Lighting',
                 'Instant Photo Prints',
                 'Digital Gallery Access',
@@ -284,7 +293,7 @@ export default function Packages() {
           className="max-w-6xl mx-auto mb-32"
         >
           <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-[#fce4a6]">360° Photo Booth Experience</h2>
+            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-[#fce4a6]">360° Booth Experience</h2>
             <p className="text-white/80 text-lg">
               Create stunning 360° videos that capture every moment from all angles
             </p>
