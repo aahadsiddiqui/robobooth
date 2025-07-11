@@ -3,6 +3,7 @@ import Head from 'next/head'
 import { motion, useScroll, useTransform } from 'framer-motion'
 import { FiArrowRight, FiCheck, FiDownload, FiMail, FiPhone, FiCalendar, FiUsers } from 'react-icons/fi'
 import { useRouter } from 'next/router'
+import { useMetaPixel } from '../hooks/useMetaPixel'
 
 export default function Wedding() {
   const { scrollY } = useScroll()
@@ -31,6 +32,7 @@ export default function Wedding() {
   const [leadSuccess, setLeadSuccess] = useState(false)
 
   const router = useRouter()
+  const { trackLead, trackFormSubmission, trackContactClick, trackVideoView, trackBookingInquiry } = useMetaPixel()
 
   useEffect(() => {
     const timer = setTimeout(() => setShowLeadModal(true), 5000)
@@ -55,6 +57,8 @@ export default function Wedding() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
+    // Track form submission
+    trackFormSubmission('Wedding Inquiry', 'Toronto')
     // Handle form submission
     console.log('Form submitted:', formData)
   }
@@ -73,6 +77,9 @@ export default function Wedding() {
     e.preventDefault()
     setLeadSubmitting(true)
     try {
+      // Track lead generation
+      trackLead('Wedding Lead Modal', 'Toronto')
+      
       const formData = new FormData()
       formData.append('phone-number', leadForm.phone)
       formData.append('event-type', 'Wedding')
@@ -140,7 +147,10 @@ export default function Wedding() {
                   <motion.button
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
-                    onClick={() => setShowForm(true)}
+                    onClick={() => {
+                      trackBookingInquiry('Wedding', 'Toronto')
+                      setShowForm(true)
+                    }}
                     className="bg-[#fce4a6] text-black px-8 py-4 rounded-full font-bold text-lg shadow-lg hover:shadow-xl transition-all group"
                   >
                     Book Now
@@ -186,6 +196,7 @@ export default function Wedding() {
                   loop
                   muted
                   playsInline
+                  onPlay={() => trackVideoView('Wedding Robot Photobooth')}
                 >
                   <source src="/videos/Wedding.mov" type="video/mp4" />
                   Your browser does not support the video tag.
@@ -354,7 +365,10 @@ export default function Wedding() {
                 <motion.button
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
-                  onClick={() => setShowForm(true)}
+                  onClick={() => {
+                    trackBookingInquiry('Wedding', 'Toronto')
+                    setShowForm(true)
+                  }}
                   className="bg-[#fce4a6] text-black px-8 py-4 rounded-full font-bold text-lg shadow-lg hover:shadow-xl transition-all group"
                 >
                   Book Now
