@@ -56,7 +56,7 @@ export default function Home() {
         <div className="max-w-6xl mx-auto">
           <h2 className="text-4xl font-bold text-center mb-12 text-black">Toronto's Premier Robot Photobooth & 360 Photo Booth Features</h2>
           <p className="text-center text-black/80 text-lg mb-12 max-w-4xl mx-auto">
-            Serving the entire GTA including Ajax, Oshawa, Whitby, Markham, Vaughan, Courtice, Etobicoke, King City, Pickering, North York, Bowmanville, Mississauga, Richmond Hill, East Gwillimbury, Barrie, and Whitchurch-Stouffville with cutting-edge photobooth technology.
+            Discover our cutting-edge photobooth technology for unforgettable events.
           </p>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {features.map((feature, index) => (
@@ -213,17 +213,17 @@ const features = [
   {
     icon: '🤖',
     title: 'Interactive Robot Photobooth',
-    description: 'Canada\'s first roaming robot photobooth drives around your event in Toronto, GTA, Ajax, Oshawa, Whitby, Markham, Vaughan, Courtice, Etobicoke, King City, Pickering, North York, Bowmanville, Mississauga, Richmond Hill, East Gwillimbury, Barrie, and Whitchurch-Stouffville, creating a fun and interactive experience for guests.'
+    description: "Canada's first roaming robot photobooth creates a fun and interactive experience for guests at any event."
   },
   {
     icon: '📸',
     title: '360 Photo Booth Technology',
-    description: 'Revolutionary 360 degree photo booth with studio-grade DSLR camera system, perfect lighting, and advanced image processing for stunning results at weddings, corporate events, and parties.'
+    description: 'Revolutionary 360 degree photo booth with professional camera system, perfect lighting, and advanced image processing for stunning results at weddings, corporate events, and parties.'
   },
   {
     icon: '🎯',
     title: 'GTA Photo Booth Rental',
-    description: 'Professional photobooth rental service across the Greater Toronto Area. Robotic movement and positioning help capture your best angles and candid moments at any event.'
+    description: 'Professional robot photobooth rental service. Robotic movement and positioning help capture your best angles and candid moments at any event.'
   }
 ]
 
