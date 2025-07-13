@@ -38,21 +38,6 @@ export default function Corporate() {
     return () => clearTimeout(timer)
   }, [])
 
-  // Show popup when user scrolls to bottom
-  useEffect(() => {
-    const handleScroll = () => {
-      if (!showLeadModal) {
-        const scrollPosition = window.innerHeight + window.scrollY;
-        const threshold = document.body.offsetHeight - 100;
-        if (scrollPosition >= threshold) {
-          setShowLeadModal(true);
-        }
-      }
-    };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, [showLeadModal]);
-
   // Disable scroll when modal is open
   useEffect(() => {
     if (showLeadModal) {
@@ -124,7 +109,7 @@ export default function Corporate() {
           </Head>
 
           {/* Hero Section */}
-          <section className="relative h-screen bg-black flex items-center justify-center overflow-hidden">
+          <section className="relative h-screen bg-black flex flex-col items-center justify-center w-full overflow-x-hidden">
             {/* Background Video/Image */}
             <div className="absolute inset-0 z-0">
               <div className="absolute inset-0 bg-gradient-to-b from-black/50 to-black/80"></div>
@@ -132,7 +117,7 @@ export default function Corporate() {
             </div>
 
             {/* Hero Content */}
-            <div className="relative z-10 max-w-6xl mx-auto px-4 text-center">
+            <div className="relative z-10 max-w-6xl mx-auto text-center w-full">
               <motion.div
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -164,7 +149,7 @@ export default function Corporate() {
             <motion.div
               animate={{ y: [0, 10, 0] }}
               transition={{ duration: 2, repeat: Infinity }}
-              className="absolute bottom-8 left-1/2 transform -translate-x-1/2 text-[#fce4a6]"
+              className="absolute bottom-8 left-1/2 -translate-x-1/2 text-[#fce4a6]"
             >
               <FiArrowRight className="w-8 h-8 rotate-90" />
             </motion.div>
@@ -624,15 +609,6 @@ export default function Corporate() {
             )}
           </motion.div>
         </div>
-      )}
-      {/* Sticky Book Now Button */}
-      {!showLeadModal && (
-        <button
-          onClick={() => setShowLeadModal(true)}
-          className="fixed bottom-6 right-6 z-40 bg-[#fce4a6] text-black font-bold px-6 py-4 rounded-full shadow-xl hover:bg-[#a49056] transition-all text-lg"
-        >
-          Book Now
-        </button>
       )}
     </>
   )

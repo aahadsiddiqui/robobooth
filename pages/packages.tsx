@@ -212,7 +212,7 @@ export default function Packages() {
             Robot Photobooth & 360 Photo Booth Packages
           </h1>
           <p className="text-white/80 text-xl max-w-2xl mx-auto">
-            Experience Canada's First Robot Photo Booth and 360° Photo Booth. Serving Toronto, GTA, Ajax, Oshawa, Whitby, Markham, Vaughan, Courtice, Etobicoke, King City, Pickering, North York, Bowmanville, Mississauga, Richmond Hill, East Gwillimbury, Barrie, and Whitchurch-Stouffville.
+            Experience Canada's First Robot Photo Booth and 360° Photo Booth.
           </p>
         </motion.div>
 
