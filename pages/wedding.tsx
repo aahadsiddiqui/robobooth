@@ -140,7 +140,7 @@ export default function Wedding() {
                   Toronto's Premier <span className="text-[#fce4a6]">Robot Photobooth</span> & 360 Photo Booth for Weddings
                 </h1>
                 <p className="text-xl md:text-2xl text-white/90 mb-8 max-w-4xl mx-auto">
-                  Make your wedding unforgettable with interactive robot photobooth and 360 photo booth that wow your guests and capture magical memories instantly. Serving Ajax, Oshawa, Whitby, Markham, Vaughan, Courtice, Etobicoke, King City, Pickering, North York, Bowmanville, Mississauga, Richmond Hill, East Gwillimbury, Barrie, and Whitchurch-Stouffville.
+                  Make your wedding unforgettable with interactive robot photobooth and 360 photo booth that wow your guests and capture magical memories instantly.
                 </p>
                 {/* CTA Buttons */}
                 <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
