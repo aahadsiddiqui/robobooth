@@ -28,6 +28,12 @@ export default function Document() {
         }} />
         {/* End Google Tag Manager */}
         
+        {/* Crisp Chatbot */}
+        <script dangerouslySetInnerHTML={{
+          __html: `window.$crisp=[];window.CRISP_WEBSITE_ID="d4528218-28ba-4427-8f91-717dc3a2cf36";(function(){d=document;s=d.createElement("script");s.src="https://client.crisp.chat/l.js";s.async=1;d.getElementsByTagName("head")[0].appendChild(s);})();`,
+        }} />
+        {/* End Crisp Chatbot */}
+        
         {/* Open Graph */}
         <meta property="og:type" content="website" />
         <meta property="og:site_name" content="Robo Booth" />

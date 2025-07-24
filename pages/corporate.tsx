@@ -108,35 +108,48 @@ export default function Corporate() {
             <meta name="keywords" content="corporate photo booth, robot photo booth, Toronto, corporate events, trade shows, conferences, staff parties" />
           </Head>
 
+          {/* Phone Number Header */}
+          <div className="fixed top-0 left-0 right-0 z-50 bg-black/90 backdrop-blur-sm border-b border-[#fce4a6]/20">
+            <div className="max-w-6xl mx-auto px-4 py-2 flex justify-center items-center">
+              <a 
+                href="tel:289-301-4039" 
+                className="text-[#fce4a6] font-bold text-lg hover:text-white transition-colors flex items-center gap-2"
+              >
+                <FiPhone className="w-5 h-5" />
+                Call Now: 289-301-4039
+              </a>
+            </div>
+          </div>
+
           {/* Hero Section */}
-          <section className="relative h-screen bg-black flex flex-col items-center justify-center w-full overflow-x-hidden">
+          <section className="relative h-1/3 bg-black flex items-center justify-center overflow-hidden pt-16">
             {/* Background Video/Image */}
             <div className="absolute inset-0 z-0">
               <div className="absolute inset-0 bg-gradient-to-b from-black/50 to-black/80"></div>
-              <div className="absolute inset-0 bg-[url('/images/corporate-hero.jpg')] bg-cover bg-center bg-no-repeat opacity-40"></div>
+              <div className="absolute inset-0 bg-[url('/images/corporate-hero.jpg')] bg-cover bg-center bg-no-repeat opacity-40 scale-125"></div>
             </div>
 
             {/* Hero Content */}
-            <div className="relative z-10 max-w-6xl mx-auto text-center w-full">
+            <div className="relative z-10 max-w-6xl mx-auto px-4 text-center">
               <motion.div
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8 }}
               >
-                <h1 className="text-5xl md:text-7xl font-black leading-tight text-white mb-6">
+                <h1 className="text-3xl md:text-5xl font-black leading-tight text-white mb-4">
                   Toronto's First <span className="text-[#fce4a6]">Robot Photobooth</span> & 360 Photo Booth for Corporate Events
                 </h1>
-                <p className="text-xl md:text-2xl text-white/90 mb-8 max-w-4xl mx-auto">
+                <p className="text-base md:text-lg text-white/90 mb-6 max-w-2xl mx-auto">
                   Make your event unforgettable with interactive photo booths that wow your guests and amplify your brand reach instantly.
                 </p>
                 
                 {/* CTA Buttons */}
-                <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-8">
                   <motion.button
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                     onClick={() => setShowForm(true)}
-                    className="bg-[#fce4a6] text-black px-8 py-4 rounded-full font-bold text-lg shadow-lg hover:shadow-xl transition-all group"
+                    className="bg-[#fce4a6] text-black px-6 py-3 rounded-full font-bold text-base shadow-lg hover:shadow-xl transition-all group"
                   >
                     Book Now
                     <FiArrowRight className="inline ml-2 group-hover:translate-x-1 transition-transform" />
@@ -149,23 +162,23 @@ export default function Corporate() {
             <motion.div
               animate={{ y: [0, 10, 0] }}
               transition={{ duration: 2, repeat: Infinity }}
-              className="absolute bottom-8 left-1/2 -translate-x-1/2 text-[#fce4a6]"
+              className="absolute bottom-4 left-1/2 -translate-x-1/2 text-[#fce4a6]"
             >
-              <FiArrowRight className="w-8 h-8 rotate-90" />
+              <FiArrowRight className="w-6 h-6 rotate-90" />
             </motion.div>
           </section>
 
           {/* Video Section */}
-          <section className="py-20 px-4 bg-white">
+          <section className="py-12 px-4 bg-white">
             <div className="max-w-6xl mx-auto">
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                className="text-center mb-12"
+                className="text-center mb-8"
               >
-                <h2 className="text-4xl md:text-5xl font-bold mb-4 text-black">Robot Photobooth in Action</h2>
-                <p className="text-black/80 text-lg max-w-3xl mx-auto">
+                <h2 className="text-3xl md:text-4xl font-bold mb-3 text-black">Robot Photobooth in Action</h2>
+                <p className="text-black/80 text-base max-w-2xl mx-auto">
                   See how our interactive robot photobooth creates unforgettable moments at corporate events
                 </p>
               </motion.div>
@@ -175,10 +188,10 @@ export default function Corporate() {
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
                 transition={{ delay: 0.2 }}
-                className="relative rounded-2xl overflow-hidden shadow-2xl"
+                className="relative rounded-xl overflow-hidden shadow-xl max-w-2xl mx-auto"
               >
                 <video
-                  className="w-full h-auto"
+                  className="w-full h-auto max-h-64"
                   controls
                   autoPlay
                   muted
@@ -193,21 +206,21 @@ export default function Corporate() {
           </section>
 
           {/* Key Benefits Section */}
-          <section className="py-20 px-4 bg-white">
+          <section className="py-12 px-4 bg-white">
             <div className="max-w-6xl mx-auto">
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                className="text-center mb-16"
+                className="text-center mb-12"
               >
-                <h2 className="text-4xl md:text-5xl font-bold mb-4 text-black">Why Corporate Teams Choose Robo Booth</h2>
-                <p className="text-black/80 text-lg max-w-3xl mx-auto">
+                <h2 className="text-3xl md:text-4xl font-bold mb-3 text-black">Why Corporate Teams Choose Robo Booth</h2>
+                <p className="text-black/80 text-base max-w-2xl mx-auto">
                   Professional, branded, and unforgettable experiences that elevate your corporate events
                 </p>
               </motion.div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {benefits.map((benefit, index) => (
                   <motion.div
                     key={index}
@@ -215,11 +228,11 @@ export default function Corporate() {
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ delay: index * 0.1 }}
-                    className="bg-black p-8 rounded-xl shadow-lg border border-[#fce4a6]/20 hover:shadow-xl transition-all"
+                    className="bg-black p-6 rounded-xl shadow-lg border border-[#fce4a6]/20 hover:shadow-xl transition-all"
                   >
-                    <div className="text-4xl mb-4 text-[#fce4a6]">{benefit.icon}</div>
-                    <h3 className="text-xl font-bold mb-3 text-[#fce4a6]">{benefit.title}</h3>
-                    <p className="text-white/80">{benefit.description}</p>
+                    <div className="text-3xl mb-3 text-[#fce4a6]">{benefit.icon}</div>
+                    <h3 className="text-lg font-bold mb-2 text-[#fce4a6]">{benefit.title}</h3>
+                    <p className="text-white/80 text-sm">{benefit.description}</p>
                   </motion.div>
                 ))}
               </div>
@@ -227,24 +240,24 @@ export default function Corporate() {
           </section>
 
           {/* Social Proof Section */}
-          <section className="py-20 px-4 bg-black">
+          <section className="py-12 px-4 bg-black">
             <div className="max-w-6xl mx-auto">
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                className="text-center mb-16"
+                className="text-center mb-12"
               >
-                <h2 className="text-4xl font-bold mb-4 text-[#fce4a6]">Trusted by Toronto's Corporate Teams</h2>
-                <p className="text-white/80 text-lg">Leading companies choose Robo Booth for their events</p>
+                <h2 className="text-3xl font-bold mb-3 text-[#fce4a6]">Trusted by Toronto's Corporate Teams</h2>
+                <p className="text-white/80 text-base">Leading companies choose Robo Booth for their events</p>
               </motion.div>
 
               {/* Animated Logo Marquee */}
-              <div className="overflow-hidden w-full mb-16">
+              <div className="overflow-hidden w-full mb-12">
                 <div className="flex animate-marquee whitespace-nowrap gap-16 items-center">
                   {companyLogos.concat(companyLogos).map((logo, idx) => (
-                    <div key={idx} className="flex-shrink-0 flex items-center justify-center h-24 w-48 bg-white rounded-xl shadow-lg mx-2 p-4">
-                      <Image src={logo.src} alt={logo.alt} width={160} height={80} className="object-contain h-20 w-auto grayscale hover:grayscale-0 transition duration-300" />
+                    <div key={idx} className="flex-shrink-0 flex items-center justify-center h-20 w-40 bg-white rounded-xl shadow-lg mx-2 p-3">
+                      <Image src={logo.src} alt={logo.alt} width={140} height={70} className="object-contain h-16 w-auto grayscale hover:grayscale-0 transition duration-300" />
                     </div>
                   ))}
                 </div>
@@ -256,19 +269,19 @@ export default function Corporate() {
           </section>
 
           {/* Package Highlights */}
-          <section className="py-20 px-4 bg-white">
+          <section className="py-12 px-4 bg-white">
             <div className="max-w-6xl mx-auto">
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                className="text-center mb-16"
+                className="text-center mb-12"
               >
-                <h2 className="text-4xl font-bold mb-4 text-black">Corporate Packages Include</h2>
-                <p className="text-black/80 text-lg">Everything you need for a successful corporate event</p>
+                <h2 className="text-3xl font-bold mb-3 text-black">Corporate Packages Include</h2>
+                <p className="text-black/80 text-base">Everything you need for a successful corporate event</p>
               </motion.div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                 {packageFeatures.map((feature, index) => (
                   <motion.div
                     key={index}
@@ -276,13 +289,13 @@ export default function Corporate() {
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ delay: index * 0.1 }}
-                    className="bg-black p-6 rounded-xl shadow-lg border border-[#fce4a6]/20"
+                    className="bg-black p-4 rounded-xl shadow-lg border border-[#fce4a6]/20"
                   >
-                    <div className="text-[#fce4a6] mb-3">
-                      <FiCheck className="w-6 h-6" />
+                    <div className="text-[#fce4a6] mb-2">
+                      <FiCheck className="w-5 h-5" />
                     </div>
-                    <h3 className="text-[#fce4a6] font-bold mb-2">{feature.title}</h3>
-                    <p className="text-white/80 text-sm">{feature.description}</p>
+                    <h3 className="text-[#fce4a6] font-bold mb-1 text-sm">{feature.title}</h3>
+                    <p className="text-white/80 text-xs">{feature.description}</p>
                   </motion.div>
                 ))}
               </div>
@@ -290,19 +303,19 @@ export default function Corporate() {
           </section>
 
           {/* FAQ Section */}
-          <section className="py-20 px-4 bg-black">
+          <section className="py-12 px-4 bg-black">
             <div className="max-w-4xl mx-auto">
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                className="text-center mb-16"
+                className="text-center mb-12"
               >
-                <h2 className="text-4xl font-bold mb-4 text-[#fce4a6]">Frequently Asked Questions</h2>
-                <p className="text-white/80 text-lg">Everything you need to know about our corporate services</p>
+                <h2 className="text-3xl font-bold mb-3 text-[#fce4a6]">Frequently Asked Questions</h2>
+                <p className="text-white/80 text-base">Everything you need to know about our corporate services</p>
               </motion.div>
 
-              <div className="space-y-6">
+              <div className="space-y-4">
                 {faqs.map((faq, index) => (
                   <motion.div
                     key={index}
@@ -310,10 +323,10 @@ export default function Corporate() {
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ delay: index * 0.1 }}
-                    className="bg-white/5 p-6 rounded-xl border border-white/10"
+                    className="bg-white/5 p-4 rounded-xl border border-white/10"
                   >
-                    <h3 className="text-xl font-bold mb-3 text-[#fce4a6]">{faq.question}</h3>
-                    <p className="text-white/80">{faq.answer}</p>
+                    <h3 className="text-lg font-bold mb-2 text-[#fce4a6]">{faq.question}</h3>
+                    <p className="text-white/80 text-sm">{faq.answer}</p>
                   </motion.div>
                 ))}
               </div>
@@ -321,30 +334,30 @@ export default function Corporate() {
           </section>
 
           {/* Trust/Guarantee Section */}
-          <section className="py-20 px-4 bg-white">
+          <section className="py-12 px-4 bg-white">
             <div className="max-w-6xl mx-auto text-center">
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                className="bg-gradient-to-r from-black to-gray-800 rounded-2xl p-8 md:p-12 text-white"
+                className="bg-gradient-to-r from-black to-gray-800 rounded-xl p-6 md:p-8 text-white"
               >
-                <h2 className="text-3xl md:text-4xl font-bold mb-4 text-[#fce4a6]">Professional & Reliable</h2>
-                <p className="text-white/90 text-lg mb-6">
+                <h2 className="text-2xl md:text-3xl font-bold mb-3 text-[#fce4a6]">Professional & Reliable</h2>
+                <p className="text-white/90 text-base mb-4">
                   Professional team with 50+ successful corporate events hosted in Toronto. Fully insured & licensed.
                 </p>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6">
                   <div className="text-center">
-                    <div className="text-3xl font-bold text-[#fce4a6]">50+</div>
-                    <div className="text-white/80">Corporate Events</div>
+                    <div className="text-2xl font-bold text-[#fce4a6]">50+</div>
+                    <div className="text-white/80 text-sm">Corporate Events</div>
                   </div>
                   <div className="text-center">
-                    <div className="text-3xl font-bold text-[#fce4a6]">100%</div>
-                    <div className="text-white/80">Satisfaction Rate</div>
+                    <div className="text-2xl font-bold text-[#fce4a6]">100%</div>
+                    <div className="text-white/80 text-sm">Satisfaction Rate</div>
                   </div>
                   <div className="text-center">
-                    <div className="text-3xl font-bold text-[#fce4a6]">24/7</div>
-                    <div className="text-white/80">Support Available</div>
+                    <div className="text-2xl font-bold text-[#fce4a6]">24/7</div>
+                    <div className="text-white/80 text-sm">Support Available</div>
                   </div>
                 </div>
               </motion.div>
@@ -352,22 +365,22 @@ export default function Corporate() {
           </section>
 
           {/* Final CTA Section */}
-          <section className="py-20 px-4 bg-black">
+          <section className="py-12 px-4 bg-black">
             <div className="max-w-4xl mx-auto text-center">
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
               >
-                <h2 className="text-4xl font-bold mb-4 text-[#fce4a6]">Ready to Transform Your Corporate Event?</h2>
-                <p className="text-white/90 text-lg mb-8">
+                <h2 className="text-3xl font-bold mb-3 text-[#fce4a6]">Ready to Transform Your Corporate Event?</h2>
+                <p className="text-white/90 text-base mb-6">
                   Get instant pricing and availability for your next corporate event
                 </p>
                 <motion.button
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                   onClick={() => setShowForm(true)}
-                  className="bg-[#fce4a6] text-black px-8 py-4 rounded-full font-bold text-lg shadow-lg hover:shadow-xl transition-all group"
+                  className="bg-[#fce4a6] text-black px-6 py-3 rounded-full font-bold text-base shadow-lg hover:shadow-xl transition-all group"
                 >
                   Book Now
                   <FiArrowRight className="inline ml-2 group-hover:translate-x-1 transition-transform" />

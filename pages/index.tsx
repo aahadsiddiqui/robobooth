@@ -7,6 +7,7 @@ import confetti from 'canvas-confetti'
 import { ImageTrailHero } from '../components/ImageTrailHero'
 import ScrollingTestimonials from '../components/ScrollingTestimonials'
 import CornerNav from '../components/CornerNav'
+import { FiPhone } from 'react-icons/fi'
 
 type LeadFormData = {
   name: string
@@ -46,6 +47,20 @@ export default function Home() {
         <meta name="twitter:description" content="Toronto's #1 robot photobooth & 360 photo booth rental. Interactive robotic photo booth experience for weddings, corporate events, parties." />
         <link rel="canonical" href="https://robobooth.ca" />
       </Head>
+
+      {/* Phone Number Header */}
+      <div className="fixed top-0 left-0 right-0 z-50 bg-black/90 backdrop-blur-sm border-b border-[#fce4a6]/20">
+        <div className="max-w-6xl mx-auto px-4 py-2 flex justify-center items-center">
+          <a 
+            href="tel:289-301-4039" 
+            className="text-[#fce4a6] font-bold text-lg hover:text-white transition-colors flex items-center gap-2"
+          >
+            <FiPhone className="w-5 h-5" />
+            Call Now: 289-301-4039
+          </a>
+        </div>
+      </div>
+
       <CornerNav active={navActive} setActive={setNavActive} />
 
       {/* Hero Section */}
