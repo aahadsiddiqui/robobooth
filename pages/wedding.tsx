@@ -38,7 +38,7 @@ export default function Wedding() {
   const { trackLead, trackFormSubmission, trackContactClick, trackVideoView, trackBookingInquiry, trackPhoneClick } = useMetaPixel()
 
   useEffect(() => {
-    const timer = setTimeout(() => setShowLeadModal(true), 5000)
+    const timer = setTimeout(() => setShowLeadModal(true), 30000)
     return () => clearTimeout(timer)
   }, [])
 
@@ -226,47 +226,30 @@ export default function Wedding() {
               >
                 <h2 className="text-lg md:text-2xl lg:text-3xl font-black mb-3 lg:mb-4 text-black">Wedding Robot Photobooth in Action</h2>
               </motion.div>
-              <div className="flex justify-center gap-4">
-                <motion.div
-                  initial={{ opacity: 0, scale: 0.95 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: 0.2 }}
-                  className="relative rounded-xl overflow-hidden shadow-xl w-1/3"
-                >
-                  <video
+                            <div className="flex justify-center -mx-8">
+              <motion.div
+                initial={{ opacity: 0, scale: 0.95 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.2 }}
+                  className="relative w-screen"
+              >
+                <video
                     className="w-full h-auto max-h-64"
-                    autoPlay
-                    loop
-                    muted
-                    playsInline
+                  autoPlay
+                  loop
+                  muted
+                  playsInline
                     controls={false}
+                    preload="auto"
+                    disablePictureInPicture
+                    disableRemotePlayback
                     onPlay={() => trackVideoView('Wedding Robot Photobooth')}
-                  >
-                    <source src="/videos/Wedding.mov" type="video/mp4" />
-                    Your browser does not support the video tag.
-                  </video>
-                </motion.div>
-                <motion.div
-                  initial={{ opacity: 0, scale: 0.95 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: 0.3 }}
-                  className="relative rounded-xl overflow-hidden shadow-xl w-1/3"
                 >
-                  <video
-                    className="w-full h-auto max-h-64"
-                    autoPlay
-                    loop
-                    muted
-                    playsInline
-                    controls={false}
-                    onPlay={() => trackVideoView('Wedding Robot Photobooth 2')}
-                  >
-                    <source src="/videos/wedding2.mov" type="video/mp4" />
-                    Your browser does not support the video tag.
-                  </video>
-                </motion.div>
+                  <source src="/videos/Wedding.mov" type="video/mp4" />
+                  Your browser does not support the video tag.
+                </video>
+              </motion.div>
               </div>
             </div>
           </section>
