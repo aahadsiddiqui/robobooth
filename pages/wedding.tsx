@@ -24,8 +24,10 @@ export default function Wedding() {
   const [showLookbook, setShowLookbook] = useState(false)
   const [showLeadModal, setShowLeadModal] = useState(false)
   const [leadForm, setLeadForm] = useState({
+    firstName: '',
     email: '',
     phone: '',
+    eventDate: '',
     eventType: 'Wedding'
   })
   const [leadSubmitting, setLeadSubmitting] = useState(false)
@@ -82,7 +84,10 @@ export default function Wedding() {
       trackLead('Wedding Lead Modal', 'Toronto')
       
       const formData = new FormData()
+      formData.append('first-name', leadForm.firstName)
       formData.append('phone-number', leadForm.phone)
+      formData.append('email', leadForm.email)
+      formData.append('event-date', leadForm.eventDate)
       formData.append('event-type', 'Wedding')
       formData.append('_replyto', leadForm.email)
       const response = await fetch('https://formspree.io/f/xkgoedyp', {
@@ -137,7 +142,7 @@ export default function Wedding() {
           </div>
 
           {/* Hero Section */}
-          <section className="relative h-1/3 bg-black flex items-center justify-center overflow-hidden pt-16">
+          <section className="relative h-1/3 bg-black flex items-center justify-center overflow-hidden pt-12">
             {/* Background Video/Image */}
             <div className="absolute inset-0 z-0">
               <div className="absolute inset-0 bg-gradient-to-b from-black/50 to-black/80"></div>
@@ -167,7 +172,7 @@ export default function Wedding() {
                       whileTap={{ scale: 0.95 }}
                       onClick={() => {
                         trackBookingInquiry('Wedding', 'Toronto')
-                        setShowForm(true)
+                        setShowLeadModal(true)
                       }}
                       className="bg-[#fce4a6] text-black px-5 py-2 lg:px-6 lg:py-3 rounded-full font-bold text-sm lg:text-base shadow-lg hover:shadow-xl transition-all group"
                     >
@@ -182,13 +187,13 @@ export default function Wedding() {
                   initial={{ opacity: 0, x: 30 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ duration: 0.8, delay: 0.2 }}
-                  className="flex-shrink-0 flex items-center justify-center"
+                  className="flex-shrink-0 flex items-center justify-center w-1/3"
                 >
                   <div className="relative">
                     <img
                       src="/images/IMG_0955.JPEG"
                       alt="Robot Photobooth at Wedding"
-                      className="w-28 h-auto md:w-36 md:h-auto lg:w-44 lg:h-auto object-contain rounded-xl shadow-2xl"
+                      className="w-full h-auto max-h-64 object-contain rounded-xl shadow-2xl"
                     />
                   </div>
                 </motion.div>
@@ -197,14 +202,14 @@ export default function Wedding() {
           </section>
 
           {/* Scrolling Marquee */}
-          <section className="bg-black">
-            <div className="overflow-hidden py-3">
+          <section className="bg-black border-b border-[#fce4a6]/20">
+            <div className="overflow-hidden py-2">
               <div className="flex animate-marquee whitespace-nowrap">
-                <div className="flex items-center gap-8">
-                  <span className="text-lg md:text-2xl lg:text-3xl font-black text-[#fce4a6]">🎉 Mention "WeddingRobo" on call for a 15% Discount off Bookings 🎉</span>
-                  <span className="text-lg md:text-2xl lg:text-3xl font-black text-[#fce4a6]">🎉 Mention "WeddingRobo" on call for a 15% Discount off Bookings 🎉</span>
-                  <span className="text-lg md:text-2xl lg:text-3xl font-black text-[#fce4a6]">🎉 Mention "WeddingRobo" on call for a 15% Discount off Bookings 🎉</span>
-                  <span className="text-lg md:text-2xl lg:text-3xl font-black text-[#fce4a6]">🎉 Mention "WeddingRobo" on call for a 15% Discount off Bookings 🎉</span>
+                <div className="flex items-center gap-2">
+                  <span className="text-xs font-black text-[#fce4a6]">🎉 Mention "WeddingRobo" for 15% Discount 🎉</span>
+                  <span className="text-xs font-black text-[#fce4a6]">🎉 Mention "WeddingRobo" for 15% Discount 🎉</span>
+                  <span className="text-xs font-black text-[#fce4a6]">🎉 Mention "WeddingRobo" for 15% Discount 🎉</span>
+                  <span className="text-xs font-black text-[#fce4a6]">🎉 Mention "WeddingRobo" for 15% Discount 🎉</span>
                 </div>
               </div>
             </div>
@@ -235,6 +240,7 @@ export default function Wedding() {
                     loop
                     muted
                     playsInline
+                    controls={false}
                     onPlay={() => trackVideoView('Wedding Robot Photobooth')}
                   >
                     <source src="/videos/Wedding.mov" type="video/mp4" />
@@ -254,6 +260,7 @@ export default function Wedding() {
                     loop
                     muted
                     playsInline
+                    controls={false}
                     onPlay={() => trackVideoView('Wedding Robot Photobooth 2')}
                   >
                     <source src="/videos/wedding2.mov" type="video/mp4" />
@@ -293,6 +300,32 @@ export default function Wedding() {
                   </motion.div>
                 ))}
               </div>
+            </div>
+          </section>
+
+          {/* Call Now CTA Section */}
+          <section className="py-8 px-4 bg-black">
+            <div className="max-w-4xl mx-auto text-center">
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+              >
+                <h2 className="text-lg md:text-xl font-bold mb-3 text-[#fce4a6]">Ready to Make Your Wedding Unforgettable?</h2>
+                <p className="text-white/90 text-sm mb-4">
+                  Call us now to discuss your special day and get instant pricing
+                </p>
+                <motion.a
+                  href="tel:289-301-4039"
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  onClick={() => trackPhoneClick('Wedding CTA Section', 'Toronto')}
+                  className="inline-flex items-center gap-3 bg-[#fce4a6] text-black px-6 py-3 rounded-full font-bold text-base shadow-lg hover:shadow-xl transition-all group"
+                >
+                  <FiPhone className="w-5 h-5" />
+                  Call Now: 289-301-4039
+                </motion.a>
+              </motion.div>
             </div>
           </section>
 
@@ -353,6 +386,61 @@ export default function Wedding() {
                     </div>
                   </motion.div>
                 ))}
+              </div>
+            </div>
+          </section>
+
+          {/* Image Gallery Section */}
+          <section className="py-4 px-4 bg-white">
+            <div className="max-w-6xl mx-auto">
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                className="text-center mb-4"
+              >
+                <h2 className="text-lg md:text-2xl lg:text-3xl font-black mb-3 lg:mb-4 text-black">Wedding Robot Photobooth Gallery</h2>
+              </motion.div>
+              <div className="flex justify-center gap-4">
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: 0.2 }}
+                  className="relative rounded-xl overflow-hidden shadow-xl w-1/3"
+                >
+                  <img
+                    src="/images/wedding1.jpg"
+                    alt="Wedding Robot Photobooth"
+                    className="w-full h-auto max-h-64 object-cover"
+                  />
+                </motion.div>
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: 0.3 }}
+                  className="relative rounded-xl overflow-hidden shadow-xl w-1/3"
+                >
+                  <img
+                    src="/images/robo2.jpg"
+                    alt="Robot Photobooth"
+                    className="w-full h-auto max-h-64 object-cover"
+                  />
+                </motion.div>
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: 0.4 }}
+                  className="relative rounded-xl overflow-hidden shadow-xl w-1/3"
+                >
+                  <img
+                    src="/images/corporate3.png"
+                    alt="Corporate Robot Photobooth"
+                    className="w-full h-auto max-h-64 object-cover"
+                  />
+                </motion.div>
               </div>
             </div>
           </section>
@@ -486,7 +574,7 @@ export default function Wedding() {
                   whileTap={{ scale: 0.95 }}
                   onClick={() => {
                     trackBookingInquiry('Wedding', 'Toronto')
-                    setShowForm(true)
+                    setShowLeadModal(true)
                   }}
                   className="bg-[#fce4a6] text-black px-6 py-3 rounded-full font-bold text-base shadow-lg hover:shadow-xl transition-all group"
                 >
@@ -520,6 +608,18 @@ export default function Wedding() {
             ) : (
               <form onSubmit={handleLeadSubmit} className="space-y-4">
                 <div>
+                  <label className="block text-sm font-medium text-black mb-1">First Name *</label>
+                  <input
+                    type="text"
+                    name="firstName"
+                    value={leadForm.firstName}
+                    onChange={handleLeadInput}
+                    required
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#fce4a6] focus:border-transparent"
+                    placeholder="Your first name"
+                  />
+                </div>
+                <div>
                   <label className="block text-sm font-medium text-black mb-1">Phone Number *</label>
                   <input
                     type="tel"
@@ -541,6 +641,17 @@ export default function Wedding() {
                     required
                     className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#fce4a6] focus:border-transparent"
                     placeholder="you@email.com"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-black mb-1">Date of Event *</label>
+                  <input
+                    type="date"
+                    name="eventDate"
+                    value={leadForm.eventDate}
+                    onChange={handleLeadInput}
+                    required
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#fce4a6] focus:border-transparent"
                   />
                 </div>
                 <button
