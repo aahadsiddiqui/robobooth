@@ -201,20 +201,6 @@ export default function Corporate() {
             </div>
           </section>
 
-          {/* Scrolling Marquee */}
-          <section className="bg-black border-b border-[#fce4a6]/20">
-            <div className="overflow-hidden py-2">
-              <div className="flex animate-marquee whitespace-nowrap">
-                <div className="flex items-center gap-2">
-                  <span className="text-xs font-black text-[#fce4a6]">🎉 Mention "RoboCorp" for 15% Discount 🎉</span>
-                  <span className="text-xs font-black text-[#fce4a6]">🎉 Mention "RoboCorp" for 15% Discount 🎉</span>
-                  <span className="text-xs font-black text-[#fce4a6]">🎉 Mention "RoboCorp" for 15% Discount 🎉</span>
-                  <span className="text-xs font-black text-[#fce4a6]">🎉 Mention "RoboCorp" for 15% Discount 🎉</span>
-                </div>
-              </div>
-            </div>
-          </section>
-
           {/* Video Section */}
           <section className="py-4 px-4 bg-white">
             <div className="max-w-6xl mx-auto">
