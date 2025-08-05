@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import Head from 'next/head'
-import Image from 'next/image'
 import { motion, useScroll, useTransform } from 'framer-motion'
-import { FiArrowRight, FiCheck, FiDownload, FiMail, FiPhone, FiCalendar, FiUsers } from 'react-icons/fi'
+import { FiArrowRight, FiCheck, FiDownload, FiMail, FiPhone, FiCalendar, FiUsers, FiChevronDown, FiChevronUp } from 'react-icons/fi'
 import { useRouter } from 'next/router'
+import { useMetaPixel } from '../hooks/useMetaPixel'
 
 export default function Corporate() {
   const { scrollY } = useScroll()
@@ -24,21 +24,24 @@ export default function Corporate() {
   const [showLookbook, setShowLookbook] = useState(false)
   const [showLeadModal, setShowLeadModal] = useState(false)
   const [leadForm, setLeadForm] = useState({
+    firstName: '',
     email: '',
     phone: '',
-    eventType: ''
+    eventDate: '',
+    eventType: 'Corporate'
   })
   const [leadSubmitting, setLeadSubmitting] = useState(false)
   const [leadSuccess, setLeadSuccess] = useState(false)
+  const [expandedFaq, setExpandedFaq] = useState<number | null>(null)
 
   const router = useRouter()
+  const { trackLead, trackFormSubmission, trackContactClick, trackVideoView, trackBookingInquiry, trackPhoneClick } = useMetaPixel()
 
   useEffect(() => {
-    const timer = setTimeout(() => setShowLeadModal(true), 5000)
+    const timer = setTimeout(() => setShowLeadModal(true), 30000)
     return () => clearTimeout(timer)
   }, [])
 
-  // Disable scroll when modal is open
   useEffect(() => {
     if (showLeadModal) {
       document.body.classList.add('overflow-hidden')
@@ -57,6 +60,8 @@ export default function Corporate() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
+    // Track form submission
+    trackFormSubmission('Corporate Inquiry', 'Toronto')
     // Handle form submission
     console.log('Form submitted:', formData)
   }
@@ -75,9 +80,15 @@ export default function Corporate() {
     e.preventDefault()
     setLeadSubmitting(true)
     try {
+      // Track lead generation
+      trackLead('Corporate Lead Modal', 'Toronto')
+      
       const formData = new FormData()
+      formData.append('first-name', leadForm.firstName)
       formData.append('phone-number', leadForm.phone)
-      formData.append('event-type', leadForm.eventType)
+      formData.append('email', leadForm.email)
+      formData.append('event-date', leadForm.eventDate)
+      formData.append('event-type', 'Corporate')
       formData.append('_replyto', leadForm.email)
       const response = await fetch('https://formspree.io/f/xkgoedyp', {
         method: 'POST',
@@ -103,9 +114,17 @@ export default function Corporate() {
       <div className={showLeadModal ? 'blur-sm pointer-events-none select-none' : ''}>
         <div className="min-h-screen overflow-x-hidden">
           <Head>
-            <title>Corporate Events - Robo Booth | Toronto's Premier Robot Photo Booth</title>
-            <meta name="description" content="Toronto's only robot photobooth & 360 photo booth for corporate events. Make your event unforgettable with interactive photo booths that wow your guests and amplify your brand reach instantly." />
-            <meta name="keywords" content="corporate photo booth, robot photo booth, Toronto, corporate events, trade shows, conferences, staff parties" />
+            <title>Corporate Photobooth Rental Toronto GTA | Robot Photobooth & 360 Photo Booth for Corporate Events</title>
+            <meta name="description" content="Toronto's premier corporate photobooth rental featuring robot photobooth & 360 photo booth. Serving Ajax, Oshawa, Whitby, Markham, Vaughan, Courtice, Etobicoke, King City, Pickering, North York, Bowmanville, Mississauga, Richmond Hill, East Gwillimbury, Barrie, Whitchurch-Stouffville. Interactive corporate photobooth that elevates your events and creates memorable team experiences." />
+            <meta name="keywords" content="corporate photobooth rental, corporate robot photobooth, corporate 360 photo booth, Toronto corporate photobooth, GTA corporate photobooth, Ajax corporate photobooth, Oshawa corporate photobooth, Whitby corporate photobooth, Markham corporate photobooth, Vaughan corporate photobooth, Courtice corporate photobooth, Etobicoke corporate photobooth, King City corporate photobooth, Pickering corporate photobooth, North York corporate photobooth, Bowmanville corporate photobooth, Mississauga corporate photobooth, Richmond Hill corporate photobooth, East Gwillimbury corporate photobooth, Barrie corporate photobooth, Whitchurch-Stouffville corporate photobooth, interactive corporate photobooth, robotic corporate photobooth, 360 degree corporate photobooth, corporate event photobooth, team building photobooth" />
+            <meta property="og:title" content="Corporate Photobooth Rental Toronto GTA | Robot Photobooth & 360 Photo Booth for Corporate Events" />
+            <meta property="og:description" content="Toronto's premier corporate photobooth rental featuring robot photobooth & 360 photo booth. Interactive corporate photobooth that elevates your events and creates memorable team experiences." />
+            <meta property="og:type" content="website" />
+            <meta property="og:url" content="https://robobooth.ca/corporate" />
+            <meta name="twitter:card" content="summary_large_image" />
+            <meta name="twitter:title" content="Corporate Photobooth Rental Toronto GTA | Robot Photobooth & 360 Photo Booth for Corporate Events" />
+            <meta name="twitter:description" content="Toronto's premier corporate photobooth rental featuring robot photobooth & 360 photo booth. Interactive corporate photobooth that elevates your events and creates memorable team experiences." />
+            <link rel="canonical" href="https://robobooth.ca/corporate" />
           </Head>
 
           {/* Phone Number Header */}
@@ -114,6 +133,7 @@ export default function Corporate() {
               <a 
                 href="tel:289-301-4039" 
                 className="text-[#fce4a6] font-bold text-lg hover:text-white transition-colors flex items-center gap-2"
+                onClick={() => trackPhoneClick('Corporate Page Header', 'Toronto')}
               >
                 <FiPhone className="w-5 h-5" />
                 Call Now: 289-301-4039
@@ -122,7 +142,7 @@ export default function Corporate() {
           </div>
 
           {/* Hero Section */}
-          <section className="relative h-1/3 bg-black flex items-center justify-center overflow-hidden pt-16">
+          <section className="relative h-1/3 bg-black flex items-center justify-center overflow-hidden pt-12">
             {/* Background Video/Image */}
             <div className="absolute inset-0 z-0">
               <div className="absolute inset-0 bg-gradient-to-b from-black/50 to-black/80"></div>
@@ -130,46 +150,211 @@ export default function Corporate() {
             </div>
 
             {/* Hero Content */}
-            <div className="relative z-10 max-w-6xl mx-auto px-4 text-center">
+            <div className="relative z-10 max-w-6xl mx-auto px-4 w-full h-full flex items-center">
+              <div className="flex flex-row items-center justify-between w-full gap-6 lg:gap-8">
+                {/* Left Side - Text Content */}
               <motion.div
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
+                  initial={{ opacity: 0, x: -30 }}
+                  animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.8 }}
+                  className="flex-1 text-left"
               >
-                <h1 className="text-3xl md:text-5xl font-black leading-tight text-white mb-4">
-                  Toronto's First <span className="text-[#fce4a6]">Robot Photobooth</span> & 360 Photo Booth for Corporate Events
+                  <h1 className="text-lg md:text-2xl lg:text-3xl font-black leading-tight text-white mb-3 lg:mb-4">
+                    Toronto's Premier <span className="text-[#fce4a6]">Robot Photobooth</span> & 360 Photo Booth for Corporate Events
                 </h1>
-                <p className="text-base md:text-lg text-white/90 mb-6 max-w-2xl mx-auto">
-                  Make your event unforgettable with interactive photo booths that wow your guests and amplify your brand reach instantly.
+                  <p className="text-sm md:text-base lg:text-lg text-white/90 mb-4 lg:mb-6 max-w-sm md:max-w-md lg:max-w-lg">
+                    Elevate your corporate events with interactive robot photobooth and 360 photo booth that engage your team and create memorable experiences.
                 </p>
-                
                 {/* CTA Buttons */}
-                <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-8">
+                  <div className="flex flex-col sm:flex-row gap-3 lg:gap-4 justify-start items-start mb-4 lg:mb-6">
                   <motion.button
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
-                    onClick={() => setShowForm(true)}
-                    className="bg-[#fce4a6] text-black px-6 py-3 rounded-full font-bold text-base shadow-lg hover:shadow-xl transition-all group"
+                      onClick={() => {
+                        trackBookingInquiry('Corporate', 'Toronto')
+                        setShowLeadModal(true)
+                      }}
+                      className="bg-[#fce4a6] text-black px-5 py-2 lg:px-6 lg:py-3 rounded-full font-bold text-sm lg:text-base shadow-lg hover:shadow-xl transition-all group"
                   >
                     Book Now
                     <FiArrowRight className="inline ml-2 group-hover:translate-x-1 transition-transform" />
                   </motion.button>
                 </div>
               </motion.div>
-            </div>
 
-            {/* Scroll Indicator */}
-            <motion.div
-              animate={{ y: [0, 10, 0] }}
-              transition={{ duration: 2, repeat: Infinity }}
-              className="absolute bottom-4 left-1/2 -translate-x-1/2 text-[#fce4a6]"
-            >
-              <FiArrowRight className="w-6 h-6 rotate-90" />
-            </motion.div>
+                {/* Right Side - Image */}
+                <motion.div
+                  initial={{ opacity: 0, x: 30 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.8, delay: 0.2 }}
+                  className="flex-shrink-0 flex items-center justify-center w-1/3"
+                >
+                  <div className="relative">
+                    <img
+                      src="/images/corporate1.JPG"
+                      alt="Robot Photobooth at Corporate Event"
+                      className="w-full h-auto max-h-64 object-contain rounded-xl shadow-2xl"
+                    />
+                  </div>
+                </motion.div>
+              </div>
+            </div>
+          </section>
+
+          {/* Scrolling Marquee */}
+          <section className="bg-black border-b border-[#fce4a6]/20">
+            <div className="overflow-hidden py-2">
+              <div className="flex animate-marquee whitespace-nowrap">
+                <div className="flex items-center gap-2">
+                  <span className="text-xs font-black text-[#fce4a6]">🎉 Mention "RoboCorp" for 15% Discount 🎉</span>
+                  <span className="text-xs font-black text-[#fce4a6]">🎉 Mention "RoboCorp" for 15% Discount 🎉</span>
+                  <span className="text-xs font-black text-[#fce4a6]">🎉 Mention "RoboCorp" for 15% Discount 🎉</span>
+                  <span className="text-xs font-black text-[#fce4a6]">🎉 Mention "RoboCorp" for 15% Discount 🎉</span>
+                </div>
+              </div>
+            </div>
           </section>
 
           {/* Video Section */}
-          <section className="py-12 px-4 bg-white">
+          <section className="py-4 px-4 bg-white">
+            <div className="max-w-6xl mx-auto">
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                className="text-center mb-4"
+              >
+                <h2 className="text-lg md:text-2xl lg:text-3xl font-black mb-3 lg:mb-4 text-black">Corporate Robot Photobooth in Action</h2>
+              </motion.div>
+                            <div className="flex justify-center -mx-8">
+              <motion.div
+                initial={{ opacity: 0, scale: 0.95 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.2 }}
+                  className="relative w-screen"
+              >
+                                  <video
+                    className="w-full h-auto max-h-64"
+                    autoPlay
+                    loop
+                    muted
+                    playsInline
+                    controls={false}
+                    preload="auto"
+                    disablePictureInPicture
+                    disableRemotePlayback
+                    webkit-playsinline="true"
+                    onPlay={() => trackVideoView('Corporate Robot Photobooth')}
+                  >
+                  <source src="/videos/Corporate.mov" type="video/mp4" />
+                  Your browser does not support the video tag.
+                </video>
+              </motion.div>
+              </div>
+            </div>
+          </section>
+
+          {/* Key Benefits Section */}
+          <section className="py-4 px-4 bg-white">
+            <div className="max-w-6xl mx-auto">
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                className="text-center mb-6"
+              >
+                <h2 className="text-lg md:text-2xl lg:text-3xl font-black mb-3 lg:mb-4 text-black">Why Companies Choose Our Robot Photobooth & 360 Photo Booth</h2>
+                <p className="text-sm md:text-base lg:text-lg text-black/80 max-w-2xl mx-auto">
+                  Professional, engaging, and innovative robot photobooth and 360 photo booth experiences that elevate your corporate events across the GTA & surrounding areas!
+                </p>
+              </motion.div>
+              <div className="grid grid-cols-3 gap-2 md:gap-4">
+                {corporateBenefits.map((benefit, index) => (
+                  <motion.div
+                    key={index}
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: index * 0.1 }}
+                    className="bg-black p-2 md:p-4 rounded-xl shadow-lg border border-[#fce4a6]/20 hover:shadow-xl transition-all text-center"
+                  >
+                    <div className="text-lg md:text-2xl mb-1 md:mb-2 text-[#fce4a6]">{benefit.icon}</div>
+                    <h3 className="text-xs md:text-sm font-bold text-[#fce4a6]">{benefit.title}</h3>
+                  </motion.div>
+                ))}
+              </div>
+            </div>
+          </section>
+
+          {/* Second Video Section */}
+          <section className="py-4 px-4 bg-white">
+            <div className="max-w-6xl mx-auto">
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                className="text-center mb-4"
+              >
+                <h2 className="text-lg md:text-2xl lg:text-3xl font-black mb-3 lg:mb-4 text-black">Corporate Robot Photobooth Experience</h2>
+              </motion.div>
+              <div className="flex justify-center -mx-8">
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: 0.2 }}
+                  className="relative w-screen"
+                >
+                  <video
+                    className="w-full h-auto max-h-64"
+                    autoPlay
+                    loop
+                    muted
+                    playsInline
+                    controls={false}
+                    preload="auto"
+                    disablePictureInPicture
+                    disableRemotePlayback
+                    webkit-playsinline="true"
+                    onPlay={() => trackVideoView('Corporate Robot Photobooth Experience')}
+                  >
+                    <source src="/videos/corporate2.mov" type="video/mp4" />
+                    Your browser does not support the video tag.
+                  </video>
+                </motion.div>
+              </div>
+            </div>
+          </section>
+
+          {/* Call Now CTA Section */}
+          <section className="py-8 px-4 bg-black">
+            <div className="max-w-4xl mx-auto text-center">
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+              >
+                <h2 className="text-lg md:text-xl font-bold mb-3 text-[#fce4a6]">Ready to Elevate Your Corporate Event?</h2>
+                <p className="text-white/90 text-sm mb-4">
+                  Call us now to discuss your event and get instant pricing
+                </p>
+                <motion.a
+                  href="tel:289-301-4039"
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  onClick={() => trackPhoneClick('Corporate CTA Section', 'Toronto')}
+                  className="inline-flex items-center gap-3 bg-[#fce4a6] text-black px-6 py-3 rounded-full font-bold text-base shadow-lg hover:shadow-xl transition-all group"
+                >
+                  <FiPhone className="w-5 h-5" />
+                  Call Now: 289-301-4039
+                </motion.a>
+              </motion.div>
+            </div>
+          </section>
+
+          {/* Social Proof Section */}
+          <section className="py-8 px-4 bg-black">
             <div className="max-w-6xl mx-auto">
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
@@ -177,125 +362,139 @@ export default function Corporate() {
                 viewport={{ once: true }}
                 className="text-center mb-8"
               >
-                <h2 className="text-3xl md:text-4xl font-bold mb-3 text-black">Robot Photobooth in Action</h2>
-                <p className="text-black/80 text-base max-w-2xl mx-auto">
-                  See how our interactive robot photobooth creates unforgettable moments at corporate events
-                </p>
+                <h2 className="text-lg md:text-2xl lg:text-3xl font-black mb-3 text-[#fce4a6]">Trusted by Toronto's Leading Companies</h2>
+                <p className="text-white/80 text-sm md:text-base mb-4">Companies choose Robo Booth for their most important events</p>
+                
+                {/* Google Rating */}
+                <div className="flex items-center justify-center gap-2 mb-6">
+                  <a 
+                    href="https://g.co/kgs/v9p1CzT" 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-2 text-[#fce4a6] hover:text-white transition-colors"
+                  >
+                    <svg className="w-6 h-6" viewBox="0 0 24 24" fill="currentColor">
+                      <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+                      <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+                      <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
+                      <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
+                    </svg>
+                    <div className="flex items-center gap-1">
+                      <span className="text-yellow-400">★</span>
+                      <span className="text-yellow-400">★</span>
+                      <span className="text-yellow-400">★</span>
+                      <span className="text-yellow-400">★</span>
+                      <span className="text-yellow-400">★</span>
+                    </div>
+                  </a>
+                </div>
               </motion.div>
               
-              <motion.div
-                initial={{ opacity: 0, scale: 0.95 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }}
-                transition={{ delay: 0.2 }}
-                className="relative rounded-xl overflow-hidden shadow-xl max-w-2xl mx-auto"
-              >
-                <video
-                  className="w-full h-auto max-h-64"
-                  controls
-                  autoPlay
-                  muted
-                  loop
-                  playsInline
-                >
-                  <source src="/videos/Corporate.mov" type="video/mp4" />
-                  Your browser does not support the video tag.
-                </video>
-              </motion.div>
-            </div>
-          </section>
-
-          {/* Key Benefits Section */}
-          <section className="py-12 px-4 bg-white">
-            <div className="max-w-6xl mx-auto">
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                className="text-center mb-12"
-              >
-                <h2 className="text-3xl md:text-4xl font-bold mb-3 text-black">Why Corporate Teams Choose Robo Booth</h2>
-                <p className="text-black/80 text-base max-w-2xl mx-auto">
-                  Professional, branded, and unforgettable experiences that elevate your corporate events
-                </p>
-              </motion.div>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {benefits.map((benefit, index) => (
+              {/* Static Testimonial Cards */}
+              <div className="grid grid-cols-3 gap-2 md:gap-4">
+                {corporateTestimonials.map((testimonial, index) => (
                   <motion.div
                     key={index}
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ delay: index * 0.1 }}
-                    className="bg-black p-6 rounded-xl shadow-lg border border-[#fce4a6]/20 hover:shadow-xl transition-all"
+                    className="bg-gradient-to-r from-[#fce4a6] to-[#a49056] p-3 md:p-4 rounded-xl shadow-lg text-center"
                   >
-                    <div className="text-3xl mb-3 text-[#fce4a6]">{benefit.icon}</div>
-                    <h3 className="text-lg font-bold mb-2 text-[#fce4a6]">{benefit.title}</h3>
-                    <p className="text-white/80 text-sm">{benefit.description}</p>
+                    <div className="text-2xl mb-2 text-black">"</div>
+                    <p className="text-black text-xs md:text-sm font-medium mb-3 leading-tight">
+                      {testimonial.text}
+                    </p>
+                    <div className="text-black text-xs font-bold">
+                      - {testimonial.title}, {testimonial.company}
+                    </div>
                   </motion.div>
                 ))}
               </div>
             </div>
           </section>
 
-          {/* Social Proof Section */}
-          <section className="py-12 px-4 bg-black">
+          {/* Image Gallery Section */}
+          <section className="py-4 px-4 bg-white">
             <div className="max-w-6xl mx-auto">
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                className="text-center mb-12"
+                className="text-center mb-4"
               >
-                <h2 className="text-3xl font-bold mb-3 text-[#fce4a6]">Trusted by Toronto's Corporate Teams</h2>
-                <p className="text-white/80 text-base">Leading companies choose Robo Booth for their events</p>
+                <h2 className="text-lg md:text-2xl lg:text-3xl font-black mb-3 lg:mb-4 text-black">Corporate Robot Photobooth Gallery</h2>
               </motion.div>
-
-              {/* Animated Logo Marquee */}
-              <div className="overflow-hidden w-full mb-12">
-                <div className="flex animate-marquee whitespace-nowrap gap-16 items-center">
-                  {companyLogos.concat(companyLogos).map((logo, idx) => (
-                    <div key={idx} className="flex-shrink-0 flex items-center justify-center h-20 w-40 bg-white rounded-xl shadow-lg mx-2 p-3">
-                      <Image src={logo.src} alt={logo.alt} width={140} height={70} className="object-contain h-16 w-auto grayscale hover:grayscale-0 transition duration-300" />
-                    </div>
-                  ))}
-                </div>
+              <div className="flex justify-center gap-4">
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: 0.2 }}
+                  className="relative w-1/3"
+                >
+                  <img
+                    src="/images/corporate1.JPG"
+                    alt="Corporate Robot Photobooth"
+                    className="w-full h-64 object-cover"
+                  />
+                </motion.div>
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: 0.3 }}
+                  className="relative w-1/3"
+                >
+                  <img
+                    src="/images/corporate2.jpg"
+                    alt="Corporate Event Photobooth"
+                    className="w-full h-64 object-cover"
+                  />
+                </motion.div>
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: 0.4 }}
+                  className="relative w-1/3"
+                >
+                  <img
+                    src="/images/corporate3.png"
+                    alt="Corporate Robot Photobooth"
+                    className="w-full h-64 object-cover"
+                  />
+                </motion.div>
               </div>
-
-              {/* Rotating Testimonials Carousel */}
-              <TestimonialCarousel />
             </div>
           </section>
 
           {/* Package Highlights */}
-          <section className="py-12 px-4 bg-white">
+          <section className="py-4 px-4 bg-white">
             <div className="max-w-6xl mx-auto">
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                className="text-center mb-12"
+                className="text-center mb-6"
               >
-                <h2 className="text-3xl font-bold mb-3 text-black">Corporate Packages Include</h2>
-                <p className="text-black/80 text-base">Everything you need for a successful corporate event</p>
+                <h2 className="text-lg md:text-2xl lg:text-3xl font-black mb-3 text-black">Corporate Package Includes</h2>
+                <p className="text-sm md:text-base text-black/80">Everything you need for a successful corporate event</p>
               </motion.div>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                {packageFeatures.map((feature, index) => (
+              <div className="grid grid-cols-3 gap-2 md:gap-4">
+                {corporatePackageFeatures.map((feature, index) => (
                   <motion.div
                     key={index}
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ delay: index * 0.1 }}
-                    className="bg-black p-4 rounded-xl shadow-lg border border-[#fce4a6]/20"
+                    className="bg-black p-2 md:p-4 rounded-xl shadow-lg border border-[#fce4a6]/20 text-center"
                   >
                     <div className="text-[#fce4a6] mb-2">
-                      <FiCheck className="w-5 h-5" />
+                      <FiCheck className="w-4 h-4 md:w-5 md:h-5 mx-auto" />
                     </div>
-                    <h3 className="text-[#fce4a6] font-bold mb-1 text-sm">{feature.title}</h3>
-                    <p className="text-white/80 text-xs">{feature.description}</p>
+                    <h3 className="text-[#fce4a6] font-bold text-xs md:text-sm">{feature.title}</h3>
                   </motion.div>
                 ))}
               </div>
@@ -303,30 +502,48 @@ export default function Corporate() {
           </section>
 
           {/* FAQ Section */}
-          <section className="py-12 px-4 bg-black">
+          <section className="py-8 px-4 bg-black">
             <div className="max-w-4xl mx-auto">
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                className="text-center mb-12"
+                className="text-center mb-8"
               >
-                <h2 className="text-3xl font-bold mb-3 text-[#fce4a6]">Frequently Asked Questions</h2>
-                <p className="text-white/80 text-base">Everything you need to know about our corporate services</p>
+                <h2 className="text-lg md:text-2xl lg:text-3xl font-black mb-3 text-[#fce4a6]">Frequently Asked Questions</h2>
+                <p className="text-white/80 text-sm md:text-base">Everything you need to know about our corporate services</p>
               </motion.div>
-
-              <div className="space-y-4">
-                {faqs.map((faq, index) => (
+              <div className="grid grid-cols-3 gap-2 md:gap-4">
+                {corporateFaqs.map((faq, index) => (
                   <motion.div
                     key={index}
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ delay: index * 0.1 }}
-                    className="bg-white/5 p-4 rounded-xl border border-white/10"
+                    className="bg-white/5 p-3 md:p-4 rounded-xl border border-white/10 cursor-pointer"
+                    onClick={() => setExpandedFaq(expandedFaq === index ? null : index)}
                   >
-                    <h3 className="text-lg font-bold mb-2 text-[#fce4a6]">{faq.question}</h3>
-                    <p className="text-white/80 text-sm">{faq.answer}</p>
+                    <div className="flex items-start justify-between min-h-[3rem] relative">
+                      <h3 className="text-sm md:text-base font-bold text-[#fce4a6] flex-1 pr-8 leading-tight">{faq.question}</h3>
+                      <div className="absolute top-1 right-3">
+                        {expandedFaq === index ? (
+                          <FiChevronUp className="text-[#fce4a6] w-4 h-4" />
+                        ) : (
+                          <FiChevronDown className="text-[#fce4a6] w-4 h-4" />
+                        )}
+                      </div>
+                    </div>
+                    {expandedFaq === index && (
+                      <motion.p 
+                        initial={{ opacity: 0, height: 0 }}
+                        animate={{ opacity: 1, height: 'auto' }}
+                        exit={{ opacity: 0, height: 0 }}
+                        className="text-white/80 text-xs"
+                      >
+                        {faq.answer}
+                      </motion.p>
+                    )}
                   </motion.div>
                 ))}
               </div>
@@ -334,30 +551,30 @@ export default function Corporate() {
           </section>
 
           {/* Trust/Guarantee Section */}
-          <section className="py-12 px-4 bg-white">
-            <div className="max-w-6xl mx-auto text-center">
+          <section className="py-8 px-4 bg-white">
+            <div className="max-w-4xl mx-auto text-center">
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                className="bg-gradient-to-r from-black to-gray-800 rounded-xl p-6 md:p-8 text-white"
+                className="bg-gradient-to-r from-black to-gray-800 rounded-xl p-4 md:p-6 text-white"
               >
-                <h2 className="text-2xl md:text-3xl font-bold mb-3 text-[#fce4a6]">Professional & Reliable</h2>
-                <p className="text-white/90 text-base mb-4">
-                  Professional team with 50+ successful corporate events hosted in Toronto. Fully insured & licensed.
+                <h2 className="text-lg md:text-2xl font-bold mb-2 text-[#fce4a6]">Professional & Reliable</h2>
+                <p className="text-white/90 text-sm md:text-base mb-3">
+                  Professional team with 100+ successful corporate events in Toronto. Fully insured & licensed.
                 </p>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6">
+                <div className="grid grid-cols-3 gap-2 md:gap-4 mt-4">
                   <div className="text-center">
-                    <div className="text-2xl font-bold text-[#fce4a6]">50+</div>
-                    <div className="text-white/80 text-sm">Corporate Events</div>
+                    <div className="text-lg md:text-xl font-bold text-[#fce4a6]">100+</div>
+                    <div className="text-white/80 text-xs md:text-sm">Corporate Events</div>
                   </div>
                   <div className="text-center">
-                    <div className="text-2xl font-bold text-[#fce4a6]">100%</div>
-                    <div className="text-white/80 text-sm">Satisfaction Rate</div>
+                    <div className="text-lg md:text-xl font-bold text-[#fce4a6]">100%</div>
+                    <div className="text-white/80 text-xs md:text-sm">Satisfied Clients</div>
                   </div>
                   <div className="text-center">
-                    <div className="text-2xl font-bold text-[#fce4a6]">24/7</div>
-                    <div className="text-white/80 text-sm">Support Available</div>
+                    <div className="text-lg md:text-xl font-bold text-[#fce4a6]">24/7</div>
+                    <div className="text-white/80 text-xs md:text-sm">Support Available</div>
                   </div>
                 </div>
               </motion.div>
@@ -372,14 +589,17 @@ export default function Corporate() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
               >
-                <h2 className="text-3xl font-bold mb-3 text-[#fce4a6]">Ready to Transform Your Corporate Event?</h2>
+                <h2 className="text-3xl font-bold mb-3 text-[#fce4a6]">Ready to Elevate Your Corporate Event?</h2>
                 <p className="text-white/90 text-base mb-6">
-                  Get instant pricing and availability for your next corporate event
+                  Get instant pricing and availability for your event
                 </p>
                 <motion.button
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
-                  onClick={() => setShowForm(true)}
+                  onClick={() => {
+                    trackBookingInquiry('Corporate', 'Toronto')
+                    setShowLeadModal(true)
+                  }}
                   className="bg-[#fce4a6] text-black px-6 py-3 rounded-full font-bold text-base shadow-lg hover:shadow-xl transition-all group"
                 >
                   Book Now
@@ -388,164 +608,6 @@ export default function Corporate() {
               </motion.div>
             </div>
           </section>
-
-          {/* Pricing Form Modal */}
-          {showForm && (
-            <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-50 p-4">
-              <motion.div
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                className="bg-white rounded-2xl p-8 max-w-md w-full max-h-[90vh] overflow-y-auto"
-              >
-                <div className="flex justify-between items-center mb-6">
-                  <h3 className="text-2xl font-bold text-black">Get Corporate Pricing</h3>
-                  <button
-                    onClick={() => setShowForm(false)}
-                    className="text-black/60 hover:text-black text-2xl"
-                  >
-                    ×
-                  </button>
-                </div>
-                
-                <form onSubmit={handleSubmit} className="space-y-4">
-                  <div>
-                    <label className="block text-sm font-medium text-black mb-1">Name *</label>
-                    <input
-                      type="text"
-                      name="name"
-                      value={formData.name}
-                      onChange={handleInputChange}
-                      required
-                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#fce4a6] focus:border-transparent"
-                    />
-                  </div>
-                  
-                  <div>
-                    <label className="block text-sm font-medium text-black mb-1">Company *</label>
-                    <input
-                      type="text"
-                      name="company"
-                      value={formData.company}
-                      onChange={handleInputChange}
-                      required
-                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#fce4a6] focus:border-transparent"
-                    />
-                  </div>
-                  
-                  <div>
-                    <label className="block text-sm font-medium text-black mb-1">Email *</label>
-                    <input
-                      type="email"
-                      name="email"
-                      value={formData.email}
-                      onChange={handleInputChange}
-                      required
-                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#fce4a6] focus:border-transparent"
-                    />
-                  </div>
-                  
-                  <div>
-                    <label className="block text-sm font-medium text-black mb-1">Phone</label>
-                    <input
-                      type="tel"
-                      name="phone"
-                      value={formData.phone}
-                      onChange={handleInputChange}
-                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#fce4a6] focus:border-transparent"
-                    />
-                  </div>
-                  
-                  <div>
-                    <label className="block text-sm font-medium text-black mb-1">Event Date</label>
-                    <input
-                      type="date"
-                      name="eventDate"
-                      value={formData.eventDate}
-                      onChange={handleInputChange}
-                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#fce4a6] focus:border-transparent"
-                    />
-                  </div>
-                  
-                  <div>
-                    <label className="block text-sm font-medium text-black mb-1">Event Type</label>
-                    <select
-                      name="eventType"
-                      value={formData.eventType}
-                      onChange={handleInputChange}
-                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#fce4a6] focus:border-transparent"
-                    >
-                      <option value="">Select Event Type</option>
-                      <option value="conference">Conference</option>
-                      <option value="trade-show">Trade Show</option>
-                      <option value="staff-party">Staff Party</option>
-                      <option value="gala">Gala</option>
-                      <option value="product-launch">Product Launch</option>
-                      <option value="other">Other</option>
-                    </select>
-                  </div>
-                  
-                  <div>
-                    <label className="block text-sm font-medium text-black mb-1">Notes</label>
-                    <textarea
-                      name="notes"
-                      value={formData.notes}
-                      onChange={handleInputChange}
-                      rows={3}
-                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#fce4a6] focus:border-transparent"
-                      placeholder="Tell us about your event..."
-                    />
-                  </div>
-                  
-                  <button
-                    type="submit"
-                    className="w-full bg-[#fce4a6] text-black py-3 rounded-lg font-bold hover:bg-[#a49056] transition-colors"
-                  >
-                    Get Pricing
-                  </button>
-                </form>
-              </motion.div>
-            </div>
-          )}
-
-          {/* Lookbook Download Modal */}
-          {showLookbook && (
-            <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-50 p-4">
-              <motion.div
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                className="bg-white rounded-2xl p-8 max-w-md w-full"
-              >
-                <div className="flex justify-between items-center mb-6">
-                  <h3 className="text-2xl font-bold text-black">Download Corporate Event Lookbook</h3>
-                  <button
-                    onClick={() => setShowLookbook(false)}
-                    className="text-black/60 hover:text-black text-2xl"
-                  >
-                    ×
-                  </button>
-                </div>
-                
-                <form onSubmit={handleLookbookDownload} className="space-y-4">
-                  <div>
-                    <label className="block text-sm font-medium text-black mb-1">Email *</label>
-                    <input
-                      type="email"
-                      required
-                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#fce4a6] focus:border-transparent"
-                    />
-                  </div>
-                  
-                  <button
-                    type="submit"
-                    className="w-full bg-[#fce4a6] text-black py-3 rounded-lg font-bold hover:bg-[#a49056] transition-colors flex items-center justify-center"
-                  >
-                    <FiDownload className="mr-2" />
-                    Download Lookbook
-                  </button>
-                </form>
-              </motion.div>
-            </div>
-          )}
         </div>
       </div>
       {/* Lead Capture Modal */}
@@ -564,11 +626,23 @@ export default function Corporate() {
               ×
             </button>
             <h2 className="text-2xl font-bold text-black mb-4 text-center">Enter your details below!</h2>
-            <p className="text-black/80 mb-6 text-center">Enter your details so we can give you a call and create a customized package for your event.</p>
+            <p className="text-black/80 mb-6 text-center">Enter your details so we can give you a call and create a customized package for your corporate event.</p>
             {leadSuccess ? (
-              <div className="text-green-600 text-center font-bold py-8">Thank you! We’ll be in touch soon.</div>
+              <div className="text-green-600 text-center font-bold py-8">Thank you! We'll be in touch soon.</div>
             ) : (
               <form onSubmit={handleLeadSubmit} className="space-y-4">
+                <div>
+                  <label className="block text-sm font-medium text-black mb-1">First Name *</label>
+                  <input
+                    type="text"
+                    name="firstName"
+                    value={leadForm.firstName}
+                    onChange={handleLeadInput}
+                    required
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#fce4a6] focus:border-transparent"
+                    placeholder="Your first name"
+                  />
+                </div>
                 <div>
                   <label className="block text-sm font-medium text-black mb-1">Phone Number *</label>
                   <input
@@ -582,24 +656,6 @@ export default function Corporate() {
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-black mb-1">Type of Event *</label>
-                  <select
-                    name="eventType"
-                    value={leadForm.eventType}
-                    onChange={handleLeadInput}
-                    required
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#fce4a6] focus:border-transparent"
-                  >
-                    <option value="">Select Event Type</option>
-                    <option value="conference">Conference</option>
-                    <option value="trade-show">Trade Show</option>
-                    <option value="staff-party">Staff Party</option>
-                    <option value="gala">Gala</option>
-                    <option value="product-launch">Product Launch</option>
-                    <option value="other">Other</option>
-                  </select>
-                </div>
-                <div>
                   <label className="block text-sm font-medium text-black mb-1">Email *</label>
                   <input
                     type="email"
@@ -609,6 +665,17 @@ export default function Corporate() {
                     required
                     className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#fce4a6] focus:border-transparent"
                     placeholder="you@email.com"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-black mb-1">Date of Event *</label>
+                  <input
+                    type="date"
+                    name="eventDate"
+                    value={leadForm.eventDate}
+                    onChange={handleLeadInput}
+                    required
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#fce4a6] focus:border-transparent"
                   />
                 </div>
                 <button
@@ -623,90 +690,79 @@ export default function Corporate() {
           </motion.div>
         </div>
       )}
+      {/* Sticky Book Now Button */}
+      {!showLeadModal && (
+        <button
+          onClick={() => setShowLeadModal(true)}
+          className="fixed bottom-6 left-6 z-40 bg-[#fce4a6] text-black font-bold px-6 py-4 rounded-full shadow-xl hover:bg-[#a49056] transition-all text-lg"
+        >
+          Book Now
+        </button>
+      )}
     </>
   )
 }
 
-const benefits = [
+const corporateBenefits = [
   {
     icon: '🏢',
-    title: 'Fully Branded for Your Company',
-    description: 'Custom logos, colors, and messaging integrated throughout the experience to amplify your brand.'
+    title: 'Professional & Corporate',
+    description: 'Elegant photo experiences that match your corporate brand and event theme.'
   },
   {
-    icon: '📱',
-    title: 'Instant Social Sharing + Lead Capture',
-    description: 'Guests share photos instantly while you capture valuable contact information for follow-up.'
+    icon: '📸',
+    title: 'Stunning Photos & Videos',
+    description: 'Capture every moment with professional quality for your team.'
   },
   {
     icon: '🤖',
-    title: 'Interactive Robot Photo Booth & 360 Video Booth',
-    description: 'Cutting-edge technology that creates memorable experiences and generates buzz at your event.'
+    title: 'Interactive Robot Photobooth',
+    description: 'A unique, engaging experience that wows your team and clients.'
   },
   {
     icon: '🎯',
-    title: 'Perfect for Conferences, Trade Shows, Staff Parties, & Galas',
-    description: 'Versatile solution that adapts to any corporate event type and venue requirements.'
+    title: 'Perfect for Team Building',
+    description: 'Enhance team bonding and create memorable corporate experiences.'
   },
   {
-    icon: '👥',
-    title: 'Professional Setup, On-Site Team, Seamless Experience',
-    description: 'Our experienced team handles everything from setup to teardown, ensuring a flawless event.'
+    icon: '💼',
+    title: 'Branded for Your Company',
+    description: 'Custom overlays, props, and experiences tailored to your brand.'
   },
   {
-    icon: '📊',
-    title: 'Analytics & ROI Tracking',
-    description: 'Detailed reports on engagement, social reach, and lead generation to measure your event success.'
+    icon: '💌',
+    title: 'Instant Sharing',
+    description: 'Team members can instantly share their memories via QR code, text, email, or Airdrop.'
   }
 ]
 
-const companyLogos = [
-  { src: '/images/pearson.png', alt: 'Toronto Pearson' },
-  { src: '/images/talent.png', alt: 'Talent Inc Canada' },
-  { src: '/images/remax.png', alt: 'Remax Impact' },
-  { src: '/images/gradegear.png', alt: 'Grade Gear' },
-  { src: '/images/pdsb.png', alt: 'PDSB' },
-]
-
-const packageFeatures = [
+const corporatePackageFeatures = [
   {
-    title: 'Custom Logo Branding',
-    description: 'Your company logo and colors integrated throughout the photo experience.'
+    title: 'Custom Corporate Overlay',
+    description: 'Personalized overlays and graphics to match your company branding.'
   },
   {
-    title: 'Unlimited Photos & Videos',
-    description: 'No limits on captures - every guest can enjoy the full experience.'
+    title: 'Unlimited Photos & Videos + High-Resolution Prints',
+    description: 'No limits on captures - every team member can enjoy the full experience with professional quality prints.'
   },
   {
     title: 'On-Site Attendant',
-    description: 'Professional team member ensures smooth operation and guest assistance.'
-  },
-  {
-    title: 'Sharing via QR Code, Text, E-Mail, Airdrop',
-    description: 'Guests can instantly receive their photos and videos through QR code, text message, email, or Airdrop.'
-  },
-  {
-    title: 'High-Resolution Prints',
-    description: 'Professional quality prints with your branding for immediate takeaway.'
+    description: 'Professional team member ensures smooth operation and team assistance.'
   }
 ]
 
-const faqs = [
+const corporateFaqs = [
   {
     question: 'How much setup time do you need?',
-    answer: 'We typically need 30 minutes for setup and testing to ensure everything works perfectly for your event.'
+    answer: 'We typically need 30 minutes for setup and testing to ensure everything works perfectly for your corporate event.'
   },
   {
-    question: 'Can we add our branding?',
-    answer: 'Absolutely! That\'s the whole purpose of our corporate service. We integrate your logos, colors, and messaging throughout the entire experience.'
+    question: 'Can we add our company branding?',
+    answer: 'Absolutely! We offer custom overlays, props, and experiences tailored to your company brand and event theme.'
   },
   {
     question: 'What happens if an issue occurs on-site?',
     answer: 'We have professional attendants at all times who are trained to handle any technical issues immediately, ensuring your event runs smoothly.'
-  },
-  {
-    question: 'What types of corporate events do you serve?',
-    answer: 'We serve conferences, trade shows, staff parties, galas, product launches, holiday parties, and any other corporate gathering.'
   },
   {
     question: 'Do you provide insurance and licensing?',
@@ -714,48 +770,41 @@ const faqs = [
   },
   {
     question: 'Can you accommodate different venue sizes?',
-    answer: 'Our robot photo booth is designed to work in various venue sizes, from intimate boardrooms to large conference halls and outdoor spaces.'
+    answer: 'Our robot photo booth is designed to work in various venue sizes, from intimate meetings to large conference halls and outdoor corporate events.'
+  },
+  {
+    question: 'How long does the photobooth rental last?',
+    answer: 'Our photobooth rentals have a 2-hour minimum and can be extended for however many hours you\'d like. Most companies choose 4-6 hours to capture all the fun moments throughout their event.'
   }
-] 
+]
 
-const testimonials = [
+const corporateTestimonials = [
   {
-    company: 'Toronto Pearson',
-    title: 'Event Coordinator',
-    text: 'Robo Booth was a huge hit at our staff appreciation event. The robot photobooth created a buzz and the branded photos were a fantastic touch for our team.'
-  },
-  {
-    company: 'Talent Inc Canada',
+    company: 'TechCorp Inc.',
     title: 'Marketing Director',
-    text: 'The interactive experience was unlike anything we have seen before. Our guests loved it and the instant sharing helped us boost our social presence.'
+    text: 'Robo Booth made our product launch incredible! Our clients loved the interactive experience and the photos were amazing.'
   },
   {
-    company: 'Remax Impact',
-    title: 'Office Manager',
-    text: 'Professional, seamless, and fun! The Robo Booth team handled everything and our agents are still talking about the experience.'
+    company: 'Global Solutions',
+    title: 'Event Manager',
+    text: 'The robot photobooth was a huge hit at our annual conference. The instant sharing feature was perfect for social media.'
   },
   {
-    company: 'Grade Gear',
-    title: 'Brand Manager',
-    text: 'We wanted something unique for our product launch and Robo Booth delivered. The branded prints were perfect for our goals.'
-  },
-  {
-    company: 'PDSB',
-    title: 'Communications Lead',
-    text: 'The robot photobooth was a highlight at our conference. The team was professional and the service was a great bonus.'
-  },
-  // Add more testimonials as needed
+    company: 'Innovation Labs',
+    title: 'HR Director',
+    text: 'We wanted something unique for our team building event and Robo Booth delivered. The custom branding was perfect.'
+  }
 ]
 
 function TestimonialCarousel() {
-  const [index, setIndex] = React.useState(0)
-  React.useEffect(() => {
+  const [index, setIndex] = useState(0)
+  useEffect(() => {
     const timer = setInterval(() => {
-      setIndex((prev) => (prev + 1) % testimonials.length)
+      setIndex((prev) => (prev + 1) % corporateTestimonials.length)
     }, 5000)
     return () => clearInterval(timer)
   }, [])
-  const testimonial = testimonials[index]
+  const testimonial = corporateTestimonials[index]
   return (
     <motion.div
       key={index}

@@ -32,7 +32,7 @@ export default function Footer() {
               <h4 className="text-lg font-bold mb-4 text-white">Contact</h4>
               <ul className="text-white/70 space-y-2">
                 <li>Email: info@robobooth.ca</li>
-                <li>Phone: (647) 877-7699</li>
+                <li>Phone: (289) 301-4039</li>
               </ul>
             </div>
 

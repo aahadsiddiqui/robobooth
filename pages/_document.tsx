@@ -30,7 +30,55 @@ export default function Document() {
         
         {/* Crisp Chatbot */}
         <script dangerouslySetInnerHTML={{
-          __html: `window.$crisp=[];window.CRISP_WEBSITE_ID="d4528218-28ba-4427-8f91-717dc3a2cf36";(function(){d=document;s=d.createElement("script");s.src="https://client.crisp.chat/l.js";s.async=1;d.getElementsByTagName("head")[0].appendChild(s);})();`,
+          __html: `
+            window.$crisp=[];
+            window.CRISP_WEBSITE_ID="d4528218-28ba-4427-8f91-717dc3a2cf36";
+            (function(){
+              d=document;
+              s=d.createElement("script");
+              s.src="https://client.crisp.chat/l.js";
+              s.async=1;
+              d.getElementsByTagName("head")[0].appendChild(s);
+            })();
+            
+            // Configure Crisp Chat form
+            window.addEventListener('load', function() {
+              setTimeout(function() {
+                if (window.$crisp) {
+                  // Set up form fields
+                  window.$crisp.push(["safe", true]);
+                  
+                  // Configure form to ask for required information
+                  window.$crisp.push(["do", "form:show", [
+                    "text", 
+                    "What's your name?", 
+                    "name", 
+                    "Please enter your full name"
+                  ]]);
+                  
+                  window.$crisp.push(["do", "form:show", [
+                    "tel", 
+                    "What's your phone number?", 
+                    "phone", 
+                    "Please enter your phone number"
+                  ]]);
+                  
+                  window.$crisp.push(["do", "form:show", [
+                    "textarea", 
+                    "Tell us about your event (date, location, and any relevant details)", 
+                    "description", 
+                    "Please provide your event date, location, and any other relevant information"
+                  ]]);
+                  
+                  // Set form submission handler
+                  window.$crisp.push(["on", "form:submit", function(form) {
+                    // Handle form submission
+                    console.log("Crisp form submitted:", form);
+                  }]);
+                }
+              }, 2000);
+            });
+          `,
         }} />
         {/* End Crisp Chatbot */}
         

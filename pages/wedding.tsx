@@ -244,6 +244,7 @@ export default function Wedding() {
                     preload="auto"
                     disablePictureInPicture
                     disableRemotePlayback
+                    webkit-playsinline="true"
                     onPlay={() => trackVideoView('Wedding Robot Photobooth')}
                 >
                   <source src="/videos/Wedding.mov" type="video/mp4" />
@@ -282,6 +283,46 @@ export default function Wedding() {
                     <h3 className="text-xs md:text-sm font-bold text-[#fce4a6]">{benefit.title}</h3>
                   </motion.div>
                 ))}
+              </div>
+            </div>
+          </section>
+
+          {/* Second Video Section */}
+          <section className="py-4 px-4 bg-white">
+            <div className="max-w-6xl mx-auto">
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                className="text-center mb-4"
+              >
+                <h2 className="text-lg md:text-2xl lg:text-3xl font-black mb-3 lg:mb-4 text-black">Wedding Robot Photobooth Experience</h2>
+              </motion.div>
+              <div className="flex justify-center -mx-8">
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: 0.2 }}
+                  className="relative w-screen"
+                >
+                  <video
+                    className="w-full h-auto max-h-64"
+                    autoPlay
+                    loop
+                    muted
+                    playsInline
+                    controls={false}
+                    preload="auto"
+                    disablePictureInPicture
+                    disableRemotePlayback
+                    webkit-playsinline="true"
+                    onPlay={() => trackVideoView('Wedding Robot Photobooth Experience')}
+                  >
+                    <source src="/videos/wedding2.mov" type="video/mp4" />
+                    Your browser does not support the video tag.
+                  </video>
+                </motion.div>
               </div>
             </div>
           </section>
@@ -390,12 +431,12 @@ export default function Wedding() {
                   whileInView={{ opacity: 1, scale: 1 }}
                   viewport={{ once: true }}
                   transition={{ delay: 0.2 }}
-                  className="relative rounded-xl overflow-hidden shadow-xl w-1/3"
+                  className="relative w-1/3"
                 >
                   <img
                     src="/images/wedding1.jpg"
                     alt="Wedding Robot Photobooth"
-                    className="w-full h-auto max-h-64 object-cover"
+                    className="w-full h-64 object-cover"
                   />
                 </motion.div>
                 <motion.div
@@ -403,12 +444,12 @@ export default function Wedding() {
                   whileInView={{ opacity: 1, scale: 1 }}
                   viewport={{ once: true }}
                   transition={{ delay: 0.3 }}
-                  className="relative rounded-xl overflow-hidden shadow-xl w-1/3"
+                  className="relative w-1/3"
                 >
                   <img
-                    src="/images/robo2.jpg"
+                    src="/images/wedding2.PNG"
                     alt="Robot Photobooth"
-                    className="w-full h-auto max-h-64 object-cover"
+                    className="w-full h-64 object-cover"
                   />
                 </motion.div>
                 <motion.div
@@ -416,12 +457,12 @@ export default function Wedding() {
                   whileInView={{ opacity: 1, scale: 1 }}
                   viewport={{ once: true }}
                   transition={{ delay: 0.4 }}
-                  className="relative rounded-xl overflow-hidden shadow-xl w-1/3"
+                  className="relative w-1/3"
                 >
                   <img
                     src="/images/corporate3.png"
                     alt="Corporate Robot Photobooth"
-                    className="w-full h-auto max-h-64 object-cover"
+                    className="w-full h-64 object-cover"
                   />
                 </motion.div>
               </div>
@@ -653,7 +694,7 @@ export default function Wedding() {
       {!showLeadModal && (
         <button
           onClick={() => setShowLeadModal(true)}
-          className="fixed bottom-6 right-6 z-40 bg-[#fce4a6] text-black font-bold px-6 py-4 rounded-full shadow-xl hover:bg-[#a49056] transition-all text-lg"
+          className="fixed bottom-6 left-6 z-40 bg-[#fce4a6] text-black font-bold px-6 py-4 rounded-full shadow-xl hover:bg-[#a49056] transition-all text-lg"
         >
           Book Now
         </button>
