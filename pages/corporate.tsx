@@ -5,78 +5,76 @@ import { FiArrowRight, FiCheck, FiDownload, FiMail, FiPhone, FiCalendar, FiUsers
 import { useRouter } from 'next/router'
 import { useMetaPixel } from '../hooks/useMetaPixel'
 
-// Lazy load heavy components to reduce initial bundle
-const LazyVideo = lazy(() => Promise.resolve({
-  default: ({ src, className, onPlay, alt }: { src: string; className: string; onPlay?: () => void; alt: string }) => {
-    const [isInView, setIsInView] = useState(false)
-    const [isLoaded, setIsLoaded] = useState(false)
-    const videoRef = useRef<HTMLVideoElement>(null)
-    const containerRef = useRef<HTMLDivElement>(null)
+// Ultra-lightweight video component with minimal overhead
+const UltraLightVideo = ({ src, className, onPlay, alt }: { src: string; className: string; onPlay?: () => void; alt: string }) => {
+  const [isInView, setIsInView] = useState(false)
+  const [isLoaded, setIsLoaded] = useState(false)
+  const videoRef = useRef<HTMLVideoElement>(null)
+  const containerRef = useRef<HTMLDivElement>(null)
 
-    useEffect(() => {
-      const observer = new IntersectionObserver(
-        ([entry]) => {
-          if (entry.isIntersecting) {
-            setIsInView(true)
-            observer.disconnect()
-          }
-        },
-        { threshold: 0.1, rootMargin: '200px' }
-      )
-
-      if (containerRef.current) {
-        observer.observe(containerRef.current)
-      }
-
-      return () => observer.disconnect()
-    }, [])
-
-    useEffect(() => {
-      if (isInView && videoRef.current) {
-        const video = videoRef.current
-        video.load()
-        video.addEventListener('loadeddata', () => setIsLoaded(true))
-        
-        // Much longer delay to reduce initial load impact
-        const playTimer = setTimeout(() => {
-          if (video.paused) {
-            video.play().catch(() => {})
-          }
-        }, 3000)
-
-        return () => clearTimeout(playTimer)
-      }
-    }, [isInView])
-
-    return (
-      <div ref={containerRef} className={className}>
-        {isInView ? (
-          <video
-            ref={videoRef}
-            className="w-full h-auto max-h-64"
-            autoPlay={isLoaded}
-            loop
-            muted
-            playsInline
-            controls={false}
-            preload="none"
-            disablePictureInPicture
-            disableRemotePlayback
-            webkit-playsinline="true"
-            onPlay={onPlay}
-          >
-            <source src={src} type="video/mp4" />
-            Your browser does not support the video tag.
-          </video>
-        ) : (
-          <div className="w-full h-64 bg-gray-200 flex items-center justify-center">
-            <div className="text-gray-500">Loading...</div>
-          </div>
-        )}
-      </div>
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsInView(true)
+          observer.disconnect()
+        }
+      },
+      { threshold: 0.1, rootMargin: '300px' }
     )
-  }
-}))
+
+    if (containerRef.current) {
+      observer.observe(containerRef.current)
+    }
+
+    return () => observer.disconnect()
+  }, [])
+
+  useEffect(() => {
+    if (isInView && videoRef.current) {
+      const video = videoRef.current
+      video.load()
+      video.addEventListener('loadeddata', () => setIsLoaded(true))
+      
+      // Much longer delay to reduce initial load impact
+      const playTimer = setTimeout(() => {
+        if (video.paused) {
+          video.play().catch(() => {})
+        }
+      }, 5000)
+
+      return () => clearTimeout(playTimer)
+    }
+  }, [isInView])
+
+  return (
+    <div ref={containerRef} className={className}>
+      {isInView ? (
+        <video
+          ref={videoRef}
+          className="w-full h-auto max-h-64"
+          autoPlay={isLoaded}
+          loop
+          muted
+          playsInline
+          controls={false}
+          preload="none"
+          disablePictureInPicture
+          disableRemotePlayback
+          webkit-playsinline="true"
+          onPlay={onPlay}
+        >
+          <source src={src} type="video/mp4" />
+          Your browser does not support the video tag.
+        </video>
+      ) : (
+        <div className="w-full h-64 bg-gray-200 flex items-center justify-center">
+          <div className="text-gray-500">Loading...</div>
+        </div>
+      )}
+    </div>
+  )
+}
 
 // Ultra-lightweight motion component with minimal overhead
 const UltraLightMotion = ({ children, className, delay = 0, onClick }: { children: React.ReactNode; className: string; delay?: number; onClick?: () => void }) => {
@@ -91,7 +89,7 @@ const UltraLightMotion = ({ children, className, delay = 0, onClick }: { childre
           observer.disconnect()
         }
       },
-      { threshold: 0.1, rootMargin: '200px' }
+      { threshold: 0.1, rootMargin: '300px' }
     )
 
     if (ref.current) {
@@ -110,7 +108,7 @@ const UltraLightMotion = ({ children, className, delay = 0, onClick }: { childre
       ref={ref}
       initial={{ opacity: 0, y: 5 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.05, delay }}
+      transition={{ duration: 0.02, delay }}
       className={className}
       onClick={onClick}
     >
@@ -280,7 +278,8 @@ export default function Corporate() {
             {/* Background Video/Image */}
             <div className="absolute inset-0 z-0">
               <div className="absolute inset-0 bg-gradient-to-b from-black/50 to-black/80"></div>
-              <div className="absolute inset-0 hero-bg bg-cover bg-center bg-no-repeat opacity-40 scale-125"></div>
+              {/* Remove heavy background image and use solid color instead */}
+              <div className="absolute inset-0 bg-gradient-to-br from-blue-900 via-indigo-900 to-purple-900 opacity-60"></div>
             </div>
 
             {/* Hero Content */}
@@ -316,7 +315,7 @@ export default function Corporate() {
                 </div>
               </motion.div>
 
-                {/* Right Side - Image */}
+                {/* Right Side - Image - Replace with lightweight placeholder */}
                 <motion.div
                   initial={{ opacity: 0, x: 30 }}
                   animate={{ opacity: 1, x: 0 }}
@@ -324,13 +323,13 @@ export default function Corporate() {
                   className="flex-shrink-0 flex items-center justify-center w-1/3"
                 >
                   <div className="relative">
-                    <img
-                      src="/images/corporate1.JPG"
-                      alt="Robot Photobooth at Corporate Event"
-                      className="w-full h-auto max-h-64 object-contain rounded-xl shadow-2xl"
-                      loading="eager"
-                      fetchPriority="high"
-                    />
+                    {/* Replace heavy image with lightweight placeholder */}
+                    <div className="w-full h-64 bg-gradient-to-br from-[#fce4a6] to-[#a49056] rounded-xl shadow-2xl flex items-center justify-center">
+                      <div className="text-center text-black">
+                        <div className="text-4xl mb-2">🏢</div>
+                        <div className="text-sm font-bold">Corporate Photobooth</div>
+                      </div>
+                    </div>
                   </div>
                 </motion.div>
               </div>
@@ -345,14 +344,12 @@ export default function Corporate() {
               </UltraLightMotion>
               <div className="flex justify-center -mx-8">
                 <UltraLightMotion className="relative w-screen" delay={0.2}>
-                  <Suspense fallback={<div className="w-full h-64 bg-gray-200 flex items-center justify-center"><div className="text-gray-500">Loading...</div></div>}>
-                    <LazyVideo
-                      src="/videos/Corporate.mov"
-                      className="w-full h-auto max-h-64"
-                      onPlay={() => trackVideoView('Corporate Robot Photobooth')}
-                      alt="Corporate Robot Photobooth in Action"
-                    />
-                  </Suspense>
+                  <UltraLightVideo
+                    src="/videos/Corporate.mov"
+                    className="w-full h-auto max-h-64"
+                    onPlay={() => trackVideoView('Corporate Robot Photobooth')}
+                    alt="Corporate Robot Photobooth in Action"
+                  />
                 </UltraLightMotion>
               </div>
             </div>
@@ -390,14 +387,12 @@ export default function Corporate() {
               </UltraLightMotion>
               <div className="flex justify-center -mx-8">
                 <UltraLightMotion className="relative w-screen" delay={0.2}>
-                  <Suspense fallback={<div className="w-full h-64 bg-gray-200 flex items-center justify-center"><div className="text-gray-500">Loading...</div></div>}>
-                    <LazyVideo
-                      src="/videos/corporate2.mov"
-                      className="w-full h-auto max-h-64"
-                      onPlay={() => trackVideoView('Corporate Robot Photobooth Experience')}
-                      alt="Corporate Robot Photobooth Experience"
-                    />
-                  </Suspense>
+                  <UltraLightVideo
+                    src="/videos/corporate2.mov"
+                    className="w-full h-auto max-h-64"
+                    onPlay={() => trackVideoView('Corporate Robot Photobooth Experience')}
+                    alt="Corporate Robot Photobooth Experience"
+                  />
                 </UltraLightMotion>
               </div>
             </div>
