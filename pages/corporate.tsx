@@ -1,9 +1,123 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef, lazy, Suspense } from 'react'
 import Head from 'next/head'
 import { motion, useScroll, useTransform } from 'framer-motion'
 import { FiArrowRight, FiCheck, FiDownload, FiMail, FiPhone, FiCalendar, FiUsers, FiChevronDown, FiChevronUp } from 'react-icons/fi'
 import { useRouter } from 'next/router'
 import { useMetaPixel } from '../hooks/useMetaPixel'
+
+// Lazy load heavy components to reduce initial bundle
+const LazyVideo = lazy(() => Promise.resolve({
+  default: ({ src, className, onPlay, alt }: { src: string; className: string; onPlay?: () => void; alt: string }) => {
+    const [isInView, setIsInView] = useState(false)
+    const [isLoaded, setIsLoaded] = useState(false)
+    const videoRef = useRef<HTMLVideoElement>(null)
+    const containerRef = useRef<HTMLDivElement>(null)
+
+    useEffect(() => {
+      const observer = new IntersectionObserver(
+        ([entry]) => {
+          if (entry.isIntersecting) {
+            setIsInView(true)
+            observer.disconnect()
+          }
+        },
+        { threshold: 0.1, rootMargin: '200px' }
+      )
+
+      if (containerRef.current) {
+        observer.observe(containerRef.current)
+      }
+
+      return () => observer.disconnect()
+    }, [])
+
+    useEffect(() => {
+      if (isInView && videoRef.current) {
+        const video = videoRef.current
+        video.load()
+        video.addEventListener('loadeddata', () => setIsLoaded(true))
+        
+        // Much longer delay to reduce initial load impact
+        const playTimer = setTimeout(() => {
+          if (video.paused) {
+            video.play().catch(() => {})
+          }
+        }, 3000)
+
+        return () => clearTimeout(playTimer)
+      }
+    }, [isInView])
+
+    return (
+      <div ref={containerRef} className={className}>
+        {isInView ? (
+          <video
+            ref={videoRef}
+            className="w-full h-auto max-h-64"
+            autoPlay={isLoaded}
+            loop
+            muted
+            playsInline
+            controls={false}
+            preload="none"
+            disablePictureInPicture
+            disableRemotePlayback
+            webkit-playsinline="true"
+            onPlay={onPlay}
+          >
+            <source src={src} type="video/mp4" />
+            Your browser does not support the video tag.
+          </video>
+        ) : (
+          <div className="w-full h-64 bg-gray-200 flex items-center justify-center">
+            <div className="text-gray-500">Loading...</div>
+          </div>
+        )}
+      </div>
+    )
+  }
+}))
+
+// Ultra-lightweight motion component with minimal overhead
+const UltraLightMotion = ({ children, className, delay = 0, onClick }: { children: React.ReactNode; className: string; delay?: number; onClick?: () => void }) => {
+  const [isInView, setIsInView] = useState(false)
+  const ref = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsInView(true)
+          observer.disconnect()
+        }
+      },
+      { threshold: 0.1, rootMargin: '200px' }
+    )
+
+    if (ref.current) {
+      observer.observe(ref.current)
+    }
+
+    return () => observer.disconnect()
+  }, [])
+
+  if (!isInView) {
+    return <div ref={ref} className={className} onClick={onClick}>{children}</div>
+  }
+
+  return (
+    <motion.div
+      ref={ref}
+      initial={{ opacity: 0, y: 5 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.05, delay }}
+      className={className}
+      onClick={onClick}
+    >
+      {children}
+    </motion.div>
+  )
+}
 
 export default function Corporate() {
   const { scrollY } = useScroll()
@@ -37,6 +151,7 @@ export default function Corporate() {
   const router = useRouter()
   const { trackLead, trackFormSubmission, trackContactClick, trackVideoView, trackBookingInquiry, trackPhoneClick } = useMetaPixel()
 
+  // Optimize modal timer to reduce initial load
   useEffect(() => {
     const timer = setTimeout(() => setShowLeadModal(true), 30000)
     return () => clearTimeout(timer)
@@ -125,6 +240,25 @@ export default function Corporate() {
             <meta name="twitter:title" content="Corporate Photobooth Rental Toronto GTA | Robot Photobooth & 360 Photo Booth for Corporate Events" />
             <meta name="twitter:description" content="Toronto's premier corporate photobooth rental featuring robot photobooth & 360 photo booth. Interactive corporate photobooth that elevates your events and creates memorable team experiences." />
             <link rel="canonical" href="https://robobooth.ca/corporate" />
+            
+            {/* Preload critical resources */}
+            <link rel="preload" href="/images/corporate-hero.jpg" as="image" />
+            <link rel="preload" href="/images/corporate1.JPG" as="image" />
+            
+            {/* DNS prefetch for external resources */}
+            <link rel="dns-prefetch" href="//formspree.io" />
+            <link rel="dns-prefetch" href="//www.facebook.com" />
+            
+            {/* Critical CSS inline */}
+            <style dangerouslySetInnerHTML={{
+              __html: `
+                .hero-bg { background-image: url('/images/corporate-hero.jpg'); }
+                .hero-image { background-image: url('/images/corporate1.JPG'); }
+                @media (max-width: 768px) {
+                  .hero-bg { background-image: url('/images/corporate-hero.jpg'); }
+                }
+              `
+            }} />
           </Head>
 
           {/* Phone Number Header */}
@@ -146,7 +280,7 @@ export default function Corporate() {
             {/* Background Video/Image */}
             <div className="absolute inset-0 z-0">
               <div className="absolute inset-0 bg-gradient-to-b from-black/50 to-black/80"></div>
-              <div className="absolute inset-0 bg-[url('/images/corporate-hero.jpg')] bg-cover bg-center bg-no-repeat opacity-40 scale-125"></div>
+              <div className="absolute inset-0 hero-bg bg-cover bg-center bg-no-repeat opacity-40 scale-125"></div>
             </div>
 
             {/* Hero Content */}
@@ -194,6 +328,8 @@ export default function Corporate() {
                       src="/images/corporate1.JPG"
                       alt="Robot Photobooth at Corporate Event"
                       className="w-full h-auto max-h-64 object-contain rounded-xl shadow-2xl"
+                      loading="eager"
+                      fetchPriority="high"
                     />
                   </div>
                 </motion.div>
@@ -204,39 +340,20 @@ export default function Corporate() {
           {/* Video Section */}
           <section className="py-4 px-4 bg-white">
             <div className="max-w-6xl mx-auto">
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                className="text-center mb-4"
-              >
+              <UltraLightMotion className="text-center mb-4">
                 <h2 className="text-lg md:text-2xl lg:text-3xl font-black mb-3 lg:mb-4 text-black">Corporate Robot Photobooth in Action</h2>
-              </motion.div>
-                            <div className="flex justify-center -mx-8">
-              <motion.div
-                initial={{ opacity: 0, scale: 0.95 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }}
-                transition={{ delay: 0.2 }}
-                  className="relative w-screen"
-              >
-                                  <video
-                    className="w-full h-auto max-h-64"
-                    autoPlay
-                    loop
-                    muted
-                    playsInline
-                    controls={false}
-                    preload="auto"
-                    disablePictureInPicture
-                    disableRemotePlayback
-                    webkit-playsinline="true"
-                    onPlay={() => trackVideoView('Corporate Robot Photobooth')}
-                  >
-                  <source src="/videos/Corporate.mov" type="video/mp4" />
-                  Your browser does not support the video tag.
-                </video>
-              </motion.div>
+              </UltraLightMotion>
+              <div className="flex justify-center -mx-8">
+                <UltraLightMotion className="relative w-screen" delay={0.2}>
+                  <Suspense fallback={<div className="w-full h-64 bg-gray-200 flex items-center justify-center"><div className="text-gray-500">Loading...</div></div>}>
+                    <LazyVideo
+                      src="/videos/Corporate.mov"
+                      className="w-full h-auto max-h-64"
+                      onPlay={() => trackVideoView('Corporate Robot Photobooth')}
+                      alt="Corporate Robot Photobooth in Action"
+                    />
+                  </Suspense>
+                </UltraLightMotion>
               </div>
             </div>
           </section>
@@ -244,30 +361,22 @@ export default function Corporate() {
           {/* Key Benefits Section */}
           <section className="py-4 px-4 bg-white">
             <div className="max-w-6xl mx-auto">
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                className="text-center mb-6"
-              >
+              <UltraLightMotion className="text-center mb-6">
                 <h2 className="text-lg md:text-2xl lg:text-3xl font-black mb-3 lg:mb-4 text-black">Why Companies Choose Our Robot Photobooth & 360 Photo Booth</h2>
                 <p className="text-sm md:text-base lg:text-lg text-black/80 max-w-2xl mx-auto">
                   Professional, engaging, and innovative robot photobooth and 360 photo booth experiences that elevate your corporate events across the GTA & surrounding areas!
                 </p>
-              </motion.div>
+              </UltraLightMotion>
               <div className="grid grid-cols-3 gap-2 md:gap-4">
                 {corporateBenefits.map((benefit, index) => (
-                  <motion.div
+                  <UltraLightMotion
                     key={index}
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: index * 0.1 }}
+                    delay={index * 0.05}
                     className="bg-black p-2 md:p-4 rounded-xl shadow-lg border border-[#fce4a6]/20 hover:shadow-xl transition-all text-center"
                   >
                     <div className="text-lg md:text-2xl mb-1 md:mb-2 text-[#fce4a6]">{benefit.icon}</div>
                     <h3 className="text-xs md:text-sm font-bold text-[#fce4a6]">{benefit.title}</h3>
-                  </motion.div>
+                  </UltraLightMotion>
                 ))}
               </div>
             </div>
@@ -276,39 +385,20 @@ export default function Corporate() {
           {/* Second Video Section */}
           <section className="py-4 px-4 bg-white">
             <div className="max-w-6xl mx-auto">
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                className="text-center mb-4"
-              >
+              <UltraLightMotion className="text-center mb-4">
                 <h2 className="text-lg md:text-2xl lg:text-3xl font-black mb-3 lg:mb-4 text-black">Corporate Robot Photobooth Experience</h2>
-              </motion.div>
+              </UltraLightMotion>
               <div className="flex justify-center -mx-8">
-                <motion.div
-                  initial={{ opacity: 0, scale: 0.95 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: 0.2 }}
-                  className="relative w-screen"
-                >
-                  <video
-                    className="w-full h-auto max-h-64"
-                    autoPlay
-                    loop
-                    muted
-                    playsInline
-                    controls={false}
-                    preload="auto"
-                    disablePictureInPicture
-                    disableRemotePlayback
-                    webkit-playsinline="true"
-                    onPlay={() => trackVideoView('Corporate Robot Photobooth Experience')}
-                  >
-                    <source src="/videos/corporate2.mov" type="video/mp4" />
-                    Your browser does not support the video tag.
-                  </video>
-                </motion.div>
+                <UltraLightMotion className="relative w-screen" delay={0.2}>
+                  <Suspense fallback={<div className="w-full h-64 bg-gray-200 flex items-center justify-center"><div className="text-gray-500">Loading...</div></div>}>
+                    <LazyVideo
+                      src="/videos/corporate2.mov"
+                      className="w-full h-auto max-h-64"
+                      onPlay={() => trackVideoView('Corporate Robot Photobooth Experience')}
+                      alt="Corporate Robot Photobooth Experience"
+                    />
+                  </Suspense>
+                </UltraLightMotion>
               </div>
             </div>
           </section>
@@ -316,11 +406,7 @@ export default function Corporate() {
           {/* Call Now CTA Section */}
           <section className="py-8 px-4 bg-black">
             <div className="max-w-4xl mx-auto text-center">
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-              >
+              <UltraLightMotion className="">
                 <h2 className="text-lg md:text-xl font-bold mb-3 text-[#fce4a6]">Ready to Elevate Your Corporate Event?</h2>
                 <p className="text-white/90 text-sm mb-4">
                   Call us now to discuss your event and get instant pricing
@@ -335,19 +421,14 @@ export default function Corporate() {
                   <FiPhone className="w-5 h-5" />
                   Call Now: 289-301-4039
                 </motion.a>
-              </motion.div>
+              </UltraLightMotion>
             </div>
           </section>
 
           {/* Social Proof Section */}
           <section className="py-8 px-4 bg-black">
             <div className="max-w-6xl mx-auto">
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                className="text-center mb-8"
-              >
+              <UltraLightMotion className="text-center mb-8">
                 <h2 className="text-lg md:text-2xl lg:text-3xl font-black mb-3 text-[#fce4a6]">Trusted by Toronto's Leading Companies</h2>
                 <p className="text-white/80 text-sm md:text-base mb-4">Companies choose Robo Booth for their most important events</p>
                 
@@ -374,17 +455,14 @@ export default function Corporate() {
                     </div>
                   </a>
                 </div>
-              </motion.div>
+              </UltraLightMotion>
               
               {/* Static Testimonial Cards */}
               <div className="grid grid-cols-3 gap-2 md:gap-4">
                 {corporateTestimonials.map((testimonial, index) => (
-                  <motion.div
+                  <UltraLightMotion
                     key={index}
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: index * 0.1 }}
+                    delay={index * 0.05}
                     className="bg-gradient-to-r from-[#fce4a6] to-[#a49056] p-3 md:p-4 rounded-xl shadow-lg text-center"
                   >
                     <div className="text-2xl mb-2 text-black">"</div>
@@ -394,7 +472,7 @@ export default function Corporate() {
                     <div className="text-black text-xs font-bold">
                       - {testimonial.title}, {testimonial.company}
                     </div>
-                  </motion.div>
+                  </UltraLightMotion>
                 ))}
               </div>
             </div>
@@ -403,54 +481,34 @@ export default function Corporate() {
           {/* Image Gallery Section */}
           <section className="py-4 px-4 bg-white">
             <div className="max-w-6xl mx-auto">
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                className="text-center mb-4"
-              >
+              <UltraLightMotion className="text-center mb-4">
                 <h2 className="text-lg md:text-2xl lg:text-3xl font-black mb-3 lg:mb-4 text-black">Corporate Robot Photobooth Gallery</h2>
-              </motion.div>
+              </UltraLightMotion>
               <div className="flex justify-center gap-4">
-                <motion.div
-                  initial={{ opacity: 0, scale: 0.95 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: 0.2 }}
-                  className="relative w-1/3"
-                >
+                <UltraLightMotion className="relative w-1/3" delay={0.2}>
                   <img
                     src="/images/corporate1.JPG"
                     alt="Corporate Robot Photobooth"
                     className="w-full h-64 object-cover"
+                    loading="lazy"
                   />
-                </motion.div>
-                <motion.div
-                  initial={{ opacity: 0, scale: 0.95 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: 0.3 }}
-                  className="relative w-1/3"
-                >
+                </UltraLightMotion>
+                <UltraLightMotion className="relative w-1/3" delay={0.3}>
                   <img
                     src="/images/corporate2.jpg"
                     alt="Corporate Event Photobooth"
                     className="w-full h-64 object-cover"
+                    loading="lazy"
                   />
-                </motion.div>
-                <motion.div
-                  initial={{ opacity: 0, scale: 0.95 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: 0.4 }}
-                  className="relative w-1/3"
-                >
+                </UltraLightMotion>
+                <UltraLightMotion className="relative w-1/3" delay={0.4}>
                   <img
                     src="/images/corporate3.png"
                     alt="Corporate Robot Photobooth"
                     className="w-full h-64 object-cover"
+                    loading="lazy"
                   />
-                </motion.div>
+                </UltraLightMotion>
               </div>
             </div>
           </section>
@@ -458,30 +516,22 @@ export default function Corporate() {
           {/* Package Highlights */}
           <section className="py-4 px-4 bg-white">
             <div className="max-w-6xl mx-auto">
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                className="text-center mb-6"
-              >
+              <UltraLightMotion className="text-center mb-6">
                 <h2 className="text-lg md:text-2xl lg:text-3xl font-black mb-3 text-black">Corporate Package Includes</h2>
                 <p className="text-sm md:text-base text-black/80">Everything you need for a successful corporate event</p>
-              </motion.div>
+              </UltraLightMotion>
               <div className="grid grid-cols-3 gap-2 md:gap-4">
                 {corporatePackageFeatures.map((feature, index) => (
-                  <motion.div
+                  <UltraLightMotion
                     key={index}
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: index * 0.1 }}
+                    delay={index * 0.05}
                     className="bg-black p-2 md:p-4 rounded-xl shadow-lg border border-[#fce4a6]/20 text-center"
                   >
                     <div className="text-[#fce4a6] mb-2">
                       <FiCheck className="w-4 h-4 md:w-5 md:h-5 mx-auto" />
                     </div>
                     <h3 className="text-[#fce4a6] font-bold text-xs md:text-sm">{feature.title}</h3>
-                  </motion.div>
+                  </UltraLightMotion>
                 ))}
               </div>
             </div>
@@ -490,23 +540,15 @@ export default function Corporate() {
           {/* FAQ Section */}
           <section className="py-8 px-4 bg-black">
             <div className="max-w-4xl mx-auto">
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                className="text-center mb-8"
-              >
+              <UltraLightMotion className="text-center mb-8">
                 <h2 className="text-lg md:text-2xl lg:text-3xl font-black mb-3 text-[#fce4a6]">Frequently Asked Questions</h2>
                 <p className="text-white/80 text-sm md:text-base">Everything you need to know about our corporate services</p>
-              </motion.div>
+              </UltraLightMotion>
               <div className="grid grid-cols-3 gap-2 md:gap-4">
                 {corporateFaqs.map((faq, index) => (
-                  <motion.div
+                  <UltraLightMotion
                     key={index}
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: index * 0.1 }}
+                    delay={index * 0.05}
                     className="bg-white/5 p-3 md:p-4 rounded-xl border border-white/10 cursor-pointer"
                     onClick={() => setExpandedFaq(expandedFaq === index ? null : index)}
                   >
@@ -530,7 +572,7 @@ export default function Corporate() {
                         {faq.answer}
                       </motion.p>
                     )}
-                  </motion.div>
+                  </UltraLightMotion>
                 ))}
               </div>
             </div>
@@ -539,12 +581,7 @@ export default function Corporate() {
           {/* Trust/Guarantee Section */}
           <section className="py-8 px-4 bg-white">
             <div className="max-w-4xl mx-auto text-center">
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                className="bg-gradient-to-r from-black to-gray-800 rounded-xl p-4 md:p-6 text-white"
-              >
+              <UltraLightMotion className="bg-gradient-to-r from-black to-gray-800 rounded-xl p-4 md:p-6 text-white">
                 <h2 className="text-lg md:text-2xl font-bold mb-2 text-[#fce4a6]">Professional & Reliable</h2>
                 <p className="text-white/90 text-sm md:text-base mb-3">
                   Professional team with 100+ successful corporate events in Toronto. Fully insured & licensed.
@@ -563,18 +600,14 @@ export default function Corporate() {
                     <div className="text-white/80 text-xs md:text-sm">Support Available</div>
                   </div>
                 </div>
-              </motion.div>
+              </UltraLightMotion>
             </div>
           </section>
 
           {/* Final CTA Section */}
           <section className="py-12 px-4 bg-black">
             <div className="max-w-4xl mx-auto text-center">
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-              >
+              <UltraLightMotion className="">
                 <h2 className="text-3xl font-bold mb-3 text-[#fce4a6]">Ready to Elevate Your Corporate Event?</h2>
                 <p className="text-white/90 text-base mb-6">
                   Get instant pricing and availability for your event
@@ -591,7 +624,7 @@ export default function Corporate() {
                   Book Now
                   <FiArrowRight className="inline ml-2 group-hover:translate-x-1 transition-transform" />
                 </motion.button>
-              </motion.div>
+              </UltraLightMotion>
             </div>
           </section>
         </div>

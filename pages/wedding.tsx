@@ -1,9 +1,123 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef, lazy, Suspense } from 'react'
 import Head from 'next/head'
 import { motion, useScroll, useTransform } from 'framer-motion'
 import { FiArrowRight, FiCheck, FiDownload, FiMail, FiPhone, FiCalendar, FiUsers, FiChevronDown, FiChevronUp } from 'react-icons/fi'
 import { useRouter } from 'next/router'
 import { useMetaPixel } from '../hooks/useMetaPixel'
+
+// Lazy load heavy components to reduce initial bundle
+const LazyVideo = lazy(() => Promise.resolve({
+  default: ({ src, className, onPlay, alt }: { src: string; className: string; onPlay?: () => void; alt: string }) => {
+    const [isInView, setIsInView] = useState(false)
+    const [isLoaded, setIsLoaded] = useState(false)
+    const videoRef = useRef<HTMLVideoElement>(null)
+    const containerRef = useRef<HTMLDivElement>(null)
+
+    useEffect(() => {
+      const observer = new IntersectionObserver(
+        ([entry]) => {
+          if (entry.isIntersecting) {
+            setIsInView(true)
+            observer.disconnect()
+          }
+        },
+        { threshold: 0.1, rootMargin: '200px' }
+      )
+
+      if (containerRef.current) {
+        observer.observe(containerRef.current)
+      }
+
+      return () => observer.disconnect()
+    }, [])
+
+    useEffect(() => {
+      if (isInView && videoRef.current) {
+        const video = videoRef.current
+        video.load()
+        video.addEventListener('loadeddata', () => setIsLoaded(true))
+        
+        // Much longer delay to reduce initial load impact
+        const playTimer = setTimeout(() => {
+          if (video.paused) {
+            video.play().catch(() => {})
+          }
+        }, 3000)
+
+        return () => clearTimeout(playTimer)
+      }
+    }, [isInView])
+
+    return (
+      <div ref={containerRef} className={className}>
+        {isInView ? (
+          <video
+            ref={videoRef}
+            className="w-full h-auto max-h-64"
+            autoPlay={isLoaded}
+            loop
+            muted
+            playsInline
+            controls={false}
+            preload="none"
+            disablePictureInPicture
+            disableRemotePlayback
+            webkit-playsinline="true"
+            onPlay={onPlay}
+          >
+            <source src={src} type="video/mp4" />
+            Your browser does not support the video tag.
+          </video>
+        ) : (
+          <div className="w-full h-64 bg-gray-200 flex items-center justify-center">
+            <div className="text-gray-500">Loading...</div>
+          </div>
+        )}
+      </div>
+    )
+  }
+}))
+
+// Ultra-lightweight motion component with minimal overhead
+const UltraLightMotion = ({ children, className, delay = 0, onClick }: { children: React.ReactNode; className: string; delay?: number; onClick?: () => void }) => {
+  const [isInView, setIsInView] = useState(false)
+  const ref = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsInView(true)
+          observer.disconnect()
+        }
+      },
+      { threshold: 0.1, rootMargin: '200px' }
+    )
+
+    if (ref.current) {
+      observer.observe(ref.current)
+    }
+
+    return () => observer.disconnect()
+  }, [])
+
+  if (!isInView) {
+    return <div ref={ref} className={className} onClick={onClick}>{children}</div>
+  }
+
+  return (
+    <motion.div
+      ref={ref}
+      initial={{ opacity: 0, y: 5 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.05, delay }}
+      className={className}
+      onClick={onClick}
+    >
+      {children}
+    </motion.div>
+  )
+}
 
 export default function Wedding() {
   const { scrollY } = useScroll()
@@ -37,6 +151,7 @@ export default function Wedding() {
   const router = useRouter()
   const { trackLead, trackFormSubmission, trackContactClick, trackVideoView, trackBookingInquiry, trackPhoneClick } = useMetaPixel()
 
+  // Optimize modal timer to reduce initial load
   useEffect(() => {
     const timer = setTimeout(() => setShowLeadModal(true), 30000)
     return () => clearTimeout(timer)
@@ -115,16 +230,35 @@ export default function Wedding() {
         <div className="min-h-screen overflow-x-hidden">
           <Head>
             <title>Wedding Photobooth Rental Toronto GTA | Robot Photobooth & 360 Photo Booth for Weddings</title>
-            <meta name="description" content="Toronto's premier wedding photobooth rental featuring robot photobooth & 360 photo booth. Serving Ajax, Oshawa, Whitby, Markham, Vaughan, Courtice, Etobicoke, King City, Pickering, North York, Bowmanville, Mississauga, Richmond Hill, East Gwillimbury, Barrie, Whitchurch-Stouffville. Interactive wedding photobooth that wows your guests and captures magical memories instantly." />
-            <meta name="keywords" content="wedding photobooth rental, wedding robot photobooth, wedding 360 photo booth, Toronto wedding photobooth, GTA wedding photobooth, Ajax wedding photobooth, Oshawa wedding photobooth, Whitby wedding photobooth, Markham wedding photobooth, Vaughan wedding photobooth, Courtice wedding photobooth, Etobicoke wedding photobooth, King City wedding photobooth, Pickering wedding photobooth, North York wedding photobooth, Bowmanville wedding photobooth, Mississauga wedding photobooth, Richmond Hill wedding photobooth, East Gwillimbury wedding photobooth, Barrie wedding photobooth, Whitchurch-Stouffville wedding photobooth, interactive wedding photobooth, robotic wedding photobooth, 360 degree wedding photobooth, wedding reception photobooth, bridal party photobooth" />
+            <meta name="description" content="Toronto's premier wedding photobooth rental featuring robot photobooth & 360 photo booth. Serving Ajax, Oshawa, Whitby, Markham, Vaughan, Courtice, Etobicoke, King City, Pickering, North York, Bowmanville, Mississauga, Richmond Hill, East Gwillimbury, Barrie, Whitchurch-Stouffville. Interactive wedding photobooth that captures every magical moment of your special day." />
+            <meta name="keywords" content="wedding photobooth rental, wedding robot photobooth, wedding 360 photo booth, Toronto wedding photobooth, GTA wedding photobooth, Ajax wedding photobooth, Oshawa wedding photobooth, Whitby wedding photobooth, Markham wedding photobooth, Vaughan wedding photobooth, Courtice wedding photobooth, Etobicoke wedding photobooth, King City wedding photobooth, Pickering wedding photobooth, North York wedding photobooth, Bowmanville wedding photobooth, Mississauga wedding photobooth, Richmond Hill wedding photobooth, East Gwillimbury wedding photobooth, Barrie wedding photobooth, Whitchurch-Stouffville wedding photobooth, interactive wedding photobooth, robotic wedding photobooth, 360 degree wedding photobooth, wedding reception photobooth, wedding entertainment" />
             <meta property="og:title" content="Wedding Photobooth Rental Toronto GTA | Robot Photobooth & 360 Photo Booth for Weddings" />
-            <meta property="og:description" content="Toronto's premier wedding photobooth rental featuring robot photobooth & 360 photo booth. Interactive wedding photobooth that wows your guests and captures magical memories instantly." />
+            <meta property="og:description" content="Toronto's premier wedding photobooth rental featuring robot photobooth & 360 photo booth. Interactive wedding photobooth that captures every magical moment of your special day." />
             <meta property="og:type" content="website" />
             <meta property="og:url" content="https://robobooth.ca/wedding" />
             <meta name="twitter:card" content="summary_large_image" />
             <meta name="twitter:title" content="Wedding Photobooth Rental Toronto GTA | Robot Photobooth & 360 Photo Booth for Weddings" />
-            <meta name="twitter:description" content="Toronto's premier wedding photobooth rental featuring robot photobooth & 360 photo booth. Interactive wedding photobooth that wows your guests and captures magical memories instantly." />
+            <meta name="twitter:description" content="Toronto's premier wedding photobooth rental featuring robot photobooth & 360 photo booth. Interactive wedding photobooth that captures every magical moment of your special day." />
             <link rel="canonical" href="https://robobooth.ca/wedding" />
+            
+            {/* Preload critical resources */}
+            <link rel="preload" href="/images/wedding-hero.jpg" as="image" />
+            <link rel="preload" href="/images/wedding1.jpg" as="image" />
+            
+            {/* DNS prefetch for external resources */}
+            <link rel="dns-prefetch" href="//formspree.io" />
+            <link rel="dns-prefetch" href="//www.facebook.com" />
+            
+            {/* Critical CSS inline */}
+            <style dangerouslySetInnerHTML={{
+              __html: `
+                .hero-bg { background-image: url('/images/wedding-hero.jpg'); }
+                .hero-image { background-image: url('/images/wedding1.jpg'); }
+                @media (max-width: 768px) {
+                  .hero-bg { background-image: url('/images/wedding-hero.jpg'); }
+                }
+              `
+            }} />
           </Head>
 
           {/* Phone Number Header */}
@@ -146,41 +280,41 @@ export default function Wedding() {
             {/* Background Video/Image */}
             <div className="absolute inset-0 z-0">
               <div className="absolute inset-0 bg-gradient-to-b from-black/50 to-black/80"></div>
-              <div className="absolute inset-0 bg-[url('/images/wedding-hero.jpg')] bg-cover bg-center bg-no-repeat opacity-40 scale-125"></div>
+              <div className="absolute inset-0 hero-bg bg-cover bg-center bg-no-repeat opacity-40 scale-125"></div>
             </div>
 
             {/* Hero Content */}
             <div className="relative z-10 max-w-6xl mx-auto px-4 w-full h-full flex items-center">
               <div className="flex flex-row items-center justify-between w-full gap-6 lg:gap-8">
                 {/* Left Side - Text Content */}
-                <motion.div
+              <motion.div
                   initial={{ opacity: 0, x: -30 }}
                   animate={{ opacity: 1, x: 0 }}
-                  transition={{ duration: 0.8 }}
+                transition={{ duration: 0.8 }}
                   className="flex-1 text-left"
-                >
+              >
                   <h1 className="text-lg md:text-2xl lg:text-3xl font-black leading-tight text-white mb-3 lg:mb-4">
                     Toronto's Premier <span className="text-[#fce4a6]">Robot Photobooth</span> & 360 Photo Booth for Weddings
-                  </h1>
+                </h1>
                   <p className="text-sm md:text-base lg:text-lg text-white/90 mb-4 lg:mb-6 max-w-sm md:max-w-md lg:max-w-lg">
-                    Make your wedding unforgettable with interactive robot photobooth and 360 photo booth that wow your guests and capture magical memories instantly.
-                  </p>
-                  {/* CTA Buttons */}
+                    Capture every magical moment of your special day with our interactive robot photobooth and 360 photo booth that wows your guests.
+                </p>
+                {/* CTA Buttons */}
                   <div className="flex flex-col sm:flex-row gap-3 lg:gap-4 justify-start items-start mb-4 lg:mb-6">
-                    <motion.button
-                      whileHover={{ scale: 1.05 }}
-                      whileTap={{ scale: 0.95 }}
+                  <motion.button
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
                       onClick={() => {
                         trackBookingInquiry('Wedding', 'Toronto')
                         setShowLeadModal(true)
                       }}
                       className="bg-[#fce4a6] text-black px-5 py-2 lg:px-6 lg:py-3 rounded-full font-bold text-sm lg:text-base shadow-lg hover:shadow-xl transition-all group"
-                    >
-                      Book Now
-                      <FiArrowRight className="inline ml-2 group-hover:translate-x-1 transition-transform" />
-                    </motion.button>
-                  </div>
-                </motion.div>
+                  >
+                    Book Now
+                    <FiArrowRight className="inline ml-2 group-hover:translate-x-1 transition-transform" />
+                  </motion.button>
+                </div>
+              </motion.div>
 
                 {/* Right Side - Image */}
                 <motion.div
@@ -191,9 +325,11 @@ export default function Wedding() {
                 >
                   <div className="relative">
                     <img
-                      src="/images/IMG_0955.JPEG"
+                      src="/images/wedding1.jpg"
                       alt="Robot Photobooth at Wedding"
                       className="w-full h-auto max-h-64 object-contain rounded-xl shadow-2xl"
+                      loading="eager"
+                      fetchPriority="high"
                     />
                   </div>
                 </motion.div>
@@ -204,39 +340,20 @@ export default function Wedding() {
           {/* Video Section */}
           <section className="py-4 px-4 bg-white">
             <div className="max-w-6xl mx-auto">
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                className="text-center mb-4"
-              >
+              <UltraLightMotion className="text-center mb-4">
                 <h2 className="text-lg md:text-2xl lg:text-3xl font-black mb-3 lg:mb-4 text-black">Wedding Robot Photobooth in Action</h2>
-              </motion.div>
-                            <div className="flex justify-center -mx-8">
-              <motion.div
-                initial={{ opacity: 0, scale: 0.95 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }}
-                transition={{ delay: 0.2 }}
-                  className="relative w-screen"
-              >
-                <video
-                    className="w-full h-auto max-h-64"
-                  autoPlay
-                  loop
-                  muted
-                  playsInline
-                    controls={false}
-                    preload="auto"
-                    disablePictureInPicture
-                    disableRemotePlayback
-                    webkit-playsinline="true"
-                    onPlay={() => trackVideoView('Wedding Robot Photobooth')}
-                >
-                  <source src="/videos/Wedding.mov" type="video/mp4" />
-                  Your browser does not support the video tag.
-                </video>
-              </motion.div>
+              </UltraLightMotion>
+              <div className="flex justify-center -mx-8">
+                <UltraLightMotion className="relative w-screen" delay={0.2}>
+                  <Suspense fallback={<div className="w-full h-64 bg-gray-200 flex items-center justify-center"><div className="text-gray-500">Loading...</div></div>}>
+                    <LazyVideo
+                      src="/videos/Wedding.mov"
+                      className="w-full h-auto max-h-64"
+                      onPlay={() => trackVideoView('Wedding Robot Photobooth')}
+                      alt="Wedding Robot Photobooth in Action"
+                    />
+                  </Suspense>
+                </UltraLightMotion>
               </div>
             </div>
           </section>
@@ -244,30 +361,22 @@ export default function Wedding() {
           {/* Key Benefits Section */}
           <section className="py-4 px-4 bg-white">
             <div className="max-w-6xl mx-auto">
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                className="text-center mb-6"
-              >
+              <UltraLightMotion className="text-center mb-6">
                 <h2 className="text-lg md:text-2xl lg:text-3xl font-black mb-3 lg:mb-4 text-black">Why Couples Love Our Robot Photobooth & 360 Photo Booth</h2>
                 <p className="text-sm md:text-base lg:text-lg text-black/80 max-w-2xl mx-auto">
                   Elegant, interactive, and unforgettable robot photobooth and 360 photo booth experiences that make your wedding day truly special across the GTA & surrounding areas!
                 </p>
-              </motion.div>
+              </UltraLightMotion>
               <div className="grid grid-cols-3 gap-2 md:gap-4">
                 {benefits.map((benefit, index) => (
-                  <motion.div
+                  <UltraLightMotion
                     key={index}
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: index * 0.1 }}
+                    delay={index * 0.1}
                     className="bg-black p-2 md:p-4 rounded-xl shadow-lg border border-[#fce4a6]/20 hover:shadow-xl transition-all text-center"
                   >
                     <div className="text-lg md:text-2xl mb-1 md:mb-2 text-[#fce4a6]">{benefit.icon}</div>
                     <h3 className="text-xs md:text-sm font-bold text-[#fce4a6]">{benefit.title}</h3>
-                  </motion.div>
+                  </UltraLightMotion>
                 ))}
               </div>
             </div>
@@ -276,39 +385,23 @@ export default function Wedding() {
           {/* Second Video Section */}
           <section className="py-4 px-4 bg-white">
             <div className="max-w-6xl mx-auto">
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                className="text-center mb-4"
-              >
+              <UltraLightMotion className="text-center mb-4">
                 <h2 className="text-lg md:text-2xl lg:text-3xl font-black mb-3 lg:mb-4 text-black">Wedding Robot Photobooth Experience</h2>
-              </motion.div>
+              </UltraLightMotion>
               <div className="flex justify-center -mx-8">
-                <motion.div
-                  initial={{ opacity: 0, scale: 0.95 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: 0.2 }}
+                <UltraLightMotion
+                  delay={0.2}
                   className="relative w-screen"
                 >
-                  <video
-                    className="w-full h-auto max-h-64"
-                    autoPlay
-                    loop
-                    muted
-                    playsInline
-                    controls={false}
-                    preload="auto"
-                    disablePictureInPicture
-                    disableRemotePlayback
-                    webkit-playsinline="true"
-                    onPlay={() => trackVideoView('Wedding Robot Photobooth Experience')}
-                  >
-                    <source src="/videos/wedding2.mov" type="video/mp4" />
-                    Your browser does not support the video tag.
-                  </video>
-                </motion.div>
+                  <Suspense fallback={<div className="w-full h-64 bg-gray-200 flex items-center justify-center"><div className="text-gray-500">Loading...</div></div>}>
+                    <LazyVideo
+                      src="/videos/wedding2.mov"
+                      className="w-full h-auto max-h-64"
+                      onPlay={() => trackVideoView('Wedding Robot Photobooth Experience')}
+                      alt="Wedding Robot Photobooth Experience"
+                    />
+                  </Suspense>
+                </UltraLightMotion>
               </div>
             </div>
           </section>
@@ -316,11 +409,7 @@ export default function Wedding() {
           {/* Call Now CTA Section */}
           <section className="py-8 px-4 bg-black">
             <div className="max-w-4xl mx-auto text-center">
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-              >
+              <UltraLightMotion className="">
                 <h2 className="text-lg md:text-xl font-bold mb-3 text-[#fce4a6]">Ready to Make Your Wedding Unforgettable?</h2>
                 <p className="text-white/90 text-sm mb-4">
                   Call us now to discuss your special day and get instant pricing
@@ -335,21 +424,16 @@ export default function Wedding() {
                   <FiPhone className="w-5 h-5" />
                   Call Now: 289-301-4039
                 </motion.a>
-              </motion.div>
+              </UltraLightMotion>
             </div>
           </section>
 
           {/* Social Proof Section */}
           <section className="py-8 px-4 bg-black">
             <div className="max-w-6xl mx-auto">
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                className="text-center mb-8"
-              >
-                <h2 className="text-lg md:text-2xl lg:text-3xl font-black mb-3 text-[#fce4a6]">Trusted by Toronto's Happiest Couples</h2>
-                <p className="text-white/80 text-sm md:text-base mb-4">Couples and families choose Robo Booth for their most important day</p>
+              <UltraLightMotion className="text-center mb-8">
+                <h2 className="text-lg md:text-2xl lg:text-3xl font-black mb-3 text-[#fce4a6]">Trusted by Toronto's Happy Couples</h2>
+                <p className="text-white/80 text-sm md:text-base mb-4">Couples choose Robo Booth for their most important day</p>
                 
                 {/* Google Rating */}
                 <div className="flex items-center justify-center gap-2 mb-6">
@@ -374,7 +458,7 @@ export default function Wedding() {
                     </div>
                   </a>
                 </div>
-              </motion.div>
+              </UltraLightMotion>
               
               {/* Static Testimonial Cards */}
               <div className="grid grid-cols-3 gap-2 md:gap-4">
@@ -403,54 +487,43 @@ export default function Wedding() {
           {/* Image Gallery Section */}
           <section className="py-4 px-4 bg-white">
             <div className="max-w-6xl mx-auto">
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                className="text-center mb-4"
-              >
+              <UltraLightMotion className="text-center mb-4">
                 <h2 className="text-lg md:text-2xl lg:text-3xl font-black mb-3 lg:mb-4 text-black">Wedding Robot Photobooth Gallery</h2>
-              </motion.div>
+              </UltraLightMotion>
               <div className="flex justify-center gap-4">
-                <motion.div
-                  initial={{ opacity: 0, scale: 0.95 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: 0.2 }}
+                <UltraLightMotion
+                  delay={0.2}
                   className="relative w-1/3"
                 >
                   <img
                     src="/images/wedding1.jpg"
                     alt="Wedding Robot Photobooth"
                     className="w-full h-64 object-cover"
+                    loading="lazy"
                   />
-                </motion.div>
-                <motion.div
-                  initial={{ opacity: 0, scale: 0.95 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: 0.3 }}
+                </UltraLightMotion>
+                <UltraLightMotion
+                  delay={0.3}
                   className="relative w-1/3"
                 >
                   <img
                     src="/images/wedding2.PNG"
                     alt="Robot Photobooth"
                     className="w-full h-64 object-cover"
+                    loading="lazy"
                   />
-                </motion.div>
-                <motion.div
-                  initial={{ opacity: 0, scale: 0.95 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: 0.4 }}
+                </UltraLightMotion>
+                <UltraLightMotion
+                  delay={0.4}
                   className="relative w-1/3"
                 >
                   <img
                     src="/images/corporate3.png"
                     alt="Corporate Robot Photobooth"
                     className="w-full h-64 object-cover"
+                    loading="lazy"
                   />
-                </motion.div>
+                </UltraLightMotion>
               </div>
             </div>
           </section>
@@ -458,30 +531,22 @@ export default function Wedding() {
           {/* Package Highlights */}
           <section className="py-4 px-4 bg-white">
             <div className="max-w-6xl mx-auto">
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                className="text-center mb-6"
-              >
+              <UltraLightMotion className="text-center mb-6">
                 <h2 className="text-lg md:text-2xl lg:text-3xl font-black mb-3 text-black">Wedding Package Includes</h2>
                 <p className="text-sm md:text-base text-black/80">Everything you need for a magical wedding celebration</p>
-              </motion.div>
+              </UltraLightMotion>
               <div className="grid grid-cols-3 gap-2 md:gap-4">
                 {packageFeatures.map((feature, index) => (
-                  <motion.div
+                  <UltraLightMotion
                     key={index}
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: index * 0.1 }}
+                    delay={index * 0.05}
                     className="bg-black p-2 md:p-4 rounded-xl shadow-lg border border-[#fce4a6]/20 text-center"
                   >
                     <div className="text-[#fce4a6] mb-2">
                       <FiCheck className="w-4 h-4 md:w-5 md:h-5 mx-auto" />
                     </div>
                     <h3 className="text-[#fce4a6] font-bold text-xs md:text-sm">{feature.title}</h3>
-                  </motion.div>
+                  </UltraLightMotion>
                 ))}
               </div>
             </div>
@@ -490,23 +555,15 @@ export default function Wedding() {
           {/* FAQ Section */}
           <section className="py-8 px-4 bg-black">
             <div className="max-w-4xl mx-auto">
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                className="text-center mb-8"
-              >
+              <UltraLightMotion className="text-center mb-8">
                 <h2 className="text-lg md:text-2xl lg:text-3xl font-black mb-3 text-[#fce4a6]">Frequently Asked Questions</h2>
                 <p className="text-white/80 text-sm md:text-base">Everything you need to know about our wedding services</p>
-              </motion.div>
+              </UltraLightMotion>
               <div className="grid grid-cols-3 gap-2 md:gap-4">
                 {faqs.map((faq, index) => (
-                  <motion.div
+                  <UltraLightMotion
                     key={index}
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: index * 0.1 }}
+                    delay={index * 0.05}
                     className="bg-white/5 p-3 md:p-4 rounded-xl border border-white/10 cursor-pointer"
                     onClick={() => setExpandedFaq(expandedFaq === index ? null : index)}
                   >
@@ -530,7 +587,7 @@ export default function Wedding() {
                         {faq.answer}
                       </motion.p>
                     )}
-                  </motion.div>
+                  </UltraLightMotion>
                 ))}
               </div>
             </div>
@@ -539,12 +596,7 @@ export default function Wedding() {
           {/* Trust/Guarantee Section */}
           <section className="py-8 px-4 bg-white">
             <div className="max-w-4xl mx-auto text-center">
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                className="bg-gradient-to-r from-black to-gray-800 rounded-xl p-4 md:p-6 text-white"
-              >
+              <UltraLightMotion className="bg-gradient-to-r from-black to-gray-800 rounded-xl p-4 md:p-6 text-white">
                 <h2 className="text-lg md:text-2xl font-bold mb-2 text-[#fce4a6]">Professional & Reliable</h2>
                 <p className="text-white/90 text-sm md:text-base mb-3">
                   Professional team with 100+ beautiful weddings hosted in Toronto. Fully insured & licensed.
@@ -563,18 +615,14 @@ export default function Wedding() {
                     <div className="text-white/80 text-xs md:text-sm">Support Available</div>
                   </div>
                 </div>
-              </motion.div>
+              </UltraLightMotion>
             </div>
           </section>
 
           {/* Final CTA Section */}
           <section className="py-12 px-4 bg-black">
             <div className="max-w-4xl mx-auto text-center">
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-              >
+              <UltraLightMotion className="">
                 <h2 className="text-3xl font-bold mb-3 text-[#fce4a6]">Ready to Make Your Wedding Unforgettable?</h2>
                 <p className="text-white/90 text-base mb-6">
                   Get instant pricing and availability for your special day
@@ -591,7 +639,7 @@ export default function Wedding() {
                   Book Now
                   <FiArrowRight className="inline ml-2 group-hover:translate-x-1 transition-transform" />
                 </motion.button>
-              </motion.div>
+              </UltraLightMotion>
             </div>
           </section>
         </div>
@@ -614,7 +662,7 @@ export default function Wedding() {
             <h2 className="text-2xl font-bold text-black mb-4 text-center">Enter your details below!</h2>
             <p className="text-black/80 mb-6 text-center">Enter your details so we can give you a call and create a customized package for your wedding.</p>
             {leadSuccess ? (
-              <div className="text-green-600 text-center font-bold py-8">Thank you! We’ll be in touch soon.</div>
+              <div className="text-green-600 text-center font-bold py-8">Thank you! We'll be in touch soon.</div>
             ) : (
               <form onSubmit={handleLeadSubmit} className="space-y-4">
                 <div>
@@ -691,24 +739,24 @@ export default function Wedding() {
 
 const benefits = [
   {
-    icon: '💍',
-    title: 'Elegant & Romantic',
-    description: 'Beautiful photo experiences that match your wedding theme and style.'
+    icon: '💒',
+    title: 'Wedding Perfect',
+    description: 'Elegant photo experiences that match your wedding theme and style.'
   },
   {
     icon: '📸',
     title: 'Stunning Photos & Videos',
-    description: 'Capture every magical moment with professional quality.'
+    description: 'Capture every magical moment with professional quality for your memories.'
   },
   {
     icon: '🤖',
     title: 'Interactive Robot Photobooth',
-    description: 'A unique, fun, and memorable experience for your guests.'
+    description: 'A unique, engaging experience that wows your guests and creates lasting memories.'
   },
   {
     icon: '🎉',
-    title: 'Perfect for Receptions & Parties',
-    description: 'Keep the celebration going with interactive entertainment.'
+    title: 'Perfect for Celebrations',
+    description: 'Enhance your wedding reception and create unforgettable guest experiences.'
   },
   {
     icon: '👰',
@@ -780,31 +828,4 @@ const testimonials = [
     title: 'Bride & Groom',
     text: 'We wanted something unique for our wedding and Robo Booth delivered. The custom overlays were beautiful.'
   }
-]
-
-function TestimonialCarousel() {
-  const [index, setIndex] = useState(0)
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setIndex((prev) => (prev + 1) % testimonials.length)
-    }, 5000)
-    return () => clearInterval(timer)
-  }, [])
-  const testimonial = testimonials[index]
-  return (
-    <motion.div
-      key={index}
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: -20 }}
-      transition={{ duration: 0.5 }}
-      className="bg-gradient-to-r from-[#fce4a6] to-[#a49056] rounded-2xl p-8 md:p-12 text-center min-h-[220px] flex flex-col justify-center"
-    >
-      <div className="text-4xl mb-4">"</div>
-      <p className="text-black text-xl md:text-2xl font-medium mb-6 max-w-4xl mx-auto">
-        {testimonial.text}
-      </p>
-      <div className="text-black font-bold">- {testimonial.title}, {testimonial.couple}</div>
-    </motion.div>
-  )
-} 
+] 
