@@ -345,7 +345,7 @@ export default function Corporate() {
               <div className="flex justify-center -mx-8">
                 <UltraLightMotion className="relative w-screen" delay={0.2}>
                   <UltraLightVideo
-                    src="/videos/Corporate.mov"
+                    src="/videos/Corporate.mp4"
                     className="w-full h-auto max-h-64"
                     onPlay={() => trackVideoView('Corporate Robot Photobooth')}
                     alt="Corporate Robot Photobooth in Action"
@@ -388,7 +388,7 @@ export default function Corporate() {
               <div className="flex justify-center -mx-8">
                 <UltraLightMotion className="relative w-screen" delay={0.2}>
                   <UltraLightVideo
-                    src="/videos/corporate2.mov"
+                    src="/videos/corporate2.mp4"
                     className="w-full h-auto max-h-64"
                     onPlay={() => trackVideoView('Corporate Robot Photobooth Experience')}
                     alt="Corporate Robot Photobooth Experience"
