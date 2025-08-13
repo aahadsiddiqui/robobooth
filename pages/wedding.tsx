@@ -278,8 +278,7 @@ export default function Wedding() {
             {/* Background Video/Image */}
             <div className="absolute inset-0 z-0">
               <div className="absolute inset-0 bg-gradient-to-b from-black/50 to-black/80"></div>
-              {/* Remove heavy background image and use solid color instead */}
-              <div className="absolute inset-0 bg-gradient-to-br from-purple-900 via-pink-900 to-red-900 opacity-60"></div>
+              <div className="absolute inset-0 hero-bg bg-cover bg-center bg-no-repeat opacity-40 scale-125"></div>
             </div>
 
             {/* Hero Content */}
@@ -315,7 +314,7 @@ export default function Wedding() {
                 </div>
               </motion.div>
 
-                {/* Right Side - Image - Replace with lightweight placeholder */}
+                {/* Right Side - Image */}
                 <motion.div
                   initial={{ opacity: 0, x: 30 }}
                   animate={{ opacity: 1, x: 0 }}
@@ -323,13 +322,14 @@ export default function Wedding() {
                   className="flex-shrink-0 flex items-center justify-center w-1/3"
                 >
                   <div className="relative">
-                    {/* Replace heavy image with lightweight placeholder */}
-                    <div className="w-full h-64 bg-gradient-to-br from-[#fce4a6] to-[#a49056] rounded-xl shadow-2xl flex items-center justify-center">
-                      <div className="text-center text-black">
-                        <div className="text-4xl mb-2">🤖</div>
-                        <div className="text-sm font-bold">Robot Photobooth</div>
-                      </div>
-                    </div>
+                    <img
+                      src="/images/wedding1.jpg"
+                      alt="Robot Photobooth at Wedding"
+                      className="w-full h-auto max-h-64 object-contain rounded-xl shadow-2xl"
+                      loading="eager"
+                      fetchPriority="high"
+                      decoding="async"
+                    />
                   </div>
                 </motion.div>
               </div>
@@ -513,7 +513,7 @@ export default function Wedding() {
                   className="relative w-1/3"
                 >
                   <img
-                    src="/images/corporate3.png"
+                    src="/images/corporate3.jpeg"
                     alt="Corporate Robot Photobooth"
                     className="w-full h-64 object-cover"
                     loading="lazy"
