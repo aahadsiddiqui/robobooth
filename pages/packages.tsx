@@ -102,7 +102,7 @@ export default function Packages() {
   const roboControls = useAnimation()
   const booth360Controls = useAnimation()
   const [showOfferModal, setShowOfferModal] = useState(false)
-  const [offerForm, setOfferForm] = useState({ phone: '', email: '' })
+  const [offerForm, setOfferForm] = useState({ firstName: '', phone: '', email: '' })
   const [offerSubmitting, setOfferSubmitting] = useState(false)
   const [offerSuccess, setOfferSuccess] = useState(false)
   const router = useRouter()
@@ -160,6 +160,7 @@ export default function Packages() {
     setOfferSubmitting(true)
     try {
       const formData = new FormData()
+      formData.append('first-name', offerForm.firstName)
       formData.append('phone-number', offerForm.phone)
       formData.append('_replyto', offerForm.email)
       const response = await fetch('https://formspree.io/f/xkgoedyp', {
@@ -481,6 +482,18 @@ export default function Packages() {
                 <div className="text-green-600 text-center font-bold py-8">Thank you! We’ll be in touch soon.</div>
               ) : (
                 <form onSubmit={handleOfferSubmit} className="space-y-4">
+                  <div>
+                    <label className="block text-sm font-medium text-black mb-1">First Name *</label>
+                    <input
+                      type="text"
+                      name="firstName"
+                      value={offerForm.firstName}
+                      onChange={handleOfferInput}
+                      required
+                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#fce4a6] focus:border-transparent"
+                      placeholder="John"
+                    />
+                  </div>
                   <div>
                     <label className="block text-sm font-medium text-black mb-1">Phone Number *</label>
                     <input
