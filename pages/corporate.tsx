@@ -339,6 +339,27 @@ export default function Corporate() {
             </div>
           </section>
 
+          {/* Company Logos Marquee */}
+          <section className="py-8 bg-black overflow-hidden border-b border-[#fce4a6]/20">
+            <div className="max-w-6xl mx-auto px-4 mb-6 text-center">
+              <h2 className="text-lg md:text-xl font-bold text-[#fce4a6]">Trusted by Leading Companies</h2>
+            </div>
+            <div className="relative w-full overflow-hidden">
+              <div className="animate-marquee flex items-center gap-12 px-4">
+                {/* Double the logos for seamless loop */}
+                {[...companyLogos, ...companyLogos].map((logo, index) => (
+                  <div key={index} className="flex-shrink-0 w-32 h-16 relative flex items-center justify-center">
+                    <img
+                      src={logo}
+                      alt="Company Logo"
+                      className="max-w-full max-h-full object-contain filter brightness-0 invert opacity-80 hover:opacity-100 transition-opacity"
+                    />
+                  </div>
+                ))}
+              </div>
+            </div>
+          </section>
+
           {/* Video Section */}
           <section className="py-4 px-4 bg-white">
             <div className="max-w-6xl mx-auto">
@@ -854,6 +875,22 @@ function TestimonialCarousel() {
     </motion.div>
   )
 }
+
+const companyLogos = [
+  '/images/bell.png',
+  '/images/bgo.png',
+  '/images/equifax.svg',
+  '/images/geotab.png',
+  '/images/infosys.png',
+  '/images/meta.png',
+  '/images/pdsb.png',
+  '/images/pearson.png',
+  '/images/remax.png',
+  '/images/rlp.svg',
+  '/images/stonex.png',
+  '/images/talent.png',
+  '/images/torontopearson.png'
+]
 
 // Add this to your global CSS (e.g., styles/globals.css) if not present:
 // .animate-marquee { animation: marquee 30s linear infinite; }
