@@ -102,7 +102,14 @@ export default function Packages() {
   const roboControls = useAnimation()
   const booth360Controls = useAnimation()
   const [showOfferModal, setShowOfferModal] = useState(false)
-  const [offerForm, setOfferForm] = useState({ firstName: '', phone: '', email: '' })
+  const [offerForm, setOfferForm] = useState({
+    firstName: '',
+    phone: '',
+    email: '',
+    eventDate: '',
+    eventType: '',
+    budget: ''
+  })
   const [offerSubmitting, setOfferSubmitting] = useState(false)
   const [offerSuccess, setOfferSuccess] = useState(false)
   const router = useRouter()
@@ -137,8 +144,8 @@ export default function Packages() {
     const setActiveImage = type === 'robo' ? setActiveRoboImage : setActive360Image
     const controls = type === 'robo' ? roboControls : booth360Controls
 
-    const newIndex = direction === 'next' 
-      ? (currentIndex + 1) % images.length 
+    const newIndex = direction === 'next'
+      ? (currentIndex + 1) % images.length
       : (currentIndex - 1 + images.length) % images.length
 
     setActiveImage(newIndex)
@@ -152,7 +159,7 @@ export default function Packages() {
     handleImageChange(direction === 'left' ? 'next' : 'prev', type)
   }
 
-  const handleOfferInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleOfferInput = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     setOfferForm({ ...offerForm, [e.target.name]: e.target.value })
   }
   const handleOfferSubmit = async (e: React.FormEvent) => {
@@ -163,6 +170,10 @@ export default function Packages() {
       formData.append('first-name', offerForm.firstName)
       formData.append('phone-number', offerForm.phone)
       formData.append('_replyto', offerForm.email)
+      formData.append('event-date', offerForm.eventDate)
+      formData.append('event-type', offerForm.eventType)
+      formData.append('budget', offerForm.budget)
+
       const response = await fetch('https://formspree.io/f/xkgoedyp', {
         method: 'POST',
         body: formData,
@@ -302,7 +313,7 @@ export default function Packages() {
 
           {/* Image Carousel */}
           <div className="relative aspect-[4/3] mb-12 rounded-3xl overflow-hidden group">
-            <motion.div 
+            <motion.div
               className="absolute inset-0"
               drag="x"
               dragConstraints={{ left: 0, right: 0 }}
@@ -351,9 +362,8 @@ export default function Packages() {
                 <button
                   key={index}
                   onClick={() => setActive360Image(index)}
-                  className={`w-3 h-3 rounded-full transition-colors ${
-                    active360Image === index ? 'bg-[#fce4a6]' : 'bg-white/50'
-                  }`}
+                  className={`w-3 h-3 rounded-full transition-colors ${active360Image === index ? 'bg-[#fce4a6]' : 'bg-white/50'
+                    }`}
                 />
               ))}
             </div>
@@ -425,9 +435,8 @@ export default function Packages() {
                   >
                     <h4 className="text-lg font-semibold text-white">{faq.question}</h4>
                     <svg
-                      className={`w-5 h-5 transform transition-transform text-[#fce4a6] ${
-                        openFaq === index ? 'rotate-180' : ''
-                      }`}
+                      className={`w-5 h-5 transform transition-transform text-[#fce4a6] ${openFaq === index ? 'rotate-180' : ''
+                        }`}
                       fill="none"
                       stroke="currentColor"
                       viewBox="0 0 24 24"
@@ -517,6 +526,48 @@ export default function Packages() {
                       className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#fce4a6] focus:border-transparent"
                       placeholder="you@email.com"
                     />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-black mb-1">Date of Event *</label>
+                    <input
+                      type="date"
+                      name="eventDate"
+                      value={offerForm.eventDate}
+                      onChange={handleOfferInput}
+                      required
+                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#fce4a6] focus:border-transparent"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-black mb-1">Type of Event *</label>
+                    <select
+                      name="eventType"
+                      value={offerForm.eventType}
+                      onChange={handleOfferInput}
+                      required
+                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#fce4a6] focus:border-transparent"
+                    >
+                      <option value="">Select event type</option>
+                      <option value="Corporate">Corporate</option>
+                      <option value="Wedding">Wedding</option>
+                      <option value="Party">Party</option>
+                      <option value="Other">Other</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-black mb-1">Budget *</label>
+                    <select
+                      name="budget"
+                      value={offerForm.budget}
+                      onChange={handleOfferInput}
+                      required
+                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#fce4a6] focus:border-transparent"
+                    >
+                      <option value="">Select budget</option>
+                      <option value="$1000-$1500">$1000-$1500</option>
+                      <option value="$1500-$2000">$1500-$2000</option>
+                      <option value="$2000+">$2000+</option>
+                    </select>
                   </div>
                   <button
                     type="submit"

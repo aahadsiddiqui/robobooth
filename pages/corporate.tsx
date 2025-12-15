@@ -352,7 +352,7 @@ export default function Corporate() {
                     <img
                       src={logo}
                       alt="Company Logo"
-                      className="max-w-full max-h-full object-contain filter brightness-0 invert opacity-80 hover:opacity-100 transition-opacity"
+                      className={`max-w-full max-h-full object-contain opacity-80 hover:opacity-100 transition-opacity ${logo.includes('td.png') ? '' : 'filter brightness-0 invert'}`}
                     />
                   </div>
                 ))}
@@ -884,11 +884,11 @@ const companyLogos = [
   '/images/infosys.png',
   '/images/meta.png',
   '/images/pdsb.png',
-  '/images/pearson.png',
   '/images/remax.png',
   '/images/rlp.svg',
   '/images/stonex.png',
   '/images/talent.png',
+  '/images/td.png',
   '/images/torontopearson.png'
 ]
 
