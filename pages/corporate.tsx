@@ -175,7 +175,14 @@ export default function Corporate() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
     // Track form submission
-    trackFormSubmission('Corporate Inquiry', 'Toronto')
+    trackFormSubmission('Corporate Inquiry', 'Toronto', {
+      fn: formData.name.split(' ')[0],
+      ln: formData.name.split(' ').slice(1).join(' '),
+      em: formData.email,
+      ph: formData.phone,
+      ct: 'Toronto',
+      country: 'CA'
+    })
     // Handle form submission
     console.log('Form submitted:', formData)
   }
@@ -195,7 +202,13 @@ export default function Corporate() {
     setLeadSubmitting(true)
     try {
       // Track lead generation
-      trackLead('Corporate Lead Modal', 'Toronto')
+      trackLead('Corporate Lead Modal', 'Toronto', {
+        fn: leadForm.firstName,
+        em: leadForm.email,
+        ph: leadForm.phone,
+        ct: 'Toronto',
+        country: 'CA'
+      })
 
       const formData = new FormData()
       formData.append('first-name', leadForm.firstName)

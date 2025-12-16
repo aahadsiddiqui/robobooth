@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import Head from 'next/head'
 import { motion, AnimatePresence } from 'framer-motion'
 import CornerNav from '../components/CornerNav'
+import { useMetaPixel } from '../hooks/useMetaPixel'
 
 const Toast = ({ message }: { message: string }) => (
   <motion.div
@@ -39,6 +40,7 @@ export default function Contact() {
   const [showToast, setShowToast] = useState(false)
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [navActive, setNavActive] = useState(false)
+  const { trackFormSubmission } = useMetaPixel()
 
   return (
     <div className="min-h-screen w-full bg-black text-white pb-12">
@@ -88,8 +90,22 @@ export default function Contact() {
                   onSubmit={async (e) => {
                     e.preventDefault()
                     setIsSubmitting(true)
+                    setIsSubmitting(true)
+
+                    const form = e.target as HTMLFormElement
+                    const formDataObj = new FormData(form)
+
+                    // Track form submission
+                    trackFormSubmission('Contact Page Form', 'Toronto', {
+                      fn: formDataObj.get('full-name')?.toString().split(' ')[0],
+                      ln: formDataObj.get('full-name')?.toString().split(' ').slice(1).join(' '),
+                      em: formDataObj.get('_replyto')?.toString(),
+                      ph: formDataObj.get('phone-number')?.toString(),
+                      ct: 'Toronto',
+                      country: 'CA'
+                    })
+
                     try {
-                      const form = e.target as HTMLFormElement
                       const formData = new FormData(form)
                       const response = await fetch('https://formspree.io/f/xkgoedyp', {
                         method: 'POST',

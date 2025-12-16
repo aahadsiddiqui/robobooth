@@ -6,6 +6,7 @@ import CornerNav from '../components/CornerNav'
 import Image from 'next/image'
 import { FiChevronLeft, FiChevronRight } from 'react-icons/fi'
 import { useRouter } from 'next/router'
+import { useMetaPixel } from '../hooks/useMetaPixel'
 
 // Testimonials and Carousel
 const testimonials = [
@@ -113,6 +114,7 @@ export default function Packages() {
   const [offerSubmitting, setOfferSubmitting] = useState(false)
   const [offerSuccess, setOfferSuccess] = useState(false)
   const router = useRouter()
+  const { trackFormSubmission } = useMetaPixel()
 
   useEffect(() => {
     const original = document.body.style.backgroundColor;
@@ -165,6 +167,16 @@ export default function Packages() {
   const handleOfferSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setOfferSubmitting(true)
+
+    // Track form submission with user data
+    trackFormSubmission('Packages Offer Form', 'Toronto', {
+      fn: offerForm.firstName,
+      ph: offerForm.phone,
+      em: offerForm.email,
+      ct: 'Toronto',
+      country: 'CA'
+    })
+
     try {
       const formData = new FormData()
       formData.append('first-name', offerForm.firstName)

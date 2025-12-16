@@ -175,7 +175,14 @@ export default function Wedding() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
     // Track form submission
-    trackFormSubmission('Wedding Inquiry', 'Toronto')
+    trackFormSubmission('Wedding Inquiry', 'Toronto', {
+      fn: formData.name.split(' ')[0],
+      ln: formData.name.split(' ').slice(1).join(' '),
+      em: formData.email,
+      ph: formData.phone,
+      ct: 'Toronto',
+      country: 'CA'
+    })
     // Handle form submission
     console.log('Form submitted:', formData)
   }
@@ -195,7 +202,13 @@ export default function Wedding() {
     setLeadSubmitting(true)
     try {
       // Track lead generation
-      trackLead('Wedding Lead Modal', 'Toronto')
+      trackLead('Wedding Lead Modal', 'Toronto', {
+        fn: leadForm.firstName,
+        em: leadForm.email,
+        ph: leadForm.phone,
+        ct: 'Toronto',
+        country: 'CA'
+      })
 
       const formData = new FormData()
       formData.append('first-name', leadForm.firstName)

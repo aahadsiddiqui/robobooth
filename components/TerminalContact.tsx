@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { FiCheckCircle, FiCalendar } from "react-icons/fi";
 import { Fragment, useEffect, useRef, useState } from "react";
+import { useMetaPixel } from "../hooks/useMetaPixel";
 
 const QUESTIONS = [
   {
@@ -324,6 +325,7 @@ const CurrentQuestion = ({
 const Summary = ({ questions, setQuestions }: { questions: typeof QUESTIONS, setQuestions: React.Dispatch<React.SetStateAction<typeof QUESTIONS>> }) => {
   const [complete, setComplete] = useState(false);
   const [sending, setSending] = useState(false);
+  const { trackFormSubmission } = useMetaPixel();
 
   const handleReset = () => {
     setQuestions((pv) => pv.map((q) => ({ ...q, value: "", complete: false })));
@@ -333,7 +335,16 @@ const Summary = ({ questions, setQuestions }: { questions: typeof QUESTIONS, set
     setSending(true);
     const formData = questions.reduce((acc, val) => {
       return { ...acc, [val.key]: val.value };
-    }, {});
+    }, {}) as any;
+
+    // Track form submission
+    trackFormSubmission('Terminal Contact Form', 'Toronto', {
+      fn: formData.name?.split(' ')[0],
+      ln: formData.name?.split(' ').slice(1).join(' '),
+      ph: formData.phone,
+      ct: 'Toronto',
+      country: 'CA'
+    });
 
     // Simulate API call
     await new Promise(resolve => setTimeout(resolve, 1500));

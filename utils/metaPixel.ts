@@ -38,18 +38,8 @@ export const initMetaPixel = () => {
   const firstScript = document.getElementsByTagName('script')[0];
   firstScript.parentNode?.insertBefore(script, firstScript);
 
-  // Initialize pixel with Manual Advanced Matching
-  // Values are set to undefined/empty initially as data is not available on load
-  window.fbq('init', META_PIXEL_ID, {
-    em: undefined, // Email
-    ph: undefined, // Phone
-    fn: undefined, // First Name
-    ln: undefined, // Last Name
-    ct: undefined, // City
-    st: undefined, // State
-    zp: undefined, // Zip
-    country: undefined, // Country
-  });
+  // Initialize pixel
+  window.fbq('init', META_PIXEL_ID);
   window.fbq('track', 'PageView');
 };
 
@@ -63,17 +53,32 @@ export const trackPageView = (url: string) => {
   });
 };
 
+export interface MetaUserData {
+  em?: string; // Email
+  ph?: string; // Phone
+  fn?: string; // First Name
+  ln?: string; // Last Name
+  ct?: string; // City
+  st?: string; // State
+  zp?: string; // Zip
+  country?: string; // Country
+}
+
 // Track custom events
-export const trackEvent = (eventName: string, parameters?: Record<string, any>) => {
+export const trackEvent = (eventName: string, parameters?: Record<string, any>, userData?: MetaUserData) => {
   if (typeof window === 'undefined' || !window.fbq) return;
 
-  window.fbq('track', eventName, parameters);
+  if (userData) {
+    window.fbq('track', eventName, parameters, userData);
+  } else {
+    window.fbq('track', eventName, parameters);
+  }
 };
 
 // Photobooth-specific event tracking
 export const trackPhotoboothEvents = {
   // Lead generation events
-  leadGenerated: (source: string, location?: string) => {
+  leadGenerated: (source: string, location?: string, userData?: MetaUserData) => {
     trackEvent('Lead', {
       content_name: 'Photobooth Lead',
       content_category: 'Lead Generation',
@@ -81,11 +86,11 @@ export const trackPhotoboothEvents = {
       currency: 'CAD',
       source: source,
       location: location || 'Toronto',
-    });
+    }, userData);
   },
 
   // Form submissions
-  formSubmitted: (formType: string, location?: string) => {
+  formSubmitted: (formType: string, location?: string, userData?: MetaUserData) => {
     trackEvent('Lead', {
       content_name: `${formType} Form Submission`,
       content_category: 'Form Submission',
@@ -93,7 +98,7 @@ export const trackPhotoboothEvents = {
       currency: 'CAD',
       form_type: formType,
       location: location || 'Toronto',
-    });
+    }, userData);
   },
 
   // Package views
@@ -120,7 +125,7 @@ export const trackPhotoboothEvents = {
   },
 
   // Booking inquiries
-  bookingInquiry: (eventType: string, location?: string) => {
+  bookingInquiry: (eventType: string, location?: string, userData?: MetaUserData) => {
     trackEvent('InitiateCheckout', {
       content_name: `${eventType} Booking Inquiry`,
       content_category: 'Booking',
@@ -128,7 +133,7 @@ export const trackPhotoboothEvents = {
       currency: 'CAD',
       event_type: eventType,
       location: location || 'Toronto',
-    });
+    }, userData);
   },
 
   // Video views

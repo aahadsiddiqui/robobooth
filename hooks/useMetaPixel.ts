@@ -1,11 +1,12 @@
 import { useEffect, useCallback } from 'react';
 import { useRouter } from 'next/router';
-import { 
-  initMetaPixel, 
-  trackPageView, 
-  trackPhotoboothEvents, 
+import {
+  initMetaPixel,
+  trackPageView,
+  trackPhotoboothEvents,
   trackLocationEvent,
-  GTA_CITIES 
+  GTA_CITIES,
+  MetaUserData
 } from '../utils/metaPixel';
 
 export const useMetaPixel = () => {
@@ -29,12 +30,12 @@ export const useMetaPixel = () => {
   }, [router.events]);
 
   // Photobooth-specific tracking functions
-  const trackLead = useCallback((source: string, location?: string) => {
-    trackPhotoboothEvents.leadGenerated(source, location);
+  const trackLead = useCallback((source: string, location?: string, userData?: MetaUserData) => {
+    trackPhotoboothEvents.leadGenerated(source, location, userData);
   }, []);
 
-  const trackFormSubmission = useCallback((formType: string, location?: string) => {
-    trackPhotoboothEvents.formSubmitted(formType, location);
+  const trackFormSubmission = useCallback((formType: string, location?: string, userData?: MetaUserData) => {
+    trackPhotoboothEvents.formSubmitted(formType, location, userData);
   }, []);
 
   const trackPackageView = useCallback((packageType: string) => {
@@ -45,8 +46,8 @@ export const useMetaPixel = () => {
     trackPhotoboothEvents.contactClicked(page, location);
   }, []);
 
-  const trackBookingInquiry = useCallback((eventType: string, location?: string) => {
-    trackPhotoboothEvents.bookingInquiry(eventType, location);
+  const trackBookingInquiry = useCallback((eventType: string, location?: string, userData?: MetaUserData) => {
+    trackPhotoboothEvents.bookingInquiry(eventType, location, userData);
   }, []);
 
   const trackVideoView = useCallback((videoType: string) => {
