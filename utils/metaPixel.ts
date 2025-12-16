@@ -68,11 +68,10 @@ export interface MetaUserData {
 export const trackEvent = (eventName: string, parameters?: Record<string, any>, userData?: MetaUserData) => {
   if (typeof window === 'undefined' || !window.fbq) return;
 
-  if (userData) {
-    window.fbq('track', eventName, parameters, userData);
-  } else {
-    window.fbq('track', eventName, parameters);
-  }
+  // Merge userData into parameters as per user's example
+  const finalParams = userData ? { ...parameters, ...userData } : parameters;
+
+  window.fbq('track', eventName, finalParams);
 };
 
 // Photobooth-specific event tracking
