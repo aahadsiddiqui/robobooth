@@ -19,7 +19,7 @@ export const initMetaPixel = () => {
   if (window.fbq) return;
 
   // Create fbq function
-  window.fbq = function() {
+  window.fbq = function () {
     window.fbq.callMethod ? window.fbq.callMethod.apply(window.fbq, arguments) : window.fbq.queue.push(arguments);
   };
 
@@ -33,20 +33,30 @@ export const initMetaPixel = () => {
   const script = document.createElement('script');
   script.async = true;
   script.src = 'https://connect.facebook.net/en_US/fbevents.js';
-  
+
   // Insert script
   const firstScript = document.getElementsByTagName('script')[0];
   firstScript.parentNode?.insertBefore(script, firstScript);
 
-  // Initialize pixel
-  window.fbq('init', META_PIXEL_ID);
+  // Initialize pixel with Manual Advanced Matching
+  // Values are set to undefined/empty initially as data is not available on load
+  window.fbq('init', META_PIXEL_ID, {
+    em: undefined, // Email
+    ph: undefined, // Phone
+    fn: undefined, // First Name
+    ln: undefined, // Last Name
+    ct: undefined, // City
+    st: undefined, // State
+    zp: undefined, // Zip
+    country: undefined, // Country
+  });
   window.fbq('track', 'PageView');
 };
 
 // Track page views
 export const trackPageView = (url: string) => {
   if (typeof window === 'undefined' || !window.fbq) return;
-  
+
   window.fbq('track', 'PageView', {
     page_title: document.title,
     page_location: url,
@@ -56,7 +66,7 @@ export const trackPageView = (url: string) => {
 // Track custom events
 export const trackEvent = (eventName: string, parameters?: Record<string, any>) => {
   if (typeof window === 'undefined' || !window.fbq) return;
-  
+
   window.fbq('track', eventName, parameters);
 };
 
@@ -198,6 +208,6 @@ export const trackLocationEvent = (eventName: string, city: string, additionalPa
     country: 'Canada',
     ...additionalParams
   };
-  
+
   trackEvent(eventName, params);
 }; 
