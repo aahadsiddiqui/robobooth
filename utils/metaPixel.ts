@@ -71,6 +71,7 @@ export const trackEvent = (eventName: string, parameters?: Record<string, any>, 
   // Merge userData into parameters as per user's example
   const finalParams = userData ? { ...parameters, ...userData } : parameters;
 
+  console.log('Meta Pixel Track:', eventName, finalParams);
   window.fbq('track', eventName, finalParams);
 };
 
