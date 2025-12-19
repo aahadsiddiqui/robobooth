@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import Head from 'next/head'
 import CornerNav from '../components/CornerNav'
-import OppoScroll from '../components/OppoScroll'
+import { AboutContent } from '../components/AboutContent'
 
 export default function About() {
   const [navActive, setNavActive] = useState(false);
@@ -21,7 +21,7 @@ export default function About() {
         <link rel="canonical" href="https://robobooth.ca/about" />
       </Head>
       <CornerNav active={navActive} setActive={setNavActive} />
-      <OppoScroll />
+      <AboutContent />
     </div>
   )
 } 

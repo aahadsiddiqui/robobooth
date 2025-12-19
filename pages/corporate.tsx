@@ -4,6 +4,7 @@ import { motion, useScroll, useTransform } from 'framer-motion'
 import { FiArrowRight, FiCheck, FiDownload, FiMail, FiPhone, FiCalendar, FiUsers, FiChevronDown, FiChevronUp } from 'react-icons/fi'
 import { useRouter } from 'next/router'
 import { useMetaPixel } from '../hooks/useMetaPixel'
+import { useUTM } from '../hooks/useUTM'
 
 // Ultra-lightweight video component with minimal overhead
 const UltraLightVideo = ({ src, className, onPlay, alt }: { src: string; className: string; onPlay?: () => void; alt: string }) => {
@@ -149,6 +150,7 @@ export default function Corporate() {
 
   const router = useRouter()
   const { trackLead, trackFormSubmission, trackContactClick, trackVideoView, trackBookingInquiry, trackPhoneClick } = useMetaPixel()
+  const utmData = useUTM()
 
   // Optimize modal timer to reduce initial load
   useEffect(() => {
@@ -181,7 +183,8 @@ export default function Corporate() {
       em: formData.email,
       ph: formData.phone,
       ct: 'Toronto',
-      country: 'CA'
+      country: 'CA',
+      ...utmData
     })
     // Handle form submission
     console.log('Form submitted:', formData)
@@ -207,7 +210,8 @@ export default function Corporate() {
         em: leadForm.email,
         ph: leadForm.phone,
         ct: 'Toronto',
-        country: 'CA'
+        country: 'CA',
+        ...utmData
       })
 
       const formData = new FormData()
@@ -219,6 +223,11 @@ export default function Corporate() {
       formData.append('budget', leadForm.budget)
       formData.append('event-type', 'Corporate')
       formData.append('_replyto', leadForm.email)
+
+      // Add UTM parameters
+      Object.entries(utmData).forEach(([key, value]) => {
+        if (value) formData.append(key, value)
+      })
       const response = await fetch('https://formspree.io/f/xkgoedyp', {
         method: 'POST',
         body: formData,

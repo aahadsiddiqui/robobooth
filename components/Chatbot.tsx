@@ -41,8 +41,8 @@ interface PackageType {
 export default function Chatbot() {
   const [isOpen, setIsOpen] = useState(false)
   const [messages, setMessages] = useState<Message[]>([
-    { 
-      type: 'bot', 
+    {
+      type: 'bot',
       text: 'Hi! 👋 I\'m RoboAssist. How can I help you today?',
       timestamp: new Date()
     }
@@ -121,7 +121,7 @@ export default function Chatbot() {
   const features = [
     {
       icon: '🤖',
-      title: 'AI Interaction',
+      title: 'Smart Interaction',
       description: 'Voice commands and gesture recognition'
     },
     {
@@ -132,7 +132,7 @@ export default function Chatbot() {
     {
       icon: '🎯',
       title: 'Smart Poses',
-      description: 'AI-powered pose guidance'
+      description: 'Interactive pose guidance'
     }
   ]
 
@@ -153,7 +153,7 @@ export default function Chatbot() {
   const handleQuickReply = (reply: QuickReply) => {
     const userMessage = { type: 'user' as const, text: reply.text, timestamp: new Date() }
     setMessages(prev => [...prev, userMessage])
-    
+
     switch (reply.action) {
       case 'availability':
         setInteractiveContent({ type: 'calendar' })
@@ -187,7 +187,7 @@ export default function Chatbot() {
       text: `I'm interested in booking for ${date}`,
       timestamp: new Date()
     }])
-    
+
     setInteractiveContent({ type: null })
     simulateBotResponse('date_selected')
   }
@@ -299,7 +299,7 @@ export default function Chatbot() {
       case 'pricing_360':
         return `360° Essential\n$250 $450 /event\n\nExperience the viral 360° booth trend\n\n✓ 2 Hours of Service\n✓ Unlimited Videos\n✓ Slow Motion Effects\n✓ Digital Gallery\n✓ Social Media Sharing\n✓ On-site Attendant\n✓ Save $200 Today!\n\nSelect Package\n\n─────────────\n\n360° Premium\n$350 $599 /event\n\nThe complete 360° experience\n\n✓ 3 Hours of Service\n✓ Unlimited Videos\n✓ Slow Motion Effects\n✓ Custom Music Selection\n✓ LED Platform\n✓ Digital Gallery\n✓ Social Media Sharing\n✓ Custom Branding\n✓ Save $249 Today!\n\nSelect Package`
       case 'features':
-        return 'Robo Booth comes with AI-powered interactions, instant photo sharing, custom branding, and much more! Want to see all features? 🤖'
+        return 'Robo Booth comes with smart interactions, instant photo sharing, custom branding, and much more! Want to see all features? 🤖'
       case 'contact':
         return 'I\'ll connect you with our sales team! Please provide your name and contact number, and they\'ll reach out within 24 hours. 📞'
       default:
@@ -319,12 +319,12 @@ export default function Chatbot() {
       }])
       return true
     }
-    
+
     // Handle booth type selection
     if (messages[messages.length - 1].field === 'boothType') {
       const is360 = text.toLowerCase().includes('360')
       const isRobo = text.toLowerCase().includes('robo')
-      
+
       if (is360 || isRobo) {
         const packages: PackageType = is360 ? {
           title: "360° Booth Packages",
@@ -351,7 +351,7 @@ export default function Chatbot() {
         return true
       }
     }
-    
+
     return false
   }
 
@@ -362,7 +362,7 @@ export default function Chatbot() {
     const userMessage = { type: 'user' as const, text: input, timestamp: new Date() }
     setMessages(prev => [...prev, userMessage])
     setInput('')
-    
+
     // Check if it's a response to a specific question
     if (!handleUserResponse(input)) {
       simulateBotResponse('default')
@@ -378,7 +378,7 @@ export default function Chatbot() {
     if (showingPricing) {
       if (text.toLowerCase().includes('360') || text.toLowerCase().includes('robo')) {
         const boothType = text.toLowerCase().includes('360') ? '360' : 'robo'
-        const pricingCards = boothType === '360' ? 
+        const pricingCards = boothType === '360' ?
           `Here are our 360° Booth packages:\n
           1. Essential Package - $250 (Regular $450)
           • 2 Hours of Service
@@ -395,9 +395,9 @@ export default function Chatbot() {
           • And more!` :
           `Here are our Robo Booth packages:\n
           [Insert Robo Booth pricing cards here]`
-        
-        setMessages(prev => [...prev, { 
-          type: 'bot', 
+
+        setMessages(prev => [...prev, {
+          type: 'bot',
           text: pricingCards,
           timestamp: new Date()
         }])
@@ -436,7 +436,7 @@ export default function Chatbot() {
         setUserInfo(prev => ({ ...prev, phone: text }))
         setCollectingInfo(false)
         setCurrentQuestion(null)
-        
+
         // Send email with user info
         const emailBody = `
           New Chat Inquiry:
@@ -446,7 +446,7 @@ export default function Chatbot() {
           Chat History:
           ${messages.map(m => `${m.type}: ${m.text}`).join('\n')}
         `
-        
+
         // Open default email client
         window.location.href = `mailto:info@robobooth.ca?subject=New Chat Inquiry&body=${encodeURIComponent(emailBody)}`
 
@@ -496,7 +496,7 @@ export default function Chatbot() {
         whileTap={{ scale: 0.9 }}
         onClick={() => setIsOpen(true)}
       >
-        <svg 
+        <svg
           className="w-6 h-6"
           fill="none"
           stroke="currentColor"
@@ -532,7 +532,7 @@ export default function Chatbot() {
                   <span className="text-xs text-white/80">Always here to help</span>
                 </div>
               </div>
-              <button 
+              <button
                 onClick={() => setIsOpen(false)}
                 className="text-white/80 hover:text-white text-xl"
               >
@@ -550,16 +550,14 @@ export default function Chatbot() {
                   className={`flex ${message.type === 'user' ? 'justify-end' : 'justify-start'}`}
                 >
                   <div
-                    className={`max-w-[80%] p-3 rounded-lg ${
-                      message.type === 'user'
+                    className={`max-w-[80%] p-3 rounded-lg ${message.type === 'user'
                         ? 'bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-br-none'
                         : 'bg-white text-gray-800 rounded-bl-none shadow-sm'
-                    }`}
+                      }`}
                   >
                     {message.text}
-                    <div className={`text-xs mt-1 ${
-                      message.type === 'user' ? 'text-white/70' : 'text-gray-500'
-                    }`}>
+                    <div className={`text-xs mt-1 ${message.type === 'user' ? 'text-white/70' : 'text-gray-500'
+                      }`}>
                       {message.timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                     </div>
                   </div>

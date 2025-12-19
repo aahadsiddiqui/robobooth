@@ -2,32 +2,40 @@ import { motion } from "framer-motion";
 
 const ScrollingTestimonials = () => {
   return (
-    <div className="bg-slate-950 py-12 overflow-x-hidden box-border">
-      <div className="mb-8 px-4 box-border">
-        <h3 className="text-slate-50 text-4xl font-semibold text-center">
-          Testimonials
-        </h3>
-        <p className="text-center text-slate-300 text-sm mt-2 max-w-lg mx-auto">
-          Hear what our clients say about Robo Booth and their unforgettable event experiences!
-        </p>
+    <div className="bg-black py-32 overflow-x-hidden box-border relative">
+      <div className="mb-20 px-4 box-border text-center relative z-10">
+        <motion.h2
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="text-white text-4xl md:text-6xl font-black mb-6 tracking-tight"
+        >
+          Trusted by <span className="text-[#fce4a6]">Hundreds</span>
+        </motion.h2>
+        <motion.p
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.1 }}
+          className="text-white/60 text-lg md:text-xl max-w-2xl mx-auto font-light"
+        >
+          Don't just take our word for it. Here's what our clients have to say about their Robo Booth experience.
+        </motion.p>
       </div>
-      <div className="p-4 overflow-x-hidden relative box-border">
-        <div className="flex flex-nowrap items-center mb-4 box-border">
-          <TestimonialList list={testimonials.top} duration={125} />
-          <TestimonialList list={testimonials.top} duration={125} />
-          <TestimonialList list={testimonials.top} duration={125} />
-        </div>
-        <div className="flex flex-nowrap items-center mb-4 box-border">
-          <TestimonialList list={testimonials.middle} duration={75} reverse />
-          <TestimonialList list={testimonials.middle} duration={75} reverse />
-          <TestimonialList list={testimonials.middle} duration={75} reverse />
+
+      <div className="space-y-12 relative z-10">
+        <div className="flex flex-nowrap items-center box-border">
+          <TestimonialList list={testimonials.top} duration={180} />
+          <TestimonialList list={testimonials.top} duration={180} />
         </div>
         <div className="flex flex-nowrap items-center box-border">
-          <TestimonialList list={testimonials.bottom} duration={275} />
-          <TestimonialList list={testimonials.bottom} duration={275} />
-          <TestimonialList list={testimonials.bottom} duration={275} />
+          <TestimonialList list={testimonials.middle} duration={140} reverse />
+          <TestimonialList list={testimonials.middle} duration={140} reverse />
         </div>
       </div>
+
+      {/* Background Glow */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-[#fce4a6]/5 rounded-full blur-[120px] pointer-events-none" />
     </div>
   );
 };
@@ -38,21 +46,34 @@ const TestimonialList = ({ list, reverse = false, duration = 50 }) => {
       initial={{ translateX: reverse ? "-100%" : "0%" }}
       animate={{ translateX: reverse ? "0%" : "-100%" }}
       transition={{ duration, repeat: Infinity, ease: "linear" }}
-      className="flex flex-nowrap px-2 box-border"
+      className="flex flex-nowrap px-8 box-border"
     >
       {list.map((t) => {
         return (
           <div
             key={t.id}
-            className="shrink-0 w-full max-w-[95vw] sm:max-w-sm md:max-w-md bg-slate-900 text-slate-50 p-6 rounded-lg relative mx-1 box-border"
+            className="shrink-0 w-[350px] md:w-[450px] bg-white/5 backdrop-blur-xl text-white p-10 rounded-[2rem] relative mx-8 box-border border border-white/10 hover:border-[#fce4a6]/30 transition-all duration-500 group shadow-2xl"
           >
-            <div className="relative">
-              <span className="block font-semibold text-lg mb-1">{t.name}</span>
-              <span className="block mb-3 text-sm font-medium text-slate-300">{t.title}</span>
-              <span className="block text-sm text-slate-300">{t.info}</span>
-              <span className="text-5xl sm:text-7xl absolute -top-4 -right-2 text-slate-700">
-                "
-              </span>
+            <div className="relative z-10">
+              <div className="flex items-center gap-1 mb-6 text-[#fce4a6]/80">
+                {[...Array(5)].map((_, i) => (
+                  <svg key={i} className="w-5 h-5 fill-current" viewBox="0 0 20 20">
+                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                  </svg>
+                ))}
+              </div>
+              <p className="text-white/80 text-lg md:text-xl font-medium mb-8 leading-relaxed">
+                "{t.info}"
+              </p>
+              <div className="flex items-center gap-4">
+                <div className="w-12 h-12 rounded-full bg-gradient-to-br from-[#fce4a6] to-[#a49056] flex items-center justify-center text-black font-bold text-xl">
+                  {t.name.charAt(0)}
+                </div>
+                <div>
+                  <span className="block font-bold text-white text-lg">{t.name}</span>
+                  <span className="block text-sm text-white/40 uppercase tracking-widest">{t.title}</span>
+                </div>
+              </div>
             </div>
           </div>
         );

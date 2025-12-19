@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import { FiCheckCircle, FiCalendar } from "react-icons/fi";
 import { Fragment, useEffect, useRef, useState } from "react";
 import { useMetaPixel } from "../hooks/useMetaPixel";
+import { useUTM } from "../hooks/useUTM";
 
 const QUESTIONS = [
   {
@@ -326,6 +327,7 @@ const Summary = ({ questions, setQuestions }: { questions: typeof QUESTIONS, set
   const [complete, setComplete] = useState(false);
   const [sending, setSending] = useState(false);
   const { trackFormSubmission } = useMetaPixel();
+  const utmData = useUTM();
 
   const handleReset = () => {
     setQuestions((pv) => pv.map((q) => ({ ...q, value: "", complete: false })));
@@ -343,15 +345,39 @@ const Summary = ({ questions, setQuestions }: { questions: typeof QUESTIONS, set
       ln: formData.name?.split(' ').slice(1).join(' '),
       ph: formData.phone,
       ct: 'Toronto',
-      country: 'CA'
+      country: 'CA',
+      ...utmData
     });
 
-    // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 1500));
+    try {
+      const submissionData = new FormData();
+      Object.entries(formData).forEach(([key, value]) => {
+        submissionData.append(key, value as string);
+      });
+      Object.entries(utmData).forEach(([key, value]) => {
+        if (value) submissionData.append(key, value);
+      });
+      submissionData.append('_subject', `New Lead from Terminal Contact Form - ${formData.name}`);
 
-    console.log(formData);
-    setSending(false);
-    setComplete(true);
+      const response = await fetch('https://formspree.io/f/xkgoedyp', {
+        method: 'POST',
+        body: submissionData,
+        headers: {
+          'Accept': 'application/json'
+        }
+      });
+
+      if (response.ok) {
+        setComplete(true);
+      } else {
+        alert('Failed to send message. Please try again.');
+      }
+    } catch (error) {
+      console.error('Error submitting form:', error);
+      alert('Failed to send message. Please try again.');
+    } finally {
+      setSending(false);
+    }
   };
 
   return (

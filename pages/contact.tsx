@@ -3,6 +3,7 @@ import Head from 'next/head'
 import { motion, AnimatePresence } from 'framer-motion'
 import CornerNav from '../components/CornerNav'
 import { useMetaPixel } from '../hooks/useMetaPixel'
+import { useUTM } from '../hooks/useUTM'
 
 const Toast = ({ message }: { message: string }) => (
   <motion.div
@@ -41,6 +42,7 @@ export default function Contact() {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [navActive, setNavActive] = useState(false)
   const { trackFormSubmission } = useMetaPixel()
+  const utmData = useUTM()
 
   return (
     <div className="min-h-screen w-full bg-black text-white pb-12">
@@ -102,11 +104,18 @@ export default function Contact() {
                       em: formDataObj.get('_replyto')?.toString(),
                       ph: formDataObj.get('phone-number')?.toString(),
                       ct: 'Toronto',
-                      country: 'CA'
+                      country: 'CA',
+                      ...utmData
                     })
 
                     try {
                       const formData = new FormData(form)
+
+                      // Add UTM parameters to Formspree submission
+                      Object.entries(utmData).forEach(([key, value]) => {
+                        if (value) formData.append(key, value)
+                      })
+
                       const response = await fetch('https://formspree.io/f/xkgoedyp', {
                         method: 'POST',
                         body: formData,

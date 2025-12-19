@@ -32,7 +32,7 @@ export default function PromoLanding() {
     <>
       <Head>
         <title>Special Offer - Robo Booth Photo Experience</title>
-        <meta name="description" content="Transform your event with our AI-powered Robo Photo Booth and 360° Photo Experience" />
+        <meta name="description" content="Transform your event with our Interactive Robo Photo Booth and 360° Photo Experience" />
       </Head>
 
       <main className="bg-gray-950 overflow-x-hidden">
@@ -41,7 +41,7 @@ export default function PromoLanding() {
         {/* Photo Gallery Section */}
         <section id="gallery" className="py-12 md:py-16 w-full">
           <div className="max-w-[1400px] mx-auto px-4">
-            <motion.h2 
+            <motion.h2
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}

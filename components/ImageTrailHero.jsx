@@ -58,7 +58,7 @@ const Copy = () => {
 const WatermarkWrapper = () => {
   return (
     <>
-      <Watermark text="AI-Powered" />
+      <Watermark text="Interactive" />
       <Watermark text="Interactive" reverse />
       <Watermark text="Innovative" />
       <Watermark text="Unique" reverse />
@@ -176,15 +176,13 @@ const MouseImageTrail = ({
       {
         opacity: [0, 1],
         transform: [
-          `translate(-50%, -25%) scale(0.5) ${
-            imageIndex % 2
-              ? `rotate(${rotation}deg)`
-              : `rotate(-${rotation}deg)`
+          `translate(-50%, -25%) scale(0.5) ${imageIndex % 2
+            ? `rotate(${rotation}deg)`
+            : `rotate(-${rotation}deg)`
           }`,
-          `translate(-50%, -50%) scale(1) ${
-            imageIndex % 2
-              ? `rotate(-${rotation}deg)`
-              : `rotate(${rotation}deg)`
+          `translate(-50%, -50%) scale(1) ${imageIndex % 2
+            ? `rotate(-${rotation}deg)`
+            : `rotate(${rotation}deg)`
           }`,
         ],
       },

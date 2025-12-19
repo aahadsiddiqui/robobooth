@@ -7,6 +7,7 @@ import Image from 'next/image'
 import { FiChevronLeft, FiChevronRight } from 'react-icons/fi'
 import { useRouter } from 'next/router'
 import { useMetaPixel } from '../hooks/useMetaPixel'
+import { useUTM } from '../hooks/useUTM'
 
 // Testimonials and Carousel
 const testimonials = [
@@ -115,6 +116,7 @@ export default function Packages() {
   const [offerSuccess, setOfferSuccess] = useState(false)
   const router = useRouter()
   const { trackFormSubmission } = useMetaPixel()
+  const utmData = useUTM()
 
   useEffect(() => {
     const original = document.body.style.backgroundColor;
@@ -174,7 +176,8 @@ export default function Packages() {
       ph: offerForm.phone,
       em: offerForm.email,
       ct: 'Toronto',
-      country: 'CA'
+      country: 'CA',
+      ...utmData
     })
 
     try {
@@ -185,6 +188,11 @@ export default function Packages() {
       formData.append('event-date', offerForm.eventDate)
       formData.append('event-type', offerForm.eventType)
       formData.append('budget', offerForm.budget)
+
+      // Add UTM parameters
+      Object.entries(utmData).forEach(([key, value]) => {
+        if (value) formData.append(key, value)
+      })
 
       const response = await fetch('https://formspree.io/f/xkgoedyp', {
         method: 'POST',

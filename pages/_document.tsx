@@ -27,7 +27,7 @@ export default function Document() {
           })(window,document,'script','dataLayer','GTM-NWKRRGVB');`,
         }} />
         {/* End Google Tag Manager */}
-        
+
         {/* Crisp Chatbot */}
         <script dangerouslySetInnerHTML={{
           __html: `
@@ -41,15 +41,15 @@ export default function Document() {
               d.getElementsByTagName("head")[0].appendChild(s);
             })();
             
-            // Configure AI Bot after Crisp loads
+            // Configure Smart Bot after Crisp loads
             window.addEventListener('load', function() {
               setTimeout(function() {
                 if (window.$crisp) {
-                  // Configure AI Bot with JSON configuration
+                  // Configure Smart Bot with JSON configuration
                   const aiBotConfig = {
-                    "name": "MagicReply AI Bot",
+                    "name": "Robo Assistant",
                     "enabled": true,
-                    "description": "A bot using AI to automatically converse with your users, using all your imported data sources.",
+                    "description": "A bot using smart logic to automatically converse with your users, using all your imported data sources.",
                     "flow": {
                       "live": {
                         "blocks": [
@@ -66,7 +66,7 @@ export default function Document() {
                           {"id":"10_id","position":{"x":840,"y":898},"type":"action","data":{"type":"message-send","subtype":"text","settings":{"default":{"type":"text","content":"Sure thing, how can I help?"}}}},
                           {"id":"11_id","position":{"x":560,"y":1036},"type":"exit","data":{"type":"stop"}},
                           {"id":"12_id","position":{"x":1120,"y":1007},"type":"proxy","data":{"type":"loop","settings":{"id":"2_id"}}},
-                          {"id":"13_id","position":{"x":1120,"y":214},"type":"action","data":{"type":"message-send","subtype":"text","settings":{"default":{"type":"text","content":"I'm not sure that my AI can answer to that correctly, and I do not want to provide a misleading response.\n\nMind asking something else? :)"}}}},
+                          {"id":"13_id","position":{"x":1120,"y":214},"type":"action","data":{"type":"message-send","subtype":"text","settings":{"default":{"type":"text","content":"I'm not sure that I can answer to that correctly, and I do not want to provide a misleading response.\\n\\nMind asking something else? :)"}}}},
                           {"id":"14_id","position":{"x":1120,"y":432},"type":"proxy","data":{"type":"loop","settings":{"id":"2_id"}}}
                         ],
                         "wires": [
@@ -93,7 +93,7 @@ export default function Document() {
                     "priority": 0
                   };
                   
-                  // Apply AI Bot configuration
+                  // Apply Smart Bot configuration
                   window.$crisp.push(["do", "ai:scenario:set", aiBotConfig]);
                 }
               }, 3000);
@@ -101,7 +101,7 @@ export default function Document() {
           `,
         }} />
         {/* End Crisp Chatbot */}
-        
+
         {/* Microsoft Clarity */}
         <script dangerouslySetInnerHTML={{
           __html: `
@@ -113,17 +113,17 @@ export default function Document() {
           `,
         }} />
         {/* End Microsoft Clarity */}
-        
+
         {/* Open Graph */}
         <meta property="og:type" content="website" />
         <meta property="og:site_name" content="Robo Booth" />
         <meta property="og:title" content="Robo Booth - Interactive Photo Experience" />
         <meta property="og:description" content="Experience the future of event photography with our interactive robot photo booth" />
         <meta property="og:image" content="/og-image.jpg" />
-        
+
         {/* Favicon */}
         <link rel="icon" href="/images/favicon.png" />
-        
+
         {/* Fonts */}
         <link
           href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
@@ -133,23 +133,23 @@ export default function Document() {
       <body>
         <Main />
         <NextScript />
-        
+
         {/* Google Tag Manager (noscript) */}
         <noscript>
-          <iframe 
+          <iframe
             src="https://www.googletagmanager.com/ns.html?id=GTM-NWKRRGVB"
-            height="0" 
-            width="0" 
-            style={{display:'none',visibility:'hidden'}}
+            height="0"
+            width="0"
+            style={{ display: 'none', visibility: 'hidden' }}
           />
         </noscript>
         {/* End Google Tag Manager (noscript) */}
-        
+
         {/* Meta Pixel (Facebook Pixel) Code */}
         <noscript>
-          <img 
-            height="1" 
-            width="1" 
+          <img
+            height="1"
+            width="1"
             style={{ display: 'none' }}
             src="https://www.facebook.com/tr?id=1125962542706222&ev=PageView&noscript=1"
           />

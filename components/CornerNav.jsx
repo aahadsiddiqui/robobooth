@@ -144,25 +144,13 @@ function Logo() {
       }}
       exit={{ opacity: 0, y: -12 }}
       href="/"
-      className="grid h-12 w-12 md:h-20 md:w-20 place-content-center rounded-br-xl rounded-tl-xl bg-white transition-colors hover:bg-[#fce4a6]"
+      className="grid h-12 w-12 md:h-20 md:w-20 place-content-center rounded-br-xl rounded-tl-xl bg-white transition-colors hover:bg-[#fce4a6] overflow-hidden"
     >
-      <svg
-        width="32"
-        height="25"
-        viewBox="0 0 50 39"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
-        className="fill-[#fce4a6]"
-      >
-        <path
-          d="M16.4992 2H37.5808L22.0816 24.9729H1L16.4992 2Z"
-          stopColor="#FFFFFF"
-        ></path>
-        <path
-          d="M17.4224 27.102L11.4192 36H33.5008L49 13.0271H32.7024L23.2064 27.102H17.4224Z"
-          stopColor="#FFFFFF"
-        ></path>
-      </svg>
+      <img
+        src="/images/logo.jpeg"
+        alt="Robo Booth Logo"
+        className="w-full h-full object-cover"
+      />
     </motion.a>
   );
 }
@@ -182,9 +170,8 @@ function HamburgerButton({ active, setActive }) {
         initial={false}
         animate={active ? "open" : "closed"}
         onClick={() => setActive((pv) => !pv)}
-        className={`group fixed right-2 top-2 z-50 h-12 w-12 md:h-20 md:w-20 bg-white/0 transition-all hover:bg-[#fce4a6]/20 ${
-          active ? "rounded-bl-xl rounded-tr-xl" : "rounded-xl"
-        }`}
+        className={`group fixed right-2 top-2 z-50 h-12 w-12 md:h-20 md:w-20 bg-white/0 transition-all hover:bg-[#fce4a6]/20 ${active ? "rounded-bl-xl rounded-tr-xl" : "rounded-xl"
+          }`}
       >
         <motion.span
           variants={HAMBURGER_VARIANTS.top}
