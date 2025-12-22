@@ -218,11 +218,11 @@ export default function Wedding() {
       formData.append('first-name', leadForm.firstName)
       formData.append('phone-number', leadForm.phone)
       formData.append('email', leadForm.email)
-      formData.append('email', leadForm.email)
       formData.append('event-date', leadForm.eventDate)
       formData.append('budget', leadForm.budget)
       formData.append('event-type', 'Wedding')
       formData.append('_replyto', leadForm.email)
+      formData.append('source', 'Wedding Page')
 
       // Add UTM parameters
       Object.entries(utmData).forEach(([key, value]) => {

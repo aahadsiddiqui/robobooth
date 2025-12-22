@@ -227,6 +227,7 @@ export default function Contact() {
                       placeholder="Tell us about your event..."
                     />
                   </div>
+                  <input type="hidden" name="source" value="Contact Page" />
                   <div className="pt-2">
                     <motion.button
                       whileHover={{ scale: 1.05 }}

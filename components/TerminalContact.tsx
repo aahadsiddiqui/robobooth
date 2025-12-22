@@ -358,6 +358,7 @@ const Summary = ({ questions, setQuestions }: { questions: typeof QUESTIONS, set
         if (value) submissionData.append(key, value);
       });
       submissionData.append('_subject', `New Lead from Terminal Contact Form - ${formData.name}`);
+      submissionData.append('source', 'Terminal Contact Form');
 
       const response = await fetch('https://formspree.io/f/xkgoedyp', {
         method: 'POST',

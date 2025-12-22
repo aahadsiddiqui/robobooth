@@ -218,11 +218,11 @@ export default function Corporate() {
       formData.append('first-name', leadForm.firstName)
       formData.append('phone-number', leadForm.phone)
       formData.append('email', leadForm.email)
-      formData.append('email', leadForm.email)
       formData.append('event-date', leadForm.eventDate)
       formData.append('budget', leadForm.budget)
       formData.append('event-type', 'Corporate')
       formData.append('_replyto', leadForm.email)
+      formData.append('source', 'Corporate Page')
 
       // Add UTM parameters
       Object.entries(utmData).forEach(([key, value]) => {
@@ -237,9 +237,11 @@ export default function Corporate() {
         setLeadSuccess(true)
         router.push('/thank-you')
       } else {
+        console.error('Form submission failed:', await response.text())
         alert('Failed to submit. Please try again.')
       }
     } catch (err) {
+      console.error('Form submission error:', err)
       alert('Failed to submit. Please try again.')
     } finally {
       setLeadSubmitting(false)
@@ -374,7 +376,12 @@ export default function Corporate() {
                     <img
                       src={logo}
                       alt="Company Logo"
-                      className={`max-w-full max-h-full object-contain opacity-80 hover:opacity-100 transition-opacity ${logo.includes('td.png') ? '' : 'filter brightness-0 invert'}`}
+                      className={`max-w-full max-h-full object-contain opacity-80 hover:opacity-100 transition-opacity ${logo.includes('ritz.webp') || logo.includes('hilton.png')
+                          ? 'filter invert grayscale'
+                          : logo.includes('td.png')
+                            ? ''
+                            : 'filter brightness-0 invert'
+                        }`}
                     />
                   </div>
                 ))}
@@ -899,14 +906,17 @@ function TestimonialCarousel() {
 }
 
 const companyLogos = [
+  '/images/adamas.png',
   '/images/bell.png',
   '/images/bgo.png',
   '/images/equifax.svg',
   '/images/geotab.png',
+  '/images/hilton.png',
   '/images/infosys.png',
   '/images/meta.png',
   '/images/pdsb.png',
   '/images/remax.png',
+  '/images/ritz.webp',
   '/images/rlp.svg',
   '/images/stonex.png',
   '/images/talent.png',
