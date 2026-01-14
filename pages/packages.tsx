@@ -198,9 +198,9 @@ export default function Packages() {
       formData.append('budget', offerForm.budget)
 
       // Add UTM parameters
-      // Object.entries(utmData).forEach(([key, value]) => {
-      //   if (value) formData.append(key, value)
-      // })
+      Object.entries(utmData).forEach(([key, value]) => {
+        if (value) formData.append(key, value)
+      })
 
       const response = await fetch('https://formspree.io/f/xkgoedyp', {
         method: 'POST',
