@@ -22,36 +22,92 @@ export const useUTM = () => {
     const [utmData, setUtmData] = useState<UTMData>({});
 
     useEffect(() => {
-        if (!router.isReady) return;
+        // Function to extract UTM parameters from URL
+        const extractUTMParams = (url: string): UTMData => {
+            const utmParams: UTMData = {};
+            try {
+                const urlObj = new URL(url);
+                const params = urlObj.searchParams;
+                
+                // Standard UTM parameters
+                const standardParams = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term'];
+                // Facebook specific parameters
+                const fbParams = ['hsa_acc', 'hsa_cam', 'hsa_grp', 'hsa_ad', 'hsa_src', 'hsa_net', 'hsa_ver'];
+                const allParams = [...standardParams, ...fbParams];
 
-        const query = router.query;
-        const utmParams: UTMData = {};
-
-        // Standard UTM parameters
-        const standardParams = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term'];
-        // Facebook specific parameters provided by user
-        const fbParams = ['hsa_acc', 'hsa_cam', 'hsa_grp', 'hsa_ad', 'hsa_src', 'hsa_net', 'hsa_ver'];
-
-        const allParams = [...standardParams, ...fbParams];
-
-        let hasNewParams = false;
-
-        allParams.forEach((param) => {
-            if (query[param]) {
-                utmParams[param] = query[param] as string;
-                hasNewParams = true;
+                allParams.forEach((param) => {
+                    const value = params.get(param);
+                    if (value) {
+                        utmParams[param] = value;
+                    }
+                });
+            } catch (e) {
+                // If URL parsing fails, try to parse as relative URL
+                const match = url.match(/[?&]([^=]+)=([^&]+)/g);
+                if (match) {
+                    const standardParams = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term'];
+                    const fbParams = ['hsa_acc', 'hsa_cam', 'hsa_grp', 'hsa_ad', 'hsa_src', 'hsa_net', 'hsa_ver'];
+                    const allParams = [...standardParams, ...fbParams];
+                    
+                    match.forEach((pair) => {
+                        const [key, value] = pair.substring(1).split('=');
+                        if (allParams.includes(key)) {
+                            utmParams[key] = decodeURIComponent(value);
+                        }
+                    });
+                }
             }
-        });
+            return utmParams;
+        };
 
-        if (hasNewParams) {
-            // Store in session storage to persist across page navigations
-            sessionStorage.setItem('utm_data', JSON.stringify(utmParams));
-            setUtmData(utmParams);
-        } else {
-            // Try to load from session storage if not in URL
-            const savedUtm = sessionStorage.getItem('utm_data');
-            if (savedUtm) {
-                setUtmData(JSON.parse(savedUtm));
+        // Check current URL (from router)
+        if (router.isReady && typeof window !== 'undefined') {
+            const currentUrl = window.location.href;
+            const queryParams = router.query;
+            const utmParams: UTMData = {};
+
+            // Standard UTM parameters
+            const standardParams = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term'];
+            // Facebook specific parameters
+            const fbParams = ['hsa_acc', 'hsa_cam', 'hsa_grp', 'hsa_ad', 'hsa_src', 'hsa_net', 'hsa_ver'];
+            const allParams = [...standardParams, ...fbParams];
+
+            let hasNewParams = false;
+
+            // First, check router query params
+            allParams.forEach((param) => {
+                if (queryParams[param]) {
+                    utmParams[param] = queryParams[param] as string;
+                    hasNewParams = true;
+                }
+            });
+
+            // Also check the actual URL in case router didn't capture it
+            if (!hasNewParams) {
+                const urlParams = extractUTMParams(currentUrl);
+                if (Object.keys(urlParams).length > 0) {
+                    Object.assign(utmParams, urlParams);
+                    hasNewParams = true;
+                }
+            }
+
+            if (hasNewParams) {
+                // Store in session storage to persist across page navigations
+                sessionStorage.setItem('utm_data', JSON.stringify(utmParams));
+                setUtmData(utmParams);
+                console.log('UTM parameters captured:', utmParams);
+            } else {
+                // Try to load from session storage if not in URL
+                try {
+                    const savedUtm = sessionStorage.getItem('utm_data');
+                    if (savedUtm) {
+                        const parsed = JSON.parse(savedUtm);
+                        setUtmData(parsed);
+                        console.log('UTM parameters loaded from session:', parsed);
+                    }
+                } catch (e) {
+                    console.error('Error loading UTM from session:', e);
+                }
             }
         }
     }, [router.isReady, router.query]);

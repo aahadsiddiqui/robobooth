@@ -354,8 +354,12 @@ const Summary = ({ questions, setQuestions }: { questions: typeof QUESTIONS, set
       Object.entries(formData).forEach(([key, value]) => {
         submissionData.append(key, value as string);
       });
+      console.log('Adding UTM parameters to Terminal form:', utmData);
       Object.entries(utmData).forEach(([key, value]) => {
-        if (value) submissionData.append(key, value);
+        if (value) {
+          submissionData.append(key, value);
+          console.log(`Added UTM param: ${key} = ${value}`);
+        }
       });
       submissionData.append('_subject', `New Lead from Terminal Contact Form - ${formData.name}`);
       submissionData.append('source', 'Terminal Contact Form');

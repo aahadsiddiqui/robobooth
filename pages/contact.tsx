@@ -112,8 +112,12 @@ export default function Contact() {
                       const formData = new FormData(form)
 
                       // Add UTM parameters to Formspree submission
+                      console.log('Adding UTM parameters to form:', utmData)
                       Object.entries(utmData).forEach(([key, value]) => {
-                        if (value) formData.append(key, value)
+                        if (value) {
+                          formData.append(key, value)
+                          console.log(`Added UTM param: ${key} = ${value}`)
+                        }
                       })
 
                       const response = await fetch('https://formspree.io/f/xkgoedyp', {
@@ -172,6 +176,23 @@ export default function Contact() {
                       className="w-full px-4 py-2 rounded-lg border border-[#fce4a6]/30 bg-black text-white focus:ring-2 focus:ring-[#fce4a6] focus:border-[#fce4a6] placeholder:text-white/50"
                       placeholder="(123) 456-7890"
                     />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-[#fce4a6] mb-1">
+                      Product
+                    </label>
+                    <select
+                      required
+                      name="product"
+                      className="w-full px-4 py-2 rounded-lg border border-[#fce4a6]/30 bg-black text-white focus:ring-2 focus:ring-[#fce4a6] focus:border-[#fce4a6]"
+                    >
+                      <option value="">Select product</option>
+                      <option value="Robot Photobooth">Robot Photobooth</option>
+                      <option value="Aerial Booth">Aerial Booth</option>
+                      <option value="Premium Photobooth">Premium Photobooth</option>
+                      <option value="360 Booth">360 Booth</option>
+                      <option value="Bundle">Bundle</option>
+                    </select>
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-[#fce4a6] mb-1">

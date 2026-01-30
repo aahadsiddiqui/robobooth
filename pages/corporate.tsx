@@ -225,8 +225,12 @@ export default function Corporate() {
       formData.append('source', 'Corporate Page')
 
       // Add UTM parameters
+      console.log('Adding UTM parameters to Corporate form:', utmData)
       Object.entries(utmData).forEach(([key, value]) => {
-        if (value) formData.append(key, value)
+        if (value) {
+          formData.append(key, value)
+          console.log(`Added UTM param: ${key} = ${value}`)
+        }
       })
       const response = await fetch('https://formspree.io/f/xkgoedyp', {
         method: 'POST',
