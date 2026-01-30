@@ -45,7 +45,7 @@ export const USPSection = () => {
                             transition={{ duration: 0.8 }}
                             className="text-4xl md:text-5xl font-bold text-black mb-8"
                         >
-                            Why Choose the <span className="text-[#fce4a6] bg-black px-2">Robot?</span>
+                            Why Choose the <span className="text-[#fce4a6] bg-black px-2">Robot Photobooth?</span>
                         </motion.h2>
 
                         <div className="space-y-12">

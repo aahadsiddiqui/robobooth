@@ -6,8 +6,11 @@ import { useEffect, useState } from 'react'
 import confetti from 'canvas-confetti'
 import { ImageTrailHero } from '../components/ImageTrailHero'
 import { USPSection } from '../components/USPSection'
+import { AerialBoothSection } from '../components/AerialBoothSection'
 import { HowItWorks } from '../components/HowItWorks'
 import { WhyChooseUs } from '../components/WhyChooseUs'
+import { HowItWorksAerial } from '../components/HowItWorksAerial'
+import { WhyChooseAerialBooth } from '../components/WhyChooseAerialBooth'
 import ScrollingTestimonials from '../components/ScrollingTestimonials'
 import CornerNav from '../components/CornerNav'
 import { FiPhone } from 'react-icons/fi'
@@ -38,16 +41,16 @@ export default function Home() {
   return (
     <div className="min-h-screen overflow-x-hidden">
       <Head>
-        <title>Robo Booth - Toronto's Premier Robot Photobooth & 360 Photo Booth | GTA Photo Booth Rental</title>
-        <meta name="description" content="Toronto's #1 robot photobooth & 360 photo booth rental. Serving Ajax, Oshawa, Whitby, Markham, Vaughan, Courtice, Etobicoke, King City, Pickering, North York, Bowmanville, Mississauga, Richmond Hill, East Gwillimbury, Barrie, Whitchurch-Stouffville. Interactive robotic photo booth experience for weddings, corporate events, parties." />
-        <meta name="keywords" content="robot photobooth, 360 photo booth, Toronto photobooth rental, GTA photo booth, Ajax photobooth, Oshawa photobooth, Whitby photobooth, Markham photobooth, Vaughan photobooth, Courtice photobooth, Etobicoke photobooth, King City photobooth, Pickering photobooth, North York photobooth, Bowmanville photobooth, Mississauga photobooth, Richmond Hill photobooth, East Gwillimbury photobooth, Barrie photobooth, Whitchurch-Stouffville photobooth, wedding photobooth, corporate photobooth, party photobooth, interactive photobooth, robotic photobooth, 360 degree photobooth, photo booth rental Toronto, photo booth rental GTA" />
-        <meta property="og:title" content="Robo Booth - Toronto's Premier Robot Photobooth & 360 Photo Booth" />
-        <meta property="og:description" content="Toronto's #1 robot photobooth & 360 photo booth rental. Interactive robotic photo booth experience for weddings, corporate events, parties across the GTA." />
+        <title>Robo Booth - Canada's First Robot Photobooth & Aerial Booth | GTA Photo Booth Rental</title>
+        <meta name="description" content="Canada's first robot photobooth & aerial booth rental. Serving Toronto, Ajax, Oshawa, Whitby, Markham, Vaughan, Courtice, Etobicoke, King City, Pickering, North York, Bowmanville, Mississauga, Richmond Hill, East Gwillimbury, Barrie, Whitchurch-Stouffville. Interactive robotic photo booth and stunning aerial booth experience for weddings, corporate events, parties." />
+        <meta name="keywords" content="robot photobooth, aerial booth, Toronto photobooth rental, GTA photo booth, Ajax photobooth, Oshawa photobooth, Whitby photobooth, Markham photobooth, Vaughan photobooth, Courtice photobooth, Etobicoke photobooth, King City photobooth, Pickering photobooth, North York photobooth, Bowmanville photobooth, Mississauga photobooth, Richmond Hill photobooth, East Gwillimbury photobooth, Barrie photobooth, Whitchurch-Stouffville photobooth, wedding photobooth, corporate photobooth, party photobooth, interactive photobooth, robotic photobooth, aerial photo booth, photo booth rental Toronto, photo booth rental GTA" />
+        <meta property="og:title" content="Robo Booth - Canada's First Robot Photobooth & Aerial Booth" />
+        <meta property="og:description" content="Canada's first robot photobooth & aerial booth rental. Interactive robotic photo booth and stunning aerial booth experience for weddings, corporate events, parties across the GTA." />
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://robobooth.ca" />
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="Robo Booth - Toronto's Premier Robot Photobooth & 360 Photo Booth" />
-        <meta name="twitter:description" content="Toronto's #1 robot photobooth & 360 photo booth rental. Interactive robotic photo booth experience for weddings, corporate events, parties." />
+        <meta name="twitter:title" content="Robo Booth - Canada's First Robot Photobooth & Aerial Booth" />
+        <meta name="twitter:description" content="Canada's first robot photobooth & aerial booth rental. Interactive robotic photo booth and stunning aerial booth experience for weddings, corporate events, parties." />
         <link rel="canonical" href="https://robobooth.ca" />
       </Head>
 
@@ -69,14 +72,23 @@ export default function Home() {
       {/* Hero Section */}
       <ImageTrailHero />
 
-      {/* USP Section */}
+      {/* Robot Photobooth USP Section */}
       <USPSection />
 
-      {/* How It Works Section */}
+      {/* How Robot Photobooth Works Section */}
       <HowItWorks />
 
-      {/* Why Choose Us Section */}
+      {/* Why Choose Robot Photobooth Section */}
       <WhyChooseUs />
+
+      {/* Aerial Booth Section */}
+      <AerialBoothSection />
+
+      {/* How Aerial Booth Works Section */}
+      <HowItWorksAerial />
+
+      {/* Why Choose Aerial Booth Section */}
+      <WhyChooseAerialBooth />
 
       {/* Testimonials Section */}
       <ScrollingTestimonials />

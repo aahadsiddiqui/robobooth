@@ -13,6 +13,8 @@ export const ImageTrailHero = ({ overlayActive = false }) => {
         "/images/IMG_0955.JPEG",
         "/images/IMG_1019.JPG",
         "/images/IMG_1170.jpg",
+        "/images/aerial-booth-1.png",
+        "/images/aerial-booth-2.png",
       ]}
     >
       <section className={`h-screen bg-black ${overlayActive ? 'pointer-events-none opacity-50' : ''}`}>
@@ -43,10 +45,10 @@ const Copy = () => {
       <div className="mx-auto flex flex-col md:flex-row max-w-7xl items-end justify-between p-4 md:p-8">
         <div>
           <h1 className="mb-6 max-w-4xl text-6xl font-black leading-[1.1] text-white md:text-8xl">
-            Canada's First <span className="text-[#fce4a6]">Robot</span> Photo Booth
+            Canada's First <span className="text-[#fce4a6]">Robot Photobooth</span> & <span className="text-[#fce4a6]">Aerial Booth</span>
           </h1>
           <p className="max-w-xl text-white/80 md:text-lg">
-            Experience the future of event photography with our DSLR robot photo booth. Perfect for weddings, corporate events, and special occasions.
+            Experience the future of event photography with our interactive robot photobooth and stunning aerial booth. Perfect for weddings, corporate events, and special occasions.
           </p>
         </div>
         <FiArrowDownCircle className="hidden text-8xl text-[#fce4a6] md:block" />
