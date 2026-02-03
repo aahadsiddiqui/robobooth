@@ -124,7 +124,8 @@ export default function Packages() {
     email: '',
     eventDate: '',
     eventType: '',
-    budget: ''
+    budget: '',
+    product: ''
   })
   const [offerSubmitting, setOfferSubmitting] = useState(false)
   const [offerSuccess, setOfferSuccess] = useState(false)
@@ -196,6 +197,7 @@ export default function Packages() {
       formData.append('event-date', offerForm.eventDate)
       formData.append('event-type', offerForm.eventType)
       formData.append('budget', offerForm.budget)
+      formData.append('product', offerForm.product)
 
       // Add UTM parameters
       console.log('Adding UTM parameters to Packages form:', utmData)
@@ -814,6 +816,23 @@ export default function Packages() {
                           <option value="Other" className="bg-black">Other</option>
                         </select>
                       </div>
+                    </div>
+                    <div>
+                      <label className="block text-xs font-medium text-white/40 mb-1 uppercase tracking-wider">Product</label>
+                      <select
+                        name="product"
+                        value={offerForm.product}
+                        onChange={handleOfferInput}
+                        required
+                        className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white focus:ring-2 focus:ring-[#fce4a6] focus:border-transparent outline-none transition-all appearance-none"
+                      >
+                        <option value="" className="bg-black">Select Product</option>
+                        <option value="Robot Photobooth" className="bg-black">Robot Photobooth</option>
+                        <option value="Aerial Booth" className="bg-black">Aerial Booth</option>
+                        <option value="Premium Photobooth" className="bg-black">Premium Photobooth</option>
+                        <option value="360 Booth" className="bg-black">360 Booth</option>
+                        <option value="Bundle" className="bg-black">Bundle</option>
+                      </select>
                     </div>
                     <div>
                       <label className="block text-xs font-medium text-white/40 mb-1 uppercase tracking-wider">Budget</label>
