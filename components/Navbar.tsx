@@ -1,104 +1,190 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import Link from 'next/link'
-import { useRouter } from 'next/router'
 import { motion, AnimatePresence } from 'framer-motion'
+import { FiPhone, FiArrowRight, FiChevronDown, FiMenu, FiX } from 'react-icons/fi'
+import { products } from '../data/products'
 
 export default function Navbar() {
-  const [isOpen, setIsOpen] = useState(false)
-  const router = useRouter()
+  const [productsOpen, setProductsOpen] = useState(false)
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const dropdownRef = useRef<HTMLDivElement>(null)
 
-  const navigation = [
-    { name: 'Home', href: '/' },
-    { name: 'About', href: '/about' },
-    { name: 'Products', href: '/products' },
-    { name: 'Features', href: '/features' },
-    { name: 'Packages', href: '/packages' },
-    { name: 'Contact', href: '/contact' },
-  ]
+  /* Close desktop dropdown on outside click */
+  useEffect(() => {
+    const handler = (e: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
+        setProductsOpen(false)
+      }
+    }
+    document.addEventListener('mousedown', handler)
+    return () => document.removeEventListener('mousedown', handler)
+  }, [])
+
+  /* Lock body scroll when mobile menu open */
+  useEffect(() => {
+    mobileMenuOpen
+      ? document.body.classList.add('overflow-hidden')
+      : document.body.classList.remove('overflow-hidden')
+    return () => document.body.classList.remove('overflow-hidden')
+  }, [mobileMenuOpen])
 
   return (
-    <nav className="fixed top-0 w-full bg-black/80 backdrop-blur-lg z-50 shadow-sm border-b border-[#a49056]/20">
-      <div className="max-w-6xl mx-auto px-4">
-        <div className="flex items-center justify-between h-16">
+    <>
+      <nav className="fixed top-0 left-0 right-0 z-50 bg-black/80 backdrop-blur-xl border-b border-white/10">
+        <div className="max-w-7xl mx-auto px-4 h-16 md:h-[4.5rem] flex items-center justify-between">
           {/* Logo */}
-          <Link href="/" className="flex items-center">
-            <span className="text-2xl font-bold bg-gradient-to-r from-[#fce4a6] to-[#a49056] text-transparent bg-clip-text">
-              Robo Booth
-            </span>
+          <Link href="/" className="flex items-center gap-3 flex-shrink-0">
+            <img src="/images/1.png" alt="Robo Booth logo" className="h-10 md:h-12 w-auto object-contain" />
           </Link>
 
-          {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-8">
-            {navigation.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                className={`text-sm font-medium transition-colors hover:text-[#fce4a6] ${
-                  router.pathname === link.href 
-                    ? 'text-[#fce4a6]' 
-                    : 'text-[#fce4a6]/70'
-                }`}
-              >
-                {link.name}
-              </Link>
-            ))}
-            <Link href="/contact">
-              <button className="flex items-center gap-2 rounded-md bg-[#fce4a6] px-4 py-2 font-medium text-black transition-colors hover:bg-[#fce4a6]/80">
-                Book Now
-              </button>
+          {/* Desktop nav links */}
+          <div className="hidden lg:flex items-center gap-6">
+            {/* Home */}
+            <Link href="/" className="text-sm text-white/70 hover:text-white transition-colors font-medium">
+              Home
             </Link>
+
+            {/* Products dropdown */}
+            <div ref={dropdownRef} className="relative">
+              <button
+                onClick={() => setProductsOpen(!productsOpen)}
+                className="flex items-center gap-1.5 text-sm text-white/70 hover:text-white transition-colors font-medium"
+              >
+                Products
+                <FiChevronDown className={`w-3.5 h-3.5 transition-transform duration-200 ${productsOpen ? 'rotate-180' : ''}`} />
+              </button>
+              <AnimatePresence>
+                {productsOpen && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 8 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: 8 }}
+                    transition={{ duration: 0.15 }}
+                    className="absolute top-full left-1/2 -translate-x-1/2 mt-3 w-64 bg-black/95 backdrop-blur-xl border border-white/10 rounded-xl shadow-2xl shadow-black/50 overflow-hidden"
+                  >
+                    <div className="py-2">
+                      {products.map((product) => (
+                        <Link
+                          key={product.slug}
+                          href={product.linkOverride || `/products/${product.slug}`}
+                          onClick={() => setProductsOpen(false)}
+                          className="flex items-center justify-between px-4 py-2.5 text-sm text-white/70 hover:text-white hover:bg-[#fce4a6]/10 transition-colors group"
+                        >
+                          <span>{product.name}</span>
+                          <FiArrowRight className="w-3.5 h-3.5 opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all text-[#fce4a6]" />
+                        </Link>
+                      ))}
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
+
+            {/* Contact */}
+            <Link href="/contact" className="text-sm text-white/70 hover:text-white transition-colors font-medium">
+              Contact
+            </Link>
+
+            {/* Phone */}
+            <a href="tel:289-301-4039" className="flex items-center gap-2 text-white/70 text-sm hover:text-[#fce4a6] transition-colors">
+              <FiPhone className="w-3.5 h-3.5" />
+              289-301-4039
+            </a>
           </div>
 
-          {/* Mobile Menu Button */}
-          <button
-            className="md:hidden p-2 text-[#fce4a6]"
-            onClick={() => setIsOpen(!isOpen)}
-          >
-            <svg
-              className="w-6 h-6"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
+          {/* Right side */}
+          <div className="flex items-center gap-3">
+            <a href="tel:289-301-4039" className="lg:hidden flex items-center gap-1.5 text-white/70 text-sm hover:text-[#fce4a6] transition-colors">
+              <FiPhone className="w-4 h-4" />
+              <span className="hidden sm:inline">289-301-4039</span>
+            </a>
+            <motion.a
+              whileHover={{ scale: 1.04 }}
+              whileTap={{ scale: 0.96 }}
+              href="/contact"
+              className="hidden sm:inline-flex bg-[#fce4a6] text-black px-4 py-2 rounded-full font-semibold text-sm"
             >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d={isOpen ? "M6 18L18 6M6 6l12 12" : "M4 6h16M4 12h16M4 18h16"}
-              />
-            </svg>
-          </button>
+              Get a Quote
+            </motion.a>
+            {/* Mobile hamburger */}
+            <button
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              className="lg:hidden flex items-center justify-center w-9 h-9 rounded-lg text-white/80 hover:text-white hover:bg-white/10 transition-colors"
+              aria-label="Menu"
+            >
+              {mobileMenuOpen ? <FiX className="w-5 h-5" /> : <FiMenu className="w-5 h-5" />}
+            </button>
+          </div>
         </div>
-      </div>
+      </nav>
 
-      {/* Mobile Menu */}
+      {/* ── Mobile Menu Overlay ── */}
       <AnimatePresence>
-        {isOpen && (
+        {mobileMenuOpen && (
           <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: 'auto' }}
-            exit={{ opacity: 0, height: 0 }}
-            className="md:hidden bg-black border-t border-[#a49056]/20"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-40 bg-black/95 backdrop-blur-xl pt-20 px-6 overflow-y-auto lg:hidden"
           >
-            <div className="px-4 py-2 space-y-1">
-              {navigation.map((link) => (
+            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.05 }}>
+              {/* Home link */}
+              <Link
+                href="/"
+                onClick={() => setMobileMenuOpen(false)}
+                className="flex items-center justify-between py-3 px-3 rounded-xl text-white/80 hover:text-white hover:bg-[#fce4a6]/10 transition-colors group mb-4"
+              >
+                <span className="text-base font-medium">Home</span>
+                <FiArrowRight className="w-4 h-4 text-[#fce4a6]/50 group-hover:text-[#fce4a6] group-hover:translate-x-1 transition-all" />
+              </Link>
+
+              <p className="text-[#fce4a6]/60 text-[10px] uppercase tracking-[0.2em] font-semibold mb-3">Products</p>
+              <div className="space-y-1 mb-8">
+                {products.map((product, i) => (
+                  <motion.div key={product.slug} initial={{ opacity: 0, x: -10 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.05 + i * 0.04 }}>
+                    <Link
+                      href={product.linkOverride || `/products/${product.slug}`}
+                      onClick={() => setMobileMenuOpen(false)}
+                      className="flex items-center justify-between py-3 px-3 rounded-xl text-white/80 hover:text-white hover:bg-[#fce4a6]/10 transition-colors group"
+                    >
+                      <span className="text-base font-medium">{product.name}</span>
+                      <FiArrowRight className="w-4 h-4 text-[#fce4a6]/50 group-hover:text-[#fce4a6] group-hover:translate-x-1 transition-all" />
+                    </Link>
+                  </motion.div>
+                ))}
+              </div>
+
+              <div className="border-t border-white/10 pt-6 space-y-3">
                 <Link
-                  key={link.href}
-                  href={link.href}
-                  className={`block px-3 py-2 rounded-md text-base font-medium ${
-                    router.pathname === link.href
-                      ? 'text-[#fce4a6] bg-black'
-                      : 'text-[#fce4a6]/70 hover:text-[#fce4a6] hover:bg-black'
-                  }`}
-                  onClick={() => setIsOpen(false)}
+                  href="/contact"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="flex items-center justify-between py-3 px-3 rounded-xl text-white/80 hover:text-white hover:bg-[#fce4a6]/10 transition-colors"
                 >
-                  {link.name}
+                  <span className="text-base font-medium">Contact</span>
+                  <FiArrowRight className="w-4 h-4 text-[#fce4a6]/50" />
                 </Link>
-              ))}
-            </div>
+                <a
+                  href="tel:289-301-4039"
+                  className="flex items-center gap-3 py-3 px-3 rounded-xl text-[#fce4a6] hover:bg-[#fce4a6]/10 transition-colors"
+                >
+                  <FiPhone className="w-4 h-4" />
+                  <span className="text-base font-medium">289-301-4039</span>
+                </a>
+              </div>
+
+              <div className="mt-8">
+                <Link
+                  href="/contact"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="block w-full bg-[#fce4a6] text-black text-center py-3.5 rounded-full font-bold text-sm shadow-lg shadow-[#fce4a6]/20"
+                >
+                  Get a Quote <FiArrowRight className="inline ml-1.5 w-4 h-4" />
+                </Link>
+              </div>
+            </motion.div>
           </motion.div>
         )}
       </AnimatePresence>
-    </nav>
+    </>
   )
-} 
+}

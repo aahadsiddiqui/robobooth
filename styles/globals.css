@@ -138,3 +138,8 @@
   width: max-content;
   animation: marquee 30s linear infinite;
 } 
+
+/* Safe area padding for iPhones with home indicator */
+.safe-area-pb {
+  padding-bottom: max(0.75rem, env(safe-area-inset-bottom));
+}

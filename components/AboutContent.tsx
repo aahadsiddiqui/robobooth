@@ -42,7 +42,7 @@ export const AboutContent = () => {
                     >
                         Canada's First <br />
                         <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#fce4a6] to-[#a49056]">
-                            Robot Photobooth & Aerial Booth
+                            Robot Photobooth
                         </span>
                     </motion.h1>
                     <motion.p
@@ -106,25 +106,25 @@ export const AboutContent = () => {
                     >
                         <div className="space-y-4">
                             <img
-                                src="/images/aerial-booth-1.png"
-                                alt="Aerial Booth Experience"
+                                src="/images/IMG_1019.JPG"
+                                alt="Interactive Experience 1"
                                 className="rounded-2xl shadow-2xl w-full h-64 object-cover"
                             />
                             <img
-                                src="/images/robo-booth-1.jpg"
-                                alt="Robot Photobooth Experience"
+                                src="/images/robo1.jpg"
+                                alt="Interactive Experience 2"
                                 className="rounded-2xl shadow-2xl w-full h-48 object-cover"
                             />
                         </div>
                         <div className="space-y-4 pt-8">
                             <img
-                                src="/images/robo-booth-2.jpg"
-                                alt="Robot Photobooth Experience"
+                                src="/images/robo2.jpg"
+                                alt="Interactive Experience 3"
                                 className="rounded-2xl shadow-2xl w-full h-48 object-cover"
                             />
                             <img
-                                src="/images/aerial-booth-2.png"
-                                alt="Aerial Booth Experience"
+                                src="/images/IMG_1170.jpg"
+                                alt="Interactive Experience 4"
                                 className="rounded-2xl shadow-2xl w-full h-64 object-cover"
                             />
                         </div>

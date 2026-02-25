@@ -1,9 +1,48 @@
 import React, { useState } from 'react'
 import Head from 'next/head'
 import { motion, AnimatePresence } from 'framer-motion'
-import CornerNav from '../components/CornerNav'
+import Navbar from '../components/Navbar'
 import { useMetaPixel } from '../hooks/useMetaPixel'
 import { useUTM } from '../hooks/useUTM'
+
+/* ── Budget options per product ── */
+const budgetsByProduct: Record<string, { value: string; label: string }[]> = {
+  'Robot Photobooth': [
+    { value: '$1000-$1500', label: '$1,000 – $1,500' },
+    { value: '$1500-$2000', label: '$1,500 – $2,000' },
+    { value: '$2000+', label: '$2,000+' },
+  ],
+  'Aerial Booth': [
+    { value: '$1000-$1500', label: '$1,000 – $1,500' },
+    { value: '$1500-$2000', label: '$1,500 – $2,000' },
+    { value: '$2000+', label: '$2,000+' },
+  ],
+  'Premium Photobooth': [
+    { value: '$800-$1200', label: '$800 – $1,200' },
+    { value: '$1200-$1800', label: '$1,200 – $1,800' },
+    { value: '$1800+', label: '$1,800+' },
+  ],
+  '360 Booth': [
+    { value: '$1000-$1500', label: '$1,000 – $1,500' },
+    { value: '$1500-$2000', label: '$1,500 – $2,000' },
+    { value: '$2000+', label: '$2,000+' },
+  ],
+  'Portrait Booth': [
+    { value: '$1000-$1500', label: '$1,000 – $1,500' },
+    { value: '$1500-$2000', label: '$1,500 – $2,000' },
+    { value: '$2000+', label: '$2,000+' },
+  ],
+  'Photography, Videography, & Headshots': [
+    { value: '$1500-$2500', label: '$1,500 – $2,500' },
+    { value: '$2500-$4000', label: '$2,500 – $4,000' },
+    { value: '$4000+', label: '$4,000+' },
+  ],
+  'Bundle': [
+    { value: '$2000-$3000', label: '$2,000 – $3,000' },
+    { value: '$3000-$5000', label: '$3,000 – $5,000' },
+    { value: '$5000+', label: '$5,000+' },
+  ],
+}
 
 const Toast = ({ message }: { message: string }) => (
   <motion.div
@@ -40,9 +79,11 @@ const Toast = ({ message }: { message: string }) => (
 export default function Contact() {
   const [showToast, setShowToast] = useState(false)
   const [isSubmitting, setIsSubmitting] = useState(false)
-  const [navActive, setNavActive] = useState(false)
+  const [selectedProduct, setSelectedProduct] = useState('')
   const { trackFormSubmission } = useMetaPixel()
   const utmData = useUTM()
+
+  const budgetOptions = selectedProduct ? (budgetsByProduct[selectedProduct] || []) : []
 
   return (
     <div className="min-h-screen w-full bg-black text-white pb-12">
@@ -50,8 +91,8 @@ export default function Contact() {
         <title>Contact Us - Robo Booth</title>
         <meta name="description" content="Book Robo Booth for your next event or get in touch with any questions" />
       </Head>
-      <CornerNav active={navActive} setActive={setNavActive} />
-      <div className="max-w-3xl mx-auto pt-32 px-4">
+      <Navbar />
+      <div className="max-w-3xl mx-auto pt-24 md:pt-28 px-4">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -184,6 +225,8 @@ export default function Contact() {
                     <select
                       required
                       name="product"
+                      value={selectedProduct}
+                      onChange={(e) => setSelectedProduct(e.target.value)}
                       className="w-full px-4 py-2 rounded-lg border border-[#fce4a6]/30 bg-black text-white focus:ring-2 focus:ring-[#fce4a6] focus:border-[#fce4a6]"
                     >
                       <option value="">Select product</option>
@@ -191,7 +234,9 @@ export default function Contact() {
                       <option value="Aerial Booth">Aerial Booth</option>
                       <option value="Premium Photobooth">Premium Photobooth</option>
                       <option value="360 Booth">360 Booth</option>
-                      <option value="Bundle">Bundle</option>
+                      <option value="Portrait Booth">Portrait Booth</option>
+                      <option value="Photography, Videography, & Headshots">Photography, Videography, &amp; Headshots</option>
+                      <option value="Bundle">Bundle (Multiple Products)</option>
                     </select>
                   </div>
                   <div>
@@ -208,6 +253,8 @@ export default function Contact() {
                       <option value="corporate">Corporate Event</option>
                       <option value="birthday">Birthday Party</option>
                       <option value="graduation">Graduation</option>
+                      <option value="brand-activation">Brand Activation</option>
+                      <option value="gala">Gala / Fundraiser</option>
                       <option value="other">Other</option>
                     </select>
                   </div>
@@ -218,12 +265,13 @@ export default function Contact() {
                     <select
                       required
                       name="budget"
-                      className="w-full px-4 py-2 rounded-lg border border-[#fce4a6]/30 bg-black text-white focus:ring-2 focus:ring-[#fce4a6] focus:border-[#fce4a6]"
+                      className="w-full px-4 py-2 rounded-lg border border-[#fce4a6]/30 bg-black text-white focus:ring-2 focus:ring-[#fce4a6] focus:border-[#fce4a6] disabled:opacity-40 disabled:cursor-not-allowed"
+                      disabled={!selectedProduct}
                     >
-                      <option value="">Select budget</option>
-                      <option value="$1000-$1500">$1000-$1500 (Robot Photobooth)</option>
-                      <option value="$1500-$2000">$1500-$2000 (Robot Photobooth & Bundle)</option>
-                      <option value="$2000+">$2000+ (Premium Package)</option>
+                      <option value="">{selectedProduct ? 'Select budget' : 'Select a product first'}</option>
+                      {budgetOptions.map((opt) => (
+                        <option key={opt.value} value={opt.value}>{opt.label}</option>
+                      ))}
                     </select>
                   </div>
                   <div>
