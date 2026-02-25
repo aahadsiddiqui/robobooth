@@ -193,7 +193,7 @@ export default function PhotographyPage() {
               {/* Photo/Video image */}
               <Reveal className="mb-6">
                 <div className="max-w-2xl mx-auto rounded-2xl overflow-hidden border border-white/10 bg-black">
-                  <img src="/images/photography2.jpg" alt="Professional event photography and videography" className="w-full h-auto object-contain" style={{ display: 'block', maxHeight: '50vh' }} loading="lazy" />
+                  <img src="/images/photography3.jpg" alt="Professional event photography and videography" className="w-full h-auto object-contain" style={{ display: 'block', maxHeight: '50vh' }} loading="lazy" />
                 </div>
               </Reveal>
 
@@ -226,7 +226,7 @@ export default function PhotographyPage() {
               {/* Headshots image */}
               <Reveal className="mb-6">
                 <div className="max-w-2xl mx-auto rounded-2xl overflow-hidden border border-white/10 bg-black">
-                  <img src="/images/photography3.jpg" alt="Professional corporate headshots" className="w-full h-auto object-contain" style={{ display: 'block', maxHeight: '50vh' }} loading="lazy" />
+                  <img src="/images/photography2.jpg" alt="Professional corporate headshots" className="w-full h-auto object-contain" style={{ display: 'block', maxHeight: '50vh' }} loading="lazy" />
                 </div>
               </Reveal>
 
