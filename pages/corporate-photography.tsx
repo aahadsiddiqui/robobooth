@@ -12,22 +12,14 @@ const Reveal = ({ children, className, delay = 0 }: { children: React.ReactNode;
   </motion.div>
 )
 
-/* ─── CTA Block (reused between sections) ─── */
-const CTABlock = ({ headline, sub, primary, onQuote, phone }: { headline: string; sub: string; primary: string; onQuote: () => void; phone: () => void }) => (
-  <Reveal className="max-w-4xl mx-auto text-center py-10 md:py-14 px-4">
-    <h2 className="text-xl md:text-3xl lg:text-4xl font-black text-white mb-2">{headline}</h2>
-    <p className="text-white/50 text-sm md:text-base mb-5">{sub}</p>
-    <div className="flex flex-col sm:flex-row gap-3 justify-center items-center">
-      <motion.button whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.97 }} onClick={onQuote}
-        className="w-full sm:w-auto bg-[#fce4a6] text-black px-7 py-3.5 md:px-8 md:py-4 rounded-full font-bold text-sm md:text-base shadow-lg shadow-[#fce4a6]/20 hover:shadow-xl transition-all group">
-        {primary} <FiArrowRight className="inline ml-1.5 group-hover:translate-x-1 transition-transform" />
-      </motion.button>
-      <a href="tel:289-301-4039" onClick={phone} className="flex items-center gap-2 text-[#fce4a6] text-sm md:text-base font-semibold hover:text-white transition-colors">
-        <FiPhone className="w-4 h-4 md:w-5 md:h-5" /> 289-301-4039
-      </a>
-    </div>
-    <p className="text-white/30 text-[10px] md:text-xs mt-3">Responses in &lt;15 mins&ensp;|&ensp;No credit card required</p>
-  </Reveal>
+/* ─── Subtle CTA Button (inline, minimal) ─── */
+const SubtleCTA = ({ label, onQuote }: { label: string; onQuote: () => void }) => (
+  <div className="flex justify-center pt-4 pb-2">
+    <motion.button whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.97 }} onClick={onQuote}
+      className="bg-[#fce4a6] text-black px-6 py-2.5 rounded-full font-bold text-sm shadow-md shadow-[#fce4a6]/20 hover:shadow-lg transition-all group">
+      {label} <FiArrowRight className="inline ml-1.5 group-hover:translate-x-1 transition-transform" />
+    </motion.button>
+  </div>
 )
 
 /* ════════════════════════════════════════════════════════════════
@@ -52,7 +44,6 @@ export default function PhotographyPage() {
   useEffect(() => { showModal ? document.body.classList.add('overflow-hidden') : document.body.classList.remove('overflow-hidden'); return () => document.body.classList.remove('overflow-hidden') }, [showModal])
 
   const openQuote = useCallback(() => setShowModal(true), [])
-  const trackPhone = useCallback(() => {}, [])
 
   const handleInput = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => setForm({ ...form, [e.target.name]: e.target.value })
 
@@ -188,78 +179,86 @@ export default function PhotographyPage() {
             </div>
           </section>
 
-          {/* ── CTA 1 ── */}
-          <CTABlock headline="Want This for Your Event?" sub="Limited dates available — secure yours before they're gone." primary="Reserve Your Date" onQuote={openQuote} phone={trackPhone} />
-
-          {/* ── Photography Image 1 ── */}
-          <section className="px-4 py-6 md:py-8">
-            <div className="max-w-2xl mx-auto">
-              <Reveal>
-                <div className="rounded-2xl overflow-hidden border border-white/10 bg-black">
-                  <img src="/images/photography2.jpg" alt="Professional event photography" className="w-full h-auto object-contain" style={{ display: 'block', maxHeight: '50vh' }} loading="lazy" />
-                </div>
-              </Reveal>
-            </div>
-          </section>
-
-          {/* ── Why Clients Love It ── */}
-          <section className="py-8 md:py-10 px-4 border-t border-white/5">
+          {/* ════════════════════════════════════
+              PHOTOGRAPHY & VIDEOGRAPHY SECTION
+              ════════════════════════════════════ */}
+          <section className="py-8 md:py-12 px-4 border-t border-white/5">
             <div className="max-w-5xl mx-auto">
               <Reveal className="text-center mb-6">
-                <h2 className="text-xl md:text-2xl lg:text-3xl font-black mb-1.5">Why Clients <span className="text-[#fce4a6]">Love It</span></h2>
-                <p className="text-white/50 text-xs md:text-sm">Five reasons our photography & videography stands out</p>
+                <span className="inline-block bg-[#fce4a6]/10 border border-[#fce4a6]/30 text-[#fce4a6] text-[10px] md:text-xs font-semibold tracking-widest uppercase px-3 py-1 rounded-full mb-3">Photography & Videography</span>
+                <h2 className="text-xl md:text-2xl lg:text-3xl font-black mb-1.5">Capture Every <span className="text-[#fce4a6]">Moment</span></h2>
+                <p className="text-white/50 text-xs md:text-sm max-w-xl mx-auto">From candid moments to cinematic highlights — we document your event in stunning detail. RAW + Edited delivered within a week.</p>
               </Reveal>
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4">
-                {whyClientsLove.map((item, i) => (
+
+              {/* Photo/Video image */}
+              <Reveal className="mb-6">
+                <div className="max-w-2xl mx-auto rounded-2xl overflow-hidden border border-white/10 bg-black">
+                  <img src="/images/photography2.jpg" alt="Professional event photography and videography" className="w-full h-auto object-contain" style={{ display: 'block', maxHeight: '50vh' }} loading="lazy" />
+                </div>
+              </Reveal>
+
+              {/* Photo/Video feature cards */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 md:gap-4 mb-5">
+                {photoVideoFeatures.map((item, i) => (
                   <Reveal key={i} delay={i * 0.06} className="bg-white/[0.04] border border-white/10 rounded-xl p-4 md:p-5 hover:border-[#fce4a6]/30 transition-colors group">
-                    <div className="text-[#fce4a6] mb-2 md:mb-3 group-hover:scale-110 transition-transform inline-block">{item.icon}</div>
+                    <div className="text-[#fce4a6] mb-2 group-hover:scale-110 transition-transform inline-block">{item.icon}</div>
                     <h3 className="font-bold text-sm md:text-base mb-1">{item.title}</h3>
                     <p className="text-white/50 text-[11px] md:text-xs leading-relaxed">{item.desc}</p>
                   </Reveal>
                 ))}
               </div>
+
+              <SubtleCTA label="Book Photography & Videography" onQuote={openQuote} />
             </div>
           </section>
 
-          {/* ── CTA 2 ── */}
-          <CTABlock headline="Your Event Deserves to Be Captured Beautifully." sub="Professional photography, videography & headshots — all in one package." primary="Check Availability" onQuote={openQuote} phone={trackPhone} />
-
-          {/* ── Photography Image 2 ── */}
-          <section className="px-4 py-6 md:py-8">
-            <div className="max-w-2xl mx-auto">
-              <Reveal>
-                <div className="rounded-2xl overflow-hidden border border-white/10 bg-black">
-                  <img src="/images/photography3.jpg" alt="Professional headshot session" className="w-full h-auto object-contain" style={{ display: 'block', maxHeight: '50vh' }} loading="lazy" />
-                </div>
-              </Reveal>
-            </div>
-          </section>
-
-          {/* ── What's Included ── */}
-          <section className="py-8 md:py-10 px-4 border-t border-white/5">
+          {/* ════════════════════
+              HEADSHOTS SECTION
+              ════════════════════ */}
+          <section className="py-8 md:py-12 px-4 border-t border-white/5">
             <div className="max-w-5xl mx-auto">
               <Reveal className="text-center mb-6">
-                <h2 className="text-xl md:text-2xl lg:text-3xl font-black mb-1.5">What&apos;s <span className="text-[#fce4a6]">Included</span></h2>
-                <p className="text-white/50 text-xs md:text-sm">Everything you need — no hidden fees</p>
+                <span className="inline-block bg-[#fce4a6]/10 border border-[#fce4a6]/30 text-[#fce4a6] text-[10px] md:text-xs font-semibold tracking-widest uppercase px-3 py-1 rounded-full mb-3">Professional Headshots</span>
+                <h2 className="text-xl md:text-2xl lg:text-3xl font-black mb-1.5">Elevate Your <span className="text-[#fce4a6]">Professional Image</span></h2>
+                <p className="text-white/50 text-xs md:text-sm max-w-xl mx-auto">On-location headshot sessions with studio-quality lighting. Perfect for corporate teams, conferences, LinkedIn profiles, and company directories.</p>
               </Reveal>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                {whatsIncluded.map((item, i) => (
-                  <Reveal key={i} delay={i * 0.1}>
-                    <div className="bg-gradient-to-br from-[#fce4a6]/10 to-transparent border border-[#fce4a6]/20 rounded-2xl p-5 md:p-6 h-full hover:border-[#fce4a6]/40 transition-colors group">
-                      <div className="w-12 h-12 rounded-xl bg-[#fce4a6]/10 border border-[#fce4a6]/30 flex items-center justify-center mb-4 text-[#fce4a6] group-hover:bg-[#fce4a6]/20 transition-colors">
-                        {item.icon}
-                      </div>
-                      <h3 className="font-bold text-base md:text-lg text-white mb-2">{item.title}</h3>
-                      <p className="text-white/60 text-xs md:text-sm leading-relaxed">{item.desc}</p>
-                    </div>
+
+              {/* Headshots image */}
+              <Reveal className="mb-6">
+                <div className="max-w-2xl mx-auto rounded-2xl overflow-hidden border border-white/10 bg-black">
+                  <img src="/images/photography3.jpg" alt="Professional corporate headshots" className="w-full h-auto object-contain" style={{ display: 'block', maxHeight: '50vh' }} loading="lazy" />
+                </div>
+              </Reveal>
+
+              {/* Headshots feature cards */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 md:gap-4 mb-6">
+                {headshotFeatures.map((item, i) => (
+                  <Reveal key={i} delay={i * 0.06} className="bg-white/[0.04] border border-white/10 rounded-xl p-4 md:p-5 hover:border-[#fce4a6]/30 transition-colors group">
+                    <div className="text-[#fce4a6] mb-2 group-hover:scale-110 transition-transform inline-block">{item.icon}</div>
+                    <h3 className="font-bold text-sm md:text-base mb-1">{item.title}</h3>
+                    <p className="text-white/50 text-[11px] md:text-xs leading-relaxed">{item.desc}</p>
                   </Reveal>
                 ))}
               </div>
+
+              {/* What's Included cards */}
+              <Reveal className="mb-5">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  {whatsIncluded.map((item, i) => (
+                    <div key={i} className="bg-gradient-to-br from-[#fce4a6]/10 to-transparent border border-[#fce4a6]/20 rounded-2xl p-5 hover:border-[#fce4a6]/40 transition-colors group">
+                      <div className="w-10 h-10 rounded-xl bg-[#fce4a6]/10 border border-[#fce4a6]/30 flex items-center justify-center mb-3 text-[#fce4a6] group-hover:bg-[#fce4a6]/20 transition-colors">
+                        {item.icon}
+                      </div>
+                      <h3 className="font-bold text-sm md:text-base text-white mb-1.5">{item.title}</h3>
+                      <p className="text-white/60 text-xs leading-relaxed">{item.desc}</p>
+                    </div>
+                  ))}
+                </div>
+              </Reveal>
+
+              <SubtleCTA label="Book Headshots" onQuote={openQuote} />
             </div>
           </section>
-
-          {/* ── CTA 3 ── */}
-          <CTABlock headline="Ready to Capture Your Next Event?" sub="Get a quote in minutes — we respond fast." primary="Book Now" onQuote={openQuote} phone={trackPhone} />
 
           {/* ── Testimonials ── */}
           <section className="py-8 md:py-10 px-4 border-t border-white/5">
@@ -293,7 +292,7 @@ export default function PhotographyPage() {
           </section>
 
           {/* ── Intro / Explanatory Video ── */}
-          <section className="px-4 py-6 md:py-8">
+          <section className="px-4 py-6 md:py-8 border-t border-white/5">
             <div className="max-w-2xl mx-auto">
               <Reveal>
                 <div className="rounded-2xl overflow-hidden border border-white/10 bg-black">
@@ -313,9 +312,6 @@ export default function PhotographyPage() {
               </Reveal>
             </div>
           </section>
-
-          {/* ── CTA 4 ── */}
-          <CTABlock headline="Don't Miss Out — Dates Are Filling Fast." sub="Join 200+ events that trusted us with their coverage." primary="Reserve Your Date" onQuote={openQuote} phone={trackPhone} />
 
           {/* ── FAQs ── */}
           <section className="py-8 md:py-10 px-4">
@@ -439,12 +435,18 @@ const howItWorks = [
   { title: 'You Get Your Content', desc: 'Receive your full gallery of RAW + Edited photos within about a week. Professional color grading, retouching, and full-resolution delivery.' },
 ]
 
-const whyClientsLove = [
-  { icon: <FiCamera className="w-5 h-5 md:w-6 md:h-6" />, title: 'Professional Photography', desc: 'High-resolution event photography that captures keynotes, candid moments, details, and the full atmosphere of your event with professional lighting and composition.' },
-  { icon: <FiFilm className="w-5 h-5 md:w-6 md:h-6" />, title: 'Cinematic Videography', desc: 'Multi-angle video coverage with cinema-grade equipment. Highlight reels, full ceremony captures, and social-ready clips — all professionally edited.' },
-  { icon: <FiUsers className="w-5 h-5 md:w-6 md:h-6" />, title: 'Professional Headshots', desc: 'On-site headshot sessions with studio-quality lighting and backdrops. Perfect for corporate events, conferences, and team photos.' },
-  { icon: <FiImage className="w-5 h-5 md:w-6 md:h-6" />, title: 'RAW + Edited Delivery', desc: 'You get both RAW and professionally edited photos. Full color grading, retouching, and delivered in full resolution within about a week.' },
-  { icon: <FiZap className="w-5 h-5 md:w-6 md:h-6" />, title: 'One Team, Full Coverage', desc: 'Photography, videography, and headshots all handled by one professional team. No juggling multiple vendors — we cover everything seamlessly.' },
+const photoVideoFeatures = [
+  { icon: <FiCamera className="w-5 h-5 md:w-6 md:h-6" />, title: 'Professional Photography', desc: 'High-resolution event photography capturing keynotes, candid moments, details, and the full atmosphere of your event with professional lighting and composition.' },
+  { icon: <FiFilm className="w-5 h-5 md:w-6 md:h-6" />, title: 'Cinematic Videography', desc: 'Multi-angle video coverage with cinema-grade equipment. Highlight reels, full event captures, and social-ready clips — all professionally edited.' },
+  { icon: <FiImage className="w-5 h-5 md:w-6 md:h-6" />, title: 'RAW + Edited Delivery', desc: 'Receive both RAW and professionally edited files. Full color grading, retouching, and delivered in full resolution within about a week of your event.' },
+  { icon: <FiZap className="w-5 h-5 md:w-6 md:h-6" />, title: 'Seamless, Single Team', desc: 'Photography and videography handled together by one professional crew. No vendor coordination — just consistent, premium coverage from start to finish.' },
+]
+
+const headshotFeatures = [
+  { icon: <FiUsers className="w-5 h-5 md:w-6 md:h-6" />, title: 'On-Location Studio Setup', desc: 'We bring the studio to you. Full professional lighting and backdrop setup at your venue — no need to travel or book a separate studio.' },
+  { icon: <FiStar className="w-5 h-5 md:w-6 md:h-6" />, title: 'Studio-Quality Results', desc: 'Professional-grade lighting rigs and backdrops deliver polished, publication-ready headshots that look just like a dedicated studio session.' },
+  { icon: <FiShield className="w-5 h-5 md:w-6 md:h-6" />, title: 'Expert Retouching', desc: 'Every headshot is professionally retouched — skin smoothing, color correction, and background cleanup. LinkedIn-ready and corporate-polished.' },
+  { icon: <FiZap className="w-5 h-5 md:w-6 md:h-6" />, title: 'Fast Turnaround', desc: 'Edited headshots delivered within a week. High-resolution files with commercial usage rights — ready for your website, LinkedIn, and company directory.' },
 ]
 
 const whatsIncluded = [
