@@ -13,21 +13,13 @@ const Reveal = ({ children, className, delay = 0 }: { children: React.ReactNode;
 )
 
 /* ─── CTA Block ─── */
-const CTABlock = ({ headline, sub, primary, onQuote, phone }: { headline: string; sub: string; primary: string; onQuote: () => void; phone: () => void }) => (
-  <Reveal className="max-w-4xl mx-auto text-center py-10 md:py-14 px-4">
-    <h2 className="text-xl md:text-3xl lg:text-4xl font-black text-white mb-2">{headline}</h2>
-    <p className="text-white/50 text-sm md:text-base mb-5">{sub}</p>
-    <div className="flex flex-col sm:flex-row gap-3 justify-center items-center">
-      <motion.button whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.97 }} onClick={onQuote}
-        className="w-full sm:w-auto bg-[#fce4a6] text-black px-7 py-3.5 md:px-8 md:py-4 rounded-full font-bold text-sm md:text-base shadow-lg shadow-[#fce4a6]/20 hover:shadow-xl transition-all group">
-        {primary} <FiArrowRight className="inline ml-1.5 group-hover:translate-x-1 transition-transform" />
-      </motion.button>
-      <a href="tel:289-301-4039" onClick={phone} className="flex items-center gap-2 text-[#fce4a6] text-sm md:text-base font-semibold hover:text-white transition-colors">
-        <FiPhone className="w-4 h-4 md:w-5 md:h-5" /> 289-301-4039
-      </a>
-    </div>
-    <p className="text-white/30 text-[10px] md:text-xs mt-3">Responses in &lt;15 mins&ensp;|&ensp;No credit card required</p>
-  </Reveal>
+const SubtleCTA = ({ label, onQuote }: { label: string; onQuote: () => void }) => (
+  <div className="flex justify-center pt-4 pb-2">
+    <motion.button whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.97 }} onClick={onQuote}
+      className="bg-[#fce4a6] text-black px-6 py-2.5 rounded-full font-bold text-sm shadow-md shadow-[#fce4a6]/20 hover:shadow-lg transition-all group">
+      {label} <FiArrowRight className="inline ml-1.5 group-hover:translate-x-1 transition-transform" />
+    </motion.button>
+  </div>
 )
 
 /* ════════════════════════════════════════════════════════════════
@@ -52,7 +44,6 @@ export default function PortraitBoothPage() {
   useEffect(() => { showModal ? document.body.classList.add('overflow-hidden') : document.body.classList.remove('overflow-hidden'); return () => document.body.classList.remove('overflow-hidden') }, [showModal])
 
   const openQuote = useCallback(() => setShowModal(true), [])
-  const trackPhone = useCallback(() => {}, [])
 
   const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => setForm({ ...form, [e.target.name]: e.target.value })
 
@@ -188,7 +179,7 @@ export default function PortraitBoothPage() {
           </section>
 
           {/* ── CTA 1 ── */}
-          <CTABlock headline="Want This at Your Event?" sub="Limited dates available — secure yours before they're gone." primary="Reserve Your Date" onQuote={openQuote} phone={trackPhone} />
+          <SubtleCTA label="Reserve Your Date" onQuote={openQuote} />
 
           {/* ── Portrait Image (portraitbooth2.jpg) ── */}
           <section className="px-4 py-6 md:py-8">
@@ -221,7 +212,7 @@ export default function PortraitBoothPage() {
           </section>
 
           {/* ── CTA 2 ── */}
-          <CTABlock headline="Your Guests Deserve the Celebrity Treatment." sub="Studio-quality portraits, delivered instantly at your event." primary="Check Availability" onQuote={openQuote} phone={trackPhone} />
+          <SubtleCTA label="Check Availability" onQuote={openQuote} />
 
           {/* ── Portrait Image 2 ── */}
           <section className="px-4 py-6 md:py-8">
@@ -258,7 +249,7 @@ export default function PortraitBoothPage() {
           </section>
 
           {/* ── CTA 3 ── */}
-          <CTABlock headline="Ready to Elevate Your Event?" sub="Get a quote in minutes — we respond fast." primary="Book Now" onQuote={openQuote} phone={trackPhone} />
+          <SubtleCTA label="Book Now" onQuote={openQuote} />
 
           {/* ── Testimonials ── */}
           <section className="py-8 md:py-10 px-4 border-t border-white/5">
@@ -292,7 +283,7 @@ export default function PortraitBoothPage() {
           </section>
 
           {/* ── CTA 4 ── */}
-          <CTABlock headline="Don't Miss Out — Dates Are Filling Fast." sub="Join 500+ events that trusted us with their portrait experience." primary="Reserve Your Date" onQuote={openQuote} phone={trackPhone} />
+          <SubtleCTA label="Reserve Your Date" onQuote={openQuote} />
 
           {/* ── FAQs ── */}
           <section className="py-8 md:py-10 px-4">
