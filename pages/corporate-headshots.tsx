@@ -261,7 +261,7 @@ export default function CorporateHeadshots() {
               </Reveal>
               <Reveal delay={0.1}>
                 <div className="rounded-2xl overflow-hidden border border-white/10">
-                  <LazyVideo src="/videos/Corporate.mp4" className="w-full aspect-video object-cover" onPlay={() => trackVideoView('Corporate Headshots')} />
+                  <LazyVideo src="/videos/corporateheadshot.MOV" className="w-full aspect-video object-cover" onPlay={() => trackVideoView('Corporate Headshots')} />
                 </div>
               </Reveal>
               <Reveal delay={0.2} className="text-center mt-4">

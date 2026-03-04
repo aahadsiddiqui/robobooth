@@ -182,12 +182,20 @@ export default function PhotographyPage() {
           {/* ════════════════════════════════════
               PHOTOGRAPHY & VIDEOGRAPHY SECTION
               ════════════════════════════════════ */}
-          <section className="py-8 md:py-12 px-4 border-t border-white/5">
+          <section className="py-10 md:py-14 px-4 border-t-2 border-[#fce4a6]/20">
             <div className="max-w-5xl mx-auto">
-              <Reveal className="text-center mb-6">
-                <span className="inline-block bg-[#fce4a6]/10 border border-[#fce4a6]/30 text-[#fce4a6] text-[10px] md:text-xs font-semibold tracking-widest uppercase px-3 py-1 rounded-full mb-3">Photography & Videography</span>
-                <h2 className="text-xl md:text-2xl lg:text-3xl font-black mb-1.5">Capture Every <span className="text-[#fce4a6]">Moment</span></h2>
-                <p className="text-white/50 text-xs md:text-sm max-w-xl mx-auto">From candid moments to cinematic highlights — we document your event in stunning detail. RAW + Edited delivered within a week.</p>
+              <Reveal className="text-center mb-8">
+                <div className="flex items-center justify-center gap-3 mb-4">
+                  <div className="h-px flex-1 max-w-[80px] bg-gradient-to-r from-transparent to-[#fce4a6]/40" />
+                  <div className="flex items-center gap-2 bg-[#fce4a6]/10 border border-[#fce4a6]/40 px-4 py-1.5 rounded-full">
+                    <FiCamera className="w-3.5 h-3.5 text-[#fce4a6]" />
+                    <FiFilm className="w-3.5 h-3.5 text-[#fce4a6]" />
+                    <span className="text-[#fce4a6] text-xs font-bold tracking-widest uppercase">Photography & Videography</span>
+                  </div>
+                  <div className="h-px flex-1 max-w-[80px] bg-gradient-to-l from-transparent to-[#fce4a6]/40" />
+                </div>
+                <h2 className="text-2xl md:text-3xl lg:text-4xl font-black mb-2">Capture Every <span className="text-[#fce4a6]">Moment</span></h2>
+                <p className="text-white/50 text-sm md:text-base max-w-xl mx-auto">From candid moments to cinematic highlights — we document your event in stunning detail. RAW + Edited delivered within a week.</p>
               </Reveal>
 
               {/* Photo/Video image */}
@@ -208,6 +216,24 @@ export default function PhotographyPage() {
                 ))}
               </div>
 
+              {/* Photo/Video — action video */}
+              <Reveal className="mt-5 mb-2">
+                <div className="max-w-2xl mx-auto rounded-2xl overflow-hidden border border-white/10 bg-black">
+                  <video
+                    className="w-full max-h-[50vh] object-contain"
+                    style={{ display: 'block' }}
+                    autoPlay
+                    loop
+                    muted
+                    playsInline
+                    preload="auto"
+                  >
+                    <source src="/videos/photography1.MOV" type="video/quicktime" />
+                    <source src="/videos/photography1.MOV" type="video/mp4" />
+                  </video>
+                </div>
+              </Reveal>
+
               <SubtleCTA label="Book Photography & Videography" onQuote={openQuote} />
             </div>
           </section>
@@ -215,12 +241,19 @@ export default function PhotographyPage() {
           {/* ════════════════════
               HEADSHOTS SECTION
               ════════════════════ */}
-          <section className="py-8 md:py-12 px-4 border-t border-white/5">
+          <section className="py-10 md:py-14 px-4 border-t-2 border-[#fce4a6]/20">
             <div className="max-w-5xl mx-auto">
-              <Reveal className="text-center mb-6">
-                <span className="inline-block bg-[#fce4a6]/10 border border-[#fce4a6]/30 text-[#fce4a6] text-[10px] md:text-xs font-semibold tracking-widest uppercase px-3 py-1 rounded-full mb-3">Professional Headshots</span>
-                <h2 className="text-xl md:text-2xl lg:text-3xl font-black mb-1.5">Elevate Your <span className="text-[#fce4a6]">Professional Image</span></h2>
-                <p className="text-white/50 text-xs md:text-sm max-w-xl mx-auto">On-location headshot sessions with studio-quality lighting. Perfect for corporate teams, conferences, LinkedIn profiles, and company directories.</p>
+              <Reveal className="text-center mb-8">
+                <div className="flex items-center justify-center gap-3 mb-4">
+                  <div className="h-px flex-1 max-w-[80px] bg-gradient-to-r from-transparent to-[#fce4a6]/40" />
+                  <div className="flex items-center gap-2 bg-[#fce4a6]/10 border border-[#fce4a6]/40 px-4 py-1.5 rounded-full">
+                    <FiUsers className="w-3.5 h-3.5 text-[#fce4a6]" />
+                    <span className="text-[#fce4a6] text-xs font-bold tracking-widest uppercase">Professional Headshots</span>
+                  </div>
+                  <div className="h-px flex-1 max-w-[80px] bg-gradient-to-l from-transparent to-[#fce4a6]/40" />
+                </div>
+                <h2 className="text-2xl md:text-3xl lg:text-4xl font-black mb-2">Elevate Your <span className="text-[#fce4a6]">Professional Image</span></h2>
+                <p className="text-white/50 text-sm md:text-base max-w-xl mx-auto">On-location headshot sessions with studio-quality lighting. Perfect for corporate teams, conferences, LinkedIn profiles, and company directories.</p>
               </Reveal>
 
               {/* Headshots image */}
@@ -291,7 +324,7 @@ export default function PhotographyPage() {
             </div>
           </section>
 
-          {/* ── Intro / Explanatory Video ── */}
+          {/* ── Headshots Video (after reviews) ── */}
           <section className="px-4 py-6 md:py-8 border-t border-white/5">
             <div className="max-w-2xl mx-auto">
               <Reveal>
@@ -301,12 +334,13 @@ export default function PhotographyPage() {
                     style={{ display: 'block' }}
                     autoPlay
                     loop
+                    muted
                     playsInline
                     controls
                     preload="auto"
                   >
-                    <source src="/videos/photography1.MOV" type="video/quicktime" />
-                    <source src="/videos/photography1.MOV" type="video/mp4" />
+                    <source src="/videos/corporateheadshot.MOV" type="video/quicktime" />
+                    <source src="/videos/corporateheadshot.MOV" type="video/mp4" />
                   </video>
                 </div>
               </Reveal>
