@@ -262,7 +262,7 @@ export default function PremiumPhotoboothPage() {
             <div className="max-w-5xl mx-auto">
               <Reveal>
                 <div className="rounded-2xl overflow-hidden border border-white/10 bg-black">
-                  <img src="/images/photobooth1.JPG" alt="Premium Photobooth at event" className="w-full h-auto" style={{ display: 'block' }} loading="lazy" />
+                  <img src="/images/tdtech.jpg" alt="Premium Photobooth at event" className="w-full h-auto" style={{ display: 'block' }} loading="lazy" />
                 </div>
               </Reveal>
             </div>
@@ -295,7 +295,7 @@ export default function PremiumPhotoboothPage() {
             <div className="max-w-5xl mx-auto">
               <Reveal>
                 <div className="rounded-2xl overflow-hidden border border-white/10 bg-black">
-                  <img src="/images/photobooth2.jpg" alt="Premium Photobooth setup" className="w-full h-auto" style={{ display: 'block' }} loading="lazy" />
+                  <img src="/images/photobooth1.JPG" alt="Premium Photobooth setup" className="w-full h-auto" style={{ display: 'block' }} loading="lazy" />
                 </div>
               </Reveal>
             </div>
@@ -529,6 +529,6 @@ const companyLogos = [
   '/images/adamas.png', '/images/bell.png', '/images/bgo.png', '/images/equifax.svg',
   '/images/geotab.png', '/images/hilton.png', '/images/infosys.png', '/images/meta.png',
   '/images/pdsb.png', '/images/remax.png', '/images/ritz.webp', '/images/rlp.svg',
-  '/images/stonex.png', '/images/talent.png', '/images/td.png', '/images/torontopearson.png', '/images/BMO.svg',
+  '/images/stonex.png', '/images/talent.png', '/images/td.png', '/images/torontopearson.png', '/images/BMO.svg.png',
 ]
 

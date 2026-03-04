@@ -508,5 +508,5 @@ const companyLogos = [
   '/images/adamas.png', '/images/bell.png', '/images/bgo.png', '/images/equifax.svg',
   '/images/geotab.png', '/images/hilton.png', '/images/infosys.png', '/images/meta.png',
   '/images/pdsb.png', '/images/remax.png', '/images/ritz.webp', '/images/rlp.svg',
-  '/images/stonex.png', '/images/talent.png', '/images/td.png', '/images/torontopearson.png', '/images/BMO.svg',
+  '/images/stonex.png', '/images/talent.png', '/images/td.png', '/images/torontopearson.png', '/images/BMO.svg.png',
 ]
