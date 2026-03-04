@@ -195,6 +195,61 @@ export default function ThreeSixtyBoothPage() {
             </div>
           </section>
 
+          {/* ── Gold Package Upsell ── */}
+          <section className="py-10 md:py-14 px-4">
+            <div className="max-w-3xl mx-auto">
+              <Reveal>
+                <div className="relative rounded-3xl overflow-hidden border-2 border-[#fce4a6]/50 bg-gradient-to-br from-[#fce4a6]/10 via-black to-black p-6 md:p-10 shadow-2xl shadow-[#fce4a6]/10">
+                  <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_left,_#fce4a625_0%,_transparent_65%)] pointer-events-none" />
+                  <div className="relative z-10">
+                    <div className="flex justify-center mb-5">
+                      <span className="inline-flex items-center gap-2 bg-[#fce4a6] text-black text-[11px] font-black tracking-widest uppercase px-4 py-1.5 rounded-full shadow-lg">
+                        ⭐ Most Popular · Gold Package
+                      </span>
+                    </div>
+                    <h2 className="text-2xl md:text-3xl lg:text-4xl font-black text-center mb-2">
+                      Complete Your Event with <span className="text-[#fce4a6]">Professional Photography</span>
+                    </h2>
+                    <p className="text-white/60 text-sm md:text-base text-center mb-8 max-w-xl mx-auto">
+                      8 out of 10 clients bundle photography with their 360 Booth — because viral content from the booth is great, but a full event gallery is what you keep forever.
+                    </p>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mb-7">
+                      <div className="bg-white/[0.05] border border-[#fce4a6]/20 rounded-2xl p-4 md:p-5">
+                        <div className="text-[#fce4a6] font-bold text-sm mb-2 flex items-center gap-2"><FiCheck className="w-4 h-4" /> 360 Booth</div>
+                        <p className="text-white/50 text-xs leading-relaxed">Slow-motion cinematic 360 videos with custom overlays and song selection. Instantly shared to every guest's phone — content they'll actually post.</p>
+                      </div>
+                      <div className="bg-white/[0.05] border border-[#fce4a6]/20 rounded-2xl p-4 md:p-5">
+                        <div className="text-[#fce4a6] font-bold text-sm mb-2 flex items-center gap-2"><FiCheck className="w-4 h-4" /> Event Photography</div>
+                        <p className="text-white/50 text-xs leading-relaxed">A dedicated photographer captures every candid moment — guests mingling, speeches, real emotions. RAW + Edited delivered within a week.</p>
+                      </div>
+                    </div>
+                    <div className="space-y-3 mb-8">
+                      {[
+                        'The 360 Booth creates viral video content — photography preserves the real moments that happen off the platform',
+                        'Walk away with cinematic videos AND a full photo gallery — the complete event story',
+                        'One team, zero coordination — both activations handled seamlessly side by side',
+                        'RAW + Edited photos delivered within a week, high-res and ready to share',
+                        'More content = more reach — your event lives on well past the night itself',
+                      ].map((b, i) => (
+                        <div key={i} className="flex items-start gap-3">
+                          <FiCheck className="w-4 h-4 text-[#fce4a6] mt-0.5 flex-shrink-0" />
+                          <p className="text-white/70 text-xs md:text-sm leading-relaxed">{b}</p>
+                        </div>
+                      ))}
+                    </div>
+                    <div className="text-center">
+                      <motion.button whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.97 }} onClick={openQuote}
+                        className="bg-[#fce4a6] text-black px-8 py-3.5 rounded-full font-black text-sm md:text-base shadow-lg shadow-[#fce4a6]/30 hover:shadow-xl transition-all group">
+                        Book the Gold Package <FiArrowRight className="inline ml-2 group-hover:translate-x-1 transition-transform" />
+                      </motion.button>
+                      <p className="text-white/30 text-[10px] mt-2">Responses in &lt;15 mins · No credit card required</p>
+                    </div>
+                  </div>
+                </div>
+              </Reveal>
+            </div>
+          </section>
+
           {/* ── CTA 1 ── */}
           <SubtleCTA label="Reserve Your Date" onQuote={openQuote} />
 
@@ -259,61 +314,6 @@ export default function ThreeSixtyBoothPage() {
 
           {/* ── CTA 3 ── */}
           <SubtleCTA label="Book Now" onQuote={openQuote} />
-
-          {/* ── Gold Package Upsell ── */}
-          <section className="py-10 md:py-14 px-4">
-            <div className="max-w-3xl mx-auto">
-              <Reveal>
-                <div className="relative rounded-3xl overflow-hidden border-2 border-[#fce4a6]/50 bg-gradient-to-br from-[#fce4a6]/10 via-black to-black p-6 md:p-10 shadow-2xl shadow-[#fce4a6]/10">
-                  <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_left,_#fce4a625_0%,_transparent_65%)] pointer-events-none" />
-                  <div className="relative z-10">
-                    <div className="flex justify-center mb-5">
-                      <span className="inline-flex items-center gap-2 bg-[#fce4a6] text-black text-[11px] font-black tracking-widest uppercase px-4 py-1.5 rounded-full shadow-lg">
-                        ⭐ Most Popular · Gold Package
-                      </span>
-                    </div>
-                    <h2 className="text-2xl md:text-3xl lg:text-4xl font-black text-center mb-2">
-                      Complete Your Event with <span className="text-[#fce4a6]">Professional Photography</span>
-                    </h2>
-                    <p className="text-white/60 text-sm md:text-base text-center mb-8 max-w-xl mx-auto">
-                      8 out of 10 clients bundle photography with their 360 Booth — because viral content from the booth is great, but a full event gallery is what you keep forever.
-                    </p>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mb-7">
-                      <div className="bg-white/[0.05] border border-[#fce4a6]/20 rounded-2xl p-4 md:p-5">
-                        <div className="text-[#fce4a6] font-bold text-sm mb-2 flex items-center gap-2"><FiCheck className="w-4 h-4" /> 360 Booth</div>
-                        <p className="text-white/50 text-xs leading-relaxed">Slow-motion cinematic 360 videos with custom overlays and song selection. Instantly shared to every guest's phone — content they'll actually post.</p>
-                      </div>
-                      <div className="bg-white/[0.05] border border-[#fce4a6]/20 rounded-2xl p-4 md:p-5">
-                        <div className="text-[#fce4a6] font-bold text-sm mb-2 flex items-center gap-2"><FiCheck className="w-4 h-4" /> Event Photography</div>
-                        <p className="text-white/50 text-xs leading-relaxed">A dedicated photographer captures every candid moment — guests mingling, speeches, real emotions. RAW + Edited delivered within a week.</p>
-                      </div>
-                    </div>
-                    <div className="space-y-3 mb-8">
-                      {[
-                        'The 360 Booth creates viral video content — photography preserves the real moments that happen off the platform',
-                        'Walk away with cinematic videos AND a full photo gallery — the complete event story',
-                        'One team, zero coordination — both activations handled seamlessly side by side',
-                        'RAW + Edited photos delivered within a week, high-res and ready to share',
-                        'More content = more reach — your event lives on well past the night itself',
-                      ].map((b, i) => (
-                        <div key={i} className="flex items-start gap-3">
-                          <FiCheck className="w-4 h-4 text-[#fce4a6] mt-0.5 flex-shrink-0" />
-                          <p className="text-white/70 text-xs md:text-sm leading-relaxed">{b}</p>
-                        </div>
-                      ))}
-                    </div>
-                    <div className="text-center">
-                      <motion.button whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.97 }} onClick={openQuote}
-                        className="bg-[#fce4a6] text-black px-8 py-3.5 rounded-full font-black text-sm md:text-base shadow-lg shadow-[#fce4a6]/30 hover:shadow-xl transition-all group">
-                        Book the Gold Package <FiArrowRight className="inline ml-2 group-hover:translate-x-1 transition-transform" />
-                      </motion.button>
-                      <p className="text-white/30 text-[10px] mt-2">Responses in &lt;15 mins · No credit card required</p>
-                    </div>
-                  </div>
-                </div>
-              </Reveal>
-            </div>
-          </section>
 
           {/* ── Testimonials (no faces) ── */}
           <section className="py-8 md:py-10 px-4 border-t border-white/5">

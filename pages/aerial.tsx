@@ -196,6 +196,61 @@ export default function AerialBooth() {
             </div>
           </section>
 
+          {/* ── Gold Package Upsell ── */}
+          <section className="py-10 md:py-14 px-4">
+            <div className="max-w-3xl mx-auto">
+              <Reveal>
+                <div className="relative rounded-3xl overflow-hidden border-2 border-[#fce4a6]/50 bg-gradient-to-br from-[#fce4a6]/10 via-black to-black p-6 md:p-10 shadow-2xl shadow-[#fce4a6]/10">
+                  <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_left,_#fce4a625_0%,_transparent_65%)] pointer-events-none" />
+                  <div className="relative z-10">
+                    <div className="flex justify-center mb-5">
+                      <span className="inline-flex items-center gap-2 bg-[#fce4a6] text-black text-[11px] font-black tracking-widest uppercase px-4 py-1.5 rounded-full shadow-lg">
+                        ⭐ Most Popular · Gold Package
+                      </span>
+                    </div>
+                    <h2 className="text-2xl md:text-3xl lg:text-4xl font-black text-center mb-2">
+                      Complete Your Event with <span className="text-[#fce4a6]">Professional Photography</span>
+                    </h2>
+                    <p className="text-white/60 text-sm md:text-base text-center mb-8 max-w-xl mx-auto">
+                      8 out of 10 clients bundle photography with their Aerial Booth — and every single one says it was the best decision they made for their event.
+                    </p>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mb-7">
+                      <div className="bg-white/[0.05] border border-[#fce4a6]/20 rounded-2xl p-4 md:p-5">
+                        <div className="text-[#fce4a6] font-bold text-sm mb-2 flex items-center gap-2"><FiCheck className="w-4 h-4" /> Aerial Booth</div>
+                        <p className="text-white/50 text-xs leading-relaxed">Full setup and teardown, on-site attendant, custom overlay, instant sharing to phones. We handle everything start to finish.</p>
+                      </div>
+                      <div className="bg-white/[0.05] border border-[#fce4a6]/20 rounded-2xl p-4 md:p-5">
+                        <div className="text-[#fce4a6] font-bold text-sm mb-2 flex items-center gap-2"><FiCheck className="w-4 h-4" /> Event Photography</div>
+                        <p className="text-white/50 text-xs leading-relaxed">A dedicated photographer captures every candid moment on the ground — guests mingling, speeches, emotions. RAW + Edited delivered within a week.</p>
+                      </div>
+                    </div>
+                    <div className="space-y-3 mb-8">
+                      {[
+                        'The Aerial Booth captures stunning group shots from above — photography catches everything happening in between',
+                        'Walk away with a full event gallery, not just booth prints — professional content you can actually use',
+                        'One team, zero coordination stress — both services handled seamlessly together',
+                        'RAW + Edited photos delivered within a week, ready for social media, marketing, and memories',
+                        'Your venue, your guests, your brand — fully documented from every angle',
+                      ].map((b, i) => (
+                        <div key={i} className="flex items-start gap-3">
+                          <FiCheck className="w-4 h-4 text-[#fce4a6] mt-0.5 flex-shrink-0" />
+                          <p className="text-white/70 text-xs md:text-sm leading-relaxed">{b}</p>
+                        </div>
+                      ))}
+                    </div>
+                    <div className="text-center">
+                      <motion.button whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.97 }} onClick={openQuote}
+                        className="bg-[#fce4a6] text-black px-8 py-3.5 rounded-full font-black text-sm md:text-base shadow-lg shadow-[#fce4a6]/30 hover:shadow-xl transition-all group">
+                        Book the Gold Package <FiArrowRight className="inline ml-2 group-hover:translate-x-1 transition-transform" />
+                      </motion.button>
+                      <p className="text-white/30 text-[10px] mt-2">Responses in &lt;15 mins · No credit card required</p>
+                    </div>
+                  </div>
+                </div>
+              </Reveal>
+            </div>
+          </section>
+
           {/* ── CTA 1 ── */}
           <SubtleCTA label="Reserve Your Date" onQuote={openQuote} />
 
@@ -275,61 +330,6 @@ export default function AerialBooth() {
               <Reveal>
                 <div className="rounded-2xl overflow-hidden border border-white/10 bg-black">
                   <img src="/images/aerialpic.JPG" alt="Aerial Booth experience" className="w-full h-auto" style={{ display: 'block' }} loading="lazy" />
-                </div>
-              </Reveal>
-            </div>
-          </section>
-
-          {/* ── Gold Package Upsell ── */}
-          <section className="py-10 md:py-14 px-4">
-            <div className="max-w-3xl mx-auto">
-              <Reveal>
-                <div className="relative rounded-3xl overflow-hidden border-2 border-[#fce4a6]/50 bg-gradient-to-br from-[#fce4a6]/10 via-black to-black p-6 md:p-10 shadow-2xl shadow-[#fce4a6]/10">
-                  <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_left,_#fce4a625_0%,_transparent_65%)] pointer-events-none" />
-                  <div className="relative z-10">
-                    <div className="flex justify-center mb-5">
-                      <span className="inline-flex items-center gap-2 bg-[#fce4a6] text-black text-[11px] font-black tracking-widest uppercase px-4 py-1.5 rounded-full shadow-lg">
-                        ⭐ Most Popular · Gold Package
-                      </span>
-                    </div>
-                    <h2 className="text-2xl md:text-3xl lg:text-4xl font-black text-center mb-2">
-                      Complete Your Event with <span className="text-[#fce4a6]">Professional Photography</span>
-                    </h2>
-                    <p className="text-white/60 text-sm md:text-base text-center mb-8 max-w-xl mx-auto">
-                      8 out of 10 clients bundle photography with their Aerial Booth — and every single one says it was the best decision they made for their event.
-                    </p>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mb-7">
-                      <div className="bg-white/[0.05] border border-[#fce4a6]/20 rounded-2xl p-4 md:p-5">
-                        <div className="text-[#fce4a6] font-bold text-sm mb-2 flex items-center gap-2"><FiCheck className="w-4 h-4" /> Aerial Booth</div>
-                        <p className="text-white/50 text-xs leading-relaxed">Full setup and teardown, on-site attendant, custom overlay, instant sharing to phones. We handle everything start to finish.</p>
-                      </div>
-                      <div className="bg-white/[0.05] border border-[#fce4a6]/20 rounded-2xl p-4 md:p-5">
-                        <div className="text-[#fce4a6] font-bold text-sm mb-2 flex items-center gap-2"><FiCheck className="w-4 h-4" /> Event Photography</div>
-                        <p className="text-white/50 text-xs leading-relaxed">A dedicated photographer captures every candid moment on the ground — guests mingling, speeches, emotions. RAW + Edited delivered within a week.</p>
-                      </div>
-                    </div>
-                    <div className="space-y-3 mb-8">
-                      {[
-                        'The Aerial Booth captures stunning group shots from above — photography catches everything happening in between',
-                        'Walk away with a full event gallery, not just booth prints — professional content you can actually use',
-                        'One team, zero coordination stress — both services handled seamlessly together',
-                        'RAW + Edited photos delivered within a week, ready for social media, marketing, and memories',
-                        'Your venue, your guests, your brand — fully documented from every angle',
-                      ].map((b, i) => (
-                        <div key={i} className="flex items-start gap-3">
-                          <FiCheck className="w-4 h-4 text-[#fce4a6] mt-0.5 flex-shrink-0" />
-                          <p className="text-white/70 text-xs md:text-sm leading-relaxed">{b}</p>
-                        </div>
-                      ))}
-                    </div>
-                    <div className="text-center">
-                      <motion.button whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.97 }} onClick={openQuote}
-                        className="bg-[#fce4a6] text-black px-8 py-3.5 rounded-full font-black text-sm md:text-base shadow-lg shadow-[#fce4a6]/30 hover:shadow-xl transition-all group">
-                        Book the Gold Package <FiArrowRight className="inline ml-2 group-hover:translate-x-1 transition-transform" />
-                      </motion.button>
-                      <p className="text-white/30 text-[10px] mt-2">Responses in &lt;15 mins · No credit card required</p>
-                    </div>
-                  </div>
                 </div>
               </Reveal>
             </div>
