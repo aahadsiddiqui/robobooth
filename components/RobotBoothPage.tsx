@@ -26,6 +26,7 @@ const SubtleCTA = ({ label, onQuote }: { label: string; onQuote: () => void }) =
    ════════════════════════════════════════════════════════════════ */
 export default function RobotBoothPage() {
   const [showModal, setShowModal] = useState(false)
+  const [isGoldPackage, setIsGoldPackage] = useState(false)
   const [form, setForm] = useState({ firstName: '', email: '', phone: '', eventDate: '', budget: '' })
   const [submitting, setSubmitting] = useState(false)
   const [success, setSuccess] = useState(false)
@@ -42,7 +43,8 @@ export default function RobotBoothPage() {
   useEffect(() => { const t = setTimeout(() => setShowModal(true), 25000); return () => clearTimeout(t) }, [])
   useEffect(() => { showModal ? document.body.classList.add('overflow-hidden') : document.body.classList.remove('overflow-hidden'); return () => document.body.classList.remove('overflow-hidden') }, [showModal])
 
-  const openQuote = useCallback(() => setShowModal(true), [])
+  const openQuote = useCallback(() => { setIsGoldPackage(false); setShowModal(true) }, [])
+  const openGoldPackage = useCallback(() => { setIsGoldPackage(true); setShowModal(true) }, [])
 
   const handleInput = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => setForm({ ...form, [e.target.name]: e.target.value })
 
@@ -53,6 +55,7 @@ export default function RobotBoothPage() {
       const fd = new FormData()
       fd.append('first-name', form.firstName); fd.append('phone-number', form.phone); fd.append('email', form.email)
       fd.append('event-date', form.eventDate); fd.append('budget', form.budget); fd.append('event-type', 'Robot Photobooth')
+      fd.append('package', isGoldPackage ? 'Gold Package (Robot Photobooth + Event Photography)' : 'Robot Photobooth Only')
       fd.append('_replyto', form.email); fd.append('source', 'Robot Photobooth Page')
       const res = await fetch('https://formspree.io/f/xkgoedyp', { method: 'POST', body: fd, headers: { Accept: 'application/json' } })
       if (res.ok) { setSuccess(true) } else { alert('Failed to submit. Please try again.') }
@@ -242,7 +245,7 @@ export default function RobotBoothPage() {
                       ))}
                     </div>
                     <div className="text-center">
-                      <motion.button whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.97 }} onClick={openQuote}
+                      <motion.button whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.97 }} onClick={openGoldPackage}
                         className="bg-[#fce4a6] text-black px-8 py-3.5 rounded-full font-black text-sm md:text-base shadow-lg shadow-[#fce4a6]/30 hover:shadow-xl transition-all group">
                         Book the Gold Package <FiArrowRight className="inline ml-2 group-hover:translate-x-1 transition-transform" />
                       </motion.button>
@@ -453,8 +456,14 @@ export default function RobotBoothPage() {
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 z-[60] flex items-end md:items-center justify-center bg-black/70 backdrop-blur-md p-0 md:p-4">
             <motion.div initial={{ opacity: 0, y: 60 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 60 }}
               className="bg-white rounded-t-2xl md:rounded-2xl p-5 md:p-8 max-w-md w-full shadow-2xl relative max-h-[90vh] overflow-y-auto">
-              <button onClick={() => setShowModal(false)} className="absolute top-3 right-4 text-black/40 hover:text-black text-2xl">×</button>
-              <h2 className="text-lg md:text-2xl font-black text-black mb-1 text-center">Reserve the Robot Photobooth</h2>
+              <button onClick={() => { setShowModal(false); setIsGoldPackage(false) }} className="absolute top-3 right-4 text-black/40 hover:text-black text-2xl">×</button>
+              {isGoldPackage && (
+                <div className="bg-[#fce4a6] rounded-xl px-4 py-2.5 mb-3 flex items-center justify-center gap-2 flex-wrap">
+                  <span className="text-black text-xs font-black">⭐ Gold Package Selected</span>
+                  <span className="text-black/60 text-[10px]">Robot Photobooth + Event Photography</span>
+                </div>
+              )}
+              <h2 className="text-lg md:text-2xl font-black text-black mb-1 text-center">{isGoldPackage ? 'Book the Gold Package' : 'Reserve the Robot Photobooth'}</h2>
               <p className="text-black/60 text-xs md:text-sm mb-4 text-center">Tell us your date and we&apos;ll confirm availability within 15 minutes.</p>
               {success ? (
                 <div className="text-green-600 text-center font-bold py-6">Thank you! We&apos;ll be in touch soon.</div>
