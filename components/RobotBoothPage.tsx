@@ -26,7 +26,7 @@ const SubtleCTA = ({ label, onQuote }: { label: string; onQuote: () => void }) =
    ════════════════════════════════════════════════════════════════ */
 export default function RobotBoothPage() {
   const [showModal, setShowModal] = useState(false)
-  const [isGoldPackage, setIsGoldPackage] = useState(false)
+  const [packageType, setPackageType] = useState<'bronze' | 'gold' | 'platinum' | ''>('')
   const [form, setForm] = useState({ firstName: '', email: '', phone: '', eventDate: '', budget: '' })
   const [submitting, setSubmitting] = useState(false)
   const [success, setSuccess] = useState(false)
@@ -43,8 +43,10 @@ export default function RobotBoothPage() {
   useEffect(() => { const t = setTimeout(() => setShowModal(true), 25000); return () => clearTimeout(t) }, [])
   useEffect(() => { showModal ? document.body.classList.add('overflow-hidden') : document.body.classList.remove('overflow-hidden'); return () => document.body.classList.remove('overflow-hidden') }, [showModal])
 
-  const openQuote = useCallback(() => { setIsGoldPackage(false); setShowModal(true) }, [])
-  const openGoldPackage = useCallback(() => { setIsGoldPackage(true); setShowModal(true) }, [])
+  const openQuote = useCallback(() => { setPackageType(''); setShowModal(true) }, [])
+  const openBronzePackage = useCallback(() => { setPackageType('bronze'); setShowModal(true) }, [])
+  const openGoldPackage = useCallback(() => { setPackageType('gold'); setShowModal(true) }, [])
+  const openPlatinumPackage = useCallback(() => { setPackageType('platinum'); setShowModal(true) }, [])
 
   const handleInput = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => setForm({ ...form, [e.target.name]: e.target.value })
 
@@ -55,7 +57,7 @@ export default function RobotBoothPage() {
       const fd = new FormData()
       fd.append('first-name', form.firstName); fd.append('phone-number', form.phone); fd.append('email', form.email)
       fd.append('event-date', form.eventDate); fd.append('budget', form.budget); fd.append('event-type', 'Robot Photobooth')
-      fd.append('package', isGoldPackage ? 'Gold Package (Robot Photobooth + Event Photography)' : 'Robot Photobooth Only')
+      fd.append('package', packageType === 'gold' ? 'Gold Package (Robot Photobooth + Event Photography)' : packageType === 'platinum' ? 'Platinum Package (Robot Photobooth + Event Photography + Second Booth)' : packageType === 'bronze' ? 'Bronze Package (Robot Photobooth Only)' : 'General Inquiry')
       fd.append('_replyto', form.email); fd.append('source', 'Robot Photobooth Page')
       const res = await fetch('https://formspree.io/f/xkgoedyp', { method: 'POST', body: fd, headers: { Accept: 'application/json' } })
       if (res.ok) { setSuccess(true) } else { alert('Failed to submit. Please try again.') }
@@ -202,58 +204,126 @@ export default function RobotBoothPage() {
             </div>
           </section>
 
-          {/* ── Gold Package Upsell ── */}
+          {/* ── Packages: Bronze + Gold ── */}
           <section className="py-10 md:py-14 px-4">
-            <div className="max-w-3xl mx-auto">
-              <Reveal>
-                <div className="relative rounded-3xl overflow-hidden border-2 border-[#fce4a6]/50 bg-gradient-to-br from-[#fce4a6]/10 via-black to-black p-6 md:p-10 shadow-2xl shadow-[#fce4a6]/10">
-                  <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_left,_#fce4a625_0%,_transparent_65%)] pointer-events-none" />
-                  <div className="relative z-10">
-                    <div className="flex justify-center mb-5">
-                      <span className="inline-flex items-center gap-2 bg-[#fce4a6] text-black text-[11px] font-black tracking-widest uppercase px-4 py-1.5 rounded-full shadow-lg">
-                        ⭐ Most Popular · Gold Package
+            <div className="max-w-5xl mx-auto">
+              <Reveal className="text-center mb-8">
+                <h2 className="text-2xl md:text-3xl lg:text-4xl font-black mb-2">Choose Your <span className="text-[#fce4a6]">Package</span></h2>
+                <p className="text-white/50 text-sm md:text-base">Every event is different — pick the package that fits yours.</p>
+              </Reveal>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-5 items-stretch">
+
+                {/* Bronze */}
+                <Reveal>
+                  <div className="relative rounded-3xl border border-white/20 bg-white/[0.04] p-6 md:p-7 h-full flex flex-col">
+                    <div className="flex justify-center mb-4">
+                      <span className="inline-flex items-center gap-2 bg-white/10 text-white/70 text-[11px] font-black tracking-widest uppercase px-4 py-1.5 rounded-full">
+                        Bronze Package
                       </span>
                     </div>
-                    <h2 className="text-2xl md:text-3xl lg:text-4xl font-black text-center mb-2">
-                      Complete Your Event with <span className="text-[#fce4a6]">Professional Photography</span>
-                    </h2>
-                    <p className="text-white/60 text-sm md:text-base text-center mb-8 max-w-xl mx-auto">
-                      8 out of 10 clients bundle photography with their Robot Photobooth — because the robot roams the crowd, but a photographer captures the moments between the moments.
-                    </p>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mb-7">
-                      <div className="bg-white/[0.05] border border-[#fce4a6]/20 rounded-2xl p-4 md:p-5">
-                        <div className="text-[#fce4a6] font-bold text-sm mb-2 flex items-center gap-2"><FiCheck className="w-4 h-4" /> Robot Photobooth</div>
-                        <p className="text-white/50 text-xs leading-relaxed">Canada's first roaming robot photobooth — autonomously navigates your venue, engages guests, and delivers branded photos instantly to their phones.</p>
-                      </div>
-                      <div className="bg-white/[0.05] border border-[#fce4a6]/20 rounded-2xl p-4 md:p-5">
-                        <div className="text-[#fce4a6] font-bold text-sm mb-2 flex items-center gap-2"><FiCheck className="w-4 h-4" /> Event Photography</div>
-                        <p className="text-white/50 text-xs leading-relaxed">A dedicated photographer captures every candid moment — speeches, emotions, connections. RAW + Edited photos delivered within a week.</p>
-                      </div>
-                    </div>
-                    <div className="space-y-3 mb-8">
+                    <h3 className="text-lg md:text-xl font-black text-center mb-2">Robot Photobooth <span className="text-white/50">Only</span></h3>
+                    <p className="text-white/50 text-xs text-center mb-6">The standalone robot photobooth experience — fully set up, operated, and managed by our team.</p>
+                    <div className="space-y-2.5 mb-8 flex-1">
                       {[
-                        'The robot engages and photographs your guests — a photographer captures the spontaneous, in-between moments that define your event',
-                        'Walk away with robot booth prints AND a full professional event gallery — the complete picture',
-                        'One team, zero coordination stress — robot and photographer work seamlessly side by side',
-                        'RAW + Edited photos delivered within a week, high-res and ready for social media or print',
-                        'Your event, fully documented — nothing missed, nothing forgotten',
+                        "Canada's First Robot Photobooth roaming guest-to-guest",
+                        'Physical prints delivered on the spot',
+                        'Branded photo overlays and custom filters',
+                        'Dedicated on-site attendant handling everything',
+                        'Guests receive digital copies instantly to their phones',
                       ].map((b, i) => (
                         <div key={i} className="flex items-start gap-3">
-                          <FiCheck className="w-4 h-4 text-[#fce4a6] mt-0.5 flex-shrink-0" />
-                          <p className="text-white/70 text-xs md:text-sm leading-relaxed">{b}</p>
+                          <FiCheck className="w-4 h-4 text-white/40 mt-0.5 flex-shrink-0" />
+                          <p className="text-white/60 text-xs leading-relaxed">{b}</p>
                         </div>
                       ))}
                     </div>
                     <div className="text-center">
-                      <motion.button whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.97 }} onClick={openGoldPackage}
-                        className="bg-[#fce4a6] text-black px-8 py-3.5 rounded-full font-black text-sm md:text-base shadow-lg shadow-[#fce4a6]/30 hover:shadow-xl transition-all group">
-                        Book the Gold Package <FiArrowRight className="inline ml-2 group-hover:translate-x-1 transition-transform" />
+                      <motion.button whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.97 }} onClick={openBronzePackage}
+                        className="border-2 border-white/30 text-white px-4 py-3 rounded-full font-bold text-xs md:text-sm hover:bg-white/10 transition-all group w-full">
+                        Book Bronze Package <FiArrowRight className="inline ml-1 group-hover:translate-x-1 transition-transform" />
                       </motion.button>
                       <p className="text-white/30 text-[10px] mt-2">Responses in &lt;15 mins · No credit card required</p>
                     </div>
                   </div>
-                </div>
-              </Reveal>
+                </Reveal>
+
+                {/* Gold */}
+                <Reveal delay={0.1}>
+                  <div className="relative rounded-3xl overflow-hidden border-2 border-[#fce4a6]/50 bg-gradient-to-br from-[#fce4a6]/10 via-black to-black p-6 md:p-7 shadow-2xl shadow-[#fce4a6]/10 h-full flex flex-col">
+                    <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_left,_#fce4a625_0%,_transparent_65%)] pointer-events-none" />
+                    <div className="relative z-10 flex flex-col h-full">
+                      <div className="flex justify-center mb-4">
+                        <span className="inline-flex items-center gap-2 bg-[#fce4a6] text-black text-[11px] font-black tracking-widest uppercase px-4 py-1.5 rounded-full shadow-lg">
+                          ⭐ Most Popular · Gold
+                        </span>
+                      </div>
+                      <h3 className="text-lg md:text-xl font-black text-center mb-2">Robot Photobooth + <span className="text-[#fce4a6]">Event Photography</span></h3>
+                      <p className="text-white/60 text-xs text-center mb-6">Capture every moment of your event from two unforgettable perspectives.</p>
+                      <div className="space-y-2.5 mb-8 flex-1">
+                        {[
+                          "Canada's First Robot Photobooth roaming guest-to-guest",
+                          'Professional event photographer covering key moments',
+                          'Candid guest photography throughout the event',
+                          'Group photos and highlight moments captured',
+                          'Professionally edited high-resolution images delivered after the event',
+                          'Custom photo overlays and branded Robot Photobooth experience',
+                        ].map((b, i) => (
+                          <div key={i} className="flex items-start gap-3">
+                            <FiCheck className="w-4 h-4 text-[#fce4a6] mt-0.5 flex-shrink-0" />
+                            <p className="text-white/70 text-xs leading-relaxed">{b}</p>
+                          </div>
+                        ))}
+                      </div>
+                      <div className="text-center">
+                        <motion.button whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.97 }} onClick={openGoldPackage}
+                          className="bg-[#fce4a6] text-black px-4 py-3 rounded-full font-black text-xs md:text-sm shadow-lg shadow-[#fce4a6]/30 hover:shadow-xl transition-all group w-full">
+                          Book Gold Package <FiArrowRight className="inline ml-1 group-hover:translate-x-1 transition-transform" />
+                        </motion.button>
+                        <p className="text-white/30 text-[10px] mt-2">Responses in &lt;15 mins · No credit card required</p>
+                      </div>
+                    </div>
+                  </div>
+                </Reveal>
+
+                {/* Platinum */}
+                <Reveal delay={0.2}>
+                  <div className="relative rounded-3xl overflow-hidden border-2 border-white/40 bg-gradient-to-br from-white/[0.08] via-black to-black p-6 md:p-7 h-full flex flex-col" style={{ boxShadow: '0 0 40px rgba(255,255,255,0.06)' }}>
+                    <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_rgba(255,255,255,0.07)_0%,_transparent_60%)] pointer-events-none" />
+                    <div className="relative z-10 flex flex-col h-full">
+                      <div className="flex justify-center mb-4">
+                        <span className="inline-flex items-center gap-2 bg-gradient-to-r from-white/20 to-white/10 text-white text-[11px] font-black tracking-widest uppercase px-4 py-1.5 rounded-full border border-white/30">
+                          💎 Platinum Package
+                        </span>
+                      </div>
+                      <h3 className="text-lg md:text-xl font-black text-center mb-2">Robot Photobooth + Photography + <span className="text-white/80">Second Booth</span></h3>
+                      <p className="text-white/60 text-xs text-center mb-6">The ultimate event setup — add a 360 Booth, Premium Photobooth, or Aerial Booth to your activation.</p>
+                      <div className="space-y-2.5 mb-8 flex-1">
+                        {[
+                          'Everything included in the Gold Package',
+                          'Add-on: 360 Booth, Premium Photobooth, or Aerial Booth',
+                          'Two interactive booth activations running simultaneously',
+                          'Maximum guest engagement from multiple experiences',
+                          'One team coordinating everything seamlessly',
+                          'The most talked-about event setup in the GTA',
+                        ].map((b, i) => (
+                          <div key={i} className="flex items-start gap-3">
+                            <FiCheck className="w-4 h-4 text-white/70 mt-0.5 flex-shrink-0" />
+                            <p className="text-white/70 text-xs leading-relaxed">{b}</p>
+                          </div>
+                        ))}
+                      </div>
+                      <div className="text-center">
+                        <motion.button whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.97 }} onClick={openPlatinumPackage}
+                          className="bg-white text-black px-4 py-3 rounded-full font-black text-xs md:text-sm hover:bg-white/90 transition-all group w-full shadow-lg shadow-white/10">
+                          Book Platinum Package <FiArrowRight className="inline ml-1 group-hover:translate-x-1 transition-transform" />
+                        </motion.button>
+                        <p className="text-white/30 text-[10px] mt-2">Responses in &lt;15 mins · No credit card required</p>
+                      </div>
+                    </div>
+                  </div>
+                </Reveal>
+
+              </div>
             </div>
           </section>
 
@@ -456,14 +526,26 @@ export default function RobotBoothPage() {
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 z-[60] flex items-end md:items-center justify-center bg-black/70 backdrop-blur-md p-0 md:p-4">
             <motion.div initial={{ opacity: 0, y: 60 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 60 }}
               className="bg-white rounded-t-2xl md:rounded-2xl p-5 md:p-8 max-w-md w-full shadow-2xl relative max-h-[90vh] overflow-y-auto">
-              <button onClick={() => { setShowModal(false); setIsGoldPackage(false) }} className="absolute top-3 right-4 text-black/40 hover:text-black text-2xl">×</button>
-              {isGoldPackage && (
+              <button onClick={() => { setShowModal(false); setPackageType('') }} className="absolute top-3 right-4 text-black/40 hover:text-black text-2xl">×</button>
+              {packageType === 'bronze' && (
+                <div className="bg-white/90 border border-black/10 rounded-xl px-4 py-2.5 mb-3 flex items-center justify-center gap-2 flex-wrap">
+                  <span className="text-black text-xs font-black">🥉 Bronze Package Selected</span>
+                  <span className="text-black/60 text-[10px]">Robot Photobooth Only</span>
+                </div>
+              )}
+              {packageType === 'gold' && (
                 <div className="bg-[#fce4a6] rounded-xl px-4 py-2.5 mb-3 flex items-center justify-center gap-2 flex-wrap">
                   <span className="text-black text-xs font-black">⭐ Gold Package Selected</span>
                   <span className="text-black/60 text-[10px]">Robot Photobooth + Event Photography</span>
                 </div>
               )}
-              <h2 className="text-lg md:text-2xl font-black text-black mb-1 text-center">{isGoldPackage ? 'Book the Gold Package' : 'Reserve the Robot Photobooth'}</h2>
+              {packageType === 'platinum' && (
+                <div className="bg-gradient-to-r from-white/95 to-gray-100 border border-gray-300 rounded-xl px-4 py-2.5 mb-3 flex items-center justify-center gap-2 flex-wrap">
+                  <span className="text-black text-xs font-black">💎 Platinum Package Selected</span>
+                  <span className="text-black/60 text-[10px]">Robot Photobooth + Photography + Second Booth</span>
+                </div>
+              )}
+              <h2 className="text-lg md:text-2xl font-black text-black mb-1 text-center">{packageType === 'gold' ? 'Book Gold Package' : packageType === 'bronze' ? 'Book Bronze Package' : packageType === 'platinum' ? 'Book Platinum Package' : 'Reserve the Robot Photobooth'}</h2>
               <p className="text-black/60 text-xs md:text-sm mb-4 text-center">Tell us your date and we&apos;ll confirm availability within 15 minutes.</p>
               {success ? (
                 <div className="text-green-600 text-center font-bold py-6">Thank you! We&apos;ll be in touch soon.</div>
