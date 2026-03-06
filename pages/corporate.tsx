@@ -353,17 +353,21 @@ export default function Corporate() {
             </div>
           </section>
 
-          {/* ── Equifax Robot Video ── */}
+          {/* ── Gallery: robotbell + robottd ── */}
           <section className="px-4 py-6 md:py-8">
-            <div className="max-w-3xl mx-auto">
-              <Reveal>
-                <div className="rounded-2xl overflow-hidden border border-white/10 bg-black">
-                  <video className="w-full max-h-[60vh] object-contain" style={{ display: 'block' }} autoPlay loop muted playsInline preload="auto">
-                    <source src="/videos/equifaxrobot.mov" type="video/quicktime" />
-                    <source src="/videos/equifaxrobot.mov" type="video/mp4" />
-                  </video>
-                </div>
-              </Reveal>
+            <div className="max-w-5xl mx-auto">
+              <div className="grid grid-cols-2 gap-3 md:gap-4">
+                <Reveal>
+                  <div className="rounded-2xl overflow-hidden border border-white/10">
+                    <img src="/images/robotbell.jpg" alt="Robot Photobooth at Bell event" className="w-full h-48 sm:h-64 md:h-80 lg:h-96 object-cover" loading="lazy" />
+                  </div>
+                </Reveal>
+                <Reveal delay={0.1}>
+                  <div className="rounded-2xl overflow-hidden border border-white/10">
+                    <img src="/images/robottd.jpg" alt="Robot Photobooth at TD Coliseum" className="w-full h-48 sm:h-64 md:h-80 lg:h-96 object-cover" loading="lazy" />
+                  </div>
+                </Reveal>
+              </div>
             </div>
           </section>
 
