@@ -43,12 +43,11 @@ export default function Corporate() {
   useEffect(() => { const t = setTimeout(() => setShowModal(true), 25000); return () => clearTimeout(t) }, [])
   useEffect(() => { showModal ? document.body.classList.add('overflow-hidden') : document.body.classList.remove('overflow-hidden'); return () => document.body.classList.remove('overflow-hidden') }, [showModal])
   useEffect(() => {
-    const tryPlay = () => {
-      document.querySelectorAll('video').forEach(v => { v.muted = true; v.play().catch(() => {}) })
+    const handlePlay = (e: Event) => {
+      document.querySelectorAll('video').forEach(v => { if (v !== e.target) { v.pause() } })
     }
-    tryPlay()
-    const t = setTimeout(tryPlay, 800)
-    return () => clearTimeout(t)
+    document.addEventListener('play', handlePlay, true)
+    return () => document.removeEventListener('play', handlePlay, true)
   }, [])
 
   const openQuote = useCallback(() => { setPackageType(''); setShowModal(true) }, [])
@@ -138,7 +137,7 @@ export default function Corporate() {
                 {/* Hero video — desktop */}
                 <motion.div initial={{ opacity: 0, x: 30 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.7, delay: 0.15 }} className="hidden md:block">
                   <div className="rounded-2xl overflow-hidden shadow-2xl border border-white/10 bg-black">
-                    <video className="w-full h-[480px] lg:h-[520px] object-contain" autoPlay loop muted playsInline preload="auto" style={{ display: 'block' }}>
+                    <video className="w-full h-[480px] lg:h-[520px] object-contain" controls loop playsInline preload="metadata" poster="/images/robot1.jpg" style={{ display: 'block' }}>
                       <source src="/videos/equifaxrobot.mov" type="video/quicktime" />
                       <source src="/videos/equifaxrobot.mov" type="video/mp4" />
                     </video>
@@ -148,7 +147,7 @@ export default function Corporate() {
                 {/* Mobile hero video */}
                 <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.1 }} className="md:hidden -mx-4">
                   <div className="overflow-hidden bg-black">
-                    <video className="w-full max-h-[50vh] object-contain" autoPlay loop muted playsInline preload="auto" style={{ display: 'block' }}>
+                    <video className="w-full max-h-[50vh] object-contain" controls loop playsInline preload="metadata" poster="/images/robot1.jpg" style={{ display: 'block' }}>
                       <source src="/videos/equifaxrobot.mov" type="video/quicktime" />
                       <source src="/videos/equifaxrobot.mov" type="video/mp4" />
                     </video>
@@ -166,8 +165,8 @@ export default function Corporate() {
             <div className="relative w-full overflow-hidden">
               <div className="animate-marquee flex items-center gap-10 md:gap-14 px-4">
                 {[...companyLogos, ...companyLogos].map((logo, i) => (
-                  <div key={i} className="flex-shrink-0 w-20 md:w-28 h-10 md:h-12 flex items-center justify-center">
-                    <img src={logo} alt="Client" className={`max-w-full max-h-full object-contain opacity-50 hover:opacity-100 transition-opacity ${logo.includes('ritz.webp') || logo.includes('hilton.png') ? 'filter invert grayscale' : logo.includes('td.png') ? '' : 'filter brightness-0 invert'}`} loading="lazy" />
+                  <div key={i} className="flex-shrink-0 w-32 md:w-44 h-20 md:h-24 flex items-center justify-center">
+                    <img src={logo} alt="Client" className={`w-full h-full object-contain opacity-60 hover:opacity-100 transition-opacity ${logo.includes('ritz.webp') || logo.includes('hilton.png') ? 'filter invert grayscale' : logo.includes('td.png') ? '' : 'filter brightness-0 invert'}`} loading="lazy" />
                   </div>
                 ))}
               </div>
@@ -199,7 +198,7 @@ export default function Corporate() {
               {/* How It Works video */}
               <Reveal delay={0.2} className="mt-8">
                 <div className="max-w-3xl mx-auto rounded-2xl overflow-hidden border border-white/10 bg-black">
-                  <video className="w-full max-h-[60vh] object-contain" style={{ display: 'block' }} autoPlay loop muted playsInline preload="auto">
+                  <video className="w-full max-h-[60vh] object-contain" controls loop playsInline preload="metadata" poster="/images/robottd.jpg" style={{ display: 'block' }}>
                     <source src="/videos/bmorobot.MOV" type="video/quicktime" />
                     <source src="/videos/bmorobot.MOV" type="video/mp4" />
                   </video>
@@ -466,7 +465,7 @@ export default function Corporate() {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 md:gap-4">
                 <Reveal>
                   <div className="rounded-2xl overflow-hidden border border-white/10 bg-black">
-                    <video className="w-full max-h-[60vh] object-contain" style={{ display: 'block' }} autoPlay loop muted playsInline preload="auto">
+                    <video className="w-full max-h-[60vh] object-contain" controls loop playsInline preload="metadata" style={{ display: 'block' }}>
                       <source src="/videos/tdtestimonial.mov" type="video/quicktime" />
                       <source src="/videos/tdtestimonial.mov" type="video/mp4" />
                     </video>
@@ -474,7 +473,7 @@ export default function Corporate() {
                 </Reveal>
                 <Reveal delay={0.1}>
                   <div className="rounded-2xl overflow-hidden border border-white/10 bg-black">
-                    <video className="w-full max-h-[60vh] object-contain" style={{ display: 'block' }} autoPlay loop muted playsInline preload="auto">
+                    <video className="w-full max-h-[60vh] object-contain" controls loop playsInline preload="metadata" style={{ display: 'block' }}>
                       <source src="/videos/robottest1.MOV" type="video/quicktime" />
                       <source src="/videos/robottest1.MOV" type="video/mp4" />
                     </video>

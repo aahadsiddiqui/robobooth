@@ -67,8 +67,8 @@ export default function Home() {
       />
 
       {/* ── Companies We've Worked With ── */}
-      <section className="py-10 md:py-14 border-t border-white/5 overflow-hidden">
-        <div className="max-w-7xl mx-auto px-4 mb-6">
+      <section className="py-8 md:py-10 border-t border-white/5 overflow-hidden bg-black">
+        <div className="max-w-7xl mx-auto px-4 mb-4">
           <motion.h2
             initial={{ opacity: 0, y: 16 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -90,7 +90,7 @@ export default function Home() {
         <div className="relative w-full overflow-hidden">
           <div className="animate-marquee flex items-center gap-10 md:gap-16 px-4">
             {[...companyLogos, ...companyLogos].map((logo, i) => (
-              <div key={i} className="flex-shrink-0 w-20 md:w-28 h-10 md:h-14 flex items-center justify-center">
+              <div key={i} className="flex-shrink-0 w-24 md:w-36 h-14 md:h-16 flex items-center justify-center">
                 <img
                   src={logo}
                   alt="Client"
