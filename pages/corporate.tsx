@@ -334,6 +334,17 @@ export default function Corporate() {
           {/* ── CTA 1 ── */}
           <SubtleCTA label="Check Availability" onQuote={openQuote} />
 
+          {/* ── Corporate Image ── */}
+          <section className="px-4 py-6 md:py-8">
+            <div className="max-w-5xl mx-auto">
+              <Reveal>
+                <div className="rounded-2xl overflow-hidden border border-white/10">
+                  <img src="/images/corporate1.JPG" alt="Corporate Robot Photobooth event" className="w-full h-auto object-cover max-h-[60vh]" loading="lazy" />
+                </div>
+              </Reveal>
+            </div>
+          </section>
+
           {/* ── Why Clients Love It ── */}
           <section className="py-8 md:py-10 px-4 border-t border-white/5">
             <div className="max-w-5xl mx-auto">
