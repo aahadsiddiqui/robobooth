@@ -107,7 +107,7 @@ export default function Corporate() {
                     <span className="text-white/60 text-xs font-medium">5.0 Rating · Trusted by Toronto&apos;s Top Brands</span>
                   </div>
                   <h1 className="text-[1.65rem] leading-[1.15] md:text-4xl lg:text-5xl font-black md:leading-[1.1] mb-4">
-                    The Corporate Event Activation That{' '}
+                    Toronto's #1 <span className="text-[#fce4a6]">Robot Photobooth</span> for Corporate Events —{' '}
                     <span className="text-[#fce4a6]">Guests Actually Remember.</span>
                   </h1>
                   <p className="text-white/80 text-sm md:text-base lg:text-lg leading-relaxed mb-5 max-w-xl">
@@ -128,12 +128,12 @@ export default function Corporate() {
 
                 {/* Hero image — desktop */}
                 <motion.div initial={{ opacity: 0, x: 30 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.7, delay: 0.15 }} className="hidden md:block">
-                  <img src="/images/robotbell.jpg" alt="Corporate Robot Photobooth" className="w-full h-[480px] lg:h-[520px] object-cover rounded-2xl shadow-2xl" loading="eager" fetchPriority="high" />
+                  <img src="/images/robottd.jpg" alt="Corporate Robot Photobooth at TD Coliseum" className="w-full h-[480px] lg:h-[520px] object-cover rounded-2xl shadow-2xl" loading="eager" fetchPriority="high" />
                 </motion.div>
 
                 {/* Mobile hero */}
                 <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.1 }} className="md:hidden -mx-4">
-                  <img src="/images/robotbell.jpg" alt="Corporate Robot Photobooth" className="w-full h-60 object-cover" loading="eager" fetchPriority="high" />
+                  <img src="/images/robottd.jpg" alt="Corporate Robot Photobooth at TD Coliseum" className="w-full h-60 object-cover" loading="eager" fetchPriority="high" />
                 </motion.div>
               </div>
             </div>
@@ -165,7 +165,8 @@ export default function Corporate() {
               <Reveal delay={0.1}>
                 <div className="rounded-2xl overflow-hidden border border-white/10 bg-black flex justify-center">
                   <video className="w-full h-auto max-h-[70vh]" autoPlay loop muted playsInline controls={false} preload="auto" disablePictureInPicture style={{ display: 'block' }}>
-                    <source src="/videos/Corporate.mp4" type="video/mp4" />
+                    <source src="/videos/robot.mov" type="video/quicktime" />
+                    <source src="/videos/robot.mov" type="video/mp4" />
                   </video>
                 </div>
               </Reveal>
@@ -196,21 +197,17 @@ export default function Corporate() {
             </div>
           </section>
 
-          {/* ── Gallery pair 1 ── */}
+          {/* ── BMO Robot Video ── */}
           <section className="px-4 py-6 md:py-8">
-            <div className="max-w-5xl mx-auto">
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 md:gap-4">
-                <Reveal>
-                  <div className="rounded-2xl overflow-hidden border border-white/10">
-                    <img src="/images/robottd.jpg" alt="Robot Photobooth at TD corporate event" className="w-full h-56 sm:h-64 md:h-80 lg:h-96 object-cover" loading="lazy" />
-                  </div>
-                </Reveal>
-                <Reveal delay={0.1}>
-                  <div className="rounded-2xl overflow-hidden border border-white/10">
-                    <img src="/images/robotpeople.PNG" alt="Guests engaging with Robot Photobooth" className="w-full h-56 sm:h-64 md:h-80 lg:h-96 object-cover" loading="lazy" />
-                  </div>
-                </Reveal>
-              </div>
+            <div className="max-w-3xl mx-auto">
+              <Reveal>
+                <div className="rounded-2xl overflow-hidden border border-white/10 bg-black">
+                  <video className="w-full max-h-[60vh] object-contain" style={{ display: 'block' }} autoPlay loop muted playsInline preload="auto">
+                    <source src="/videos/bmorobot.MOV" type="video/quicktime" />
+                    <source src="/videos/bmorobot.MOV" type="video/mp4" />
+                  </video>
+                </div>
+              </Reveal>
             </div>
           </section>
 
@@ -291,21 +288,17 @@ export default function Corporate() {
             </div>
           </section>
 
-          {/* ── Gallery pair 2 ── */}
+          {/* ── Equifax Robot Video ── */}
           <section className="px-4 py-6 md:py-8">
-            <div className="max-w-5xl mx-auto">
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 md:gap-4">
-                <Reveal>
-                  <div className="rounded-2xl overflow-hidden border border-white/10">
-                    <img src="/images/robotfire.png" alt="Robot Photobooth corporate activation" className="w-full h-56 sm:h-64 md:h-80 lg:h-96 object-cover" loading="lazy" />
-                  </div>
-                </Reveal>
-                <Reveal delay={0.1}>
-                  <div className="rounded-2xl overflow-hidden border border-white/10">
-                    <img src="/images/robotbell.jpg" alt="Robot Photobooth at Bell event" className="w-full h-56 sm:h-64 md:h-80 lg:h-96 object-cover" loading="lazy" />
-                  </div>
-                </Reveal>
-              </div>
+            <div className="max-w-3xl mx-auto">
+              <Reveal>
+                <div className="rounded-2xl overflow-hidden border border-white/10 bg-black">
+                  <video className="w-full max-h-[60vh] object-contain" style={{ display: 'block' }} autoPlay loop muted playsInline preload="auto">
+                    <source src="/videos/equifaxrobot.mov" type="video/quicktime" />
+                    <source src="/videos/equifaxrobot.mov" type="video/mp4" />
+                  </video>
+                </div>
+              </Reveal>
             </div>
           </section>
 
@@ -383,6 +376,30 @@ export default function Corporate() {
                     </div>
                   </Reveal>
                 ))}
+              </div>
+            </div>
+          </section>
+
+          {/* ── Testimonial Videos ── */}
+          <section className="px-4 py-6 md:py-8">
+            <div className="max-w-5xl mx-auto">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 md:gap-4">
+                <Reveal>
+                  <div className="rounded-2xl overflow-hidden border border-white/10 bg-black">
+                    <video className="w-full max-h-[60vh] object-contain" style={{ display: 'block' }} autoPlay loop muted playsInline preload="auto">
+                      <source src="/videos/tdtestimonial.mov" type="video/quicktime" />
+                      <source src="/videos/tdtestimonial.mov" type="video/mp4" />
+                    </video>
+                  </div>
+                </Reveal>
+                <Reveal delay={0.1}>
+                  <div className="rounded-2xl overflow-hidden border border-white/10 bg-black">
+                    <video className="w-full max-h-[60vh] object-contain" style={{ display: 'block' }} autoPlay loop muted playsInline preload="auto">
+                      <source src="/videos/robottest1.MOV" type="video/quicktime" />
+                      <source src="/videos/robottest1.MOV" type="video/mp4" />
+                    </video>
+                  </div>
+                </Reveal>
               </div>
             </div>
           </section>
@@ -541,7 +558,7 @@ const customizations = [
 ]
 
 const testimonials = [
-  { name: 'James T.', role: 'VP of Marketing, TD Bank', text: 'Incredible activation. The robot moved around the room on its own, engaged our team naturally, and the branded photos were all over LinkedIn the next morning. Exactly what we needed.' },
+  { name: 'Rosanna', role: 'Project Manager, TD Canada Trust', text: 'I want to extend a huge THANK YOU to you and your team. The photo booths were very popular among TechCon attendees. You and your team were accommodating, patient and friendly from the beginning to the end of the event. The backdrop and pictures were great quality. We especially appreciated your attention to helping us brainstorm ideas for the TechCon sticker.' },
   { name: 'Priya S.', role: 'Corporate Events Manager', text: 'We\'ve done a lot of activations — this was by far the most talked-about. Guests loved it, the setup was seamless, and the branded content was exactly on-point. Will book again.' },
   { name: 'Marcus L.', role: 'Head of People & Culture', text: 'Our company gala needed something different. The robot was a massive hit — every table got engagement, the photos were stunning, and our team shared them everywhere. 10/10 recommend.' },
 ]
