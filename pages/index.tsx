@@ -90,11 +90,11 @@ export default function Home() {
         <div className="relative w-full overflow-hidden">
           <div className="animate-marquee flex items-center gap-10 md:gap-16 px-4">
             {[...companyLogos, ...companyLogos].map((logo, i) => (
-              <div key={i} className="flex-shrink-0 w-24 md:w-36 h-14 md:h-16 flex items-center justify-center">
+              <div key={i} className="flex-shrink-0 w-32 md:w-44 h-20 md:h-24 flex items-center justify-center">
                 <img
                   src={logo}
                   alt="Client"
-                  className={`max-w-full max-h-full object-contain opacity-50 hover:opacity-100 transition-opacity duration-300 ${
+                  className={`w-full h-full object-contain opacity-60 hover:opacity-100 transition-opacity duration-300 ${
                     logo.includes('ritz.webp') || logo.includes('hilton.png')
                       ? 'filter invert grayscale'
                       : logo.includes('td.png')
