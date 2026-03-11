@@ -1,12 +1,14 @@
-import React from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 import Head from 'next/head'
 import Link from 'next/link'
-import { motion } from 'framer-motion'
-import { FiPhone, FiArrowRight } from 'react-icons/fi'
+import { motion, AnimatePresence } from 'framer-motion'
+import { FiPhone, FiArrowRight, FiChevronDown } from 'react-icons/fi'
+import { useRouter } from 'next/router'
 import ProductHub from '../components/ProductHub'
 import ScrollingTestimonials from '../components/ScrollingTestimonials'
 import Navbar from '../components/Navbar'
 import { products } from '../data/products'
+import { eventTypes } from '../data/events'
 
 const companyLogos = [
   '/images/adamas.png', '/images/bell.png', '/images/bgo.png', '/images/equifax.svg',
@@ -16,6 +18,45 @@ const companyLogos = [
 ]
 
 export default function Home() {
+  const router = useRouter()
+  const [plannerOpen, setPlannerOpen] = useState(false)
+  const plannerRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    const handler = (e: MouseEvent) => {
+      if (plannerRef.current && !plannerRef.current.contains(e.target as Node)) {
+        setPlannerOpen(false)
+      }
+    }
+    document.addEventListener('mousedown', handler)
+    return () => document.removeEventListener('mousedown', handler)
+  }, [])
+
+  const slugToPath = (slug: string) => {
+    const map: Record<string, string> = {
+      'product-launches': '/events/product-launch',
+      'retail-pop-ups': '/events/retail-pop-up',
+      'conferences-summits': '/events/conference-summit',
+      'trade-shows-expos': '/events/trade-show-expo',
+      'gala-dinners-award-ceremonies': '/events/gala-dinner',
+      'holiday-parties': '/events/holiday-party',
+      'milestone-celebrations': '/events/milestone-celebration',
+      'engagements': '/events/engagement',
+      'bar-bat-mitzvahs': '/events/bar-bat-mitzvah',
+      'concerts-festivals': '/events/concert-festival',
+      'graduation': '/events/graduation',
+    }
+    return map[slug] || `/events/${slug}`
+  }
+
+  const handleEventSelect = (path: string) => {
+    setPlannerOpen(false)
+    if (path === 'corporate') { router.push('/corporate'); return }
+    if (path === 'brand-activation') { router.push('/brand-activations'); return }
+    if (path === 'wedding') { router.push('/wedding'); return }
+    router.push(path)
+  }
+
   return (
     <div className="min-h-screen overflow-x-hidden bg-black">
       <Head>
@@ -106,6 +147,106 @@ export default function Home() {
               </div>
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* ── I'm Planning a... ── */}
+      <section className="py-10 md:py-14 px-4 border-t border-white/5 bg-black">
+        <div className="max-w-3xl mx-auto text-center">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+          >
+            <p className="text-[#fce4a6]/60 text-[10px] md:text-xs font-semibold tracking-[0.25em] uppercase mb-3">Find Your Perfect Experience</p>
+            <h2 className="text-3xl md:text-5xl lg:text-6xl font-black text-white mb-6 md:mb-8 leading-tight">
+              I&apos;m planning a<span className="text-[#fce4a6]">...</span>
+            </h2>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 16 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.15 }}
+            ref={plannerRef}
+            className="relative inline-block w-full max-w-md"
+          >
+            <button
+              onClick={() => setPlannerOpen(!plannerOpen)}
+              className="w-full flex items-center justify-between bg-white/[0.06] border-2 border-[#fce4a6]/40 hover:border-[#fce4a6]/80 text-white px-5 py-4 md:py-5 rounded-2xl font-bold text-base md:text-lg transition-all group"
+            >
+              <span className={plannerOpen ? 'text-white' : 'text-white/50'}>
+                {plannerOpen ? 'Select your event type' : 'Select your event type'}
+              </span>
+              <FiChevronDown className={`w-5 h-5 text-[#fce4a6] transition-transform duration-200 ${plannerOpen ? 'rotate-180' : ''}`} />
+            </button>
+
+            <AnimatePresence>
+              {plannerOpen && (
+                <motion.div
+                  initial={{ opacity: 0, y: 8, scale: 0.98 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  exit={{ opacity: 0, y: 8, scale: 0.98 }}
+                  transition={{ duration: 0.15 }}
+                  className="absolute top-full left-0 right-0 mt-2 bg-black/98 backdrop-blur-xl border border-[#fce4a6]/20 rounded-2xl shadow-2xl shadow-black/80 overflow-hidden z-50"
+                >
+                  <div className="py-2 max-h-[60vh] overflow-y-auto">
+                    {/* Featured — white bold */}
+                    {[
+                      { slug: 'corporate', name: 'Corporate Event', emoji: '🏢' },
+                      { slug: 'brand-activation', name: 'Brand Activation', emoji: '🚀' },
+                      { slug: 'wedding', name: 'Wedding', emoji: '👫' },
+                    ].map((item, i) => (
+                      <motion.button
+                        key={item.slug}
+                        initial={{ opacity: 0, x: -8 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ delay: i * 0.03 }}
+                        onClick={() => handleEventSelect(item.slug)}
+                        className="w-full flex items-center justify-between px-5 py-3.5 text-left text-white hover:bg-[#fce4a6]/10 transition-colors group"
+                      >
+                        <div className="flex items-center gap-3">
+                          <span className="text-xl">{item.emoji}</span>
+                          <span className="font-bold text-sm md:text-base">{item.name}</span>
+                        </div>
+                        <FiArrowRight className="w-4 h-4 text-[#fce4a6] opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all" />
+                      </motion.button>
+                    ))}
+                    <div className="mx-5 my-1 border-t border-white/10" />
+                    {/* All event types — exclude wedding since it's featured above */}
+                    {eventTypes.filter(e => e.slug !== 'weddings').map((event, i) => (
+                      <motion.button
+                        key={event.slug}
+                        initial={{ opacity: 0, x: -8 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ delay: (i + 3) * 0.03 }}
+                        onClick={() => handleEventSelect(slugToPath(event.slug))}
+                        className="w-full flex items-center justify-between px-5 py-3.5 text-left text-white/70 hover:text-white hover:bg-[#fce4a6]/10 transition-colors group"
+                      >
+                        <div className="flex items-center gap-3">
+                          <span className="text-xl">{event.emoji}</span>
+                          <span className="font-semibold text-sm md:text-base">{event.name}</span>
+                        </div>
+                        <FiArrowRight className="w-4 h-4 text-[#fce4a6] opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all" />
+                      </motion.button>
+                    ))}
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </motion.div>
+
+          <motion.p
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.3 }}
+            className="text-white/30 text-xs mt-4"
+          >
+            Select your event type to see the perfect package for your celebration
+          </motion.p>
         </div>
       </section>
 

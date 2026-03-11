@@ -3,17 +3,46 @@ import Link from 'next/link'
 import { motion, AnimatePresence } from 'framer-motion'
 import { FiPhone, FiArrowRight, FiChevronDown, FiMenu, FiX } from 'react-icons/fi'
 import { products } from '../data/products'
+import { eventTypes } from '../data/events'
+
+const eventSlugToPath = (slug: string): string => {
+  const map: Record<string, string> = {
+    'product-launches': '/events/product-launch',
+    'retail-pop-ups': '/events/retail-pop-up',
+    'conferences-summits': '/events/conference-summit',
+    'trade-shows-expos': '/events/trade-show-expo',
+    'gala-dinners-award-ceremonies': '/events/gala-dinner',
+    'holiday-parties': '/events/holiday-party',
+    'milestone-celebrations': '/events/milestone-celebration',
+    'engagements': '/events/engagement',
+    'bar-bat-mitzvahs': '/events/bar-bat-mitzvah',
+    'concerts-festivals': '/events/concert-festival',
+    'graduation': '/events/graduation',
+  }
+  return map[slug] || `/events/${slug}`
+}
+
+const featuredEvents = [
+  { name: 'Corporate', href: '/corporate', emoji: '🏢' },
+  { name: 'Brand Activations', href: '/brand-activations', emoji: '🚀' },
+  { name: 'Wedding', href: '/wedding', emoji: '👫' },
+]
 
 export default function Navbar() {
   const [productsOpen, setProductsOpen] = useState(false)
+  const [eventsOpen, setEventsOpen] = useState(false)
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const dropdownRef = useRef<HTMLDivElement>(null)
+  const eventsDropdownRef = useRef<HTMLDivElement>(null)
 
-  /* Close desktop dropdown on outside click */
+  /* Close desktop dropdowns on outside click */
   useEffect(() => {
     const handler = (e: MouseEvent) => {
       if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
         setProductsOpen(false)
+      }
+      if (eventsDropdownRef.current && !eventsDropdownRef.current.contains(e.target as Node)) {
+        setEventsOpen(false)
       }
     }
     document.addEventListener('mousedown', handler)
@@ -47,7 +76,7 @@ export default function Navbar() {
             {/* Products dropdown */}
             <div ref={dropdownRef} className="relative">
               <button
-                onClick={() => setProductsOpen(!productsOpen)}
+                onClick={() => { setProductsOpen(!productsOpen); setEventsOpen(false) }}
                 className="flex items-center gap-1.5 text-sm text-white/70 hover:text-white transition-colors font-medium"
               >
                 Products
@@ -74,6 +103,57 @@ export default function Navbar() {
                           <FiArrowRight className="w-3.5 h-3.5 opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all text-[#fce4a6]" />
                         </Link>
                       ))}
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
+
+            {/* Events dropdown */}
+            <div ref={eventsDropdownRef} className="relative">
+              <button
+                onClick={() => { setEventsOpen(!eventsOpen); setProductsOpen(false) }}
+                className="flex items-center gap-1.5 text-sm text-white/70 hover:text-white transition-colors font-medium"
+              >
+                Events
+                <FiChevronDown className={`w-3.5 h-3.5 transition-transform duration-200 ${eventsOpen ? 'rotate-180' : ''}`} />
+              </button>
+              <AnimatePresence>
+                {eventsOpen && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 8 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: 8 }}
+                    transition={{ duration: 0.15 }}
+                    className="absolute top-full left-1/2 -translate-x-1/2 mt-3 w-64 bg-black/95 backdrop-blur-xl border border-white/10 rounded-xl shadow-2xl shadow-black/50 overflow-hidden"
+                  >
+                    <div className="py-2 max-h-[70vh] overflow-y-auto">
+                      <p className="px-4 pt-1 pb-1.5 text-[10px] font-bold tracking-[0.15em] uppercase text-[#fce4a6]/50">Featured</p>
+                      {featuredEvents.map((event) => (
+                        <Link
+                          key={event.href}
+                          href={event.href}
+                          onClick={() => setEventsOpen(false)}
+                          className="flex items-center justify-between px-4 py-2.5 text-sm text-white/70 hover:text-white hover:bg-[#fce4a6]/10 transition-colors group"
+                        >
+                          <span className="flex items-center gap-2"><span>{event.emoji}</span>{event.name}</span>
+                          <FiArrowRight className="w-3.5 h-3.5 opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all text-[#fce4a6]" />
+                        </Link>
+                      ))}
+                      <div className="border-t border-white/10 mt-1 pt-1">
+                        <p className="px-4 pt-1 pb-1.5 text-[10px] font-bold tracking-[0.15em] uppercase text-[#fce4a6]/50">All Event Types</p>
+                        {eventTypes.filter(e => e.slug !== 'weddings').map((event) => (
+                          <Link
+                            key={event.slug}
+                            href={eventSlugToPath(event.slug)}
+                            onClick={() => setEventsOpen(false)}
+                            className="flex items-center justify-between px-4 py-2 text-sm text-white/60 hover:text-white hover:bg-[#fce4a6]/10 transition-colors group"
+                          >
+                            <span className="flex items-center gap-2"><span className="text-base">{event.emoji}</span>{event.name}</span>
+                            <FiArrowRight className="w-3 h-3 opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all text-[#fce4a6]" />
+                          </Link>
+                        ))}
+                      </div>
                     </div>
                   </motion.div>
                 )}
@@ -149,6 +229,37 @@ export default function Navbar() {
                     >
                       <span className="text-base font-medium">{product.name}</span>
                       <FiArrowRight className="w-4 h-4 text-[#fce4a6]/50 group-hover:text-[#fce4a6] group-hover:translate-x-1 transition-all" />
+                    </Link>
+                  </motion.div>
+                ))}
+              </div>
+
+              <p className="text-[#fce4a6]/60 text-[10px] uppercase tracking-[0.2em] font-semibold mb-2">Events — Featured</p>
+              <div className="space-y-1 mb-4">
+                {featuredEvents.map((event, i) => (
+                  <motion.div key={event.href} initial={{ opacity: 0, x: -10 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.05 + i * 0.04 }}>
+                    <Link
+                      href={event.href}
+                      onClick={() => setMobileMenuOpen(false)}
+                      className="flex items-center justify-between py-3 px-3 rounded-xl text-white/80 hover:text-white hover:bg-[#fce4a6]/10 transition-colors group"
+                    >
+                      <span className="text-base font-medium flex items-center gap-2"><span>{event.emoji}</span>{event.name}</span>
+                      <FiArrowRight className="w-4 h-4 text-[#fce4a6]/50 group-hover:text-[#fce4a6] group-hover:translate-x-1 transition-all" />
+                    </Link>
+                  </motion.div>
+                ))}
+              </div>
+              <p className="text-[#fce4a6]/60 text-[10px] uppercase tracking-[0.2em] font-semibold mb-2">All Event Types</p>
+              <div className="space-y-0.5 mb-8">
+                {eventTypes.filter(e => e.slug !== 'weddings').map((event, i) => (
+                  <motion.div key={event.slug} initial={{ opacity: 0, x: -10 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.05 + i * 0.03 }}>
+                    <Link
+                      href={eventSlugToPath(event.slug)}
+                      onClick={() => setMobileMenuOpen(false)}
+                      className="flex items-center justify-between py-2.5 px-3 rounded-xl text-white/70 hover:text-white hover:bg-[#fce4a6]/10 transition-colors group"
+                    >
+                      <span className="text-sm font-medium flex items-center gap-2"><span>{event.emoji}</span>{event.name}</span>
+                      <FiArrowRight className="w-3.5 h-3.5 text-[#fce4a6]/50 group-hover:text-[#fce4a6] group-hover:translate-x-1 transition-all" />
                     </Link>
                   </motion.div>
                 ))}

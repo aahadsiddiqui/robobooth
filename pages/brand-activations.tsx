@@ -1,10 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react'
 import Head from 'next/head'
 import { motion, AnimatePresence } from 'framer-motion'
-import {
-  FiArrowRight, FiCheck, FiPhone, FiChevronDown, FiChevronUp,
-  FiClock, FiX, FiHeart, FiImage, FiStar, FiUsers, FiZap, FiShield
-} from 'react-icons/fi'
+import { FiArrowRight, FiCheck, FiPhone, FiChevronDown, FiChevronUp, FiClock, FiX, FiZap, FiUsers, FiStar, FiShield, FiImage, FiShare2 } from 'react-icons/fi'
 import Navbar from '../components/Navbar'
 
 /* ─── Reveal ─── */
@@ -24,7 +21,10 @@ const SubtleCTA = ({ label, onQuote }: { label: string; onQuote: () => void }) =
   </div>
 )
 
-export default function Wedding() {
+/* ════════════════════════════════════════════════════════════════
+   BRAND ACTIVATIONS LANDING PAGE
+   ════════════════════════════════════════════════════════════════ */
+export default function BrandActivations() {
   const [showModal, setShowModal] = useState(false)
   const [packageType, setPackageType] = useState<'bronze' | 'gold' | 'platinum' | ''>('')
   const [form, setForm] = useState({ firstName: '', email: '', phone: '', eventDate: '', budget: '' })
@@ -44,7 +44,7 @@ export default function Wedding() {
   useEffect(() => { showModal ? document.body.classList.add('overflow-hidden') : document.body.classList.remove('overflow-hidden'); return () => document.body.classList.remove('overflow-hidden') }, [showModal])
   useEffect(() => {
     const handlePlay = (e: Event) => {
-      document.querySelectorAll('video').forEach(v => { if (v !== e.target) v.pause() })
+      document.querySelectorAll('video').forEach(v => { if (v !== e.target) { v.pause() } })
     }
     document.addEventListener('play', handlePlay, true)
     return () => document.removeEventListener('play', handlePlay, true)
@@ -55,8 +55,7 @@ export default function Wedding() {
   const openGoldPackage = useCallback(() => { setPackageType('gold'); setShowModal(true) }, [])
   const openPlatinumPackage = useCallback(() => { setPackageType('platinum'); setShowModal(true) }, [])
 
-  const handleInput = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) =>
-    setForm({ ...form, [e.target.name]: e.target.value })
+  const handleInput = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => setForm({ ...form, [e.target.name]: e.target.value })
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -64,9 +63,9 @@ export default function Wedding() {
     try {
       const fd = new FormData()
       fd.append('first-name', form.firstName); fd.append('phone-number', form.phone); fd.append('email', form.email)
-      fd.append('event-date', form.eventDate); fd.append('budget', form.budget); fd.append('event-type', 'Wedding')
-      fd.append('package', packageType === 'gold' ? 'Gold Package (Robot Photobooth + Wedding Photography)' : packageType === 'platinum' ? 'Platinum Package (Robot + Photography + Second Booth)' : packageType === 'bronze' ? 'Bronze Package (Robot Photobooth Only)' : 'General Inquiry')
-      fd.append('_replyto', form.email); fd.append('source', 'Wedding Page')
+      fd.append('event-date', form.eventDate); fd.append('budget', form.budget); fd.append('event-type', 'Brand Activation')
+      fd.append('package', packageType === 'gold' ? 'Gold Package (Robot Photobooth + Event Photography)' : packageType === 'platinum' ? 'Platinum Package (Robot Photobooth + Event Photography + Second Booth)' : packageType === 'bronze' ? 'Bronze Package (Robot Photobooth Only)' : 'General Inquiry')
+      fd.append('_replyto', form.email); fd.append('source', 'Brand Activations Page')
       const res = await fetch('https://formspree.io/f/xkgoedyp', { method: 'POST', body: fd, headers: { Accept: 'application/json' } })
       if (res.ok) { setSuccess(true) } else { alert('Failed to submit. Please try again.') }
     } catch { alert('Failed to submit. Please try again.') } finally { setSubmitting(false) }
@@ -75,20 +74,22 @@ export default function Wedding() {
   return (
     <>
       <Head>
-        <title>Wedding Robot Photobooth Toronto GTA | Robo Booth</title>
-        <meta name="description" content="Make your wedding reception unforgettable with Canada's first Robot Photobooth. Personalized keepsakes for every guest. White-glove service. Serving Toronto & GTA." />
-        <meta name="keywords" content="wedding photobooth Toronto, robot photobooth wedding GTA, wedding photo booth rental, wedding entertainment Toronto" />
-        <meta property="og:title" content="Wedding Robot Photobooth | Robo Booth" />
-        <meta property="og:description" content="The wedding activation your guests will never stop talking about. Personalized branded photos delivered to every guest — physical prints they take home forever." />
+        <title>Brand Activations & Product Launches Toronto GTA | Robo Booth</title>
+        <meta name="description" content="Turn your brand launch into an experience guests can't stop talking about. Canada's first Robot Photobooth for brand activations in Toronto & GTA." />
+        <meta name="keywords" content="brand activation Toronto, product launch photobooth GTA, brand experience robot photobooth, experiential marketing Toronto" />
+        <meta property="og:title" content="Brand Activations | Robo Booth" />
+        <meta property="og:description" content="Make your brand launch unforgettable. Canada's first Robot Photobooth delivers branded content to every guest in real-time." />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://robobooth.ca/wedding" />
-        <link rel="canonical" href="https://robobooth.ca/wedding" />
+        <meta property="og:url" content="https://robobooth.ca/brand-activations" />
+        <link rel="canonical" href="https://robobooth.ca/brand-activations" />
+        <link rel="preload" href="/images/robotbell.jpg" as="image" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
 
       <div className={showModal ? 'blur-sm pointer-events-none select-none' : ''}>
         <div className="min-h-screen bg-black text-white overflow-x-hidden">
 
+          {/* ── Navbar ── */}
           <Navbar />
 
           {/* ── Urgency Banner ── */}
@@ -96,34 +97,35 @@ export default function Wedding() {
             <div className="fixed top-16 md:top-[4.5rem] left-0 right-0 z-40 bg-[#fce4a6] text-black text-center py-2 px-4">
               <div className="flex items-center justify-center gap-2 text-xs md:text-sm font-semibold">
                 <FiClock className="w-3.5 h-3.5 flex-shrink-0" />
-                <span>Wedding dates are filling fast — <button onClick={openQuote} className="underline font-bold">check availability now</button></span>
+                <span>Brand activation dates are filling fast — <button onClick={openQuote} className="underline font-bold">check availability now</button></span>
                 <button onClick={() => setUrgencyDismissed(true)} className="ml-2 text-black/50 hover:text-black"><FiX className="w-3.5 h-3.5" /></button>
               </div>
             </div>
           )}
 
-          {/* ══ HERO ══ */}
+          {/* ═══════════════════════════════════════
+              HERO
+             ═══════════════════════════════════════ */}
           <section className={`relative ${urgencyDismissed ? 'pt-20 md:pt-24' : 'pt-[7rem] md:pt-[8rem]'} pb-6 md:pb-8 px-4`}>
             <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_left,_#fce4a620_0%,_transparent_50%)] pointer-events-none" />
             <div className="relative z-10 max-w-7xl mx-auto">
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-10 items-center">
                 <motion.div initial={{ opacity: 0, x: -30 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.7 }}>
                   <div className="flex items-center gap-2 mb-3">
-                    <FiHeart className="w-4 h-4 text-[#fce4a6]" />
                     <div className="flex text-yellow-400 text-sm">★★★★★</div>
-                    <span className="text-white/60 text-xs font-medium">5.0 Rating · Trusted by Couples Across the GTA</span>
+                    <span className="text-white/60 text-xs font-medium">5.0 Rating · Trusted by Toronto&apos;s Top Brands</span>
                   </div>
                   <h1 className="text-[1.65rem] leading-[1.15] md:text-4xl lg:text-5xl font-black md:leading-[1.1] mb-4">
-                    The Wedding Moment <span className="text-[#fce4a6]">Every Guest Will Remember Forever</span>
+                    The Brand Activation That <span className="text-[#fce4a6]">Gets Everyone Talking</span>
                   </h1>
                   <p className="text-white/80 text-sm md:text-base lg:text-lg leading-relaxed mb-5 max-w-xl">
-                    Canada&apos;s first Robot Photobooth visits every table at your reception, captures personalized photos, and delivers physical keepsakes your guests take home.{' '}
-                    <span className="text-white font-semibold">White-glove service — you celebrate, we handle everything.</span>
+                    Canada&apos;s first Robot Photobooth turns your brand launch into a live, shareable experience. Your logo on every photo, delivered instantly to every guest&apos;s phone in real-time.{' '}
+                    <span className="text-white font-semibold">White-glove service — we handle the tech, you own the moment.</span>
                   </p>
                   <div className="flex flex-col sm:flex-row gap-3 mb-3">
                     <motion.button whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.97 }} onClick={openQuote}
                       className="w-full sm:w-auto bg-[#fce4a6] text-black px-6 py-3.5 rounded-full font-bold text-sm md:text-base shadow-lg shadow-[#fce4a6]/20 hover:shadow-xl transition-all group text-center">
-                      Check Your Date <FiArrowRight className="inline ml-2 group-hover:translate-x-1 transition-transform" />
+                      Check Availability <FiArrowRight className="inline ml-2 group-hover:translate-x-1 transition-transform" />
                     </motion.button>
                     <a href="tel:289-301-4039" className="w-full sm:w-auto flex items-center justify-center gap-2 border-2 border-[#fce4a6]/40 text-[#fce4a6] px-6 py-3 rounded-full font-bold text-sm hover:bg-[#fce4a6]/10 transition-all text-center">
                       <FiPhone className="w-4 h-4" /> Call 289-301-4039
@@ -132,7 +134,7 @@ export default function Wedding() {
                   <p className="text-white/40 text-[11px] md:text-xs">Responses in &lt;15 mins&ensp;|&ensp;No credit card required</p>
                 </motion.div>
 
-                {/* Desktop hero video */}
+                {/* Hero video — desktop */}
                 <motion.div initial={{ opacity: 0, x: 30 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.7, delay: 0.15 }} className="hidden md:block">
                   <div className="rounded-2xl overflow-hidden shadow-2xl border border-white/10 bg-black">
                     <video className="w-full h-[480px] lg:h-[520px] object-contain" controls loop playsInline preload="metadata" poster="/images/robot1.jpg" style={{ display: 'block' }}>
@@ -158,7 +160,7 @@ export default function Wedding() {
           {/* ── Logo Marquee ── */}
           <section className="py-4 md:py-6 border-y border-[#fce4a6]/10 overflow-hidden">
             <div className="max-w-7xl mx-auto px-4 mb-3">
-              <p className="text-center text-[#fce4a6]/60 text-[10px] md:text-xs font-semibold tracking-[0.2em] uppercase">Trusted by leading brands & couples across Canada</p>
+              <p className="text-center text-[#fce4a6]/60 text-[10px] md:text-xs font-semibold tracking-[0.2em] uppercase">Trusted by leading brands across Canada</p>
             </div>
             <div className="relative w-full overflow-hidden">
               <div className="animate-marquee flex items-center gap-10 md:gap-14 px-4">
@@ -176,7 +178,7 @@ export default function Wedding() {
             <div className="max-w-5xl mx-auto">
               <Reveal className="text-center mb-6">
                 <h2 className="text-xl md:text-2xl lg:text-3xl font-black mb-1.5">How It <span className="text-[#fce4a6]">Works</span></h2>
-                <p className="text-white/50 text-xs md:text-sm">Simple, romantic, and completely stress-free for the couple</p>
+                <p className="text-white/50 text-xs md:text-sm">Simple, fully managed, and stress-free for your brand team</p>
               </Reveal>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
                 {howItWorks.map((step, i) => (
@@ -193,6 +195,7 @@ export default function Wedding() {
                 ))}
               </div>
 
+              {/* How It Works video */}
               <Reveal delay={0.2} className="mt-8">
                 <div className="max-w-3xl mx-auto rounded-2xl overflow-hidden border border-white/10 bg-black">
                   <video className="w-full max-h-[60vh] object-contain" controls loop playsInline preload="metadata" poster="/images/robottd.jpg" style={{ display: 'block' }}>
@@ -204,12 +207,12 @@ export default function Wedding() {
             </div>
           </section>
 
-          {/* ── Packages ── */}
+          {/* ── Packages: Bronze + Gold + Platinum ── */}
           <section className="py-10 md:py-14 px-4">
             <div className="max-w-5xl mx-auto">
               <Reveal className="text-center mb-8">
                 <h2 className="text-2xl md:text-3xl lg:text-4xl font-black mb-2">Choose Your <span className="text-[#fce4a6]">Package</span></h2>
-                <p className="text-white/50 text-sm md:text-base">Every wedding is unique — pick the package that fits your vision.</p>
+                <p className="text-white/50 text-sm md:text-base">Every brand is different — pick the activation that fits your launch.</p>
               </Reveal>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-5 items-stretch">
 
@@ -222,14 +225,14 @@ export default function Wedding() {
                       </span>
                     </div>
                     <h3 className="text-lg md:text-xl font-black text-center mb-2">Robot Photobooth <span className="text-white/50">Only</span></h3>
-                    <p className="text-white/50 text-xs text-center mb-6">The standalone wedding activation — elegant, personalized, and fully managed from ceremony to last dance.</p>
+                    <p className="text-white/50 text-xs text-center mb-6">The standalone brand activation experience — fully set up, operated, and managed by our team.</p>
                     <div className="space-y-2.5 mb-8 flex-1">
                       {[
-                        'Robot Photobooth visiting every table at your reception',
-                        'Physical prints with your names & wedding date',
-                        'Custom couple overlay designed to match your theme',
-                        'Dedicated on-site attendant the entire evening',
-                        'Instant digital delivery to every guest',
+                        'Robot Photobooth roaming guest-to-guest at your launch',
+                        'Physical prints with your brand delivered on the spot',
+                        'Branded photo overlays with your logo and campaign',
+                        'Dedicated on-site attendant handling everything',
+                        'Guests receive digital copies instantly to their phones',
                       ].map((b, i) => (
                         <div key={i} className="flex items-start gap-3">
                           <FiCheck className="w-4 h-4 text-white/40 mt-0.5 flex-shrink-0" />
@@ -257,16 +260,16 @@ export default function Wedding() {
                           ⭐ Most Popular · Gold
                         </span>
                       </div>
-                      <h3 className="text-lg md:text-xl font-black text-center mb-2">Robot Photobooth + <span className="text-[#fce4a6]">Wedding Photography</span></h3>
-                      <p className="text-white/60 text-xs text-center mb-6">Capture every beautiful wedding moment from two unforgettable perspectives — the robot and your dedicated photographer.</p>
+                      <h3 className="text-lg md:text-xl font-black text-center mb-2">Robot Photobooth + <span className="text-[#fce4a6]">Event Photography</span></h3>
+                      <p className="text-white/60 text-xs text-center mb-6">Capture every moment of your brand launch from two unforgettable perspectives.</p>
                       <div className="space-y-2.5 mb-8 flex-1">
                         {[
-                          'Robot Photobooth visiting every table throughout the reception',
-                          'Professional wedding photographer covering your day',
-                          'First dance, speeches & key moments captured',
-                          'Candid couple and guest photography all evening',
-                          'Professionally edited full gallery delivered post-wedding',
-                          'Custom couple overlay designed to match your wedding aesthetic',
+                          "Canada's First Robot Photobooth roaming your launch event",
+                          'Professional event photographer covering every key moment',
+                          'Candid guest and brand interaction photography',
+                          'Product reveal and highlight moments captured',
+                          'Professionally edited high-resolution images delivered after the event',
+                          'Custom photo overlays and fully branded activation experience',
                         ].map((b, i) => (
                           <div key={i} className="flex items-start gap-3">
                             <FiCheck className="w-4 h-4 text-[#fce4a6] mt-0.5 flex-shrink-0" />
@@ -295,16 +298,16 @@ export default function Wedding() {
                           💎 Platinum Package
                         </span>
                       </div>
-                      <h3 className="text-lg md:text-xl font-black text-center mb-2">Robot + Photography + <span className="text-white/80">Second Booth</span></h3>
-                      <p className="text-white/60 text-xs text-center mb-6">The ultimate wedding reception experience — multiple photo stations your guests will be talking about for years.</p>
+                      <h3 className="text-lg md:text-xl font-black text-center mb-2">Full Activation + Photography + <span className="text-white/80">Second Booth</span></h3>
+                      <p className="text-white/60 text-xs text-center mb-6">The ultimate brand launch experience — add a 360 Booth, Aerial Booth, or Premium Photobooth.</p>
                       <div className="space-y-2.5 mb-8 flex-1">
                         {[
-                          'Everything in the Gold Package',
-                          'Add-on: Premium Photobooth, Aerial Booth, or 360 Booth',
-                          'Multiple photo experiences for every guest all night',
-                          'Physical prints at every station — keepsakes guests love',
+                          'Everything included in the Gold Package',
+                          'Add-on: 360 Booth, Aerial Booth, or Premium Photobooth',
+                          'Two interactive activations running simultaneously',
+                          'Maximum brand exposure and guest engagement',
                           'One team coordinating everything seamlessly',
-                          'The most unforgettable wedding reception in your circle',
+                          'The most talked-about brand launch setup in the GTA',
                         ].map((b, i) => (
                           <div key={i} className="flex items-start gap-3">
                             <FiCheck className="w-4 h-4 text-white/70 mt-0.5 flex-shrink-0" />
@@ -328,35 +331,28 @@ export default function Wedding() {
           </section>
 
           {/* ── CTA 1 ── */}
-          <SubtleCTA label="Check Your Date" onQuote={openQuote} />
+          <SubtleCTA label="Check Availability" onQuote={openQuote} />
 
-          {/* ── Gallery pair 1 ── */}
+          {/* ── Brand Activation Image ── */}
           <section className="px-4 py-6 md:py-8">
             <div className="max-w-5xl mx-auto">
-              <div className="grid grid-cols-2 gap-3 md:gap-4">
-                <Reveal>
-                  <div className="rounded-2xl overflow-hidden border border-white/10">
-                    <img src="/images/robotbell.jpg" alt="Robot Photobooth at wedding reception" className="w-full h-48 sm:h-64 md:h-80 lg:h-96 object-cover" loading="lazy" />
-                  </div>
-                </Reveal>
-                <Reveal delay={0.1}>
-                  <div className="rounded-2xl overflow-hidden border border-white/10">
-                    <img src="/images/robottd.jpg" alt="Wedding photobooth keepsake" className="w-full h-48 sm:h-64 md:h-80 lg:h-96 object-cover" loading="lazy" />
-                  </div>
-                </Reveal>
-              </div>
+              <Reveal>
+                <div className="rounded-2xl overflow-hidden border border-white/10">
+                  <img src="/images/corporate1.JPG" alt="Brand Activation Robot Photobooth" className="w-full h-auto object-cover max-h-[60vh]" loading="lazy" />
+                </div>
+              </Reveal>
             </div>
           </section>
 
-          {/* ── Why Couples Love It ── */}
+          {/* ── Why Brands Choose Us ── */}
           <section className="py-8 md:py-10 px-4 border-t border-white/5">
             <div className="max-w-5xl mx-auto">
               <Reveal className="text-center mb-6">
-                <h2 className="text-xl md:text-2xl lg:text-3xl font-black mb-1.5">Why Couples <span className="text-[#fce4a6]">Choose Us</span></h2>
-                <p className="text-white/50 text-xs md:text-sm">The wedding moment every guest talks about for years</p>
+                <h2 className="text-xl md:text-2xl lg:text-3xl font-black mb-1.5">Why Brands <span className="text-[#fce4a6]">Choose Us</span></h2>
+                <p className="text-white/50 text-xs md:text-sm">The activation that turns your launch into a social moment</p>
               </Reveal>
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4">
-                {whyCouplesLove.map((item, i) => (
+                {whyBrandsLove.map((item, i) => (
                   <Reveal key={i} delay={i * 0.06} className="bg-white/[0.04] border border-white/10 rounded-xl p-4 md:p-5 hover:border-[#fce4a6]/30 transition-colors group">
                     <div className="text-[#fce4a6] mb-2 md:mb-3 group-hover:scale-110 transition-transform inline-block">{item.icon}</div>
                     <h3 className="font-bold text-sm md:text-base mb-1">{item.title}</h3>
@@ -367,18 +363,18 @@ export default function Wedding() {
             </div>
           </section>
 
-          {/* ── Gallery pair 2 ── */}
+          {/* ── Gallery ── */}
           <section className="px-4 py-6 md:py-8">
             <div className="max-w-5xl mx-auto">
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 md:gap-4">
+              <div className="grid grid-cols-2 gap-3 md:gap-4">
                 <Reveal>
                   <div className="rounded-2xl overflow-hidden border border-white/10">
-                    <img src="/images/robot1.jpg" alt="Wedding robot photobooth activation" className="w-full h-56 sm:h-64 md:h-80 lg:h-96 object-cover" loading="lazy" />
+                    <img src="/images/robotbell.jpg" alt="Brand Activation at Bell event" className="w-full h-48 sm:h-64 md:h-80 lg:h-96 object-cover" loading="lazy" />
                   </div>
                 </Reveal>
                 <Reveal delay={0.1}>
                   <div className="rounded-2xl overflow-hidden border border-white/10">
-                    <img src="/images/robothalloween.JPG" alt="Wedding photobooth experience" className="w-full h-56 sm:h-64 md:h-80 lg:h-96 object-cover" loading="lazy" />
+                    <img src="/images/robottd.jpg" alt="Brand Activation at TD Coliseum" className="w-full h-48 sm:h-64 md:h-80 lg:h-96 object-cover" loading="lazy" />
                   </div>
                 </Reveal>
               </div>
@@ -386,14 +382,14 @@ export default function Wedding() {
           </section>
 
           {/* ── CTA 2 ── */}
-          <SubtleCTA label="Get a Wedding Quote" onQuote={openQuote} />
+          <SubtleCTA label="Get a Brand Activation Quote" onQuote={openQuote} />
 
-          {/* ── Personalization ── */}
+          {/* ── Built Around Your Brand ── */}
           <section className="py-8 md:py-10 px-4 border-t border-white/5">
             <div className="max-w-5xl mx-auto">
               <Reveal className="text-center mb-6">
-                <h2 className="text-xl md:text-2xl lg:text-3xl font-black mb-1.5">Built Around <span className="text-[#fce4a6]">Your Love Story</span></h2>
-                <p className="text-white/50 text-xs md:text-sm">Every detail tailored to reflect your wedding aesthetic</p>
+                <h2 className="text-xl md:text-2xl lg:text-3xl font-black mb-1.5">Built Around <span className="text-[#fce4a6]">Your Brand</span></h2>
+                <p className="text-white/50 text-xs md:text-sm">Every detail of the activation is tailored to your campaign</p>
               </Reveal>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 {customizations.map((item, i) => (
@@ -411,6 +407,24 @@ export default function Wedding() {
             </div>
           </section>
 
+          {/* ── Gallery pair 2 ── */}
+          <section className="px-4 py-6 md:py-8">
+            <div className="max-w-5xl mx-auto">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 md:gap-4">
+                <Reveal>
+                  <div className="rounded-2xl overflow-hidden border border-white/10">
+                    <img src="/images/robot1.jpg" alt="Brand Activation Robot Photobooth" className="w-full h-56 sm:h-64 md:h-80 lg:h-96 object-cover" loading="lazy" />
+                  </div>
+                </Reveal>
+                <Reveal delay={0.1}>
+                  <div className="rounded-2xl overflow-hidden border border-white/10">
+                    <img src="/images/robothalloween.JPG" alt="Brand Activation themed event" className="w-full h-56 sm:h-64 md:h-80 lg:h-96 object-cover" loading="lazy" />
+                  </div>
+                </Reveal>
+              </div>
+            </div>
+          </section>
+
           {/* ── CTA 3 ── */}
           <SubtleCTA label="Book Now" onQuote={openQuote} />
 
@@ -418,7 +432,7 @@ export default function Wedding() {
           <section className="py-8 md:py-10 px-4 border-t border-white/5">
             <div className="max-w-5xl mx-auto">
               <Reveal className="text-center mb-5">
-                <h2 className="text-xl md:text-2xl lg:text-3xl font-black mb-1.5">What Couples <span className="text-[#fce4a6]">Are Saying</span></h2>
+                <h2 className="text-xl md:text-2xl lg:text-3xl font-black mb-1.5">What Clients <span className="text-[#fce4a6]">Are Saying</span></h2>
                 <div className="flex items-center justify-center gap-2 mt-2">
                   <a href="https://g.co/kgs/v9p1CzT" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-[#fce4a6] hover:text-white transition-colors text-xs md:text-sm">
                     <svg className="w-4 h-4 md:w-5 md:h-5" viewBox="0 0 24 24" fill="currentColor"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
@@ -470,7 +484,7 @@ export default function Wedding() {
           </section>
 
           {/* ── CTA 4 ── */}
-          <SubtleCTA label="Check Your Date" onQuote={openQuote} />
+          <SubtleCTA label="Check Availability" onQuote={openQuote} />
 
           {/* ── FAQs ── */}
           <section className="py-8 md:py-10 px-4">
@@ -505,15 +519,15 @@ export default function Wedding() {
           <section className="py-10 md:py-14 px-4 border-t border-white/5">
             <Reveal className="max-w-3xl mx-auto text-center">
               <h2 className="text-xl md:text-2xl lg:text-4xl font-black mb-2 md:mb-3">
-                Your Wedding Day Deserves <span className="text-[#fce4a6]">Something Extraordinary.</span>
+                Your Brand Launch Should Be <span className="text-[#fce4a6]">Unforgettable.</span>
               </h2>
               <p className="text-white/60 text-xs md:text-sm lg:text-base mb-5 max-w-lg mx-auto">
-                Give every guest a personalized keepsake from the most important night of your life. Elegant, romantic, and completely managed — you focus on each other.
+                Join Toronto&apos;s top brands that trust Robo Booth to make their activations the talk of the room. Branded, automated, and fully managed — we handle everything.
               </p>
               <div className="flex flex-col sm:flex-row gap-3 justify-center items-center">
                 <motion.button whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.97 }} onClick={openQuote}
                   className="w-full sm:w-auto bg-[#fce4a6] text-black px-7 py-3.5 md:px-8 md:py-4 rounded-full font-bold text-sm md:text-base shadow-lg shadow-[#fce4a6]/20 hover:shadow-xl transition-all group">
-                  Check Your Date & Get a Quote <FiArrowRight className="inline ml-2 group-hover:translate-x-1 transition-transform" />
+                  Check Availability & Get a Quote <FiArrowRight className="inline ml-2 group-hover:translate-x-1 transition-transform" />
                 </motion.button>
                 <a href="tel:289-301-4039" className="flex items-center gap-2 text-[#fce4a6] text-sm font-semibold hover:text-white transition-colors">
                   <FiPhone className="w-4 h-4" /> 289-301-4039
@@ -543,7 +557,7 @@ export default function Wedding() {
               {packageType === 'gold' && (
                 <div className="bg-[#fce4a6] rounded-xl px-4 py-2.5 mb-3 flex items-center justify-center gap-2 flex-wrap">
                   <span className="text-black text-xs font-black">⭐ Gold Package Selected</span>
-                  <span className="text-black/60 text-[10px]">Robot Photobooth + Wedding Photography</span>
+                  <span className="text-black/60 text-[10px]">Robot Photobooth + Event Photography</span>
                 </div>
               )}
               {packageType === 'platinum' && (
@@ -552,10 +566,8 @@ export default function Wedding() {
                   <span className="text-black/60 text-[10px]">Robot + Photography + Second Booth</span>
                 </div>
               )}
-              <h2 className="text-lg md:text-2xl font-black text-black mb-1 text-center">
-                {packageType === 'gold' ? 'Book Gold Package' : packageType === 'bronze' ? 'Book Bronze Package' : packageType === 'platinum' ? 'Book Platinum Package' : 'Get a Wedding Quote'}
-              </h2>
-              <p className="text-black/60 text-xs md:text-sm mb-4 text-center">Tell us your wedding date and we&apos;ll confirm availability within 15 minutes.</p>
+              <h2 className="text-lg md:text-2xl font-black text-black mb-1 text-center">{packageType === 'gold' ? 'Book Gold Package' : packageType === 'bronze' ? 'Book Bronze Package' : packageType === 'platinum' ? 'Book Platinum Package' : 'Get a Brand Activation Quote'}</h2>
+              <p className="text-black/60 text-xs md:text-sm mb-4 text-center">Tell us your event date and we&apos;ll confirm availability within 15 minutes.</p>
               {success ? (
                 <div className="text-green-600 text-center font-bold py-6">Thank you! We&apos;ll be in touch soon.</div>
               ) : (
@@ -605,7 +617,7 @@ export default function Wedding() {
             <motion.button initial={{ opacity: 0, y: 40, scale: 0.9 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: 40, scale: 0.9 }}
               transition={{ type: 'spring', stiffness: 300, damping: 25 }} whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} onClick={openQuote}
               className="hidden md:flex fixed bottom-6 right-6 z-40 bg-[#fce4a6] text-black font-bold px-6 py-3.5 rounded-full shadow-xl shadow-black/40 hover:bg-white transition-colors text-sm items-center gap-2">
-              Get a Wedding Quote <FiArrowRight className="w-4 h-4" />
+              Get a Brand Activation Quote <FiArrowRight className="w-4 h-4" />
             </motion.button>
           </>
         )}
@@ -616,40 +628,40 @@ export default function Wedding() {
 
 /* ─── DATA ─── */
 const howItWorks = [
-  { title: 'Tell Us Your Vision', desc: 'Share your wedding date, venue, colour palette, and theme. We design a fully custom overlay and robot styling that feels like it was made for your love story — because it was.' },
-  { title: 'We Arrive & Set Up', desc: 'Our team arrives before your first guest. The robot is set up, branded, and ready — no venue power or WiFi needed. You focus on getting ready; we handle every detail.' },
-  { title: 'Every Guest Gets a Keepsake', desc: 'The robot visits every table throughout the reception, capturing personalized photos. Physical prints in hand and digital copies on their phones — a memory from your night, forever.' },
+  { title: 'You Brief Us', desc: 'Share your brand, campaign goals, and event details. We confirm availability fast and build a fully custom activation plan around your launch.' },
+  { title: 'We Show Up Fully Branded', desc: 'Our team arrives early, sets up the robot with your brand overlays and custom voice — no power or WiFi needed. Zero work for your team.' },
+  { title: 'Your Brand Goes Viral', desc: 'The robot roams your launch, creates content, and delivers branded photos instantly to every guest\'s phone. Your logo spreads everywhere in real-time.' },
 ]
 
-const whyCouplesLove = [
-  { icon: <FiHeart className="w-5 h-5 md:w-6 md:h-6" />, title: 'Visits Every Table', desc: 'The robot comes to every guest — not the other way around. From grandparents to the kids\' table, everyone gets their moment without leaving their seat.' },
-  { icon: <FiImage className="w-5 h-5 md:w-6 md:h-6" />, title: 'Physical Print Keepsakes', desc: 'Beautiful branded prints with your names and wedding date delivered on the spot. Something guests frame and display for years — a far more personal take-home than a favour bag.' },
-  { icon: <FiStar className="w-5 h-5 md:w-6 md:h-6" />, title: 'Fully Personalized Design', desc: 'Custom overlay designed around your wedding theme — florals, gold foil, minimalist, or whatever reflects your aesthetic. Every photo feels like it was made for your day.' },
-  { icon: <FiUsers className="w-5 h-5 md:w-6 md:h-6" />, title: 'Engages Every Generation', desc: 'From the flower girls to the grandparents — the robot creates moments everyone loves. A shared experience that brings your whole guest list together.' },
-  { icon: <FiZap className="w-5 h-5 md:w-6 md:h-6" />, title: 'Zero Venue Requirements', desc: 'Self-powered and self-connected. Ballrooms, barns, gardens, rooftops — the robot works in any venue with no cables, no WiFi, no disruption to your décor.' },
-  { icon: <FiShield className="w-5 h-5 md:w-6 md:h-6" />, title: 'Zero Stress for the Couple', desc: 'Our dedicated attendant manages everything from arrival to teardown. You and your partner are fully present for every moment — not managing a vendor.' },
+const whyBrandsLove = [
+  { icon: <FiShare2 className="w-5 h-5 md:w-6 md:h-6" />, title: 'Instant Brand Reach', desc: 'Every photo is branded with your logo and shared instantly to guests\' phones — turning your launch into a live social media campaign.' },
+  { icon: <FiUsers className="w-5 h-5 md:w-6 md:h-6" />, title: 'Hands-On Guest Engagement', desc: 'Our attendant drives the robot through your crowd, creating genuine brand interactions — not just a booth people walk past.' },
+  { icon: <FiStar className="w-5 h-5 md:w-6 md:h-6" />, title: 'Custom Voice & Campaign Messaging', desc: 'The robot speaks your brand\'s voice — custom recorded lines that announce the photo and reinforce your campaign message every single time.' },
+  { icon: <FiZap className="w-5 h-5 md:w-6 md:h-6" />, title: 'Zero Setup Burden', desc: 'No power outlets, no WiFi, no venue requirements. Our team handles full setup and teardown so your team stays focused on the launch.' },
+  { icon: <FiImage className="w-5 h-5 md:w-6 md:h-6" />, title: 'Campaign-Ready Content', desc: 'Every photo is polished, on-brand, and ready for social. Your launch generates a full library of content guests actually want to share.' },
+  { icon: <FiShield className="w-5 h-5 md:w-6 md:h-6" />, title: 'White-Glove Service', desc: 'A dedicated on-site team manages everything start to finish. Your brand stays in the spotlight — we stay invisible in the background.' },
 ]
 
 const customizations = [
-  { icon: <FiImage className="w-5 h-5" />, title: 'Couple\'s Name & Date Overlay', desc: 'Your names, wedding date, and a custom design that reflects your aesthetic — romantic florals, gold foil, modern minimalist. Every photo is a beautifully branded keepsake from your day.' },
-  { icon: <FiHeart className="w-5 h-5" />, title: 'Custom Voice Message from the Couple', desc: 'Record a personal voice message from the bride, groom, or both. The robot delivers it at every photo — a heartfelt, unique touch that makes every guest interaction feel personal and special.' },
-  { icon: <FiStar className="w-5 h-5" />, title: 'Multi-Booth Reception Experience', desc: 'Add a Premium Photobooth, Aerial Booth, or 360 Booth alongside the robot — giving your guests multiple keepsake experiences throughout the reception that they\'ll be talking about for decades.' },
+  { icon: <FiImage className="w-5 h-5" />, title: 'Logo Overlays, Campaign Branding & Theme', desc: 'Every photo features your logo, campaign name, and brand colors. The robot can also be dressed and themed to match your product launch — making every interaction a branded touchpoint.' },
+  { icon: <FiZap className="w-5 h-5" />, title: 'Custom Voice & Campaign Messaging', desc: 'Record custom voice lines in your brand voice or a spokesperson\'s voice — announcing the product, hyping guests, and making every photo moment part of the campaign story.' },
+  { icon: <FiStar className="w-5 h-5" />, title: 'Multi-Booth Activations', desc: 'Combine the Robot Photobooth with a 360 Booth, Aerial Booth, or Premium Photobooth for a full brand activation floor — multiple touchpoints, maximum exposure, one unified experience.' },
 ]
 
 const testimonials = [
-  { name: 'Sarah J.', role: 'Bride', text: 'Our guests absolutely loved the robot. It visited every table during dinner, everyone got a personalized print with our names on it, and people are still talking about it months later. Best wedding decision we made.' },
-  { name: 'Ben S.', role: 'Groom', text: 'We were worried it might feel out of place at a formal reception. It didn\'t — it was elegant, warm, and our photographer said the candid moments the robot created were some of the best shots of the entire night.' },
-  { name: 'Emma D.', role: 'Maid of Honour', text: 'I\'ve been to over 20 weddings and this was the first time entertainment made me tear up. The bride\'s voice coming out of the robot at every photo was so personal and beautiful. Every guest loved it.' },
+  { name: 'Rosanna', role: 'Project Manager, TD Canada Trust', text: 'I want to extend a huge THANK YOU to you and your team. The photo booths were very popular among TechCon attendees. You and your team were accommodating, patient and friendly from the beginning to the end of the event. The backdrop and pictures were great quality.' },
+  { name: 'Priya S.', role: 'Brand Marketing Manager', text: 'We\'ve done a lot of brand activations — this was by far the most talked-about. The robot was engaging, the branded photos were everywhere on social the next day. Will book again.' },
+  { name: 'Marcus L.', role: 'Head of Experiential Marketing', text: 'Our product launch needed something that would make people stop and engage. The robot delivered exactly that — every guest walked away with a branded photo and a story to tell.' },
 ]
 
 const faqs = [
-  { question: 'Is the robot appropriate for a formal wedding reception?', answer: 'Absolutely. The robot is operated elegantly by our professional attendant and moves gracefully through the venue. We can style it to complement your wedding aesthetic — from black tie and formal to rustic, boho, or garden chic.' },
-  { question: 'Can the photos feature both of our names and our wedding date?', answer: 'Yes. We design a fully custom overlay with your names, wedding date, and a theme that matches your aesthetic — florals, gold foil, minimalist lettering, or whatever reflects your vision.' },
-  { question: 'When does the robot operate during the reception?', answer: 'Typically during cocktail hour and throughout the dinner reception when guests are seated and relaxed. Our attendant visits each table ensuring every single guest has their personalized photo moment.' },
-  { question: 'Are physical prints included?', answer: 'Yes. Every booking includes physical prints delivered on the spot — a personalized keepsake from your wedding day that guests take home and treasure. Better than any traditional party favour.' },
-  { question: 'Can we record a personal voice message for guests?', answer: 'Yes. We can record a message from the bride, groom, or both — the robot delivers it before each photo moment, making every interaction feel heartfelt and uniquely yours.' },
-  { question: 'Does the robot require power or WiFi from our venue?', answer: 'No. The robot is fully self-powered and self-connected. No cables, no WiFi requirements, no disruption to your venue setup or décor whatsoever.' },
-  { question: 'How far in advance should we book?', answer: 'We strongly recommend booking 6–8 weeks ahead. Peak wedding season (May–October) fills extremely fast. Contact us now to secure your date before it\'s gone.' },
+  { question: 'What types of brand activations do you cover?', answer: 'We cover product launches, brand reveals, pop-up activations, trade shows, sponsorship activations, and any event where you need to create a memorable branded experience.' },
+  { question: 'How big is the Robot Photobooth?', answer: 'The robot stands at 5ft 4in tall — roughly the same height and footprint as a person. It moves through your venue seamlessly without requiring any dedicated booth space.' },
+  { question: 'Can we fully brand the photos with our campaign?', answer: 'Yes. Every photo includes a custom overlay with your logo, campaign name, hashtag, event date, and brand colors. It\'s a branded asset every single guest takes home.' },
+  { question: 'Does the robot require WiFi or power from the venue?', answer: 'No. The robot is fully self-powered and uses its own connectivity. No cables, no venue WiFi needed. Our team handles everything independently.' },
+  { question: 'Can the robot speak in our brand voice?', answer: 'Yes. We can program custom voice lines — even recorded in a spokesperson\'s or team member\'s voice — that greet guests and hype the photo moment as part of your campaign.' },
+  { question: 'How far in advance should we book?', answer: 'We recommend booking 4–6 weeks in advance for brand activations. Launch season dates fill quickly. Contact us now to lock in your date.' },
+  { question: 'Can we combine multiple booths for a larger activation floor?', answer: 'Absolutely. Our Platinum Package lets you bundle the Robot Photobooth with a 360 Booth, Aerial Booth, or Premium Photobooth — creating multiple brand touchpoints at your event.' },
 ]
 
 const companyLogos = [

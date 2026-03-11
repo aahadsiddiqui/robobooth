@@ -50,7 +50,7 @@ export default function Document() {
         <meta property="og:image" content="/og-image.jpg" />
 
         {/* Favicon */}
-        <link rel="icon" href="/images/favicon.png" />
+        <link rel="icon" href="/images/faviconlogo.png" />
 
         {/* Fonts */}
         <link
