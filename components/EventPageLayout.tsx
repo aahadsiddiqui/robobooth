@@ -3,6 +3,7 @@ import Head from 'next/head'
 import { motion, AnimatePresence } from 'framer-motion'
 import { FiArrowRight, FiCheck, FiPhone, FiChevronDown, FiChevronUp, FiClock, FiX } from 'react-icons/fi'
 import Navbar from './Navbar'
+import { appendUtmParams } from '../lib/utmParams'
 
 /* ─── Reveal ─── */
 export const Reveal = ({ children, className, delay = 0 }: { children: ReactNode; className?: string; delay?: number }) => (
@@ -131,6 +132,7 @@ export default function EventPageLayout(props: EventPageProps) {
       fd.append('budget', form.budget); fd.append('event-type', eventTypeName)
       fd.append('package', packageType === 'gold' ? 'Gold Package' : packageType === 'platinum' ? 'Platinum Package' : packageType === 'bronze' ? 'Bronze Package' : 'General Inquiry')
       fd.append('_replyto', form.email); fd.append('source', `${eventTypeName} Page`)
+      appendUtmParams(fd)
       const res = await fetch('https://formspree.io/f/xkgoedyp', { method: 'POST', body: fd, headers: { Accept: 'application/json' } })
       if (res.ok) { setSuccess(true) } else { alert('Failed to submit. Please try again.') }
     } catch { alert('Failed to submit. Please try again.') } finally { setSubmitting(false) }

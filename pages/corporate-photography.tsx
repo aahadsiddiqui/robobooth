@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { motion, AnimatePresence } from 'framer-motion'
 import { FiArrowRight, FiCheck, FiPhone, FiChevronDown, FiChevronUp, FiClock, FiX, FiCamera, FiFilm, FiZap, FiImage, FiUsers, FiStar, FiShield, FiVideo } from 'react-icons/fi'
 import Navbar from '../components/Navbar'
+import { appendUtmParams } from '../lib/utmParams'
 
 /* ─── Reveal ─── */
 const Reveal = ({ children, className, delay = 0 }: { children: React.ReactNode; className?: string; delay?: number }) => (
@@ -55,6 +56,7 @@ export default function PhotographyPage() {
       fd.append('first-name', form.firstName); fd.append('phone-number', form.phone); fd.append('email', form.email)
       fd.append('event-date', form.eventDate); fd.append('event-type', 'Photography, Videography & Headshots')
       fd.append('_replyto', form.email); fd.append('source', 'Photography Page')
+      appendUtmParams(fd)
       const res = await fetch('https://formspree.io/f/xkgoedyp', { method: 'POST', body: fd, headers: { Accept: 'application/json' } })
       if (res.ok) { setSuccess(true) } else { alert('Failed to submit. Please try again.') }
     } catch { alert('Failed to submit. Please try again.') } finally { setSubmitting(false) }
