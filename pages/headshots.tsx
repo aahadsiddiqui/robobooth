@@ -1,8 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react'
 import Head from 'next/head'
-import Link from 'next/link'
 import { motion, AnimatePresence } from 'framer-motion'
-import { FiArrowRight, FiCheck, FiPhone, FiChevronDown, FiChevronUp, FiClock, FiX, FiCamera, FiFilm, FiZap, FiImage } from 'react-icons/fi'
+import { FiArrowRight, FiPhone, FiChevronDown, FiChevronUp, FiClock, FiX, FiUsers, FiStar, FiShield, FiZap, FiCamera, FiVideo } from 'react-icons/fi'
 import Navbar from '../components/Navbar'
 import { appendUtmParams } from '../lib/utmParams'
 
@@ -13,7 +12,7 @@ const Reveal = ({ children, className, delay = 0 }: { children: React.ReactNode;
   </motion.div>
 )
 
-/* ─── Subtle CTA Button (inline, minimal) ─── */
+/* ─── Subtle CTA Button ─── */
 const SubtleCTA = ({ label, onQuote }: { label: string; onQuote: () => void }) => (
   <div className="flex justify-center pt-4 pb-2">
     <motion.button whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.97 }} onClick={onQuote}
@@ -24,9 +23,9 @@ const SubtleCTA = ({ label, onQuote }: { label: string; onQuote: () => void }) =
 )
 
 /* ════════════════════════════════════════════════════════════════
-   PHOTOGRAPHY & VIDEOGRAPHY — Landing Page
+   PROFESSIONAL HEADSHOTS — Landing Page
    ════════════════════════════════════════════════════════════════ */
-export default function PhotographyPage() {
+export default function HeadshotsPage() {
   const [showModal, setShowModal] = useState(false)
   const [form, setForm] = useState({ firstName: '', email: '', phone: '', eventDate: '' })
   const [submitting, setSubmitting] = useState(false)
@@ -54,8 +53,8 @@ export default function PhotographyPage() {
     try {
       const fd = new FormData()
       fd.append('first-name', form.firstName); fd.append('phone-number', form.phone); fd.append('email', form.email)
-      fd.append('event-date', form.eventDate); fd.append('event-type', 'Photography & Videography')
-      fd.append('_replyto', form.email); fd.append('source', 'Photography Page')
+      fd.append('event-date', form.eventDate); fd.append('event-type', 'Professional Headshots')
+      fd.append('_replyto', form.email); fd.append('source', 'Headshots Page')
       appendUtmParams(fd)
       const res = await fetch('https://formspree.io/f/xkgoedyp', { method: 'POST', body: fd, headers: { Accept: 'application/json' } })
       if (res.ok) { setSuccess(true) } else { alert('Failed to submit. Please try again.') }
@@ -65,15 +64,15 @@ export default function PhotographyPage() {
   return (
     <>
       <Head>
-        <title>Photography & Videography Toronto GTA | Robo Booth</title>
-        <meta name="description" content="Professional Photography & Videography for events, corporate, and private sessions across Toronto & GTA. RAW + Edited photos delivered within a week. Book now." />
-        <meta name="keywords" content="event photography Toronto, videography GTA, corporate photography, event videographer, portrait photographer Toronto" />
-        <meta property="og:title" content="Photography & Videography | Robo Booth" />
-        <meta property="og:description" content="Professional event photography & videography. RAW + Edited delivered within a week. Toronto & GTA." />
+        <title>Professional Headshots Toronto GTA | Robo Booth</title>
+        <meta name="description" content="On-location professional headshots for corporate teams, conferences, and LinkedIn profiles across Toronto & GTA. Studio-quality lighting. RAW + Edited delivered within a week." />
+        <meta name="keywords" content="professional headshots Toronto, corporate headshots GTA, LinkedIn headshots, team headshots, on-location headshot photography Toronto" />
+        <meta property="og:title" content="Professional Headshots | Robo Booth" />
+        <meta property="og:description" content="On-location professional headshots. Studio-quality results at your venue. RAW + Edited delivered within a week. Toronto & GTA." />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://robobooth.ca/corporate-photography" />
-        <link rel="canonical" href="https://robobooth.ca/corporate-photography" />
-        <link rel="preload" href="/images/photography1.jpg" as="image" />
+        <meta property="og:url" content="https://robobooth.ca/headshots" />
+        <link rel="canonical" href="https://robobooth.ca/headshots" />
+        <link rel="preload" href="/images/photography2.jpg" as="image" />
         <link rel="dns-prefetch" href="//formspree.io" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
@@ -89,14 +88,14 @@ export default function PhotographyPage() {
             <div className="fixed top-16 md:top-[4.5rem] left-0 right-0 z-40 bg-[#fce4a6] text-black text-center py-2 px-4">
               <div className="flex items-center justify-center gap-2 text-xs md:text-sm font-semibold">
                 <FiClock className="w-3.5 h-3.5 flex-shrink-0" />
-                <span>Event season is filling fast — <button onClick={openQuote} className="underline font-bold">check your date now</button></span>
+                <span>Headshot sessions are booking fast — <button onClick={openQuote} className="underline font-bold">reserve your slot now</button></span>
                 <button onClick={() => setUrgencyDismissed(true)} className="ml-2 text-black/50 hover:text-black"><FiX className="w-3.5 h-3.5" /></button>
               </div>
             </div>
           )}
 
           {/* ═══════════════════════════════════════
-              HERO — Single large image
+              HERO
              ═══════════════════════════════════════ */}
           <section className={`relative ${urgencyDismissed ? 'pt-20 md:pt-24' : 'pt-[7rem] md:pt-[8rem]'} pb-6 md:pb-8 px-4`}>
             <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_left,_#fce4a620_0%,_transparent_50%)] pointer-events-none" />
@@ -105,21 +104,21 @@ export default function PhotographyPage() {
                 <motion.div initial={{ opacity: 0, x: -30 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.7 }}>
                   <div className="flex items-center gap-2 mb-3">
                     <div className="flex text-yellow-400 text-sm">★★★★★</div>
-                    <span className="text-white/60 text-xs font-medium">5.0 Rating · Professional Event Coverage</span>
+                    <span className="text-white/60 text-xs font-medium">5.0 Rating · Professional Headshot Photography</span>
                   </div>
                   <h1 className="text-[1.65rem] leading-[1.15] md:text-4xl lg:text-5xl font-black md:leading-[1.1] mb-4">
-                    Professional{' '}
-                    <span className="text-[#fce4a6]">Photography & Videography</span>{' '}
-                    for Your Event.
+                    Elevate Your{' '}
+                    <span className="text-[#fce4a6]">Professional Image</span>{' '}
+                    with Studio-Quality Headshots.
                   </h1>
                   <p className="text-white/80 text-sm md:text-base lg:text-lg leading-relaxed mb-5 max-w-xl">
-                    From candid moments to cinematic highlights — we capture it all. RAW + Edited photos delivered within a week.{' '}
-                    <span className="text-white font-semibold">We handle everything so you can focus on your event.</span>
+                    On-location headshot sessions with professional lighting and expert retouching. Perfect for corporate teams, conferences, LinkedIn profiles, and company directories.{' '}
+                    <span className="text-white font-semibold">We come to you — no studio required.</span>
                   </p>
                   <div className="flex flex-col sm:flex-row gap-3 mb-3">
                     <motion.button whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.97 }} onClick={openQuote}
                       className="w-full sm:w-auto bg-[#fce4a6] text-black px-6 py-3.5 rounded-full font-bold text-sm md:text-base shadow-lg shadow-[#fce4a6]/20 hover:shadow-xl transition-all group text-center">
-                      Reserve Your Date <FiArrowRight className="inline ml-2 group-hover:translate-x-1 transition-transform" />
+                      Book Your Session <FiArrowRight className="inline ml-2 group-hover:translate-x-1 transition-transform" />
                     </motion.button>
                     <a href="tel:289-301-4039" className="w-full sm:w-auto flex items-center justify-center gap-2 border-2 border-[#fce4a6]/40 text-[#fce4a6] px-6 py-3 rounded-full font-bold text-sm hover:bg-[#fce4a6]/10 transition-all text-center">
                       <FiPhone className="w-4 h-4" /> Call 289-301-4039
@@ -130,12 +129,12 @@ export default function PhotographyPage() {
 
                 {/* Hero image */}
                 <motion.div initial={{ opacity: 0, x: 30 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.7, delay: 0.15 }} className="hidden md:block">
-                  <img src="/images/photography1.jpg" alt="Photography & Videography" className="w-full h-[480px] lg:h-[520px] object-cover rounded-2xl shadow-2xl" loading="eager" fetchPriority="high" />
+                  <img src="/images/photography2.jpg" alt="Professional corporate headshots" className="w-full h-[480px] lg:h-[520px] object-cover rounded-2xl shadow-2xl" loading="eager" fetchPriority="high" />
                 </motion.div>
 
                 {/* Mobile hero */}
                 <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.1 }} className="md:hidden -mx-4">
-                  <img src="/images/photography1.jpg" alt="Photography & Videography" className="w-full h-60 object-cover" loading="eager" fetchPriority="high" />
+                  <img src="/images/photography2.jpg" alt="Professional corporate headshots" className="w-full h-60 object-cover" loading="eager" fetchPriority="high" />
                 </motion.div>
               </div>
             </div>
@@ -181,35 +180,27 @@ export default function PhotographyPage() {
             </div>
           </section>
 
-          {/* ════════════════════════════════════
-              PHOTOGRAPHY & VIDEOGRAPHY SECTION
-              ════════════════════════════════════ */}
+          {/* ════════════════════
+              HEADSHOTS SECTION
+              ════════════════════ */}
           <section className="py-10 md:py-14 px-4 border-t-2 border-[#fce4a6]/20">
             <div className="max-w-5xl mx-auto">
               <Reveal className="text-center mb-8">
                 <div className="flex items-center justify-center gap-3 mb-4">
                   <div className="h-px flex-1 max-w-[80px] bg-gradient-to-r from-transparent to-[#fce4a6]/40" />
                   <div className="flex items-center gap-2 bg-[#fce4a6]/10 border border-[#fce4a6]/40 px-4 py-1.5 rounded-full">
-                    <FiCamera className="w-3.5 h-3.5 text-[#fce4a6]" />
-                    <FiFilm className="w-3.5 h-3.5 text-[#fce4a6]" />
-                    <span className="text-[#fce4a6] text-xs font-bold tracking-widest uppercase">Photography & Videography</span>
+                    <FiUsers className="w-3.5 h-3.5 text-[#fce4a6]" />
+                    <span className="text-[#fce4a6] text-xs font-bold tracking-widest uppercase">Professional Headshots</span>
                   </div>
                   <div className="h-px flex-1 max-w-[80px] bg-gradient-to-l from-transparent to-[#fce4a6]/40" />
                 </div>
-                <h2 className="text-2xl md:text-3xl lg:text-4xl font-black mb-2">Capture Every <span className="text-[#fce4a6]">Moment</span></h2>
-                <p className="text-white/50 text-sm md:text-base max-w-xl mx-auto">From candid moments to cinematic highlights — we document your event in stunning detail. RAW + Edited delivered within a week.</p>
+                <h2 className="text-2xl md:text-3xl lg:text-4xl font-black mb-2">Headshots That Make a <span className="text-[#fce4a6]">First Impression</span></h2>
+                <p className="text-white/50 text-sm md:text-base max-w-xl mx-auto">On-location headshot sessions with studio-quality lighting. Perfect for corporate teams, conferences, LinkedIn profiles, and company directories.</p>
               </Reveal>
 
-              {/* Photo/Video image */}
-              <Reveal className="mb-6">
-                <div className="max-w-2xl mx-auto rounded-2xl overflow-hidden border border-white/10 bg-black">
-                  <img src="/images/photography3.jpg" alt="Professional event photography and videography" className="w-full h-auto object-contain" style={{ display: 'block', maxHeight: '50vh' }} loading="lazy" />
-                </div>
-              </Reveal>
-
-              {/* Photo/Video feature cards */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 md:gap-4 mb-5">
-                {photoVideoFeatures.map((item, i) => (
+              {/* Headshots feature cards */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 md:gap-4 mb-6">
+                {headshotFeatures.map((item, i) => (
                   <Reveal key={i} delay={i * 0.06} className="bg-white/[0.04] border border-white/10 rounded-xl p-4 md:p-5 hover:border-[#fce4a6]/30 transition-colors group">
                     <div className="text-[#fce4a6] mb-2 group-hover:scale-110 transition-transform inline-block">{item.icon}</div>
                     <h3 className="font-bold text-sm md:text-base mb-1">{item.title}</h3>
@@ -218,25 +209,22 @@ export default function PhotographyPage() {
                 ))}
               </div>
 
-              {/* Photo/Video — action video */}
-              <Reveal className="mt-5 mb-2">
-                <div className="max-w-2xl mx-auto rounded-2xl overflow-hidden border border-white/10 bg-black">
-                  <video
-                    className="w-full max-h-[50vh] object-contain"
-                    style={{ display: 'block' }}
-                    autoPlay
-                    loop
-                    muted
-                    playsInline
-                    preload="auto"
-                  >
-                    <source src="/videos/photography1.MOV" type="video/quicktime" />
-                    <source src="/videos/photography1.MOV" type="video/mp4" />
-                  </video>
+              {/* What's Included cards */}
+              <Reveal className="mb-5">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  {whatsIncluded.map((item, i) => (
+                    <div key={i} className="bg-gradient-to-br from-[#fce4a6]/10 to-transparent border border-[#fce4a6]/20 rounded-2xl p-5 hover:border-[#fce4a6]/40 transition-colors group">
+                      <div className="w-10 h-10 rounded-xl bg-[#fce4a6]/10 border border-[#fce4a6]/30 flex items-center justify-center mb-3 text-[#fce4a6] group-hover:bg-[#fce4a6]/20 transition-colors">
+                        {item.icon}
+                      </div>
+                      <h3 className="font-bold text-sm md:text-base text-white mb-1.5">{item.title}</h3>
+                      <p className="text-white/60 text-xs leading-relaxed">{item.desc}</p>
+                    </div>
+                  ))}
                 </div>
               </Reveal>
 
-              <SubtleCTA label="Book Photography & Videography" onQuote={openQuote} />
+              <SubtleCTA label="Book Your Headshot Session" onQuote={openQuote} />
             </div>
           </section>
 
@@ -268,6 +256,27 @@ export default function PhotographyPage() {
                   </Reveal>
                 ))}
               </div>
+            </div>
+          </section>
+
+          {/* ── Headshots Video (after reviews) ── */}
+          <section className="px-4 py-6 md:py-8 border-t border-white/5">
+            <div className="max-w-2xl mx-auto">
+              <Reveal>
+                <div className="rounded-2xl overflow-hidden border border-white/10 bg-black">
+                  <video
+                    className="w-full max-h-[50vh] object-contain"
+                    style={{ display: 'block' }}
+                    loop
+                    playsInline
+                    controls
+                    preload="metadata"
+                  >
+                    <source src="/videos/corporateheadshot.MOV" type="video/quicktime" />
+                    <source src="/videos/corporateheadshot.MOV" type="video/mp4" />
+                  </video>
+                </div>
+              </Reveal>
             </div>
           </section>
 
@@ -304,15 +313,15 @@ export default function PhotographyPage() {
           <section className="py-10 md:py-14 px-4 border-t border-white/5">
             <Reveal className="max-w-3xl mx-auto text-center">
               <h2 className="text-xl md:text-2xl lg:text-4xl font-black mb-2 md:mb-3">
-                Your Event Deserves <span className="text-[#fce4a6]">Professional Coverage.</span>
+                Your Team Deserves a <span className="text-[#fce4a6]">Professional Image.</span>
               </h2>
               <p className="text-white/60 text-xs md:text-sm lg:text-base mb-5 max-w-lg mx-auto">
-                Photography & videography — all handled by our team. RAW + Edited photos delivered within a week.
+                Studio-quality headshots delivered to you — at your venue, your office, or your event. RAW + Edited photos within a week.
               </p>
               <div className="flex flex-col sm:flex-row gap-3 justify-center items-center">
                 <motion.button whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.97 }} onClick={openQuote}
                   className="w-full sm:w-auto bg-[#fce4a6] text-black px-7 py-3.5 md:px-8 md:py-4 rounded-full font-bold text-sm md:text-base shadow-lg shadow-[#fce4a6]/20 hover:shadow-xl transition-all group">
-                  Reserve Your Date Now <FiArrowRight className="inline ml-2 group-hover:translate-x-1 transition-transform" />
+                  Book Your Headshot Session <FiArrowRight className="inline ml-2 group-hover:translate-x-1 transition-transform" />
                 </motion.button>
                 <a href="tel:289-301-4039" className="flex items-center gap-2 text-[#fce4a6] text-sm font-semibold hover:text-white transition-colors">
                   <FiPhone className="w-4 h-4" /> 289-301-4039
@@ -333,7 +342,7 @@ export default function PhotographyPage() {
             <motion.div initial={{ opacity: 0, y: 60 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 60 }}
               className="bg-white rounded-t-2xl md:rounded-2xl p-5 md:p-8 max-w-md w-full shadow-2xl relative max-h-[90vh] overflow-y-auto">
               <button onClick={() => setShowModal(false)} className="absolute top-3 right-4 text-black/40 hover:text-black text-2xl">×</button>
-              <h2 className="text-lg md:text-2xl font-black text-black mb-1 text-center">Book Photography & Videography</h2>
+              <h2 className="text-lg md:text-2xl font-black text-black mb-1 text-center">Book Professional Headshots</h2>
               <p className="text-black/60 text-xs md:text-sm mb-4 text-center">Tell us your date and we&apos;ll confirm availability within 15 minutes.</p>
               {success ? (
                 <div className="text-green-600 text-center font-bold py-6">Thank you! We&apos;ll be in touch soon.</div>
@@ -349,7 +358,7 @@ export default function PhotographyPage() {
                     className="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm focus:ring-2 focus:ring-[#fce4a6] focus:border-transparent outline-none text-black" />
                   <button type="submit" disabled={submitting}
                     className="w-full bg-[#fce4a6] text-black py-3.5 rounded-xl font-bold text-sm hover:bg-[#e8d08e] transition-colors">
-                    {submitting ? 'Sending…' : 'Reserve My Date →'}
+                    {submitting ? 'Sending…' : 'Book My Session →'}
                   </button>
                   <p className="text-center text-black/30 text-[10px]">No spam. We respond within 15 minutes during business hours.</p>
                 </form>
@@ -370,14 +379,14 @@ export default function PhotographyPage() {
                   <FiPhone className="w-4 h-4" /> Call Now
                 </a>
                 <button onClick={openQuote} className="flex-[2] flex items-center justify-center gap-2 bg-[#fce4a6] text-black py-3 rounded-full font-bold text-sm shadow-lg shadow-[#fce4a6]/20">
-                  Reserve Your Date <FiArrowRight className="w-4 h-4" />
+                  Book Session <FiArrowRight className="w-4 h-4" />
                 </button>
               </div>
             </motion.div>
             <motion.button initial={{ opacity: 0, y: 40, scale: 0.9 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: 40, scale: 0.9 }}
               transition={{ type: 'spring', stiffness: 300, damping: 25 }} whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} onClick={openQuote}
               className="hidden md:flex fixed bottom-6 right-6 z-40 bg-[#fce4a6] text-black font-bold px-6 py-3.5 rounded-full shadow-xl shadow-black/40 hover:bg-white transition-colors text-sm items-center gap-2">
-              Reserve Your Date <FiArrowRight className="w-4 h-4" />
+              Book Your Session <FiArrowRight className="w-4 h-4" />
             </motion.button>
           </>
         )}
@@ -388,31 +397,37 @@ export default function PhotographyPage() {
 
 /* ─── DATA ─── */
 const howItWorks = [
-  { title: 'You Book', desc: 'Tell us your event date, type, and what you need covered. We\'ll confirm availability and put together a custom plan.' },
-  { title: 'We Show Up', desc: 'Our professional team arrives with all equipment — cameras, lighting, audio — ready to capture every moment from start to finish.' },
-  { title: 'You Get Your Content', desc: 'Receive your full gallery of RAW + Edited photos within about a week. Professional color grading, retouching, and full-resolution delivery.' },
+  { title: 'You Book', desc: 'Tell us your session date, number of people, and any brand guidelines. We\'ll confirm availability and build a plan around you.' },
+  { title: 'We Show Up', desc: 'Our professional team arrives with studio lighting, backdrops, and all equipment. Setup is quick and zero disruption to your day.' },
+  { title: 'You Get Your Content', desc: 'Receive RAW + Edited headshots within a week. Professional retouching, color grading, and full-resolution delivery included.' },
 ]
 
-const photoVideoFeatures = [
-  { icon: <FiCamera className="w-5 h-5 md:w-6 md:h-6" />, title: 'Professional Photography', desc: 'High-resolution event photography capturing keynotes, candid moments, details, and the full atmosphere of your event with professional lighting and composition.' },
-  { icon: <FiFilm className="w-5 h-5 md:w-6 md:h-6" />, title: 'Cinematic Videography', desc: 'Multi-angle video coverage with cinema-grade equipment. Highlight reels, full event captures, and social-ready clips — all professionally edited.' },
-  { icon: <FiImage className="w-5 h-5 md:w-6 md:h-6" />, title: 'RAW + Edited Delivery', desc: 'Receive both RAW and professionally edited files. Full color grading, retouching, and delivered in full resolution within about a week of your event.' },
-  { icon: <FiZap className="w-5 h-5 md:w-6 md:h-6" />, title: 'Seamless, Single Team', desc: 'Photography and videography handled together by one professional crew. No vendor coordination — just consistent, premium coverage from start to finish.' },
+const headshotFeatures = [
+  { icon: <FiUsers className="w-5 h-5 md:w-6 md:h-6" />, title: 'On-Location Studio Setup', desc: 'We bring the studio to you. Full professional lighting and backdrop setup at your venue — no need to travel or book a separate studio.' },
+  { icon: <FiStar className="w-5 h-5 md:w-6 md:h-6" />, title: 'Studio-Quality Results', desc: 'Professional-grade lighting rigs and backdrops deliver polished, publication-ready headshots that look just like a dedicated studio session.' },
+  { icon: <FiShield className="w-5 h-5 md:w-6 md:h-6" />, title: 'Expert Retouching', desc: 'Every headshot is professionally retouched — skin smoothing, color correction, and background cleanup. LinkedIn-ready and corporate-polished.' },
+  { icon: <FiZap className="w-5 h-5 md:w-6 md:h-6" />, title: 'Fast Turnaround', desc: 'Edited headshots delivered within a week. High-resolution files with commercial usage rights — ready for your website, LinkedIn, and company directory.' },
+]
+
+const whatsIncluded = [
+  { icon: <FiCamera className="w-5 h-5" />, title: 'Professional Photographer', desc: 'An experienced headshot photographer with studio-grade lighting and backdrops comes directly to your location. Setup in minutes, zero downtime.' },
+  { icon: <FiShield className="w-5 h-5" />, title: 'Expert Retouching', desc: 'Every headshot is professionally retouched — skin smoothing, color correction, background cleanup, and color grading included as standard.' },
+  { icon: <FiVideo className="w-5 h-5" />, title: 'White-Glove Service', desc: 'We handle every detail — equipment, setup, and post-production. You focus on showing up, we deliver polished results. Full commercial usage rights included.' },
 ]
 
 const testimonials = [
-  { name: 'James W.', role: 'VP of Marketing', text: 'The photography was stunning — every detail was captured beautifully. The team was professional, discreet, and delivered everything within the week as promised. Exactly what we needed.' },
-  { name: 'Lisa C.', role: 'Event Director', text: 'Having photography and videography handled by one team made everything so much easier. The quality was incredible and the turnaround was impressively fast.' },
-  { name: 'Robert K.', role: 'Corporate Events Manager', text: 'The RAW + Edited delivery was a game-changer. We had professional content ready for marketing within days. The team captured moments we didn\'t even know happened. Highly recommend.' },
+  { name: 'Lisa C.', role: 'Event Director', text: 'Having headshots handled on-location made everything so much easier. The quality was incredible and the turnaround was impressively fast. The whole team looked polished and consistent.' },
+  { name: 'Amanda T.', role: 'HR Director, Tech Company', text: 'Our entire team was photographed in a single afternoon. The quality was phenomenal and everyone loved their shots. Best investment we\'ve made in our professional image.' },
+  { name: 'Robert K.', role: 'Corporate Events Manager', text: 'The RAW + Edited delivery was a game-changer. We had professional headshots ready for our website within days. The team made everyone feel comfortable and the results were outstanding.' },
 ]
 
 const faqs = [
-  { question: 'What do I receive and when?', answer: 'You receive the full gallery of RAW + Edited photos within about a week of your event. All photos are professionally color graded and retouched, delivered in full resolution with commercial usage rights.' },
-  { question: 'Do you offer photography and videography separately?', answer: 'Yes. We offer flexible packages — photography only, videography only, or both together. We\'ll tailor the package to your exact needs.' },
-  { question: 'What equipment do you use?', answer: 'We use professional-grade DSLR and mirrorless cameras, cinema lenses, studio lighting, professional audio equipment, and stabilization gear. Everything needed for premium results.' },
-  { question: 'Can you handle large events?', answer: 'Absolutely. We regularly cover events of all sizes — from intimate gatherings to large-scale conferences and galas. We scale our team and equipment to match your event size.' },
-  { question: 'Do you travel outside Toronto?', answer: 'We serve Toronto and the entire GTA including Mississauga, Brampton, Vaughan, Markham, and surrounding areas. Contact us about your venue location and we\'ll make it work.' },
-  { question: 'How far in advance should I book?', answer: 'We recommend booking at least 4-6 weeks in advance, though peak season dates can fill up faster. Contact us now to check availability for your date.' },
+  { question: 'What do I receive and when?', answer: 'You receive the full set of RAW + Edited headshots within about a week of your session. All photos are professionally retouched and color graded, delivered in full resolution with commercial usage rights.' },
+  { question: 'Do you come to our location?', answer: 'Yes — we bring the full studio setup to you. Whether it\'s your office, venue, conference, or event space, we set up professional lighting and backdrops wherever you need us.' },
+  { question: 'How many people can you photograph in a session?', answer: 'We\'ve photographed individuals and teams of all sizes — from single executives to groups of 100+. For larger teams, we scale our setup and staffing to keep things moving efficiently.' },
+  { question: 'Can you match our brand guidelines?', answer: 'Absolutely. Send us your brand guidelines and we\'ll match background colors, lighting mood, and editing style to ensure a uniform aesthetic across your team.' },
+  { question: 'Do you travel outside Toronto?', answer: 'We serve Toronto and the entire GTA including Mississauga, Brampton, Vaughan, Markham, and surrounding areas. Contact us about your location and we\'ll make it work.' },
+  { question: 'How far in advance should I book?', answer: 'We recommend booking at least 2-4 weeks in advance. Peak season and conference dates can fill up faster. Contact us now to check availability for your date.' },
 ]
 
 const companyLogos = [

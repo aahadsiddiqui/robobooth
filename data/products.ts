@@ -169,9 +169,9 @@ export const products: ProductData[] = [
   },
   {
     slug: 'photography-videography',
-    name: 'Photography, Videography, & Headshots',
+    name: 'Photography & Videography',
     tagline: 'Cinematic event coverage that captures your milestone in HD.',
-    summary: 'From keynote highlights to high-energy sizzle reels. We document your event\'s ROI through cinematic storytelling and professional photography.',
+    summary: 'From keynote highlights to cinematic highlight reels — professional photography and videography handled by one seamless team.',
     productImage: '/images/PhotographyVideography1.jpeg',
     videoUrl: '/videos/Corporate.mp4',
     priceLabel: 'Custom Quote',
@@ -193,6 +193,33 @@ export const products: ProductData[] = [
       { name: 'Alex F.', role: 'Corporate Planner', text: 'Professional, fast, and the quality was next level.' }
     ],
     linkOverride: '/corporate-photography'
+  },
+  {
+    slug: 'headshots',
+    name: 'Headshots',
+    tagline: 'Studio-quality headshots delivered to your location.',
+    summary: 'On-location headshot sessions with professional lighting and expert retouching. Perfect for corporate teams, conferences, and LinkedIn profiles.',
+    productImage: '/images/photography2.jpg',
+    videoUrl: '/videos/corporateheadshot.MOV',
+    priceLabel: 'Custom Quote',
+    priceNote: 'Individual & team sessions available',
+    badges: ['We come to you', 'RAW + Edited included'],
+    usp: [
+      { title: 'On-Location Studio', description: 'We bring professional lighting and backdrops to your office, venue, or event.' },
+      { title: 'Expert Retouching', description: 'Every headshot is professionally retouched and color-graded — LinkedIn-ready.' },
+      { title: 'Fast Delivery', description: 'RAW + Edited files delivered within a week with full commercial usage rights.' }
+    ],
+    faqData: [
+      { question: 'Do you come to our location?', answer: 'Yes — we bring the full studio setup to you wherever you need us.' },
+      { question: 'How many people can you photograph?', answer: 'We handle individuals and teams of all sizes, from single executives to groups of 100+.' },
+      { question: 'When do we receive the photos?', answer: 'RAW + Edited headshots are delivered within about a week of your session.' }
+    ],
+    testimonials: [
+      { name: 'Amanda T.', role: 'HR Director', text: 'Our entire team was photographed in one afternoon. The quality was phenomenal and everyone loved their shots.' },
+      { name: 'Lisa C.', role: 'Event Director', text: 'The quality was incredible and the turnaround was impressively fast. The whole team looked polished and consistent.' },
+      { name: 'Robert K.', role: 'Corporate Events Manager', text: 'Professional headshots ready for our website within days. The team made everyone feel comfortable and the results were outstanding.' }
+    ],
+    linkOverride: '/headshots'
   }
 ]
 
