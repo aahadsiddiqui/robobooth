@@ -127,14 +127,14 @@ export default function HeadshotsPage() {
                   <p className="text-white/40 text-[11px] md:text-xs">Responses in &lt;15 mins&ensp;|&ensp;No credit card required</p>
                 </motion.div>
 
-                {/* Hero image */}
-                <motion.div initial={{ opacity: 0, x: 30 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.7, delay: 0.15 }} className="hidden md:block">
-                  <img src="/images/photography2.jpg" alt="Professional corporate headshots" className="w-full h-[480px] lg:h-[520px] object-cover rounded-2xl shadow-2xl" loading="eager" fetchPriority="high" />
+                {/* Hero image — desktop */}
+                <motion.div initial={{ opacity: 0, x: 30 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.7, delay: 0.15 }} className="hidden md:flex items-center justify-center">
+                  <img src="/images/photography2.jpg" alt="Professional corporate headshots" className="w-full h-auto max-h-[560px] object-contain rounded-2xl shadow-2xl" loading="eager" fetchPriority="high" />
                 </motion.div>
 
-                {/* Mobile hero */}
-                <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.1 }} className="md:hidden -mx-4">
-                  <img src="/images/photography2.jpg" alt="Professional corporate headshots" className="w-full h-60 object-cover" loading="eager" fetchPriority="high" />
+                {/* Hero image — mobile */}
+                <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.1 }} className="md:hidden w-full flex items-center justify-center px-2">
+                  <img src="/images/photography2.jpg" alt="Professional corporate headshots" className="w-full h-auto max-h-[340px] object-contain rounded-xl" loading="eager" fetchPriority="high" />
                 </motion.div>
               </div>
             </div>
