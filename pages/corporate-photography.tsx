@@ -69,7 +69,7 @@ export default function PhotographyPage() {
         <meta name="description" content="Professional Photography & Videography for events, corporate, and private sessions across Toronto & GTA. RAW + Edited photos delivered within a week. Book now." />
         <meta name="keywords" content="event photography Toronto, videography GTA, corporate photography, event videographer, portrait photographer Toronto" />
         <meta property="og:title" content="Photography & Videography | Robo Booth" />
-        <meta property="og:description" content="Professional event photography & videography. RAW + Edited delivered within a week. Toronto & GTA." />
+        <meta property="og:description" content="Professional event photography & videography. RAW + Edited Videos/Photos delivered within a week. Toronto & GTA." />
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://robobooth.ca/corporate-photography" />
         <link rel="canonical" href="https://robobooth.ca/corporate-photography" />
@@ -113,7 +113,7 @@ export default function PhotographyPage() {
                     for Your Event.
                   </h1>
                   <p className="text-white/80 text-sm md:text-base lg:text-lg leading-relaxed mb-5 max-w-xl">
-                    From candid moments to cinematic highlights — we capture it all. RAW + Edited photos delivered within a week.{' '}
+                    From candid moments to cinematic highlights — we capture it all. RAW + Edited Photos & Videos delivered within a week.{' '}
                     <span className="text-white font-semibold">We handle everything so you can focus on your event.</span>
                   </p>
                   <div className="flex flex-col sm:flex-row gap-3 mb-3">
