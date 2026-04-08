@@ -203,19 +203,21 @@ export default function VogueBooth() {
                     </div>
                     <h3 className="text-lg md:text-xl font-black text-center mb-2">Vogue Booth <span className="text-white/50">Only</span></h3>
                     <p className="text-white/50 text-xs text-center mb-6">The standalone Vogue Booth experience — fully set up, styled, and managed by our team.</p>
-                    <div className="space-y-2.5 mb-8 flex-1">
+                    <div className="space-y-2.5 mb-6 flex-1">
                       {[
                         'Illuminated enclosed Vogue Booth (7\'6" × 6\'6" × 6\'6")',
                         'Custom editorial magazine cover overlay',
                         'Studio-quality lighting inside the booth',
-                        'Instant prints and digital delivery to guests\' phones',
-                        'Dedicated on-site attendant handling everything',
                       ].map((b, i) => (
                         <div key={i} className="flex items-start gap-3">
                           <FiCheck className="w-4 h-4 text-white/40 mt-0.5 flex-shrink-0" />
                           <p className="text-white/60 text-xs leading-relaxed">{b}</p>
                         </div>
                       ))}
+                    </div>
+                    <div className="border border-white/20 rounded-xl px-4 py-3 mb-5 bg-white/[0.03]">
+                      <p className="text-white/80 text-[11px] font-bold mb-1">+ Add Photography &amp; Videography</p>
+                      <p className="text-white/50 text-[10px] leading-relaxed">Upgrade any package with professional event photography and videography. RAW + edited photos &amp; videos delivered within a week. Ask us when you reach out.</p>
                     </div>
                     <div className="text-center">
                       <motion.button whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.97 }} onClick={openBronzePackage}
@@ -239,13 +241,12 @@ export default function VogueBooth() {
                       </div>
                       <h3 className="text-lg md:text-xl font-black text-center mb-2">Vogue Booth + <span className="text-[#fce4a6]">Premium Photobooth</span></h3>
                       <p className="text-white/60 text-xs text-center mb-6">Two premium booth activations running together — the ultimate editorial duo for your event.</p>
-                      <div className="space-y-2.5 mb-8 flex-1">
+                      <div className="space-y-2.5 mb-6 flex-1">
                         {[
                           'Vogue Booth with custom magazine cover overlay',
                           'Premium Photobooth running simultaneously',
                           'Studio-quality lighting in both booths',
                           'Instant prints and digital delivery from both activations',
-                          'Guests choose their experience — or do both',
                           'One seamless team managing everything on-site',
                         ].map((b, i) => (
                           <div key={i} className="flex items-start gap-3">
@@ -253,6 +254,10 @@ export default function VogueBooth() {
                             <p className="text-white/70 text-xs leading-relaxed">{b}</p>
                           </div>
                         ))}
+                      </div>
+                      <div className="border border-[#fce4a6]/20 rounded-xl px-4 py-3 mb-5 bg-[#fce4a6]/[0.04]">
+                        <p className="text-white/80 text-[11px] font-bold mb-1">+ Add Photography &amp; Videography</p>
+                        <p className="text-white/50 text-[10px] leading-relaxed">Upgrade any package with professional event photography and videography. RAW + edited photos &amp; videos delivered within a week. Ask us when you reach out.</p>
                       </div>
                       <div className="text-center">
                         <motion.button whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.97 }} onClick={openGoldPackage}
