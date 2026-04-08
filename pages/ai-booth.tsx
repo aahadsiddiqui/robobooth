@@ -112,8 +112,8 @@ export default function AIBooth() {
                     <span className="text-white/60 text-xs font-medium">5.0 Rating · The GTA's Most Unique Photo Experience</span>
                   </div>
                   <h1 className="text-[1.65rem] leading-[1.15] md:text-4xl lg:text-5xl font-black md:leading-[1.1] mb-4">
-                    Step In. Strike a Pose. Walk Away as a{' '}
-                    <span className="text-[#fce4a6]">Cinematic Icon.</span>
+                    The <span className="text-[#fce4a6]">AI Booth</span> That Turns Every Guest Into a Cinematic{' '}
+                    <span className="text-[#fce4a6]">Icon.</span>
                   </h1>
                   <p className="text-white/80 text-sm md:text-base lg:text-lg leading-relaxed mb-5 max-w-xl">
                     Our AI Booth uses your photo — taken with our Premium Photobooth or Robot Photobooth — and transforms it into a stunning cinematic, editorial, or animated masterpiece. Delivered instantly to every guest's phone.{' '}
@@ -188,37 +188,33 @@ export default function AIBooth() {
 
           {/* ── AI Style Showcase ── */}
           <section className="py-8 md:py-10 px-4 border-t border-white/5">
-            <div className="max-w-5xl mx-auto">
-              <Reveal className="text-center mb-6">
+            <div className="max-w-6xl mx-auto">
+              <Reveal className="text-center mb-8">
                 <h2 className="text-xl md:text-2xl lg:text-3xl font-black mb-1.5">Choose Your <span className="text-[#fce4a6]">AI Style</span></h2>
                 <p className="text-white/50 text-xs md:text-sm">Every style is fully customized to match your event theme</p>
               </Reveal>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 md:gap-6 max-w-3xl mx-auto">
-                <Reveal delay={0.05}>
-                  <div className="rounded-2xl overflow-hidden border border-white/10 group hover:border-[#fce4a6]/30 transition-colors">
-                    <div className="overflow-hidden">
-                      <img src="/images/aibooth1.png" alt="Classic Hollywood AI style" className="w-full h-64 md:h-80 object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" />
+              <div className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-5">
+                {aiStyles.map((style, i) => (
+                  <Reveal key={i} delay={i * 0.07}>
+                    <div className="rounded-2xl overflow-hidden border border-white/10 group hover:border-[#fce4a6]/40 transition-colors bg-white/[0.03]">
+                      <div className="bg-black flex items-center justify-center overflow-hidden">
+                        <img
+                          src={style.img}
+                          alt={style.label}
+                          className="w-full h-auto object-contain group-hover:scale-[1.02] transition-transform duration-500"
+                          loading="lazy"
+                        />
+                      </div>
+                      <div className="px-3 py-3 md:px-4 md:py-3.5">
+                        <p className="font-bold text-xs md:text-sm text-white">{style.label}</p>
+                        <p className="text-white/50 text-[10px] md:text-xs mt-0.5 leading-relaxed">{style.desc}</p>
+                      </div>
                     </div>
-                    <div className="bg-white/[0.04] px-4 py-3">
-                      <p className="font-bold text-sm text-white">Classic Hollywood / Gala</p>
-                      <p className="text-white/50 text-xs mt-0.5">Cinematic red carpet glamour — perfect for galas, award nights, and upscale events.</p>
-                    </div>
-                  </div>
-                </Reveal>
-                <Reveal delay={0.1}>
-                  <div className="rounded-2xl overflow-hidden border border-white/10 group hover:border-[#fce4a6]/30 transition-colors">
-                    <div className="overflow-hidden">
-                      <img src="/images/aibooth2.png" alt="Animated cartoon AI style" className="w-full h-64 md:h-80 object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" />
-                    </div>
-                    <div className="bg-white/[0.04] px-4 py-3">
-                      <p className="font-bold text-sm text-white">Animated / Cartoon</p>
-                      <p className="text-white/50 text-xs mt-0.5">Fun, vibrant, and share-worthy — perfect for brand activations, kids' events, and parties.</p>
-                    </div>
-                  </div>
-                </Reveal>
+                  </Reveal>
+                ))}
               </div>
-              <Reveal delay={0.15} className="text-center mt-5">
-                <p className="text-white/40 text-xs md:text-sm">Custom styles available — themed to your event. Ask us.</p>
+              <Reveal delay={0.2} className="text-center mt-6">
+                <p className="text-white/40 text-xs md:text-sm">Fully custom styles available — themed exactly to your event. <a href="tel:289-301-4039" className="text-[#fce4a6] underline font-semibold">Ask us.</a></p>
               </Reveal>
             </div>
           </section>
@@ -570,6 +566,15 @@ export default function AIBooth() {
 }
 
 /* ─── DATA ─── */
+const aiStyles = [
+  { img: '/images/aibooth1.png', label: 'Classic Hollywood / Gala', desc: 'Cinematic red carpet glamour — perfect for galas, award nights, and upscale events.' },
+  { img: '/images/aibooth2.png', label: 'Animated / Cartoon', desc: 'Fun and vibrant — perfect for brand activations, holiday parties, and corporate events.' },
+  { img: '/images/aibooth3.png', label: 'Spy / Secret Agent', desc: 'Dark, cinematic noir — an instant hit at themed parties, galas, and casino nights.' },
+  { img: '/images/aibooth4.png', label: 'Sports Star', desc: 'Team-branded sports heroes — perfect for corporate team events, playoffs parties, and fan activations.' },
+  { img: '/images/aibooth5.png', label: 'Stage Performer', desc: 'Concert spotlight energy — ideal for music events, galas, and entertainment-themed activations.' },
+  { img: '/images/aibooth6.png', label: 'Space Explorer', desc: 'Out-of-this-world fun — great for tech events, product launches, and futuristic themed parties.' },
+]
+
 const howItWorks = [
   { title: 'Step Inside the Booth', desc: 'Guests enter our Premium Photobooth or get snapped by the roaming Robot Photobooth. A perfectly lit, high-quality photo is taken in seconds.' },
   { title: 'AI Works Its Magic', desc: 'The photo is instantly processed and transformed into the chosen AI style — cinematic Hollywood, animated cartoon, editorial fashion, and more.' },
