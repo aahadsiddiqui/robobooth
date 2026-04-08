@@ -366,6 +366,18 @@ export default function VogueBooth() {
 
           <SubtleCTA label="Book Now" onQuote={openQuote} />
 
+          {/* ── Real Vogue Booth Photo ── */}
+          <section className="px-4 py-6 md:py-8">
+            <div className="max-w-xl mx-auto">
+              <Reveal>
+                <div className="rounded-2xl overflow-hidden border border-white/10 bg-black flex items-center justify-center">
+                  <img src="/images/voguebooth3.png" alt="Vogue Booth wedding couple magazine cover" className="w-full h-auto object-contain" style={{ display: 'block', maxHeight: '75vh' }} loading="lazy" />
+                </div>
+                <p className="text-white/40 text-[11px] text-center mt-2">Every cover is fully custom — names, dates, and branding tailored to your event.</p>
+              </Reveal>
+            </div>
+          </section>
+
           {/* ── Testimonials ── */}
           <section className="py-8 md:py-10 px-4 border-t border-white/5">
             <div className="max-w-5xl mx-auto">
