@@ -58,7 +58,7 @@ export default function VogueBooth() {
       const fd = new FormData()
       fd.append('first-name', form.firstName); fd.append('phone-number', form.phone); fd.append('email', form.email)
       fd.append('event-date', form.eventDate); fd.append('budget', form.budget); fd.append('event-type', 'Vogue Booth')
-      fd.append('package', packageType === 'gold' ? 'Gold Package (Vogue Booth + Event Photography)' : packageType === 'platinum' ? 'Platinum Package (Vogue Booth + Event Photography + Second Booth)' : packageType === 'bronze' ? 'Bronze Package (Vogue Booth Only)' : 'General Inquiry')
+      fd.append('package', packageType === 'gold' ? 'Gold Package (Vogue Booth + Premium Photobooth)' : packageType === 'platinum' ? 'Platinum Package (Vogue Booth + Premium Photobooth + Second Booth)' : packageType === 'bronze' ? 'Bronze Package (Vogue Booth Only)' : 'General Inquiry')
       fd.append('_replyto', form.email); fd.append('source', 'Vogue Booth Page')
       appendUtmParams(fd)
       const res = await fetch('https://formspree.io/f/xkgoedyp', { method: 'POST', body: fd, headers: { Accept: 'application/json' } })
@@ -112,7 +112,7 @@ export default function VogueBooth() {
                     <span className="text-white/60 text-xs font-medium">5.0 Rating · The GTA's Most Iconic Photo Booth</span>
                   </div>
                   <h1 className="text-[1.65rem] leading-[1.15] md:text-4xl lg:text-5xl font-black md:leading-[1.1] mb-4">
-                    The Photo Booth That Turns Every Guest Into a{' '}
+                    The Booth That Turns Every Guest Into a{' '}
                     <span className="text-[#fce4a6]">Magazine Cover Star.</span>
                   </h1>
                   <p className="text-white/80 text-sm md:text-base lg:text-lg leading-relaxed mb-5 max-w-xl">
@@ -237,16 +237,16 @@ export default function VogueBooth() {
                           ⭐ Most Popular · Gold
                         </span>
                       </div>
-                      <h3 className="text-lg md:text-xl font-black text-center mb-2">Vogue Booth + <span className="text-[#fce4a6]">Event Photography</span></h3>
-                      <p className="text-white/60 text-xs text-center mb-6">The complete editorial event experience — the booth plus professional photography coverage.</p>
+                      <h3 className="text-lg md:text-xl font-black text-center mb-2">Vogue Booth + <span className="text-[#fce4a6]">Premium Photobooth</span></h3>
+                      <p className="text-white/60 text-xs text-center mb-6">Two premium booth activations running together — the ultimate editorial duo for your event.</p>
                       <div className="space-y-2.5 mb-8 flex-1">
                         {[
-                          'Everything in Bronze, plus:',
-                          'Professional event photographer covering key moments',
-                          'Candid guest photography throughout the event',
-                          'Group photos and highlight moments captured',
-                          'Professionally edited high-resolution images delivered after the event',
-                          'Custom editorial overlays and fully branded Vogue Booth experience',
+                          'Vogue Booth with custom magazine cover overlay',
+                          'Premium Photobooth running simultaneously',
+                          'Studio-quality lighting in both booths',
+                          'Instant prints and digital delivery from both activations',
+                          'Guests choose their experience — or do both',
+                          'One seamless team managing everything on-site',
                         ].map((b, i) => (
                           <div key={i} className="flex items-start gap-3">
                             <FiCheck className="w-4 h-4 text-[#fce4a6] mt-0.5 flex-shrink-0" />
@@ -275,13 +275,13 @@ export default function VogueBooth() {
                           💎 Platinum Package
                         </span>
                       </div>
-                      <h3 className="text-lg md:text-xl font-black text-center mb-2">Vogue Booth + Photography + <span className="text-white/80">Second Booth</span></h3>
-                      <p className="text-white/60 text-xs text-center mb-6">The ultimate event activation — add a Robot Photobooth, Aerial Booth, or 360 Booth alongside the Vogue Booth.</p>
-                      <div className="space-y-2.5 mb-8 flex-1">
+                      <h3 className="text-lg md:text-xl font-black text-center mb-2">Vogue Booth + Premium Photobooth + <span className="text-white/80">Second Booth</span></h3>
+                      <p className="text-white/60 text-xs text-center mb-6">The full multi-booth activation — three premium experiences running simultaneously for maximum guest engagement.</p>
+                      <div className="space-y-2.5 mb-6 flex-1">
                         {[
                           'Everything included in the Gold Package',
                           'Add-on: Robot Photobooth, Aerial Booth, or 360 Booth',
-                          'Two premium booth activations running simultaneously',
+                          'Three premium activations running simultaneously',
                           'Maximum guest engagement across multiple experiences',
                           'One seamless team coordinating everything on-site',
                           'The most talked-about event setup in the GTA',
@@ -291,6 +291,11 @@ export default function VogueBooth() {
                             <p className="text-white/70 text-xs leading-relaxed">{b}</p>
                           </div>
                         ))}
+                      </div>
+                      {/* Add Photography/Videography upsell */}
+                      <div className="border border-white/20 rounded-xl px-4 py-3 mb-5 bg-white/[0.03]">
+                        <p className="text-white/80 text-[11px] font-bold mb-1">+ Add Photography &amp; Videography</p>
+                        <p className="text-white/50 text-[10px] leading-relaxed">Upgrade any package with professional event photography and videography. RAW + edited photos &amp; videos delivered within a week. Ask us when you reach out.</p>
                       </div>
                       <div className="text-center">
                         <motion.button whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.97 }} onClick={openPlatinumPackage}
@@ -482,13 +487,13 @@ export default function VogueBooth() {
               {packageType === 'gold' && (
                 <div className="bg-[#fce4a6] rounded-xl px-4 py-2.5 mb-3 flex items-center justify-center gap-2 flex-wrap">
                   <span className="text-black text-xs font-black">⭐ Gold Package Selected</span>
-                  <span className="text-black/60 text-[10px]">Vogue Booth + Event Photography</span>
+                  <span className="text-black/60 text-[10px]">Vogue Booth + Premium Photobooth</span>
                 </div>
               )}
               {packageType === 'platinum' && (
                 <div className="bg-gradient-to-r from-white/95 to-gray-100 border border-gray-300 rounded-xl px-4 py-2.5 mb-3 flex items-center justify-center gap-2 flex-wrap">
                   <span className="text-black text-xs font-black">💎 Platinum Package Selected</span>
-                  <span className="text-black/60 text-[10px]">Vogue Booth + Photography + Second Booth</span>
+                  <span className="text-black/60 text-[10px]">Vogue Booth + Premium Photobooth + Second Booth</span>
                 </div>
               )}
               <h2 className="text-lg md:text-2xl font-black text-black mb-1 text-center">
