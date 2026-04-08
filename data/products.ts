@@ -220,6 +220,33 @@ export const products: ProductData[] = [
       { name: 'Robert K.', role: 'Corporate Events Manager', text: 'Professional headshots ready for our website within days. The team made everyone feel comfortable and the results were outstanding.' }
     ],
     linkOverride: '/headshots'
+  },
+  {
+    slug: 'vogue-booth',
+    name: 'Vogue Booth',
+    tagline: 'Step inside the GTA\'s most iconic photo experience.',
+    summary: 'A fully illuminated enclosed booth with custom magazine cover overlays, studio lighting, and instant prints. The most talked-about activation at every event.',
+    productImage: '/images/voguebooth1.png',
+    videoUrl: '/videos/premiumphoto.mov',
+    priceLabel: 'Custom Quote',
+    priceNote: 'Perfect for weddings, galas & brand activations',
+    badges: ['Custom Vogue overlay', 'On-site attendant included'],
+    usp: [
+      { title: 'Magazine Cover Experience', description: 'Custom editorial overlays turn every photo into a personalized Vogue-style magazine cover.' },
+      { title: 'Studio-Quality Lighting', description: 'Built-in professional LED lighting ensures every guest looks polished and camera-ready.' },
+      { title: 'Instant Prints & Digital', description: 'Photos delivered to guests\' phones instantly — prints in hand within seconds.' }
+    ],
+    faqData: [
+      { question: 'What are the booth dimensions?', answer: 'The Vogue Booth is 7\'6" tall, 6\'6" deep, and 6\'6" wide — fully illuminated and comfortably fits 1–4 guests.' },
+      { question: 'Can the overlay be customized?', answer: 'Yes — we design a completely bespoke editorial overlay for every booking with your event details, colors, and branding.' },
+      { question: 'What\'s included?', answer: 'The illuminated booth, custom overlay design, on-site attendant, instant prints, digital delivery, setup, and teardown.' }
+    ],
+    testimonials: [
+      { name: 'Sophia R.', role: 'Bride', text: 'The most talked-about thing at our wedding. The prints look like actual magazine covers.' },
+      { name: 'Marcus T.', role: 'Brand Activation Manager', text: 'Premium, editorial, and perfectly on-brand. The custom overlay was flawless.' },
+      { name: 'Danielle K.', role: 'Gala Organizer', text: 'Our guests couldn\'t stop talking about it. Will absolutely book again.' }
+    ],
+    linkOverride: '/vogue-booth'
   }
 ]
 
