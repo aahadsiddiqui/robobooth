@@ -247,6 +247,33 @@ export const products: ProductData[] = [
       { name: 'Danielle K.', role: 'Gala Organizer', text: 'Our guests couldn\'t stop talking about it. Will absolutely book again.' }
     ],
     linkOverride: '/vogue-booth'
+  },
+  {
+    slug: 'ai-booth',
+    name: 'AI Booth',
+    tagline: 'Step in. Strike a pose. Walk away as a cinematic icon.',
+    summary: 'Your photo, taken with our Premium Photobooth or Robot Photobooth, instantly transformed into a stunning AI-styled masterpiece — delivered to every guest\'s phone in seconds.',
+    productImage: '/images/aibooth1.png',
+    videoUrl: '',
+    priceLabel: 'Custom Quote',
+    priceNote: 'Perfect for galas, brand activations & weddings',
+    badges: ['AI transformation included', 'Instant phone delivery'],
+    usp: [
+      { title: 'Truly Unique Photos', description: 'AI transforms every guest photo into a cinematic, animated, or editorial masterpiece — unlike anything else at any event.' },
+      { title: 'Instant Delivery', description: 'Transformed images delivered to guests\' phones within seconds via QR, SMS, or AirDrop.' },
+      { title: 'Social Media Gold', description: 'Every share organically extends your event\'s reach — guests post immediately.' }
+    ],
+    faqData: [
+      { question: 'What is the AI Booth?', answer: 'A photo booth experience where your photo is instantly transformed by AI into a styled masterpiece — Hollywood, cartoon, editorial, and more.' },
+      { question: 'How long does it take?', answer: 'Under a minute from photo to AI transformation delivered on the guest\'s phone.' },
+      { question: 'Can we choose the style?', answer: 'Yes — we design a custom AI style matched to your event theme before the event.' }
+    ],
+    testimonials: [
+      { name: 'Priya M.', role: 'Corporate Event Manager', text: 'Our guests lost it when they saw their AI photos. The most unique event experience we\'ve ever offered.' },
+      { name: 'Jason & Kelly', role: 'Wedding Reception', text: 'Everyone left with the biggest smile. The most unique thing we\'ve ever seen at a wedding.' },
+      { name: 'Derek T.', role: 'Brand Activation Director', text: 'The social reach from guests sharing their AI photos was unreal. Booking again for every activation.' }
+    ],
+    linkOverride: '/ai-booth'
   }
 ]
 
