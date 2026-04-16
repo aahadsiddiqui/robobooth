@@ -1,9 +1,20 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Head from 'next/head'
 import { motion } from 'framer-motion'
 import Navbar from '../components/Navbar'
 
 export default function IntakePage() {
+  useEffect(() => {
+    const handleMessage = (e: MessageEvent) => {
+      if (typeof e.data === 'object' && e.data.action === 'setHeight') {
+        const iframe = document.getElementById('JotFormIFrame-261057837328059') as HTMLIFrameElement
+        if (iframe) iframe.style.height = e.data.height + 'px'
+      }
+    }
+    window.addEventListener('message', handleMessage)
+    return () => window.removeEventListener('message', handleMessage)
+  }, [])
+
   return (
     <>
       <Head>
@@ -72,7 +83,6 @@ export default function IntakePage() {
             <iframe
               id="JotFormIFrame-261057837328059"
               title="Event Details & Customization Form"
-              onLoad={() => { if (typeof window !== 'undefined') window.parent.scrollTo(0, 0) }}
               allowTransparency={true}
               allow="geolocation; microphone; camera; fullscreen"
               src="https://form.jotform.com/261057837328059"
@@ -80,11 +90,11 @@ export default function IntakePage() {
               style={{
                 minWidth: '100%',
                 maxWidth: '100%',
-                height: '900px',
+                height: '1600px',
                 border: 'none',
                 display: 'block',
               }}
-              scrolling="no"
+              scrolling="yes"
             />
           </motion.div>
           <p className="text-white/30 text-xs text-center mt-4">
