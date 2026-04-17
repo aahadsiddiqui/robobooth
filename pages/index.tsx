@@ -138,7 +138,7 @@ export default function Home() {
                   className={`w-full h-full object-contain opacity-60 hover:opacity-100 transition-opacity duration-300 ${
                     logo.includes('ritz.webp') || logo.includes('hilton.png')
                       ? 'filter invert grayscale'
-                      : logo.includes('td.png') || logo.includes('tdsynnex.png') || logo.includes('carmichael.png') || logo.includes('siemens.png') || logo.includes('BMO.svg.png')
+                      : logo.includes('td.png')
                         ? ''
                         : 'filter brightness-0 invert'
                   }`}

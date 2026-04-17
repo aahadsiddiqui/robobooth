@@ -219,7 +219,7 @@ export default function CorporateHeadshots() {
               <div className="animate-marquee flex items-center gap-10 md:gap-14 px-4">
                 {[...companyLogos, ...companyLogos].map((logo, i) => (
                   <div key={i} className="flex-shrink-0 w-32 md:w-44 h-20 md:h-24 flex items-center justify-center">
-                    <img src={logo} alt="Client" className={`w-full h-full object-contain opacity-60 hover:opacity-100 transition-opacity ${logo.includes('ritz.webp') || logo.includes('hilton.png') ? 'filter invert grayscale' : logo.includes('td.png') || logo.includes('tdsynnex.png') || logo.includes('carmichael.png') || logo.includes('siemens.png') || logo.includes('BMO.svg.png') ? '' : 'filter brightness-0 invert'}`} loading="lazy" />
+                    <img src={logo} alt="Client" className={`w-full h-full object-contain opacity-60 hover:opacity-100 transition-opacity ${logo.includes('ritz.webp') || logo.includes('hilton.png') ? 'filter invert grayscale' : logo.includes('td.png') ? '' : 'filter brightness-0 invert'}`} loading="lazy" />
                   </div>
                 ))}
               </div>
