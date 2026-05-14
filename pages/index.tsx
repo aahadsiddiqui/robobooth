@@ -14,7 +14,7 @@ const companyLogos = [
   '/images/adamas.png', '/images/bell.png', '/images/bgo.png', '/images/equifax.svg',
   '/images/geotab.png', '/images/hilton.png', '/images/infosys.png', '/images/meta.png',
   '/images/pdsb.png', '/images/remax.png', '/images/ritz.webp', '/images/rlp.svg',
-  '/images/stonex.png', '/images/talent.png', '/images/td.png', '/images/torontopearson.png', '/images/BMO.svg.png', '/images/tdsynnex.png', '/images/carmichael.png', '/images/siemens.png',
+  '/images/stonex.png', '/images/talent.png', '/images/td.png', '/images/torontopearson.png', '/images/BMO.svg.png', '/images/tdsynnex.png', '/images/carmichael.png', '/images/siemens.png', '/images/alphawave.png', '/images/newmarket.png',
 ]
 
 export default function Home() {
@@ -138,9 +138,11 @@ export default function Home() {
                   className={`w-full h-full object-contain opacity-60 hover:opacity-100 transition-opacity duration-300 ${
                     logo.includes('ritz.webp') || logo.includes('hilton.png')
                       ? 'filter invert grayscale'
-                      : logo.includes('td.png')
-                        ? ''
-                        : 'filter brightness-0 invert'
+                      : logo.includes('tdsynnex.png') || logo.includes('carmichael.png') || logo.includes('siemens.png') || logo.includes('alphawave.png') || logo.includes('newmarket.png')
+                        ? 'filter invert grayscale brightness-150'
+                        : logo.includes('td.png')
+                          ? ''
+                          : 'filter brightness-0 invert'
                   }`}
                   loading="lazy"
                 />

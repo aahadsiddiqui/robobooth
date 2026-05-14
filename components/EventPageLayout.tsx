@@ -26,12 +26,13 @@ export const companyLogos = [
   '/images/adamas.png', '/images/bell.png', '/images/bgo.png', '/images/equifax.svg',
   '/images/geotab.png', '/images/hilton.png', '/images/infosys.png', '/images/meta.png',
   '/images/pdsb.png', '/images/remax.png', '/images/ritz.webp', '/images/rlp.svg',
-  '/images/stonex.png', '/images/talent.png', '/images/td.png', '/images/torontopearson.png', '/images/BMO.svg.png', '/images/tdsynnex.png', '/images/carmichael.png', '/images/siemens.png',
+  '/images/stonex.png', '/images/talent.png', '/images/td.png', '/images/torontopearson.png', '/images/BMO.svg.png', '/images/tdsynnex.png', '/images/carmichael.png', '/images/siemens.png', '/images/alphawave.png', '/images/newmarket.png',
 ]
 
 export type WhyCard = { icon: ReactNode; title: string; desc: string }
 export type CustomCard = { icon: ReactNode; title: string; desc: string }
 export type Testimonial = { name: string; role: string; text: string }
+export type VideoTestimonial = { src: string; poster?: string; caption: string }
 export type FAQ = { question: string; answer: string }
 export type Step = { title: string; desc: string }
 export type Benefit = string
@@ -59,6 +60,9 @@ export type EventPageProps = {
   goldTitle: string
   goldDesc: string
   goldBenefits: Benefit[]
+  /** When set, shows a video under the Bronze description (same placement as Platinum package video). */
+  bronzePackageVideo?: string
+  bronzePackageVideoPoster?: string
   platinumDesc: string
   platinumBenefits: Benefit[]
   /* Why us */
@@ -73,6 +77,10 @@ export type EventPageProps = {
   img1: string; img2: string; img3: string; img4: string
   /* Testimonials */
   testimonials: Testimonial[]
+  /** Optional bullet list shown above video testimonials (e.g. trade show value props). */
+  testimonialHighlights?: string[]
+  /** Optional side-by-side video testimonials below quote cards (same pattern as Robot Photobooth page). */
+  videoTestimonials?: VideoTestimonial[]
   /* FAQs */
   faqs: FAQ[]
   /* Final CTA */
@@ -88,10 +96,10 @@ export default function EventPageLayout(props: EventPageProps) {
   const {
     seoTitle, seoDescription, canonicalPath, emoji, heroTagline, heroHeadline, heroSub,
     heroCTALabel, heroVideo, heroPoster, urgencyText, steps,
-    bronzeTitle, bronzeDesc, bronzeBenefits, goldTitle, goldDesc, goldBenefits,
+    bronzeTitle, bronzeDesc, bronzeBenefits, bronzePackageVideo, bronzePackageVideoPoster, goldTitle, goldDesc, goldBenefits,
     platinumDesc, platinumBenefits, whySectionTitle, whySectionSub, whyCards,
     customTitle, customSub, customCards, img1, img2, img3, img4,
-    testimonials, faqs, finalHeadline, finalSub, quoteCTALabel, modalTitle, eventTypeName,
+    testimonials, testimonialHighlights, videoTestimonials, faqs, finalHeadline, finalSub, quoteCTALabel, modalTitle, eventTypeName,
   } = props
 
   const [showModal, setShowModal] = useState(false)
@@ -220,7 +228,7 @@ export default function EventPageLayout(props: EventPageProps) {
               <div className="animate-marquee flex items-center gap-10 md:gap-14 px-4">
                 {[...companyLogos, ...companyLogos].map((logo, i) => (
                   <div key={i} className="flex-shrink-0 w-32 md:w-44 h-20 md:h-24 flex items-center justify-center">
-                    <img src={logo} alt="Client" className={`w-full h-full object-contain opacity-60 hover:opacity-100 transition-opacity ${logo.includes('ritz.webp') || logo.includes('hilton.png') ? 'filter invert grayscale' : logo.includes('td.png') ? '' : 'filter brightness-0 invert'}`} loading="lazy" />
+                    <img src={logo} alt="Client" className={`w-full h-full object-contain opacity-60 hover:opacity-100 transition-opacity ${logo.includes('ritz.webp') || logo.includes('hilton.png') ? 'filter invert grayscale' : logo.includes('tdsynnex.png') || logo.includes('carmichael.png') || logo.includes('siemens.png') || logo.includes('alphawave.png') || logo.includes('newmarket.png') ? 'filter invert grayscale brightness-150' : logo.includes('td.png') ? '' : 'filter brightness-0 invert'}`} loading="lazy" />
                   </div>
                 ))}
               </div>
@@ -250,9 +258,9 @@ export default function EventPageLayout(props: EventPageProps) {
               </div>
               <Reveal delay={0.2} className="mt-8">
                 <div className="max-w-3xl mx-auto rounded-2xl overflow-hidden border border-white/10 bg-black">
-                  <video className="w-full max-h-[60vh] object-contain" controls loop playsInline preload="metadata" poster="/images/robottd.jpg" style={{ display: 'block' }}>
-                    <source src="/videos/bmorobot.MOV" type="video/quicktime" />
-                    <source src="/videos/bmorobot.MOV" type="video/mp4" />
+                  <video className="w-full max-h-[60vh] object-contain" controls loop playsInline preload="metadata" style={{ display: 'block' }}>
+                    <source src="/videos/testimonialrobot1.mov" type="video/quicktime" />
+                    <source src="/videos/testimonialrobot1.mov" type="video/mp4" />
                   </video>
                 </div>
               </Reveal>
@@ -269,10 +277,25 @@ export default function EventPageLayout(props: EventPageProps) {
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-5 items-stretch">
                 {/* Bronze */}
                 <Reveal>
-                  <div className="relative rounded-3xl border border-white/20 bg-white/[0.04] p-6 md:p-7 h-full flex flex-col">
+                  <div className={`relative rounded-3xl border border-white/20 bg-white/[0.04] p-6 md:p-7 h-full flex flex-col ${bronzePackageVideo ? 'overflow-hidden' : ''}`}>
                     <div className="flex justify-center mb-4"><span className="inline-flex items-center gap-2 bg-white/10 text-white/70 text-[11px] font-black tracking-widest uppercase px-4 py-1.5 rounded-full">Bronze Package</span></div>
                     <h3 className="text-lg md:text-xl font-black text-center mb-2">{bronzeTitle}</h3>
-                    <p className="text-white/50 text-xs text-center mb-6">{bronzeDesc}</p>
+                    <p className={`text-white/50 text-xs text-center ${bronzePackageVideo ? 'mb-4' : 'mb-6'}`}>{bronzeDesc}</p>
+                    {bronzePackageVideo && (
+                      <div className="mb-5 rounded-xl overflow-hidden border border-white/15 bg-black/60">
+                        <video
+                          className="w-full max-h-[200px] sm:max-h-[220px] object-contain object-center mx-auto"
+                          controls
+                          loop
+                          playsInline
+                          preload="metadata"
+                          {...(bronzePackageVideoPoster ? { poster: bronzePackageVideoPoster } : {})}
+                        >
+                          <source src={bronzePackageVideo} type="video/quicktime" />
+                          <source src={bronzePackageVideo} type="video/mp4" />
+                        </video>
+                      </div>
+                    )}
                     <div className="space-y-2.5 mb-8 flex-1">
                       {bronzeBenefits.map((b, i) => <div key={i} className="flex items-start gap-3"><FiCheck className="w-4 h-4 text-white/40 mt-0.5 flex-shrink-0" /><p className="text-white/60 text-xs leading-relaxed">{b}</p></div>)}
                     </div>
@@ -311,7 +334,20 @@ export default function EventPageLayout(props: EventPageProps) {
                     <div className="relative z-10 flex flex-col h-full">
                       <div className="flex justify-center mb-4"><span className="inline-flex items-center gap-2 bg-gradient-to-r from-white/20 to-white/10 text-white text-[11px] font-black tracking-widest uppercase px-4 py-1.5 rounded-full border border-white/30">💎 Platinum Package</span></div>
                       <h3 className="text-lg md:text-xl font-black text-center mb-2">Robot + Photography + <span className="text-white/80">Second Booth</span></h3>
-                      <p className="text-white/60 text-xs text-center mb-6">{platinumDesc}</p>
+                      <p className="text-white/60 text-xs text-center mb-4">{platinumDesc}</p>
+                      <div className="mb-5 rounded-xl overflow-hidden border border-white/15 bg-black/60">
+                        <video
+                          className="w-full max-h-[200px] sm:max-h-[220px] object-contain object-center mx-auto"
+                          controls
+                          loop
+                          playsInline
+                          preload="metadata"
+                          poster="/images/robot1.jpg"
+                        >
+                          <source src="/videos/RobotAerial.mov" type="video/quicktime" />
+                          <source src="/videos/RobotAerial.mov" type="video/mp4" />
+                        </video>
+                      </div>
                       <div className="space-y-2.5 mb-8 flex-1">
                         {platinumBenefits.map((b, i) => <div key={i} className="flex items-start gap-3"><FiCheck className="w-4 h-4 text-white/70 mt-0.5 flex-shrink-0" /><p className="text-white/70 text-xs leading-relaxed">{b}</p></div>)}
                       </div>
@@ -418,6 +454,39 @@ export default function EventPageLayout(props: EventPageProps) {
                   </Reveal>
                 ))}
               </div>
+
+              {testimonialHighlights && testimonialHighlights.length > 0 && (
+                <Reveal delay={0.12} className="mt-6">
+                  <div className="bg-[#fce4a6]/10 border border-[#fce4a6]/25 rounded-2xl p-4 md:p-6">
+                    <ul className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4">
+                      {testimonialHighlights.map((line, i) => (
+                        <li key={i} className="flex gap-2.5 text-white/90 text-xs md:text-sm leading-relaxed">
+                          <FiCheck className="w-4 h-4 md:w-5 md:h-5 text-[#fce4a6] flex-shrink-0 mt-0.5" />
+                          <span>{line}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </Reveal>
+              )}
+
+              {videoTestimonials && videoTestimonials.length > 0 && (
+                <Reveal delay={0.2} className="mt-6">
+                  <div className="grid grid-cols-2 gap-3 md:gap-4">
+                    {videoTestimonials.map((v, i) => (
+                      <div key={i} className="bg-white/[0.04] border border-white/10 rounded-xl p-2 md:p-4">
+                        <div className="rounded-xl overflow-hidden mb-2 md:mb-3 aspect-[9/16] bg-black">
+                          <video className="w-full h-full object-cover" controls preload="none" poster={v.poster} style={{ display: 'block' }}>
+                            <source src={v.src} type="video/quicktime" />
+                            <source src={v.src} type="video/mp4" />
+                          </video>
+                        </div>
+                        <p className="text-white/60 text-[10px] md:text-sm leading-snug">{v.caption}</p>
+                      </div>
+                    ))}
+                  </div>
+                </Reveal>
+              )}
             </div>
           </section>
 
@@ -474,8 +543,8 @@ export default function EventPageLayout(props: EventPageProps) {
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 z-[60] flex items-end md:items-center justify-center bg-black/70 backdrop-blur-md p-0 md:p-4">
             <motion.div initial={{ opacity: 0, y: 60 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 60 }} className="bg-white rounded-t-2xl md:rounded-2xl p-5 md:p-8 max-w-md w-full shadow-2xl relative max-h-[90vh] overflow-y-auto">
               <button onClick={() => { setShowModal(false); setPackageType('') }} className="absolute top-3 right-4 text-black/40 hover:text-black text-2xl">×</button>
-              {packageType === 'bronze' && <div className="bg-white/90 border border-black/10 rounded-xl px-4 py-2.5 mb-3 flex items-center justify-center gap-2 flex-wrap"><span className="text-black text-xs font-black">🥉 Bronze Package Selected</span><span className="text-black/60 text-[10px]">Robot Photobooth Only</span></div>}
-              {packageType === 'gold' && <div className="bg-[#fce4a6] rounded-xl px-4 py-2.5 mb-3 flex items-center justify-center gap-2 flex-wrap"><span className="text-black text-xs font-black">⭐ Gold Package Selected</span><span className="text-black/60 text-[10px]">Robot Photobooth + Event Photography</span></div>}
+              {packageType === 'bronze' && <div className="bg-white/90 border border-black/10 rounded-xl px-4 py-2.5 mb-3 flex items-center justify-center gap-2 flex-wrap"><span className="text-black text-xs font-black">🥉 Bronze Package Selected</span><span className="text-black/60 text-[10px]">{bronzeTitle}</span></div>}
+              {packageType === 'gold' && <div className="bg-[#fce4a6] rounded-xl px-4 py-2.5 mb-3 flex items-center justify-center gap-2 flex-wrap"><span className="text-black text-xs font-black">⭐ Gold Package Selected</span><span className="text-black/60 text-[10px]">{goldTitle}</span></div>}
               {packageType === 'platinum' && <div className="bg-gradient-to-r from-white/95 to-gray-100 border border-gray-300 rounded-xl px-4 py-2.5 mb-3 flex items-center justify-center gap-2 flex-wrap"><span className="text-black text-xs font-black">💎 Platinum Package Selected</span><span className="text-black/60 text-[10px]">Robot + Photography + Second Booth</span></div>}
               <h2 className="text-lg md:text-2xl font-black text-black mb-1 text-center">{packageType === 'gold' ? 'Book Gold Package' : packageType === 'bronze' ? 'Book Bronze Package' : packageType === 'platinum' ? 'Book Platinum Package' : modalTitle}</h2>
               <p className="text-black/60 text-xs md:text-sm mb-4 text-center">Tell us your event date and we&apos;ll confirm availability within 15 minutes.</p>

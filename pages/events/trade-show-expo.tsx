@@ -4,22 +4,24 @@ import { FiImage, FiShare2, FiStar, FiUsers, FiZap, FiShield, FiTarget, FiTrendi
 
 const props: EventPageProps = {
   seoTitle: 'Trade Show & Expo Photobooth Toronto GTA | Robo Booth',
-  seoDescription: 'Draw the biggest crowd at your next trade show with Canada\'s first Robot Photobooth. Branded photos and lead generation built in. Serving Toronto & GTA.',
+  seoDescription: 'Draw the biggest crowd at your next trade show with Canada\'s first Roaming Robot Activation. Branded photos and lead generation built in. Serving Toronto & GTA.',
   canonicalPath: '/events/trade-show-expo',
 
   emoji: '🏢',
   heroTagline: 'TRADE SHOW & EXPO ACTIVATION',
   heroHeadline: <>The Trade Show Booth That <span className="text-[#fce4a6]">Draws the Biggest Crowd</span></>,
-  heroSub: 'Stop competing for floor traffic. Canada\'s first Robot Photobooth turns your booth into the event\'s most-visited destination — with branded photos putting your company name in every attendee\'s pocket. Built-in lead capture ensures every interaction becomes a qualified contact.',
+  heroSub: 'Stop competing for floor traffic. Canada\'s first Roaming Robot Activation turns your booth into the event\'s most-visited destination — with branded photos putting your company name in every attendee\'s pocket. Built-in lead capture ensures every interaction becomes a qualified contact.',
   heroCTALabel: 'Check Availability',
-  heroVideo: '/videos/equifaxrobot.mov',
+  heroVideo: '/videos/robotherotradeshow.mov',
   heroPoster: '/images/robot1.jpg',
+  bronzePackageVideo: '/videos/robotherotradeshow.mov',
+  bronzePackageVideoPoster: '/images/robot1.jpg',
   urgencyText: 'Trade show dates are booking up',
 
   steps: [
     {
       title: 'Reserve Your Spot',
-      desc: 'Share your booth number, show dates, and brand assets. We design branded photo overlays and program custom sales voice messaging tailored to your products, services, and target buyer.',
+      desc: 'Share your booth number, show dates, and brand assets. We design branded photo overlays and program custom voice to say a special message about the event or your brand before & after it takes a photo.',
     },
     {
       title: 'We Set Up In Your Booth',
@@ -31,17 +33,17 @@ const props: EventPageProps = {
     },
   ],
 
-  bronzeTitle: 'Robot Photobooth Only',
+  bronzeTitle: 'Roaming Robot Activation Only',
   bronzeDesc: 'The standalone trade show activation — the fastest way to make your booth the busiest on the floor.',
   bronzeBenefits: [
     'Company branding and product imagery integrated into every photo overlay for instant brand recall',
     'Robot draws attendees to your booth from across the show floor — no passive waiting for walk-bys',
-    'Instant photo delivery to attendee phones via SMS — your brand in their pocket before they leave your booth',
-    'Custom sales voice messaging introduces your company, product line, or key value proposition',
+    'Instant photo delivery to attendee phones via SMS or Email — your brand in their pocket before they leave your booth. Attendees can scan a QR code and fill out a survey for lead capturing, which can later be imported as a .csv for your internal database records.',
+    'Program custom voice to say a special message about the event or your brand before & after it takes a photo.',
     'Dedicated on-site operator runs the activation so your sales team can stay focused on conversations',
   ],
 
-  goldTitle: 'Robot Photobooth + Event Photography',
+  goldTitle: 'Roaming Robot Activation + Event Photography',
   goldDesc: 'Capture every trade show moment — the crowds, the energy, and the product — for post-show marketing.',
   goldBenefits: [
     'Everything in the Bronze Package, fully customised to your trade show booth',
@@ -52,10 +54,10 @@ const props: EventPageProps = {
     'Full usage rights included — use in sales decks, case studies, and next year\'s show marketing materials',
   ],
 
-  platinumDesc: 'The ultimate booth presence — add a 360 Booth or Premium Photobooth to dominate the show floor from multiple angles.',
+  platinumDesc: 'The ultimate booth presence — add a Vogue Booth, Aerial Booth, or another Roaming Robot as your second activation to dominate the show floor from multiple angles.',
   platinumBenefits: [
     'Everything in the Gold Package, scaled for maximum booth impact',
-    'Second activation station — 360 Booth or Premium Photobooth — positioned strategically within your booth',
+    'Second activation station can be either Vogue Booth, Aerial Booth, or another Roaming Robot — positioned strategically within your booth',
     'Multiple content moments within a single booth visit increases dwell time and deepens brand engagement',
     'Different activations attract different attendee personas — broader floor reach with a single booth footprint',
     'Higher branded content volume amplifies your post-show social presence and organic reach',
@@ -103,12 +105,12 @@ const props: EventPageProps = {
     {
       icon: <FiImage className="w-5 h-5" />,
       title: 'Company Branding & Product Overlays',
-      desc: 'Custom photo overlays featuring your company logo, product imagery, and show-specific messaging. Every photo looks like a professional marketing asset — not an event photo. Attendees share it because it looks great.',
+      desc: 'Custom photo overlays featuring your company logo and show-specific messaging. Every photo looks like a professional marketing asset — not an event photo. Attendees share it because it looks great.',
     },
     {
       icon: <FiZap className="w-5 h-5" />,
-      title: 'Custom Sales Voice Messaging',
-      desc: 'Script the robot to introduce your company, announce a show special, highlight your flagship product, or drive attendees to a demo station. A roaming sales tool that works the floor while your team handles one-on-one conversations.',
+      title: 'Custom Voice Before & After Photos',
+      desc: 'We program custom voice lines so the robot speaks a short message about your event or your brand before the photo — and a second line right after the capture — so every interaction feels intentional, friendly, and on-brand.',
     },
     {
       icon: <FiTrendingUp className="w-5 h-5" />,
@@ -117,10 +119,10 @@ const props: EventPageProps = {
     },
   ],
 
-  img1: '/images/robotbell.jpg',
-  img2: '/images/robottd.jpg',
-  img3: '/images/robot1.jpg',
-  img4: '/images/robothalloween.JPG',
+  img1: '/images/tradeshow-gallery-1.png',
+  img2: '/images/tradeshow-gallery-2.png',
+  img3: '/images/tradeshow-gallery-3.png',
+  img4: '/images/tradeshow-gallery-4.png',
 
   testimonials: [
     {
@@ -140,6 +142,27 @@ const props: EventPageProps = {
     },
   ],
 
+  testimonialHighlights: [
+    'Best for lead capture — built so every booth interaction can turn into a qualified contact for your sales team.',
+    'We can roam the trade show or expo floor with our attendant, drawing far more leads than waiting for walk-bys at a static display.',
+    'After the event we export every captured lead to CSV and send the full file to you so follow-up is immediate and organised.',
+    'Completely brandable: your company branding on the Roaming Robot Activation, overlays, and digital delivery.',
+    'We can dress and style the Roaming Robot Activation to match your event\'s brand elements so the activation feels like part of your booth story.',
+  ],
+
+  videoTestimonials: [
+    {
+      src: '/videos/tradeshowtest1.mov',
+      poster: '/images/tradeshow-gallery-4.png',
+      caption: 'Trade show floor energy — see how the robot pulls a crowd and keeps your brand in every pocket.',
+    },
+    {
+      src: '/videos/tradeshowtest2.mov',
+      poster: '/images/robot1.jpg',
+      caption: 'Real exhibitor activation: roaming engagement, branded moments, and leads you can export after the show.',
+    },
+  ],
+
   faqs: [
     {
       question: 'Do I need to get approval from the show organiser before booking?',
@@ -151,7 +174,7 @@ const props: EventPageProps = {
     },
     {
       question: 'How does the photo lead capture work?',
-      answer: 'When attendees receive their photo via SMS, their phone number is logged. This creates a contact list of everyone who engaged with your booth activation. Depending on your configuration and local privacy laws, you can incorporate opt-in messaging for follow-up marketing. We advise on compliant implementation.',
+      answer: 'When attendees receive their photo via SMS, their phone number is logged. This creates a contact list of everyone who engaged with your booth activation. After the show we export those contacts to CSV and send the file to your team for CRM import and follow-up. Depending on your configuration and local privacy laws, you can incorporate opt-in messaging for follow-up marketing — we advise on compliant implementation.',
     },
     {
       question: 'Can the robot\'s messaging be updated between show days?',
@@ -164,7 +187,7 @@ const props: EventPageProps = {
   ],
 
   finalHeadline: <>Have the Most Visited Booth <span className="text-[#fce4a6]">at Your Next Expo.</span></>,
-  finalSub: 'Stop blending in. The Robot Photobooth guarantees your booth is the one everyone\'s talking about.',
+  finalSub: 'Stop blending in. The Roaming Robot Activation guarantees your booth is the one everyone\'s talking about.',
   quoteCTALabel: 'Check Availability & Get a Quote',
   modalTitle: 'Get a Trade Show Quote',
   eventTypeName: 'Trade Show & Expo',
