@@ -184,28 +184,32 @@ const props: EventPageProps = {
   faqs: [
     {
       question: 'Do I need to get approval from the show organiser before booking?',
-      answer: 'This depends on the specific show and venue. Many trade shows welcome interactive activations and the robot is entirely self-contained with no power or WiFi requirements. We recommend checking with your show organiser early — and we can provide documentation about the activation on request to support your approval process.',
+      answer: 'This depends on the specific show and venue. Many trade shows welcome interactive activations: the roaming robot is entirely self-contained with no power or WiFi requirements, and we can supply footprint, load-in, and safety notes for your Aerial Booth on request. We recommend checking with your show organiser early so both activations are cleared before build week.',
     },
     {
       question: 'Can the robot operate outside of our assigned booth footprint?',
-      answer: 'In some shows, yes — the roaming floor mode allows the robot to move beyond your booth perimeter and direct floor traffic back to your stand. This requires prior approval from show management. Our team can advise on how to request this and what parameters are typically permitted.',
+      answer: 'In some shows, yes — the roaming floor mode allows the robot to move beyond your booth perimeter and direct floor traffic back to your stand. This requires prior approval from show management. Your Aerial Booth typically stays within the contracted footprint as the anchor people see from the aisle. Our team can advise on how to request roaming approval and what parameters are typically permitted.',
     },
     {
       question: 'How does the photo lead capture work?',
-      answer: 'When attendees receive their photo via SMS, their phone number is logged. This creates a contact list of everyone who engaged with your booth activation. After the show we export those contacts to CSV and send the file to your team for CRM import and follow-up. Depending on your configuration and local privacy laws, you can incorporate opt-in messaging for follow-up marketing — we advise on compliant implementation.',
+      answer: 'When attendees receive their photo via SMS from the roaming robot, their phone number is logged. Aerial Booth guests can use the same QR-led survey path for lead capture you run on the robot line. That creates a contact list of everyone who engaged with your booth activation. After the show we export those contacts to CSV and send the file to your team for CRM import and follow-up. Depending on your configuration and local privacy laws, you can incorporate opt-in messaging for follow-up marketing — we advise on compliant implementation.',
     },
     {
       question: 'Can the robot\'s messaging be updated between show days?',
-      answer: 'Yes. If your show runs multiple days, we can update voice lines or overlay messaging between days to promote different products, announce a daily show special, or refresh the experience for repeat visitors. This is particularly effective for longer expo runs.',
+      answer: 'Yes. If your show runs multiple days, we can update voice lines or overlay messaging between days to promote different products, announce a daily show special, or refresh the experience for repeat visitors. Aerial Booth overlay artwork and on-set messaging can be refreshed on the same cadence. This is particularly effective for longer expo runs.',
     },
     {
       question: 'What\'s the minimum booth size required for the robot to operate effectively?',
-      answer: 'The robot can work in booths as small as a standard 10x10 inline space. For smaller booths, it can operate primarily within your booth footprint. For larger island or peninsula booths, it roams the perimeter and draws attention from a wider area. Our team will assess your specific booth layout during the planning process.',
+      answer: 'The robot can work in booths as small as a standard 10x10 inline space. For smaller booths, it can operate primarily within your booth footprint. For larger island or peninsula booths, it roams the perimeter and draws attention from a wider area. The Aerial Booth is planned against the same drawings — we confirm camera swing, wall panels, and guest flow so both experiences fit comfortably. Our team will assess your specific booth layout during the planning process.',
+    },
+    {
+      question: 'How is the Aerial Booth planned for load-in and on-floor traffic?',
+      answer: 'We map the Aerial Booth to your stand plan during booking: interior wall panel colours, branded overlays, lighting, and guest queueing so attendees move smoothly from the aisle into the set. Dedicated operators manage capture and delivery just like the roaming robot line. If you run both activations, we coordinate timing so neither queue blocks your sales conversations.',
     },
   ],
 
   finalHeadline: <>Have the Most Visited Booth <span className="text-[#fce4a6]">at Your Next Expo.</span></>,
-  finalSub: 'Stop blending in. The Roaming Robot Activation guarantees your booth is the one everyone\'s talking about.',
+  finalSub: 'Stop blending in. Roaming Robot Activation and Aerial Booth builds make your booth the one everyone\'s talking about.',
   quoteCTALabel: 'Check Availability & Get a Quote',
   modalTitle: 'Get a Trade Show Quote',
   eventTypeName: 'Trade Show & Expo',
