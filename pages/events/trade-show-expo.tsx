@@ -9,8 +9,8 @@ const props: EventPageProps = {
 
   emoji: '🏢',
   heroTagline: 'TRADE SHOW & EXPO ACTIVATION',
-  heroHeadline: <>The Trade Show Booth That <span className="text-[#fce4a6]">Draws the Biggest Crowd</span></>,
-  heroSub: 'Stop competing for floor traffic. Canada\'s first Roaming Robot Activation turns your booth into the event\'s most-visited destination — with branded photos putting your company name in every attendee\'s pocket. Built-in lead capture ensures every interaction becomes a qualified contact.',
+  heroHeadline: <>The Trade Show Activation That <span className="text-[#fce4a6]">Draws the Biggest Crowd</span></>,
+  heroSub: 'Stop competing for floor traffic. Combine Canada\'s first Roaming Robot Activation with our Aerial Booth to turn your booth into the event\'s most-visited destination — with branded photos putting your company name in every attendee\'s pocket. Built-in lead capture ensures every interaction becomes a qualified contact.',
   heroCTALabel: 'Check Availability',
   heroVideo: '/videos/robotherotradeshow.mov',
   heroPoster: '/images/robot1.jpg',
@@ -21,17 +21,19 @@ const props: EventPageProps = {
   steps: [
     {
       title: 'Reserve Your Spot',
-      desc: 'Share your booth number, show dates, and brand assets. We design branded photo overlays and program custom voice to say a special message about the event or your brand before & after it takes a photo.',
+      desc: 'We do a discovery call to find out what you are trying to accomplish at the trade show and your goals. We design branded photo overlays and program custom voice to say a special message about the event or your brand before & after it takes a photo.',
     },
     {
       title: 'We Set Up In Your Booth',
-      desc: 'Our team arrives during exhibitor load-in, integrates the robot into your booth layout, and has everything running before the show floor opens. No power hookup required from the venue.',
+      desc: 'Our team arrives during exhibitor load-in, integrates the roaming robot and Aerial Booth into your booth layout, and has everything running before the show floor opens. The roaming robot needs no power hookup from the venue.',
     },
     {
       title: 'The Floor Comes to You',
-      desc: 'Attendees from across the expo floor are drawn to your booth by the robot. Every interaction is a qualified lead moment — and every branded photo keeps your company name alive in their phone after they leave.',
+      desc: 'Attendees from across the expo floor are drawn to your booth by the roaming robot and Aerial Booth. Every interaction is a qualified lead moment — and every branded photo keeps your company name alive in their phone after they leave.',
     },
   ],
+
+  bronzePackageDisplayName: 'Robot Package',
 
   bronzeTitle: 'Roaming Robot Activation Only',
   bronzeDesc: 'The standalone trade show activation — the fastest way to make your booth the busiest on the floor.',
@@ -43,10 +45,10 @@ const props: EventPageProps = {
     'Dedicated on-site operator runs the activation so your sales team can stay focused on conversations',
   ],
 
-  goldTitle: 'Roaming Robot Activation + Event Photography',
+  goldTitle: 'Roaming Robot/Aerial Booth Activation + Event Photography',
   goldDesc: 'Capture every trade show moment — the crowds, the energy, and the product — for post-show marketing.',
   goldBenefits: [
-    'Everything in the Bronze Package, fully customised to your trade show booth',
+    'Everything in the Robot Package and/or Aerial Booth Package, fully customised to your trade show booth',
     'Professional photographer documents your booth traffic, product demonstrations, and team in action',
     'High-quality imagery of your booth at peak crowd density — proof of attendance and engagement for stakeholders',
     'Coordinated content capture to ensure robot activations and photography tell a unified brand story',
@@ -64,58 +66,74 @@ const props: EventPageProps = {
     'Dedicated coordination team manages all activations so your booth staff can focus entirely on selling',
   ],
 
+  extraPackageColumn: {
+    badge: 'Aerial Booth',
+    title: 'Aerial Booth Activation Only',
+    desc: 'The standalone trade show Aerial Booth — a full enclosed booth with overhead camera and pro lighting, styled to feel like part of your brand story on the floor.',
+    benefits: [
+      'Full Aerial Booth experience: guests step inside a real booth with interior wall panel colours customised to match your brand and booth design.',
+      'Company branding integrated into every photo overlay for instant recall when attendees share their shots.',
+      'Instant photo delivery to attendee phones via SMS or Email — the same fast handoff as our Roaming Robot Activation, included with this Aerial Booth-only package.',
+      'Attendees can scan a QR code and fill out a survey for lead capturing, which can later be imported as a .csv for your internal database records.',
+      'Dedicated on-site operator runs the activation so your team can stay focused on floor conversations.',
+      'No custom voice lines — a clean, photo-first activation built around shareable aerial portraits.',
+    ],
+    packageVideo: '/videos/aerialtradeshow.mov',
+    packageVideoPoster: '/images/tradeshow-gallery-2.png',
+  },
+
   whySectionTitle: 'Why Exhibitors Choose Us',
   whySectionSub: 'The booth activation that draws the entire floor',
   whyCards: [
     {
       icon: <FiUsers className="w-5 h-5 md:w-6 md:h-6" />,
       title: 'Biggest Crowd on the Floor',
-      desc: 'A roaming robot is the most visually distinctive thing at any trade show. Attendees cross the floor specifically to interact with it — and they bring their colleagues. Your booth becomes the must-visit destination of the show.',
+      desc: 'A roaming robot and a trade-show Aerial Booth are two of the most visually distinctive draws on the floor. Attendees cross the hall to interact with the robot or step inside the booth for an overhead shot — and they bring colleagues. Your stand becomes the must-visit destination of the show.',
     },
     {
       icon: <FiShare2 className="w-5 h-5 md:w-6 md:h-6" />,
       title: 'Instant Brand Distribution',
-      desc: 'Every attendee who gets a photo leaves with your company name on their phone. They share it. Their industry contacts see it. Your brand reaches well beyond the show floor without any additional media spend.',
+      desc: 'Every attendee who gets a photo — from the roaming robot line or inside your Aerial Booth — leaves with your company name on their phone. They share it. Their industry contacts see it. Your brand reaches well beyond the show floor without any additional media spend.',
     },
     {
       icon: <FiTarget className="w-5 h-5 md:w-6 md:h-6" />,
       title: 'Lead Generation Built In',
-      desc: 'Photo delivery via SMS creates a natural moment to capture contact information. Every interaction is a warm lead — attendees who\'ve already engaged with your brand and have a positive memory attached to it.',
+      desc: 'Photo delivery via SMS and QR-led survey flows create natural moments to capture contact information across both activations. Every interaction is a warm lead — attendees who\'ve already engaged with your brand and have a positive memory attached to it.',
     },
     {
       icon: <FiShield className="w-5 h-5 md:w-6 md:h-6" />,
       title: 'No Venue Power Needed',
-      desc: 'Trade show power drops are expensive and limiting. The robot operates completely independently — no power outlets, no venue fees, no cables crossing your booth floor. Just show up and activate.',
+      desc: 'Trade show power drops are expensive and limiting. The roaming robot operates completely independently — no power outlets, no venue fees, no cables from that activation crossing your booth floor. Layer in an Aerial Booth when you want a second attention magnet attendees spot from across the expo hall.',
     },
     {
       icon: <FiImage className="w-5 h-5 md:w-6 md:h-6" />,
       title: 'Physical Branded Prints',
-      desc: 'Offer physical printed photos at your booth — branded with your company name and contact details. Attendees take them home. Your brand sits on their desk, not buried in a swag bag.',
+      desc: 'Offer physical printed photos at your booth — from the robot handoff or the Aerial Booth exit — branded with your company name and contact details. Attendees take them home. Your brand sits on their desk, not buried in a swag bag.',
     },
     {
       icon: <FiStar className="w-5 h-5 md:w-6 md:h-6" />,
       title: 'Fully Managed Activation',
-      desc: 'Our operator manages every aspect of the robot activation. Your sales team doesn\'t operate anything — they simply benefit from the steady stream of attendees the robot delivers to your booth all day long.',
+      desc: 'Our operators manage every aspect of the roaming robot and Aerial Booth activations. Your sales team doesn\'t run the tech — they simply benefit from the steady stream of attendees both experiences deliver to your booth all day long.',
     },
   ],
 
-  customTitle: 'Built Around Your Booth',
-  customSub: 'Company branding, lead capture, and roaming floor mode all available',
+  customTitle: 'Built Around Your Robot & Aerial Booth',
+  customSub: 'Company branding, lead capture, roaming floor mode, and Aerial Booth custom finishes — all available',
   customCards: [
     {
       icon: <FiImage className="w-5 h-5" />,
       title: 'Company Branding & Product Overlays',
-      desc: 'Custom photo overlays featuring your company logo and show-specific messaging. Every photo looks like a professional marketing asset — not an event photo. Attendees share it because it looks great.',
+      desc: 'Custom photo overlays featuring your company logo and show-specific messaging — consistent on roaming robot captures and every Aerial Booth shot. Every image looks like a professional marketing asset, not an event snapshot. Attendees share it because it looks great.',
     },
     {
       icon: <FiZap className="w-5 h-5" />,
       title: 'Custom Voice Before & After Photos',
-      desc: 'We program custom voice lines so the robot speaks a short message about your event or your brand before the photo — and a second line right after the capture — so every interaction feels intentional, friendly, and on-brand.',
+      desc: 'On the roaming robot, we program custom voice lines so it speaks a short message about your event or brand before the photo — and a second line right after the capture. Your Aerial Booth stays photo-first with no custom voice, so overhead portraits stay clean and fast-moving.',
     },
     {
       icon: <FiTrendingUp className="w-5 h-5" />,
       title: 'Roaming Expo Floor Mode',
-      desc: 'Need to reach attendees beyond your booth perimeter? The robot can roam the broader show floor, directing traffic back to your booth. Pre-approved by show organisers, it\'s the most proactive lead generation tool on the market.',
+      desc: 'Need to reach attendees beyond your booth perimeter? The robot can roam the broader show floor directing traffic back to your stand, while your Aerial Booth stays a bright anchor people spot from across the hall. Pre-approved by show organisers where required — the most proactive one-two on the floor.',
     },
   ],
 
@@ -143,11 +161,11 @@ const props: EventPageProps = {
   ],
 
   testimonialHighlights: [
-    'Best for lead capture — built so every booth interaction can turn into a qualified contact for your sales team.',
-    'We can roam the trade show or expo floor with our attendant, drawing far more leads than waiting for walk-bys at a static display.',
+    'Best for lead capture — built so every booth interaction from the Roaming Robot Activation or Aerial Booth can turn into a qualified contact for your sales team.',
+    'We can roam the trade show or expo floor with our attendant on the robot, while your Aerial Booth anchors the stand — drawing far more leads than a static display alone.',
     'After the event we export every captured lead to CSV and send the full file to you so follow-up is immediate and organised.',
-    'Completely brandable: your company branding on the Roaming Robot Activation, overlays, and digital delivery.',
-    'We can dress and style the Roaming Robot Activation to match your event\'s brand elements so the activation feels like part of your booth story.',
+    'Completely brandable: your company branding on the Roaming Robot Activation and Aerial Booth, overlays, and digital delivery.',
+    'We can dress and style the Roaming Robot Activation and customise your Aerial Booth wall panels to match your event\'s brand elements so every activation feels like part of your booth story.',
   ],
 
   videoTestimonials: [
