@@ -81,7 +81,7 @@ const props: EventPageProps = {
       'No custom voice lines — a clean, photo-first activation built around shareable aerial portraits.',
     ],
     packageVideo: '/videos/aerialtradeshow.mov',
-    packageVideoPoster: '/images/tradeshow-gallery-2.png',
+    packageVideoPoster: '/images/tradeshow-gallery-1.png',
   },
 
   whySectionTitle: 'Why Exhibitors Choose Us',
