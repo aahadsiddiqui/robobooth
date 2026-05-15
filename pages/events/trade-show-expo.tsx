@@ -12,16 +12,18 @@ const props: EventPageProps = {
   heroHeadline: <>The Trade Show Activation That <span className="text-[#fce4a6]">Draws the Biggest Crowd</span></>,
   heroSub: 'Stop competing for floor traffic. Combine Canada\'s first Roaming Robot Activation with our Aerial Booth to turn your booth into the event\'s most-visited destination — with branded photos putting your company name in every attendee\'s pocket. Built-in lead capture ensures every interaction becomes a qualified contact.',
   heroCTALabel: 'Check Availability',
-  heroVideo: '/videos/robotherotradeshow.mov',
+  heroVideo: '/videos/RobotAerial.mov',
   heroPoster: '/images/robot1.jpg',
   bronzePackageVideo: '/videos/robotherotradeshow.mov',
   bronzePackageVideoPoster: '/images/robot1.jpg',
+  platinumPackageVideo: '/videos/robotherotradeshow.mov',
+  platinumPackageVideoPoster: '/images/robot1.jpg',
   urgencyText: 'Trade show dates are booking up',
 
   steps: [
     {
       title: 'Reserve Your Spot',
-      desc: 'We do a discovery call to find out what you are trying to accomplish at the trade show and your goals. We design branded photo overlays and program custom voice to say a special message about the event or your brand before & after it takes a photo.',
+      desc: 'We start with a discovery call on your trade-show goals. Robot line: branded overlays plus custom voice before & after each shot. Aerial Booth: exterior branding and interior walls in colours that match your brand.',
     },
     {
       title: 'We Set Up In Your Booth',

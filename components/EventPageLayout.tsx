@@ -77,6 +77,9 @@ export type EventPageProps = {
   bronzePackageVideoPoster?: string
   platinumDesc: string
   platinumBenefits: Benefit[]
+  /** When set, overrides the Platinum card demo video (default: RobotAerial.mov). */
+  platinumPackageVideo?: string
+  platinumPackageVideoPoster?: string
   /** When set, an extra package column appears directly after Bronze (e.g. Aerial beside Roaming Robot). */
   extraPackageColumn?: ExtraEventPackageColumn
   /* Why us */
@@ -111,7 +114,7 @@ export default function EventPageLayout(props: EventPageProps) {
     seoTitle, seoDescription, canonicalPath, emoji, heroTagline, heroHeadline, heroSub,
     heroCTALabel, heroVideo, heroPoster, urgencyText, steps,
     bronzeTitle, bronzeDesc, bronzeBenefits, bronzePackageDisplayName, bronzePackageVideo, bronzePackageVideoPoster, goldTitle, goldDesc, goldBenefits,
-    platinumDesc, platinumBenefits, extraPackageColumn, whySectionTitle, whySectionSub, whyCards,
+    platinumDesc, platinumBenefits, platinumPackageVideo, platinumPackageVideoPoster, extraPackageColumn, whySectionTitle, whySectionSub, whyCards,
     customTitle, customSub, customCards, img1, img2, img3, img4,
     testimonials, testimonialHighlights, videoTestimonials, faqs, finalHeadline, finalSub, quoteCTALabel, modalTitle, eventTypeName,
   } = props
@@ -139,6 +142,8 @@ export default function EventPageLayout(props: EventPageProps) {
   }, [])
 
   const bronzeLabel = bronzePackageDisplayName ?? 'Bronze Package'
+  const platinumDemoVideo = platinumPackageVideo ?? '/videos/RobotAerial.mov'
+  const platinumDemoPoster = platinumPackageVideoPoster ?? '/images/robot1.jpg'
 
   const openQuote = useCallback(() => { setPackageType(''); setShowModal(true) }, [])
   const openBronze = useCallback(() => { setPackageType('bronze'); setShowModal(true) }, [])
@@ -399,10 +404,10 @@ export default function EventPageLayout(props: EventPageProps) {
                           loop
                           playsInline
                           preload="metadata"
-                          poster="/images/robot1.jpg"
+                          poster={platinumDemoPoster}
                         >
-                          <source src="/videos/RobotAerial.mov" type="video/quicktime" />
-                          <source src="/videos/RobotAerial.mov" type="video/mp4" />
+                          <source src={platinumDemoVideo} type="video/quicktime" />
+                          <source src={platinumDemoVideo} type="video/mp4" />
                         </video>
                       </div>
                       <div className="space-y-2.5 mb-8 flex-1">
