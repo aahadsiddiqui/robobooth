@@ -430,9 +430,9 @@ export default function EventPageLayout(props: EventPageProps) {
 
           {/* Gallery 1 */}
           <section className="px-4 py-6 md:py-8">
-            <div className="max-w-5xl mx-auto grid grid-cols-2 gap-3 md:gap-4">
-              <Reveal><div className="rounded-2xl overflow-hidden border border-white/10"><img src={img1} alt="" className="w-full h-48 sm:h-64 md:h-80 lg:h-96 object-cover" loading="lazy" /></div></Reveal>
-              <Reveal delay={0.1}><div className="rounded-2xl overflow-hidden border border-white/10"><img src={img2} alt="" className="w-full h-48 sm:h-64 md:h-80 lg:h-96 object-cover" loading="lazy" /></div></Reveal>
+            <div className="max-w-5xl mx-auto grid grid-cols-1 sm:grid-cols-2 gap-3 md:gap-4">
+              <Reveal><div className="rounded-2xl overflow-hidden border border-white/10 bg-black/30"><img src={img1} alt="" className="w-full h-auto object-contain md:h-80 lg:h-96 md:object-cover" loading="lazy" /></div></Reveal>
+              <Reveal delay={0.1}><div className="rounded-2xl overflow-hidden border border-white/10 bg-black/30"><img src={img2} alt="" className="w-full h-auto object-contain md:h-80 lg:h-96 md:object-cover" loading="lazy" /></div></Reveal>
             </div>
           </section>
 
@@ -481,8 +481,8 @@ export default function EventPageLayout(props: EventPageProps) {
           {/* Gallery 2 */}
           <section className="px-4 py-6 md:py-8">
             <div className="max-w-5xl mx-auto grid grid-cols-1 sm:grid-cols-2 gap-3 md:gap-4">
-              <Reveal><div className="rounded-2xl overflow-hidden border border-white/10"><img src={img3} alt="" className="w-full h-56 sm:h-64 md:h-80 lg:h-96 object-cover" loading="lazy" /></div></Reveal>
-              <Reveal delay={0.1}><div className="rounded-2xl overflow-hidden border border-white/10"><img src={img4} alt="" className="w-full h-56 sm:h-64 md:h-80 lg:h-96 object-cover" loading="lazy" /></div></Reveal>
+              <Reveal><div className="rounded-2xl overflow-hidden border border-white/10 bg-black/30"><img src={img3} alt="" className="w-full h-auto object-contain md:h-80 lg:h-96 md:object-cover" loading="lazy" /></div></Reveal>
+              <Reveal delay={0.1}><div className="rounded-2xl overflow-hidden border border-white/10 bg-black/30"><img src={img4} alt="" className="w-full h-auto object-contain md:h-80 lg:h-96 md:object-cover" loading="lazy" /></div></Reveal>
             </div>
           </section>
 

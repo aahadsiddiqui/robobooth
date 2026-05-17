@@ -12,7 +12,7 @@ const props: EventPageProps = {
   heroHeadline: <>The Trade Show Activation That <span className="text-[#fce4a6]">Draws the Biggest Crowd</span></>,
   heroSub: 'Stop competing for floor traffic. Combine Canada\'s first Roaming Robot Activation with our Aerial Booth to turn your booth into the event\'s most-visited destination — with branded photos putting your company name in every attendee\'s pocket. Built-in lead capture ensures every interaction becomes a qualified contact.',
   heroCTALabel: 'Check Availability',
-  heroVideo: '/videos/RobotAerial.mov',
+  heroVideo: '/videos/robotaerialhero.mov',
   heroPoster: '/images/robot1.jpg',
   bronzePackageVideo: '/videos/robotherotradeshow.mov',
   bronzePackageVideoPoster: '/images/robot1.jpg',
