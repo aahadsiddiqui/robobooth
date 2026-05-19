@@ -16,14 +16,15 @@ const props: EventPageProps = {
   heroPoster: '/images/robot1.jpg',
   bronzePackageVideo: '/videos/robotherotradeshow.mov',
   bronzePackageVideoPoster: '/images/robot1.jpg',
-  platinumPackageVideo: '/videos/robotherotradeshow.mov',
-  platinumPackageVideoPoster: '/images/robot1.jpg',
+  goldPackageVideo: '/videos/robotherotradeshow.mov',
+  goldPackageVideoPoster: '/images/robot1.jpg',
+  platinumPackageVideo: null,
   urgencyText: 'Trade show dates are booking up',
 
   steps: [
     {
       title: 'Reserve Your Spot',
-      desc: 'We start with a discovery call on your trade-show goals. Robot line: branded overlays plus custom voice before & after each shot. Aerial Booth: exterior branding and interior walls in colours that match your brand.',
+      desc: 'We start with a discovery call on your trade-show goals. Our team mentions what package would suit your tradeshow the best. Once booking is confirmed, our design team will reach out to you & begin the customization process to go hand in hand with your brand & ensure the products are as branded as they can be including the customized overlay filter on pictures.',
     },
     {
       title: 'We Set Up In Your Booth',
@@ -35,9 +36,9 @@ const props: EventPageProps = {
     },
   ],
 
-  bronzePackageDisplayName: 'Robot Package',
+  bronzePackageDisplayName: 'Robot Only',
 
-  bronzeTitle: 'Roaming Robot Activation Only',
+  bronzeTitle: 'Robot Only',
   bronzeDesc: 'The standalone trade show activation — the fastest way to make your booth the busiest on the floor.',
   bronzeBenefits: [
     'Company branding and product imagery integrated into every photo overlay for instant brand recall',
@@ -47,30 +48,34 @@ const props: EventPageProps = {
     'Dedicated on-site operator runs the activation so your sales team can stay focused on conversations',
   ],
 
-  goldTitle: 'Roaming Robot/Aerial Booth Activation + Event Photography',
-  goldDesc: 'Capture every trade show moment — the crowds, the energy, and the product — for post-show marketing.',
+  goldPackageDisplayName: 'Robot and Aerial',
+  goldTitle: 'Robot and Aerial',
+  goldDesc: 'Pair the roaming robot with the Aerial Booth so your booth has movement on the floor and a branded photo destination inside the stand.',
   goldBenefits: [
-    'Everything in the Robot Package and/or Aerial Booth Package, fully customised to your trade show booth',
+    'Everything in Robot Only and Aerial Only, coordinated as one booth activation',
+    'Roaming robot draws attention from the aisle while the Aerial Booth gives attendees a polished overhead photo moment',
+    'Company branding, product imagery, and show messaging carried across both photo experiences',
+    'Instant photo delivery via SMS or Email from both activations, with QR-led survey flows available for lead capture',
+    'Two distinct content moments increase dwell time, share volume, and the number of qualified conversations at your booth',
+    'Dedicated on-site operators manage both activations so your sales team can stay focused on conversations',
+  ],
+
+  platinumPackageDisplayName: 'Robot and Aerial + Photography',
+  platinumTitle: 'Robot and Aerial + Photography',
+  platinumDesc: 'Add professional event photography to the full robot and Aerial Booth activation so you leave with both attendee content and marketing assets.',
+  platinumBenefits: [
+    'Everything in Robot and Aerial, fully customised to your trade show booth',
     'Professional photographer documents your booth traffic, product demonstrations, and team in action',
     'High-quality imagery of your booth at peak crowd density — proof of attendance and engagement for stakeholders',
-    'Coordinated content capture to ensure robot activations and photography tell a unified brand story',
+    'Coordinated content capture so robot activations, Aerial Booth portraits, and photography tell a unified brand story',
     'Full-resolution gallery delivered within 48 hours — ready for post-show email campaigns and follow-ups',
     'Full usage rights included — use in sales decks, case studies, and next year\'s show marketing materials',
   ],
 
-  platinumDesc: 'The ultimate booth presence — add a Vogue Booth, Aerial Booth, or another Roaming Robot as your second activation to dominate the show floor from multiple angles.',
-  platinumBenefits: [
-    'Everything in the Gold Package, scaled for maximum booth impact',
-    'Second activation station can be either Vogue Booth, Aerial Booth, or another Roaming Robot — positioned strategically within your booth',
-    'Multiple content moments within a single booth visit increases dwell time and deepens brand engagement',
-    'Different activations attract different attendee personas — broader floor reach with a single booth footprint',
-    'Higher branded content volume amplifies your post-show social presence and organic reach',
-    'Dedicated coordination team manages all activations so your booth staff can focus entirely on selling',
-  ],
-
   extraPackageColumn: {
-    badge: 'Aerial Booth',
-    title: 'Aerial Booth Activation Only',
+    badge: 'Aerial Only',
+    packageDisplayName: 'Aerial Only',
+    title: 'Aerial Only',
     desc: 'The standalone trade show Aerial Booth — a full enclosed booth with overhead camera and pro lighting, styled to feel like part of your brand story on the floor.',
     benefits: [
       'Full Aerial Booth experience: guests step inside a real booth with interior wall panel colours customised to match your brand and booth design.',
@@ -172,9 +177,9 @@ const props: EventPageProps = {
 
   videoTestimonials: [
     {
-      src: '/videos/tradeshowtest1.mov',
-      poster: '/images/tradeshow-gallery-4.png',
-      caption: 'Trade show floor energy — see how the robot pulls a crowd and keeps your brand in every pocket.',
+      src: '/videos/aerialtradeshow.mov',
+      poster: '/images/tradeshow-gallery-1.png',
+      caption: 'Aerial Booth at the show — overhead portraits, branded overlays, and a booth guests spot from across the floor.',
     },
     {
       src: '/videos/tradeshowtest2.mov',

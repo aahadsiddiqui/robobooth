@@ -40,6 +40,7 @@ export type Benefit = string
 /** Optional extra tier in the package grid, shown beside Bronze (e.g. trade show Aerial-only). */
 export type ExtraEventPackageColumn = {
   badge: string
+  packageDisplayName?: string
   title: string
   desc: string
   benefits: Benefit[]
@@ -72,14 +73,22 @@ export type EventPageProps = {
   goldTitle: string
   goldDesc: string
   goldBenefits: Benefit[]
+  /** When set, replaces "Gold Package" in the tier pill, book CTA, modal, and form package field. */
+  goldPackageDisplayName?: string
+  /** When set, shows a video under the Gold description. */
+  goldPackageVideo?: string
+  goldPackageVideoPoster?: string
   /** When set, shows a video under the Bronze description (same placement as Platinum package video). */
   bronzePackageVideo?: string
   bronzePackageVideoPoster?: string
+  platinumTitle?: ReactNode
   platinumDesc: string
   platinumBenefits: Benefit[]
-  /** When set, overrides the Platinum card demo video (default: RobotAerial.mov). */
-  platinumPackageVideo?: string
-  platinumPackageVideoPoster?: string
+  /** When set, replaces "Platinum Package" in the tier pill, book CTA, modal, and form package field. */
+  platinumPackageDisplayName?: string
+  /** When set, overrides the Platinum card demo video (default: RobotAerial.mov). Set to null to hide it. */
+  platinumPackageVideo?: string | null
+  platinumPackageVideoPoster?: string | null
   /** When set, an extra package column appears directly after Bronze (e.g. Aerial beside Roaming Robot). */
   extraPackageColumn?: ExtraEventPackageColumn
   /* Why us */
@@ -113,8 +122,8 @@ export default function EventPageLayout(props: EventPageProps) {
   const {
     seoTitle, seoDescription, canonicalPath, emoji, heroTagline, heroHeadline, heroSub,
     heroCTALabel, heroVideo, heroPoster, urgencyText, steps,
-    bronzeTitle, bronzeDesc, bronzeBenefits, bronzePackageDisplayName, bronzePackageVideo, bronzePackageVideoPoster, goldTitle, goldDesc, goldBenefits,
-    platinumDesc, platinumBenefits, platinumPackageVideo, platinumPackageVideoPoster, extraPackageColumn, whySectionTitle, whySectionSub, whyCards,
+    bronzeTitle, bronzeDesc, bronzeBenefits, bronzePackageDisplayName, bronzePackageVideo, bronzePackageVideoPoster, goldTitle, goldDesc, goldBenefits, goldPackageDisplayName, goldPackageVideo, goldPackageVideoPoster,
+    platinumTitle, platinumDesc, platinumBenefits, platinumPackageDisplayName, platinumPackageVideo, platinumPackageVideoPoster, extraPackageColumn, whySectionTitle, whySectionSub, whyCards,
     customTitle, customSub, customCards, img1, img2, img3, img4,
     testimonials, testimonialHighlights, videoTestimonials, faqs, finalHeadline, finalSub, quoteCTALabel, modalTitle, eventTypeName,
   } = props
@@ -142,8 +151,11 @@ export default function EventPageLayout(props: EventPageProps) {
   }, [])
 
   const bronzeLabel = bronzePackageDisplayName ?? 'Bronze Package'
-  const platinumDemoVideo = platinumPackageVideo ?? '/videos/RobotAerial.mov'
-  const platinumDemoPoster = platinumPackageVideoPoster ?? '/images/robot1.jpg'
+  const goldLabel = goldPackageDisplayName ?? 'Gold Package'
+  const platinumLabel = platinumPackageDisplayName ?? 'Platinum Package'
+  const extraPackageLabel = extraPackageColumn?.packageDisplayName ?? extraPackageColumn?.badge ?? 'Aerial Booth Package'
+  const platinumDemoVideo = platinumPackageVideo === undefined ? '/videos/RobotAerial.mov' : platinumPackageVideo
+  const platinumDemoPoster = platinumPackageVideoPoster === undefined ? '/images/robot1.jpg' : platinumPackageVideoPoster
 
   const openQuote = useCallback(() => { setPackageType(''); setShowModal(true) }, [])
   const openBronze = useCallback(() => { setPackageType('bronze'); setShowModal(true) }, [])
@@ -160,7 +172,7 @@ export default function EventPageLayout(props: EventPageProps) {
       fd.append('first-name', form.firstName); fd.append('phone-number', form.phone)
       fd.append('email', form.email); fd.append('event-date', form.eventDate)
       fd.append('budget', form.budget); fd.append('event-type', eventTypeName)
-      fd.append('package', packageType === 'gold' ? 'Gold Package' : packageType === 'platinum' ? 'Platinum Package' : packageType === 'bronze' ? bronzeLabel : packageType === 'aerial' ? 'Aerial Booth Activation Only' : 'General Inquiry')
+      fd.append('package', packageType === 'gold' ? goldLabel : packageType === 'platinum' ? platinumLabel : packageType === 'bronze' ? bronzeLabel : packageType === 'aerial' ? extraPackageLabel : 'General Inquiry')
       fd.append('_replyto', form.email); fd.append('source', `${eventTypeName} Page`)
       appendUtmParams(fd)
       const res = await fetch('https://formspree.io/f/xkgoedyp', { method: 'POST', body: fd, headers: { Accept: 'application/json' } })
@@ -361,7 +373,7 @@ export default function EventPageLayout(props: EventPageProps) {
                         </div>
                         <div className="text-center">
                           <motion.button whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.97 }} onClick={openAerial} className="border-2 border-sky-400/50 text-sky-100 px-4 py-3 rounded-full font-bold text-xs md:text-sm hover:bg-sky-500/15 transition-all group w-full">
-                            Book Aerial Booth Package <FiArrowRight className="inline ml-1 group-hover:translate-x-1 transition-transform" />
+                            Book {extraPackageLabel} <FiArrowRight className="inline ml-1 group-hover:translate-x-1 transition-transform" />
                           </motion.button>
                           <p className="text-white/30 text-[10px] mt-2">Responses in &lt;15 mins · No credit card required</p>
                         </div>
@@ -374,15 +386,30 @@ export default function EventPageLayout(props: EventPageProps) {
                   <div className="relative rounded-3xl overflow-hidden border-2 border-[#fce4a6]/50 bg-gradient-to-br from-[#fce4a6]/10 via-black to-black p-6 md:p-7 shadow-2xl shadow-[#fce4a6]/10 h-full flex flex-col">
                     <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_left,_#fce4a625_0%,_transparent_65%)] pointer-events-none" />
                     <div className="relative z-10 flex flex-col h-full">
-                      <div className="flex justify-center mb-4"><span className="inline-flex items-center gap-2 bg-[#fce4a6] text-black text-[11px] font-black tracking-widest uppercase px-4 py-1.5 rounded-full shadow-lg">⭐ Most Popular · Gold</span></div>
+                      <div className="flex justify-center mb-4"><span className="inline-flex items-center gap-2 bg-[#fce4a6] text-black text-[11px] font-black tracking-widest uppercase px-4 py-1.5 rounded-full shadow-lg">⭐ Most Popular · {goldLabel}</span></div>
                       <h3 className="text-lg md:text-xl font-black text-center mb-2">{goldTitle}</h3>
-                      <p className="text-white/60 text-xs text-center mb-6">{goldDesc}</p>
+                      <p className={`text-white/60 text-xs text-center ${goldPackageVideo ? 'mb-4' : 'mb-6'}`}>{goldDesc}</p>
+                      {goldPackageVideo && (
+                        <div className="mb-5 rounded-xl overflow-hidden border border-white/15 bg-black/60">
+                          <video
+                            className="w-full max-h-[200px] sm:max-h-[220px] object-contain object-center mx-auto"
+                            controls
+                            loop
+                            playsInline
+                            preload="metadata"
+                            {...(goldPackageVideoPoster ? { poster: goldPackageVideoPoster } : {})}
+                          >
+                            <source src={goldPackageVideo} type="video/quicktime" />
+                            <source src={goldPackageVideo} type="video/mp4" />
+                          </video>
+                        </div>
+                      )}
                       <div className="space-y-2.5 mb-8 flex-1">
                         {goldBenefits.map((b, i) => <div key={i} className="flex items-start gap-3"><FiCheck className="w-4 h-4 text-[#fce4a6] mt-0.5 flex-shrink-0" /><p className="text-white/70 text-xs leading-relaxed">{b}</p></div>)}
                       </div>
                       <div className="text-center">
                         <motion.button whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.97 }} onClick={openGold} className="bg-[#fce4a6] text-black px-4 py-3 rounded-full font-black text-xs md:text-sm shadow-lg shadow-[#fce4a6]/30 hover:shadow-xl transition-all group w-full">
-                          Book Gold Package <FiArrowRight className="inline ml-1 group-hover:translate-x-1 transition-transform" />
+                          Book {goldLabel} <FiArrowRight className="inline ml-1 group-hover:translate-x-1 transition-transform" />
                         </motion.button>
                         <p className="text-white/30 text-[10px] mt-2">Responses in &lt;15 mins · No credit card required</p>
                       </div>
@@ -394,28 +421,30 @@ export default function EventPageLayout(props: EventPageProps) {
                   <div className="relative rounded-3xl overflow-hidden border-2 border-white/40 bg-gradient-to-br from-white/[0.08] via-black to-black p-6 md:p-7 h-full flex flex-col" style={{ boxShadow: '0 0 40px rgba(255,255,255,0.06)' }}>
                     <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_rgba(255,255,255,0.07)_0%,_transparent_60%)] pointer-events-none" />
                     <div className="relative z-10 flex flex-col h-full">
-                      <div className="flex justify-center mb-4"><span className="inline-flex items-center gap-2 bg-gradient-to-r from-white/20 to-white/10 text-white text-[11px] font-black tracking-widest uppercase px-4 py-1.5 rounded-full border border-white/30">💎 Platinum Package</span></div>
-                      <h3 className="text-lg md:text-xl font-black text-center mb-2">Robot + Photography + <span className="text-white/80">Second Booth</span></h3>
-                      <p className="text-white/60 text-xs text-center mb-4">{platinumDesc}</p>
-                      <div className="mb-5 rounded-xl overflow-hidden border border-white/15 bg-black/60">
-                        <video
-                          className="w-full max-h-[200px] sm:max-h-[220px] object-contain object-center mx-auto"
-                          controls
-                          loop
-                          playsInline
-                          preload="metadata"
-                          poster={platinumDemoPoster}
-                        >
-                          <source src={platinumDemoVideo} type="video/quicktime" />
-                          <source src={platinumDemoVideo} type="video/mp4" />
-                        </video>
-                      </div>
+                      <div className="flex justify-center mb-4"><span className="inline-flex items-center gap-2 bg-gradient-to-r from-white/20 to-white/10 text-white text-[11px] font-black tracking-widest uppercase px-4 py-1.5 rounded-full border border-white/30">💎 {platinumLabel}</span></div>
+                      <h3 className="text-lg md:text-xl font-black text-center mb-2">{platinumTitle ?? <>Robot + Photography + <span className="text-white/80">Second Booth</span></>}</h3>
+                      <p className={`text-white/60 text-xs text-center ${platinumDemoVideo ? 'mb-4' : 'mb-6'}`}>{platinumDesc}</p>
+                      {platinumDemoVideo && (
+                        <div className="mb-5 rounded-xl overflow-hidden border border-white/15 bg-black/60">
+                          <video
+                            className="w-full max-h-[200px] sm:max-h-[220px] object-contain object-center mx-auto"
+                            controls
+                            loop
+                            playsInline
+                            preload="metadata"
+                            {...(platinumDemoPoster ? { poster: platinumDemoPoster } : {})}
+                          >
+                            <source src={platinumDemoVideo} type="video/quicktime" />
+                            <source src={platinumDemoVideo} type="video/mp4" />
+                          </video>
+                        </div>
+                      )}
                       <div className="space-y-2.5 mb-8 flex-1">
                         {platinumBenefits.map((b, i) => <div key={i} className="flex items-start gap-3"><FiCheck className="w-4 h-4 text-white/70 mt-0.5 flex-shrink-0" /><p className="text-white/70 text-xs leading-relaxed">{b}</p></div>)}
                       </div>
                       <div className="text-center">
                         <motion.button whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.97 }} onClick={openPlatinum} className="bg-white text-black px-4 py-3 rounded-full font-black text-xs md:text-sm hover:bg-white/90 transition-all group w-full shadow-lg shadow-white/10">
-                          Book Platinum Package <FiArrowRight className="inline ml-1 group-hover:translate-x-1 transition-transform" />
+                          Book {platinumLabel} <FiArrowRight className="inline ml-1 group-hover:translate-x-1 transition-transform" />
                         </motion.button>
                         <p className="text-white/30 text-[10px] mt-2">Responses in &lt;15 mins · No credit card required</p>
                       </div>
@@ -606,10 +635,10 @@ export default function EventPageLayout(props: EventPageProps) {
             <motion.div initial={{ opacity: 0, y: 60 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 60 }} className="bg-white rounded-t-2xl md:rounded-2xl p-5 md:p-8 max-w-md w-full shadow-2xl relative max-h-[90vh] overflow-y-auto">
               <button onClick={() => { setShowModal(false); setPackageType('') }} className="absolute top-3 right-4 text-black/40 hover:text-black text-2xl">×</button>
               {packageType === 'bronze' && <div className="bg-white/90 border border-black/10 rounded-xl px-4 py-2.5 mb-3 flex items-center justify-center gap-2 flex-wrap"><span className="text-black text-xs font-black">{bronzeLabel} Selected</span><span className="text-black/60 text-[10px]">{bronzeTitle}</span></div>}
-              {packageType === 'gold' && <div className="bg-[#fce4a6] rounded-xl px-4 py-2.5 mb-3 flex items-center justify-center gap-2 flex-wrap"><span className="text-black text-xs font-black">⭐ Gold Package Selected</span><span className="text-black/60 text-[10px]">{goldTitle}</span></div>}
-              {packageType === 'platinum' && <div className="bg-gradient-to-r from-white/95 to-gray-100 border border-gray-300 rounded-xl px-4 py-2.5 mb-3 flex items-center justify-center gap-2 flex-wrap"><span className="text-black text-xs font-black">💎 Platinum Package Selected</span><span className="text-black/60 text-[10px]">Robot + Photography + Second Booth</span></div>}
-              {packageType === 'aerial' && extraPackageColumn && <div className="bg-sky-100 border border-sky-200 rounded-xl px-4 py-2.5 mb-3 flex items-center justify-center gap-2 flex-wrap"><span className="text-black text-xs font-black">✦ Aerial Package Selected</span><span className="text-black/60 text-[10px]">{extraPackageColumn.title}</span></div>}
-              <h2 className="text-lg md:text-2xl font-black text-black mb-1 text-center">{packageType === 'gold' ? 'Book Gold Package' : packageType === 'bronze' ? `Book ${bronzeLabel}` : packageType === 'platinum' ? 'Book Platinum Package' : packageType === 'aerial' ? 'Book Aerial Booth Package' : modalTitle}</h2>
+              {packageType === 'gold' && <div className="bg-[#fce4a6] rounded-xl px-4 py-2.5 mb-3 flex items-center justify-center gap-2 flex-wrap"><span className="text-black text-xs font-black">⭐ {goldLabel} Selected</span><span className="text-black/60 text-[10px]">{goldTitle}</span></div>}
+              {packageType === 'platinum' && <div className="bg-gradient-to-r from-white/95 to-gray-100 border border-gray-300 rounded-xl px-4 py-2.5 mb-3 flex items-center justify-center gap-2 flex-wrap"><span className="text-black text-xs font-black">💎 {platinumLabel} Selected</span><span className="text-black/60 text-[10px]">{platinumTitle ?? <>Robot + Photography + Second Booth</>}</span></div>}
+              {packageType === 'aerial' && extraPackageColumn && <div className="bg-sky-100 border border-sky-200 rounded-xl px-4 py-2.5 mb-3 flex items-center justify-center gap-2 flex-wrap"><span className="text-black text-xs font-black">✦ {extraPackageLabel} Selected</span><span className="text-black/60 text-[10px]">{extraPackageColumn.title}</span></div>}
+              <h2 className="text-lg md:text-2xl font-black text-black mb-1 text-center">{packageType === 'gold' ? `Book ${goldLabel}` : packageType === 'bronze' ? `Book ${bronzeLabel}` : packageType === 'platinum' ? `Book ${platinumLabel}` : packageType === 'aerial' ? `Book ${extraPackageLabel}` : modalTitle}</h2>
               <p className="text-black/60 text-xs md:text-sm mb-4 text-center">Tell us your event date and we&apos;ll confirm availability within 15 minutes.</p>
               {success ? <div className="text-green-600 text-center font-bold py-6">Thank you! We&apos;ll be in touch soon.</div> : (
                 <form onSubmit={handleSubmit} className="space-y-2.5 md:space-y-3">
