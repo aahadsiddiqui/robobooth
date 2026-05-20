@@ -116,6 +116,8 @@ export type EventPageProps = {
   /* Modal labels */
   modalTitle: string
   eventTypeName: string
+  /** When set, used as the Formspree `source` field instead of `${eventTypeName} Page` (e.g. ad landing pages). */
+  formSource?: string
 }
 
 export default function EventPageLayout(props: EventPageProps) {
@@ -125,7 +127,7 @@ export default function EventPageLayout(props: EventPageProps) {
     bronzeTitle, bronzeDesc, bronzeBenefits, bronzePackageDisplayName, bronzePackageVideo, bronzePackageVideoPoster, goldTitle, goldDesc, goldBenefits, goldPackageDisplayName, goldPackageVideo, goldPackageVideoPoster,
     platinumTitle, platinumDesc, platinumBenefits, platinumPackageDisplayName, platinumPackageVideo, platinumPackageVideoPoster, extraPackageColumn, whySectionTitle, whySectionSub, whyCards,
     customTitle, customSub, customCards, img1, img2, img3, img4,
-    testimonials, testimonialHighlights, videoTestimonials, faqs, finalHeadline, finalSub, quoteCTALabel, modalTitle, eventTypeName,
+    testimonials, testimonialHighlights, videoTestimonials, faqs, finalHeadline, finalSub, quoteCTALabel, modalTitle, eventTypeName, formSource,
   } = props
 
   const [showModal, setShowModal] = useState(false)
@@ -173,7 +175,7 @@ export default function EventPageLayout(props: EventPageProps) {
       fd.append('email', form.email); fd.append('event-date', form.eventDate)
       fd.append('budget', form.budget); fd.append('event-type', eventTypeName)
       fd.append('package', packageType === 'gold' ? goldLabel : packageType === 'platinum' ? platinumLabel : packageType === 'bronze' ? bronzeLabel : packageType === 'aerial' ? extraPackageLabel : 'General Inquiry')
-      fd.append('_replyto', form.email); fd.append('source', `${eventTypeName} Page`)
+      fd.append('_replyto', form.email); fd.append('source', formSource ?? `${eventTypeName} Page`)
       appendUtmParams(fd)
       const res = await fetch('https://formspree.io/f/xkgoedyp', { method: 'POST', body: fd, headers: { Accept: 'application/json' } })
       if (res.ok) { setSuccess(true) } else { alert('Failed to submit. Please try again.') }
@@ -459,9 +461,9 @@ export default function EventPageLayout(props: EventPageProps) {
 
           {/* Gallery 1 */}
           <section className="px-4 py-6 md:py-8">
-            <div className="max-w-5xl mx-auto grid grid-cols-1 sm:grid-cols-2 gap-3 md:gap-4">
-              <Reveal><div className="rounded-2xl overflow-hidden border border-white/10 bg-black/30"><img src={img1} alt="" className="w-full h-auto object-contain md:h-80 lg:h-96 md:object-cover" loading="lazy" /></div></Reveal>
-              <Reveal delay={0.1}><div className="rounded-2xl overflow-hidden border border-white/10 bg-black/30"><img src={img2} alt="" className="w-full h-auto object-contain md:h-80 lg:h-96 md:object-cover" loading="lazy" /></div></Reveal>
+            <div className="max-w-5xl mx-auto grid grid-cols-1 gap-3 md:gap-4">
+              <Reveal><div className="rounded-2xl overflow-hidden border border-white/10 bg-black/30"><img src={img1} alt="" className="w-full h-auto object-contain" loading="lazy" /></div></Reveal>
+              <Reveal delay={0.1}><div className="rounded-2xl overflow-hidden border border-white/10 bg-black/30"><img src={img2} alt="" className="w-full h-auto object-contain" loading="lazy" /></div></Reveal>
             </div>
           </section>
 
@@ -509,9 +511,9 @@ export default function EventPageLayout(props: EventPageProps) {
 
           {/* Gallery 2 */}
           <section className="px-4 py-6 md:py-8">
-            <div className="max-w-5xl mx-auto grid grid-cols-1 sm:grid-cols-2 gap-3 md:gap-4">
-              <Reveal><div className="rounded-2xl overflow-hidden border border-white/10 bg-black/30"><img src={img3} alt="" className="w-full h-auto object-contain md:h-80 lg:h-96 md:object-cover" loading="lazy" /></div></Reveal>
-              <Reveal delay={0.1}><div className="rounded-2xl overflow-hidden border border-white/10 bg-black/30"><img src={img4} alt="" className="w-full h-auto object-contain md:h-80 lg:h-96 md:object-cover" loading="lazy" /></div></Reveal>
+            <div className="max-w-5xl mx-auto grid grid-cols-1 gap-3 md:gap-4">
+              <Reveal><div className="rounded-2xl overflow-hidden border border-white/10 bg-black/30"><img src={img3} alt="" className="w-full h-auto object-contain" loading="lazy" /></div></Reveal>
+              <Reveal delay={0.1}><div className="rounded-2xl overflow-hidden border border-white/10 bg-black/30"><img src={img4} alt="" className="w-full h-auto object-contain" loading="lazy" /></div></Reveal>
             </div>
           </section>
 
