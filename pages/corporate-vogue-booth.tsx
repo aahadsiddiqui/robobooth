@@ -9,7 +9,7 @@ import { appendUtmParams } from '../lib/utmParams'
 export default function CorporateVogueBooth() {
   const [showModal, setShowModal] = useState(false)
   const [packageType, setPackageType] = useState<'bronze' | 'gold' | 'platinum' | ''>('')
-  const [form, setForm] = useState({ firstName: '', email: '', phone: '', eventDate: '', budget: '' })
+  const [form, setForm] = useState({ firstName: '', lastName: '', email: '', phone: '', eventDate: '', budget: '' })
   const [submitting, setSubmitting] = useState(false)
   const [success, setSuccess] = useState(false)
   const [expandedFaq, setExpandedFaq] = useState<number | null>(null)
@@ -37,7 +37,7 @@ export default function CorporateVogueBooth() {
     setSubmitting(true)
     try {
       const fd = new FormData()
-      fd.append('first-name', form.firstName); fd.append('phone-number', form.phone); fd.append('email', form.email)
+      fd.append('first-name', form.firstName); fd.append('last-name', form.lastName); fd.append('phone-number', form.phone); fd.append('email', form.email)
       fd.append('event-date', form.eventDate); fd.append('budget', form.budget); fd.append('event-type', 'Corporate Vogue Booth')
       fd.append('package', packageType === 'gold' ? 'Gold Package (Corporate Vogue Booth + Premium Photobooth)' : packageType === 'platinum' ? 'Platinum Package (Corporate Vogue Booth + Robot Photobooth)' : packageType === 'bronze' ? 'Bronze Package (Corporate Vogue Booth Only)' : 'General Inquiry')
       fd.append('_replyto', form.email); fd.append('source', 'Corporate Vogue Booth Ads Page')
@@ -265,7 +265,6 @@ export default function CorporateVogueBooth() {
                       <p className="text-white/60 text-xs text-center mb-6">The premium two-booth corporate activation for conferences, large galas, and high-traffic brand experiences.</p>
                       <div className="space-y-2.5 mb-6 flex-1">
                         {[
-                          'Everything included in the Gold Package',
                           'Add the Robot Photobooth as your second activation',
                           'Vogue Booth and Robot Photobooth running simultaneously',
                           'Robot Photobooth adds instant prints and digital photo delivery for guests',
@@ -314,8 +313,8 @@ export default function CorporateVogueBooth() {
               <Reveal delay={0.1}>
                 <div className="rounded-2xl overflow-hidden border-2 border-black bg-black flex items-center justify-center h-[280px] sm:h-[340px] md:h-[400px] lg:h-[420px]">
                   <img
-                    src="/images/corporate-vogue-booth-ice-man-angle-2.png"
-                    alt="Corporate Vogue Booth editorial frame with custom event branding"
+                    src="/images/corporate-vogue-booth-her-guests-closeup.png"
+                    alt="Guests inside the branded Corporate Vogue Booth"
                     className="max-w-full max-h-full w-auto h-auto object-contain p-2"
                     loading="lazy"
                   />
@@ -513,14 +512,28 @@ export default function CorporateVogueBooth() {
                 <div className="text-green-600 text-center font-bold py-6">Thank you! We&apos;ll be in touch soon.</div>
               ) : (
                 <form onSubmit={handleSubmit} className="space-y-2.5 md:space-y-3">
-                  <input type="text" name="firstName" value={form.firstName} onChange={handleInput} required placeholder="First Name *"
-                    className="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm focus:ring-2 focus:ring-[#fce4a6] focus:border-transparent outline-none text-black" />
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 md:gap-3">
+                    <input type="text" name="firstName" value={form.firstName} onChange={handleInput} required placeholder="First Name *"
+                      className="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm focus:ring-2 focus:ring-[#fce4a6] focus:border-transparent outline-none text-black" />
+                    <input type="text" name="lastName" value={form.lastName} onChange={handleInput} required placeholder="Last Name *"
+                      className="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm focus:ring-2 focus:ring-[#fce4a6] focus:border-transparent outline-none text-black" />
+                  </div>
                   <input type="tel" name="phone" value={form.phone} onChange={handleInput} required placeholder="Phone Number *"
                     className="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm focus:ring-2 focus:ring-[#fce4a6] focus:border-transparent outline-none text-black" />
                   <input type="email" name="email" value={form.email} onChange={handleInput} required placeholder="Email *"
                     className="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm focus:ring-2 focus:ring-[#fce4a6] focus:border-transparent outline-none text-black" />
-                  <input type="date" name="eventDate" value={form.eventDate} onChange={handleInput} required
-                    className="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm focus:ring-2 focus:ring-[#fce4a6] focus:border-transparent outline-none text-black" />
+                  <div>
+                    <label htmlFor="corporate-vogue-event-date" className="block text-xs font-semibold text-black/60 mb-1.5">Event Date *</label>
+                    <input
+                      id="corporate-vogue-event-date"
+                      type="date"
+                      name="eventDate"
+                      value={form.eventDate}
+                      onChange={handleInput}
+                      required
+                      className="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm focus:ring-2 focus:ring-[#fce4a6] focus:border-transparent outline-none text-black"
+                    />
+                  </div>
                   <select name="budget" value={form.budget} onChange={handleInput} required
                     className="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm focus:ring-2 focus:ring-[#fce4a6] focus:border-transparent outline-none text-black">
                     <option value="">Estimated Budget *</option>
