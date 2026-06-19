@@ -6,6 +6,7 @@ import {
   FiClock, FiX, FiHeart, FiImage, FiStar, FiUsers, FiZap, FiShield
 } from 'react-icons/fi'
 import Navbar from '../components/Navbar'
+import WeddingGalleryCarousel from '../components/WeddingGalleryCarousel'
 import { appendUtmParams } from '../lib/utmParams'
 
 /* ─── Reveal ─── */
@@ -85,6 +86,7 @@ export default function Wedding() {
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://robobooth.ca/wedding" />
         <link rel="canonical" href="https://robobooth.ca/wedding" />
+        <link rel="preload" href="/images/wedding/hero-poster.png" as="image" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
 
@@ -105,8 +107,7 @@ export default function Wedding() {
           )}
 
           {/* ══ HERO ══ */}
-          <section className={`relative ${urgencyDismissed ? 'pt-20 md:pt-24' : 'pt-[7rem] md:pt-[8rem]'} pb-6 md:pb-8 px-4`}>
-            <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_left,_#fce4a620_0%,_transparent_50%)] pointer-events-none" />
+          <section className={`relative bg-black ${urgencyDismissed ? 'pt-20 md:pt-24' : 'pt-[7rem] md:pt-[8rem]'} pb-6 md:pb-8 px-4`}>
             <div className="relative z-10 max-w-7xl mx-auto">
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-10 items-center">
                 <motion.div initial={{ opacity: 0, x: -30 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.7 }}>
@@ -116,10 +117,10 @@ export default function Wedding() {
                     <span className="text-white/60 text-xs font-medium">5.0 Rating · Trusted by Couples Across the GTA</span>
                   </div>
                   <h1 className="text-[1.65rem] leading-[1.15] md:text-4xl lg:text-5xl font-black md:leading-[1.1] mb-4">
-                    The Wedding Moment <span className="text-[#fce4a6]">Every Guest Will Remember Forever</span>
+                    Canada&apos;s First <span className="text-[#fce4a6]">Robot Photobooth</span> for Weddings
                   </h1>
                   <p className="text-white/80 text-sm md:text-base lg:text-lg leading-relaxed mb-5 max-w-xl">
-                    Canada&apos;s first Robot Photobooth visits every table at your reception, captures personalized photos, and delivers physical keepsakes your guests take home.{' '}
+                    Our robot photobooth roams your reception, visits every table, delivers personalized photos to every guest&apos;s phone in real-time, and prints physical keepsakes on the spot.{' '}
                     <span className="text-white font-semibold">White-glove service — you celebrate, we handle everything.</span>
                   </p>
                   <div className="flex flex-col sm:flex-row gap-3 mb-3">
@@ -137,9 +138,9 @@ export default function Wedding() {
                 {/* Desktop hero video */}
                 <motion.div initial={{ opacity: 0, x: 30 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.7, delay: 0.15 }} className="hidden md:block">
                   <div className="rounded-2xl overflow-hidden shadow-2xl border border-white/10 bg-black">
-                    <video className="w-full h-[480px] lg:h-[520px] object-contain" controls loop playsInline preload="metadata" poster="/images/robot1.jpg" style={{ display: 'block' }}>
-                      <source src="/videos/equifaxrobot.mov" type="video/quicktime" />
-                      <source src="/videos/equifaxrobot.mov" type="video/mp4" />
+                    <video className="w-full h-[480px] lg:h-[520px] object-contain" controls loop playsInline preload="metadata" poster="/images/wedding/hero-poster.png" style={{ display: 'block' }}>
+                      <source src="/videos/robotwedding1.MOV" type="video/quicktime" />
+                      <source src="/videos/robotwedding1.MOV" type="video/mp4" />
                     </video>
                   </div>
                 </motion.div>
@@ -147,9 +148,9 @@ export default function Wedding() {
                 {/* Mobile hero video */}
                 <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.1 }} className="md:hidden -mx-4">
                   <div className="overflow-hidden bg-black">
-                    <video className="w-full max-h-[50vh] object-contain" controls loop playsInline preload="metadata" poster="/images/robot1.jpg" style={{ display: 'block' }}>
-                      <source src="/videos/equifaxrobot.mov" type="video/quicktime" />
-                      <source src="/videos/equifaxrobot.mov" type="video/mp4" />
+                    <video className="w-full max-h-[50vh] object-contain" controls loop playsInline preload="metadata" poster="/images/wedding/hero-poster.png" style={{ display: 'block' }}>
+                      <source src="/videos/robotwedding1.MOV" type="video/quicktime" />
+                      <source src="/videos/robotwedding1.MOV" type="video/mp4" />
                     </video>
                   </div>
                 </motion.div>
@@ -157,16 +158,17 @@ export default function Wedding() {
             </div>
           </section>
 
-          {/* ── Logo Marquee ── */}
+          {/* ── Wedding Marquee ── */}
           <section className="py-4 md:py-6 border-y border-[#fce4a6]/10 overflow-hidden">
             <div className="max-w-7xl mx-auto px-4 mb-3">
-              <p className="text-center text-[#fce4a6]/60 text-[10px] md:text-xs font-semibold tracking-[0.2em] uppercase">Trusted by leading brands & couples across Canada</p>
+              <p className="text-center text-[#fce4a6]/60 text-[10px] md:text-xs font-semibold tracking-[0.2em] uppercase">Celebrating love stories across the GTA</p>
             </div>
             <div className="relative w-full overflow-hidden">
-              <div className="animate-marquee flex items-center gap-10 md:gap-14 px-4">
-                {[...companyLogos, ...companyLogos].map((logo, i) => (
-                  <div key={i} className="flex-shrink-0 w-32 md:w-44 h-20 md:h-24 flex items-center justify-center">
-                    <img src={logo} alt="Client" className={`w-full h-full object-contain opacity-60 hover:opacity-100 transition-opacity ${logo.includes('ritz.webp') || logo.includes('hilton.png') ? 'filter invert grayscale' : logo.includes('tdsynnex.png') || logo.includes('carmichael.png') || logo.includes('siemens.png') || logo.includes('alphawave.png') || logo.includes('newmarket.png') ? 'filter invert grayscale brightness-150' : logo.includes('td.png') ? '' : 'filter brightness-0 invert'}`} loading="lazy" />
+              <div className="animate-marquee flex items-center gap-8 md:gap-12 px-4">
+                {[...weddingHighlights, ...weddingHighlights].map((item, i) => (
+                  <div key={i} className="flex-shrink-0 flex items-center gap-2 text-white/50 hover:text-[#fce4a6] transition-colors">
+                    <span className="text-lg">{item.emoji}</span>
+                    <span className="text-sm md:text-base font-semibold whitespace-nowrap">{item.label}</span>
                   </div>
                 ))}
               </div>
@@ -197,9 +199,9 @@ export default function Wedding() {
 
               <Reveal delay={0.2} className="mt-8">
                 <div className="max-w-3xl mx-auto rounded-2xl overflow-hidden border border-white/10 bg-black">
-                  <video className="w-full max-h-[60vh] object-contain" controls loop playsInline preload="metadata" poster="/images/robottd.jpg" style={{ display: 'block' }}>
-                    <source src="/videos/bmorobot.MOV" type="video/quicktime" />
-                    <source src="/videos/bmorobot.MOV" type="video/mp4" />
+                  <video className="w-full max-h-[60vh] object-contain" controls loop playsInline preload="metadata" poster="/images/wedding/how-it-works-poster.png" style={{ display: 'block' }}>
+                    <source src="/videos/robotwedding2.MOV" type="video/quicktime" />
+                    <source src="/videos/robotwedding2.MOV" type="video/mp4" />
                   </video>
                 </div>
               </Reveal>
@@ -332,21 +334,16 @@ export default function Wedding() {
           {/* ── CTA 1 ── */}
           <SubtleCTA label="Check Your Date" onQuote={openQuote} />
 
-          {/* ── Gallery pair 1 ── */}
-          <section className="px-4 py-6 md:py-8">
-            <div className="max-w-5xl mx-auto">
-              <div className="grid grid-cols-2 gap-3 md:gap-4">
-                <Reveal>
-                  <div className="rounded-2xl overflow-hidden border border-white/10">
-                    <img src="/images/robotbell.jpg" alt="Robot Photobooth at wedding reception" className="w-full h-48 sm:h-64 md:h-80 lg:h-96 object-cover" loading="lazy" />
-                  </div>
-                </Reveal>
-                <Reveal delay={0.1}>
-                  <div className="rounded-2xl overflow-hidden border border-white/10">
-                    <img src="/images/robottd.jpg" alt="Wedding photobooth keepsake" className="w-full h-48 sm:h-64 md:h-80 lg:h-96 object-cover" loading="lazy" />
-                  </div>
-                </Reveal>
-              </div>
+          {/* ── Wedding Gallery ── */}
+          <section className="py-8 md:py-12 px-4 border-t border-white/5">
+            <div className="max-w-6xl mx-auto">
+              <Reveal className="text-center mb-6 md:mb-8">
+                <h2 className="text-xl md:text-2xl lg:text-3xl font-black mb-1.5">Wedding <span className="text-[#fce4a6]">Gallery</span></h2>
+                <p className="text-white/50 text-xs md:text-sm">Real couples. Real receptions. Real memories.</p>
+              </Reveal>
+              <Reveal delay={0.1}>
+                <WeddingGalleryCarousel />
+              </Reveal>
             </div>
           </section>
 
@@ -369,25 +366,6 @@ export default function Wedding() {
             </div>
           </section>
 
-          {/* ── Gallery pair 2 ── */}
-          <section className="px-4 py-6 md:py-8">
-            <div className="max-w-5xl mx-auto">
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 md:gap-4">
-                <Reveal>
-                  <div className="rounded-2xl overflow-hidden border border-white/10">
-                    <img src="/images/robot1.jpg" alt="Wedding robot photobooth activation" className="w-full h-56 sm:h-64 md:h-80 lg:h-96 object-cover" loading="lazy" />
-                  </div>
-                </Reveal>
-                <Reveal delay={0.1}>
-                  <div className="rounded-2xl overflow-hidden border border-white/10">
-                    <img src="/images/robothalloween.JPG" alt="Wedding photobooth experience" className="w-full h-56 sm:h-64 md:h-80 lg:h-96 object-cover" loading="lazy" />
-                  </div>
-                </Reveal>
-              </div>
-            </div>
-          </section>
-
-          {/* ── CTA 2 ── */}
           <SubtleCTA label="Get a Wedding Quote" onQuote={openQuote} />
 
           {/* ── Personalization ── */}
@@ -447,31 +425,6 @@ export default function Wedding() {
             </div>
           </section>
 
-          {/* ── Testimonial Videos ── */}
-          <section className="px-4 py-6 md:py-8">
-            <div className="max-w-5xl mx-auto">
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 md:gap-4">
-                <Reveal>
-                  <div className="rounded-2xl overflow-hidden border border-white/10 bg-black">
-                    <video className="w-full max-h-[60vh] object-contain" controls loop playsInline preload="metadata" style={{ display: 'block' }}>
-                      <source src="/videos/tdtestimonial.mov" type="video/quicktime" />
-                      <source src="/videos/tdtestimonial.mov" type="video/mp4" />
-                    </video>
-                  </div>
-                </Reveal>
-                <Reveal delay={0.1}>
-                  <div className="rounded-2xl overflow-hidden border border-white/10 bg-black">
-                    <video className="w-full max-h-[60vh] object-contain" controls loop playsInline preload="metadata" style={{ display: 'block' }}>
-                      <source src="/videos/robottest1.MOV" type="video/quicktime" />
-                      <source src="/videos/robottest1.MOV" type="video/mp4" />
-                    </video>
-                  </div>
-                </Reveal>
-              </div>
-            </div>
-          </section>
-
-          {/* ── CTA 4 ── */}
           <SubtleCTA label="Check Your Date" onQuote={openQuote} />
 
           {/* ── FAQs ── */}
@@ -634,7 +587,7 @@ const whyCouplesLove = [
 
 const customizations = [
   { icon: <FiImage className="w-5 h-5" />, title: 'Couple\'s Name & Date Overlay', desc: 'Your names, wedding date, and a custom design that reflects your aesthetic — romantic florals, gold foil, modern minimalist. Every photo is a beautifully branded keepsake from your day.' },
-  { icon: <FiHeart className="w-5 h-5" />, title: 'Custom Voice Message from the Couple', desc: 'Record a personal voice message from the bride, groom, or both. The robot delivers it at every photo — a heartfelt, unique touch that makes every guest interaction feel personal and special.' },
+  { icon: <FiHeart className="w-5 h-5" />, title: 'Custom Voice Message from the Couple', desc: 'Record a personal message from the bride, groom, or both — with a special customized greeting before & after it takes a photo. A heartfelt touch that makes every guest interaction feel uniquely yours.' },
   { icon: <FiStar className="w-5 h-5" />, title: 'Multi-Booth Reception Experience', desc: 'Add a Premium Photobooth, Aerial Booth, or 360 Booth alongside the robot — giving your guests multiple keepsake experiences throughout the reception that they\'ll be talking about for decades.' },
 ]
 
@@ -654,9 +607,15 @@ const faqs = [
   { question: 'How far in advance should we book?', answer: 'We strongly recommend booking 6–8 weeks ahead. Peak wedding season (May–October) fills extremely fast. Contact us now to secure your date before it\'s gone.' },
 ]
 
-const companyLogos = [
-  '/images/adamas.png', '/images/bell.png', '/images/bgo.png', '/images/equifax.svg',
-  '/images/geotab.png', '/images/hilton.png', '/images/infosys.png', '/images/meta.png',
-  '/images/pdsb.png', '/images/remax.png', '/images/ritz.webp', '/images/rlp.svg',
-  '/images/stonex.png', '/images/talent.png', '/images/td.png', '/images/torontopearson.png', '/images/BMO.svg.png', '/images/tdsynnex.png', '/images/carmichael.png', '/images/siemens.png', '/images/alphawave.png', '/images/newmarket.png',
+const weddingHighlights = [
+  { emoji: '💒', label: 'Reception' },
+  { emoji: '⛪', label: 'Ceremony' },
+  { emoji: '🥂', label: 'Cocktail Hour' },
+  { emoji: '👰', label: 'First Dance' },
+  { emoji: '💍', label: 'South Asian Weddings' },
+  { emoji: '🌸', label: 'Garden & Outdoor' },
+  { emoji: '✨', label: 'Black Tie' },
+  { emoji: '🎉', label: 'Sangeet & Mehndi' },
+  { emoji: '🏛️', label: 'Ballroom' },
+  { emoji: '💐', label: 'Intimate Celebrations' },
 ]
