@@ -13,7 +13,6 @@ const eventSlugToPath = (slug: string): string => {
     'trade-shows-expos': '/events/trade-show-expo',
     'gala-dinners-award-ceremonies': '/events/gala-dinner',
     'holiday-parties': '/events/holiday-party',
-    'milestone-celebrations': '/events/milestone-celebration',
     'engagements': '/events/engagement',
     'bar-bat-mitzvahs': '/events/bar-bat-mitzvah',
     'concerts-festivals': '/events/concert-festival',

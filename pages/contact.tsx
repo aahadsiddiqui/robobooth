@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import Head from 'next/head'
 import { motion, AnimatePresence } from 'framer-motion'
 import Navbar from '../components/Navbar'
+import EventDatePicker from '../components/EventDatePicker'
 import { useMetaPixel } from '../hooks/useMetaPixel'
 import { useUTM } from '../hooks/useUTM'
 
@@ -80,6 +81,7 @@ export default function Contact() {
   const [showToast, setShowToast] = useState(false)
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [selectedProduct, setSelectedProduct] = useState('')
+  const [eventDate, setEventDate] = useState('')
   const { trackFormSubmission } = useMetaPixel()
   const utmData = useUTM()
 
@@ -96,7 +98,7 @@ export default function Contact() {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="bg-white/5 backdrop-blur-sm rounded-3xl shadow-xl overflow-hidden border border-[#fce4a6]/20"
+          className="bg-white/5 backdrop-blur-sm rounded-3xl shadow-xl border border-[#fce4a6]/20 overflow-visible"
         >
           <div className="md:flex">
             {/* Contact Info */}
@@ -120,7 +122,7 @@ export default function Contact() {
               </motion.div>
             </div>
             {/* Contact Form */}
-            <div className="p-8 md:w-2/3">
+            <div className="p-8 md:w-2/3 overflow-visible">
               <motion.div
                 initial={{ opacity: 0, x: 20 }}
                 animate={{ opacity: 1, x: 0 }}
@@ -132,7 +134,10 @@ export default function Contact() {
                   method="POST"
                   onSubmit={async (e) => {
                     e.preventDefault()
-                    setIsSubmitting(true)
+                    if (!eventDate) {
+                      alert('Please select an event date.')
+                      return
+                    }
                     setIsSubmitting(true)
 
                     const form = e.target as HTMLFormElement
@@ -171,6 +176,8 @@ export default function Contact() {
                       if (response.ok) {
                         setShowToast(true)
                         form.reset()
+                        setSelectedProduct('')
+                        setEventDate('')
                         setTimeout(() => setShowToast(false), 3000)
                       } else {
                         throw new Error('Failed to submit form')
@@ -278,11 +285,11 @@ export default function Contact() {
                     <label className="block text-sm font-medium text-[#fce4a6] mb-1">
                       Event Date
                     </label>
-                    <input
-                      type="date"
-                      required
+                    <EventDatePicker
                       name="event-date"
-                      className="w-full px-4 py-2 rounded-lg border border-[#fce4a6]/30 bg-black text-white focus:ring-2 focus:ring-[#fce4a6] focus:border-[#fce4a6] placeholder:text-white/50"
+                      value={eventDate}
+                      onChange={setEventDate}
+                      placeholder="Click to choose your event date"
                     />
                   </div>
                   <div>

@@ -9,7 +9,16 @@ const nextConfig = {
       ignoreBuildErrors: false,
     },
     poweredByHeader: false,
-    distDir: '.next'
+    distDir: '.next',
+    async redirects() {
+      return [
+        {
+          source: '/events/milestone-celebration',
+          destination: '/birthday',
+          permanent: true,
+        },
+      ]
+    },
 }
 
 module.exports = nextConfig
