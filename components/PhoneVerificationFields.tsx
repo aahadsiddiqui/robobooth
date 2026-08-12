@@ -46,18 +46,16 @@ export default function PhoneVerificationFields({
   }, [phone, isVerified, verifiedPhone, reset])
 
   const isLight = variant === 'light'
-  const phoneLocked = Boolean(readOnlyPhone || isVerified)
+  // Lock after code is sent or verified; unlock only via "Change phone number"
+  const phoneLocked = Boolean(readOnlyPhone || isVerified || codeSent)
 
   const inputClass = isLight
-    ? 'w-full px-4 py-3 border border-gray-200 rounded-xl text-sm focus:ring-2 focus:ring-[#fce4a6] focus:border-transparent outline-none text-black'
-    : 'w-full px-4 py-2 rounded-lg border border-[#fce4a6]/30 bg-black text-white focus:ring-2 focus:ring-[#fce4a6] focus:border-[#fce4a6] placeholder:text-white/50'
+    ? 'w-full px-4 py-3.5 md:py-3 border border-gray-200 rounded-xl text-base md:text-sm focus:ring-2 focus:ring-[#fce4a6] focus:border-transparent outline-none text-black'
+    : 'w-full px-4 py-3 md:py-2 rounded-lg border border-[#fce4a6]/30 bg-black text-white text-base md:text-sm focus:ring-2 focus:ring-[#fce4a6] focus:border-[#fce4a6] placeholder:text-white/50'
 
   const handlePhoneChange = (value: string) => {
+    if (phoneLocked) return
     onPhoneChange?.(value)
-    // Editing the number after a code was sent should clear OTP state so they can re-send
-    if (codeSent && !isVerified) {
-      reset()
-    }
   }
 
   const handleChangeNumber = () => {
@@ -90,29 +88,37 @@ export default function PhoneVerificationFields({
             Phone Number *
           </label>
         )}
-        <div className="flex gap-2">
+        <div className="flex flex-row gap-2">
           <input
             ref={phoneInputRef}
             type="tel"
             name="phone-verification"
+            inputMode="tel"
+            autoComplete="tel"
             value={phone}
             onChange={(e) => handlePhoneChange(e.target.value)}
             readOnly={phoneLocked}
             placeholder={isLight ? 'Phone Number *' : ''}
-            className={`${inputClass} flex-1 ${phoneLocked ? 'bg-gray-50 cursor-default' : ''}`}
+            className={`${inputClass} flex-1 min-w-0 ${
+              phoneLocked
+                ? isLight
+                  ? 'bg-gray-100 text-black/60 cursor-not-allowed'
+                  : 'bg-white/5 text-white/50 cursor-not-allowed'
+                : ''
+            }`}
           />
           {!isVerified && (
             <button
               type="button"
               onClick={handleSend}
               disabled={loading || !phone.trim()}
-              className={`flex-shrink-0 px-3 py-2 rounded-xl text-xs font-bold transition-colors disabled:opacity-50 ${
+              className={`flex-shrink-0 min-h-[48px] md:min-h-0 px-4 py-3 md:py-2 rounded-xl text-sm md:text-xs font-bold transition-colors disabled:opacity-50 ${
                 isLight
                   ? 'bg-black text-white hover:bg-black/80'
                   : 'bg-[#fce4a6] text-black hover:bg-[#e8d08e]'
               }`}
             >
-              {loading && !codeSent ? <FiLoader className="w-4 h-4 animate-spin" /> : codeSent ? 'Resend' : 'Send Code'}
+              {loading && !codeSent ? <FiLoader className="w-4 h-4 animate-spin mx-auto" /> : codeSent ? 'Resend' : 'Send Code'}
             </button>
           )}
         </div>
@@ -134,18 +140,19 @@ export default function PhoneVerificationFields({
           <p className={`text-[10px] font-semibold uppercase tracking-wider ${isLight ? 'text-black/50' : 'text-white/40'}`}>
             Enter 6-digit verification code
           </p>
-          <div className="flex justify-between gap-1.5">
+          <div className="flex justify-between gap-1 sm:gap-1.5">
             {otp.map((digit, i) => (
               <input
                 key={i}
                 ref={(el) => { otpRefs.current[i] = el }}
                 type="text"
                 inputMode="numeric"
+                autoComplete={i === 0 ? 'one-time-code' : 'off'}
                 maxLength={1}
                 value={digit}
                 onChange={(e) => handleOtpChange(i, e.target.value, otpRefs.current)}
                 onKeyDown={(e) => handleOtpKeyDown(i, e.key, otpRefs.current)}
-                className={`w-full aspect-square text-center text-sm font-bold rounded-lg outline-none ${
+                className={`min-w-0 flex-1 max-w-[3rem] aspect-square text-center text-base sm:text-sm font-bold rounded-lg outline-none ${
                   isLight
                     ? 'border border-gray-200 text-black focus:ring-2 focus:ring-[#fce4a6]'
                     : 'border border-[#fce4a6]/30 bg-black text-white focus:ring-2 focus:ring-[#fce4a6]'
@@ -157,7 +164,7 @@ export default function PhoneVerificationFields({
             type="button"
             onClick={handleVerify}
             disabled={loading || otp.join('').length !== 6 || !phone.trim()}
-            className={`w-full py-2.5 rounded-xl text-xs font-bold transition-colors disabled:opacity-50 flex items-center justify-center gap-2 ${
+            className={`w-full min-h-[48px] py-3 rounded-xl text-sm md:text-xs font-bold transition-colors disabled:opacity-50 flex items-center justify-center gap-2 ${
               isLight
                 ? 'bg-[#fce4a6] text-black hover:bg-[#e8d08e]'
                 : 'border border-[#fce4a6]/40 text-[#fce4a6] hover:bg-[#fce4a6]/10'
