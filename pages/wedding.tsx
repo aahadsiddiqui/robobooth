@@ -5,12 +5,11 @@ import {
   FiArrowRight, FiCheck, FiPhone, FiChevronDown, FiChevronUp,
   FiClock, FiX, FiHeart, FiImage, FiStar, FiUsers, FiZap, FiShield
 } from 'react-icons/fi'
-import PhoneVerificationFields, { requirePhoneVerified } from '../components/PhoneVerificationFields'
 import Navbar from '../components/Navbar'
 import PackageCardsGrid from '../components/PackageCardsGrid'
+import SteppedQuoteModal from '../components/SteppedQuoteModal'
 import { weddingPackageTiers } from '../data/packageTiers'
 import WeddingGalleryCarousel from '../components/WeddingGalleryCarousel'
-import { appendUtmParams } from '../lib/utmParams'
 
 /* ─── Reveal ─── */
 const Reveal = ({ children, className, delay = 0 }: { children: React.ReactNode; className?: string; delay?: number }) => (
@@ -32,10 +31,7 @@ const SubtleCTA = ({ label, onQuote }: { label: string; onQuote: () => void }) =
 export default function Wedding() {
   const [showModal, setShowModal] = useState(false)
   const [packageType, setPackageType] = useState<'bronze' | 'gold' | 'platinum' | ''>('')
-  const [form, setForm] = useState({ firstName: '', email: '', phone: '', eventDate: '', budget: '' })
-  const [submitting, setSubmitting] = useState(false)
-  const [success, setSuccess] = useState(false)
-  const [expandedFaq, setExpandedFaq] = useState<number | null>(null)
+    const [expandedFaq, setExpandedFaq] = useState<number | null>(null)
   const [showSticky, setShowSticky] = useState(false)
   const [urgencyDismissed, setUrgencyDismissed] = useState(false)
 
@@ -46,7 +42,6 @@ export default function Wedding() {
   }, [])
 
   useEffect(() => { const t = setTimeout(() => setShowModal(true), 25000); return () => clearTimeout(t) }, [])
-  useEffect(() => { showModal ? document.body.classList.add('overflow-hidden') : document.body.classList.remove('overflow-hidden'); return () => document.body.classList.remove('overflow-hidden') }, [showModal])
   useEffect(() => {
     const handlePlay = (e: Event) => {
       document.querySelectorAll('video').forEach(v => { if (v !== e.target) v.pause() })
@@ -60,27 +55,40 @@ export default function Wedding() {
   const openGoldPackage = useCallback(() => { setPackageType('gold'); setShowModal(true) }, [])
   const openPlatinumPackage = useCallback(() => { setPackageType('platinum'); setShowModal(true) }, [])
 
-  const handleInput = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) =>
-    setForm({ ...form, [e.target.name]: e.target.value })
+  const modalTitle =
+    packageType === 'gold' ? 'Book Gold Package' :
+    packageType === 'bronze' ? 'Book Bronze Package' :
+    packageType === 'platinum' ? 'Book Platinum Package' :
+    "Get a Wedding Quote"
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    if (!requirePhoneVerified(e.currentTarget as HTMLElement)) {
-      alert('Please verify your phone number before submitting.')
-      return
-    }
-    setSubmitting(true)
-    try {
-      const fd = new FormData()
-      fd.append('first-name', form.firstName); fd.append('phone-number', form.phone); fd.append('email', form.email)
-      fd.append('event-date', form.eventDate); fd.append('budget', form.budget); fd.append('event-type', 'Wedding')
-      fd.append('package', packageType === 'gold' ? 'Gold Package (Robot Photobooth + Second Booth)' : packageType === 'platinum' ? 'Platinum Package (Robot Photobooth + Two Additional Booths)' : packageType === 'bronze' ? 'Bronze Package (Robot Photobooth Only)' : 'General Inquiry')
-      fd.append('_replyto', form.email); fd.append('source', 'Wedding Page')
-      appendUtmParams(fd)
-      const res = await fetch('https://formspree.io/f/xkgoedyp', { method: 'POST', body: fd, headers: { Accept: 'application/json' } })
-      if (res.ok) { setSuccess(true) } else { alert('Failed to submit. Please try again.') }
-    } catch { alert('Failed to submit. Please try again.') } finally { setSubmitting(false) }
-  }
+  const packageLabel =
+    packageType === 'gold' ? "Gold Package (2 Robot Photobooths)" :
+    packageType === 'platinum' ? "Platinum Package (Multiple Robots)" :
+    packageType === 'bronze' ? "Bronze Package (Robot Photobooth Only)" :
+    'General Inquiry'
+
+  const packageBanner = (
+    <>
+      {packageType === 'bronze' && (
+        <div className="bg-white/90 border border-black/10 rounded-xl px-4 py-2.5 mb-3 flex items-center justify-center gap-2 flex-wrap">
+          <span className="text-black text-xs font-black">🥉 Bronze Package Selected</span>
+          <span className="text-black/60 text-[10px]">Robot Photobooth Only</span>
+        </div>
+      )}
+      {packageType === 'gold' && (
+        <div className="bg-[#fce4a6] rounded-xl px-4 py-2.5 mb-3 flex items-center justify-center gap-2 flex-wrap">
+          <span className="text-black text-xs font-black">⭐ Gold Package Selected</span>
+          <span className="text-black/60 text-[10px]">2 Robot Photobooths</span>
+        </div>
+      )}
+      {packageType === 'platinum' && (
+        <div className="bg-gradient-to-r from-white/95 to-gray-100 border border-gray-300 rounded-xl px-4 py-2.5 mb-3 flex items-center justify-center gap-2 flex-wrap">
+          <span className="text-black text-xs font-black">💎 Platinum Package Selected</span>
+          <span className="text-black/60 text-[10px]">Multiple Robots</span>
+        </div>
+      )}
+    </>
+  )
 
   return (
     <>
@@ -375,67 +383,16 @@ export default function Wedding() {
       </div>
 
       {/* ── Lead Modal ── */}
-      <AnimatePresence>
-        {showModal && (
-          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 z-[60] flex items-end md:items-center justify-center bg-black/70 backdrop-blur-md p-0 md:p-4">
-            <motion.div initial={{ opacity: 0, y: 60 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 60 }}
-              className="bg-white rounded-t-2xl md:rounded-2xl p-5 md:p-8 max-w-md w-full shadow-2xl relative max-h-[90vh] overflow-y-auto">
-              <button onClick={() => { setShowModal(false); setPackageType('') }} className="absolute top-3 right-4 text-black/40 hover:text-black text-2xl">×</button>
-              {packageType === 'bronze' && (
-                <div className="bg-white/90 border border-black/10 rounded-xl px-4 py-2.5 mb-3 flex items-center justify-center gap-2 flex-wrap">
-                  <span className="text-black text-xs font-black">🥉 Bronze Package Selected</span>
-                  <span className="text-black/60 text-[10px]">Robot Photobooth Only</span>
-                </div>
-              )}
-              {packageType === 'gold' && (
-                <div className="bg-[#fce4a6] rounded-xl px-4 py-2.5 mb-3 flex items-center justify-center gap-2 flex-wrap">
-                  <span className="text-black text-xs font-black">⭐ Gold Package Selected</span>
-                  <span className="text-black/60 text-[10px]">Robot Photobooth + Second Booth</span>
-                </div>
-              )}
-              {packageType === 'platinum' && (
-                <div className="bg-gradient-to-r from-white/95 to-gray-100 border border-gray-300 rounded-xl px-4 py-2.5 mb-3 flex items-center justify-center gap-2 flex-wrap">
-                  <span className="text-black text-xs font-black">💎 Platinum Package Selected</span>
-                  <span className="text-black/60 text-[10px]">Robot Photobooth + Two Additional Booths</span>
-                </div>
-              )}
-              <h2 className="text-lg md:text-2xl font-black text-black mb-1 text-center">
-                {packageType === 'gold' ? 'Book Gold Package' : packageType === 'bronze' ? 'Book Bronze Package' : packageType === 'platinum' ? 'Book Platinum Package' : 'Get a Wedding Quote'}
-              </h2>
-              <p className="text-black/60 text-xs md:text-sm mb-4 text-center">Tell us your wedding date and we&apos;ll confirm availability within 15 minutes.</p>
-              {success ? (
-                <div className="text-green-600 text-center font-bold py-6">Thank you! We&apos;ll be in touch soon.</div>
-              ) : (
-                <form onSubmit={handleSubmit} className="space-y-2.5 md:space-y-3">
-                  <input type="text" name="firstName" value={form.firstName} onChange={handleInput} required placeholder="First Name *"
-                    className="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm focus:ring-2 focus:ring-[#fce4a6] focus:border-transparent outline-none text-black" />
-                  <PhoneVerificationFields
-                    phone={form.phone}
-                    onPhoneChange={(phone) => setForm({ ...form, phone })}
-                    variant="light"
-                  />
-                  <input type="email" name="email" value={form.email} onChange={handleInput} required placeholder="Email *"
-                    className="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm focus:ring-2 focus:ring-[#fce4a6] focus:border-transparent outline-none text-black" />
-                  <input type="date" name="eventDate" value={form.eventDate} onChange={handleInput} required
-                    className="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm focus:ring-2 focus:ring-[#fce4a6] focus:border-transparent outline-none text-black" />
-                  <select name="budget" value={form.budget} onChange={handleInput} required
-                    className="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm focus:ring-2 focus:ring-[#fce4a6] focus:border-transparent outline-none text-black">
-                    <option value="">Estimated Budget *</option>
-                    <option value="$1000-$1500">$1,000–$1,500</option>
-                    <option value="$1500-$2000">$1,500–$2,000</option>
-                    <option value="$2000+">$2,000+</option>
-                  </select>
-                  <button type="submit" disabled={submitting}
-                    className="w-full bg-[#fce4a6] text-black py-3.5 rounded-xl font-bold text-sm hover:bg-[#e8d08e] transition-colors">
-                    {submitting ? 'Sending…' : 'Get My Quote →'}
-                  </button>
-                  <p className="text-center text-black/30 text-[10px]">No spam. We respond within 15 minutes during business hours.</p>
-                </form>
-              )}
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+      <SteppedQuoteModal
+        open={showModal}
+        onClose={() => { setShowModal(false); setPackageType('') }}
+        title={modalTitle}
+        subtitle="Tell us your event date and we'll confirm availability within 15 minutes."
+        packageBanner={packageBanner}
+        eventType={"Wedding"}
+        packageLabel={packageLabel}
+        source={"Wedding Page"}
+      />
 
       {/* ── Sticky CTA ── */}
       <AnimatePresence>

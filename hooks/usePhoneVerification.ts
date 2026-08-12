@@ -63,6 +63,11 @@ export function usePhoneVerification() {
 
   const verifyCode = useCallback(async (phone: string, code: string) => {
     setError('')
+    const e164 = toE164Phone(phone)
+    if (!e164 || !isValidNorthAmericanPhone(phone)) {
+      setError('Please enter a valid 10-digit phone number.')
+      return false
+    }
     if (code.length !== 6) {
       setError('Please enter the full 6-digit code.')
       return false
@@ -73,12 +78,12 @@ export function usePhoneVerification() {
       const res = await fetchWithTimeout('/api/verify/check', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ phone: toE164Phone(phone), code }),
+        body: JSON.stringify({ phone: e164, code }),
       })
       const data = await res.json()
       if (!res.ok) throw new Error(data.error || 'Invalid verification code')
       setIsVerified(true)
-      setVerifiedPhone(toE164Phone(phone))
+      setVerifiedPhone(e164)
       return true
     } catch (err) {
       if (err instanceof DOMException && err.name === 'AbortError') {

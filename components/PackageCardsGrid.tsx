@@ -1,7 +1,7 @@
 import React from 'react'
 import { motion } from 'framer-motion'
-import { FiArrowRight, FiCheck, FiCamera } from 'react-icons/fi'
-import { PackageTierContent, PackageTierId } from '@/data/packageTiers'
+import { FiArrowRight, FiCheck, FiCamera, FiPlus } from 'react-icons/fi'
+import { PackageTierContent, PackageTierId, boothAddOns } from '@/data/packageTiers'
 
 const Reveal = ({ children, className, delay = 0 }: { children: React.ReactNode; className?: string; delay?: number }) => (
   <motion.div
@@ -24,6 +24,7 @@ type PackageCardsGridProps = {
   bronzeLabel?: string
   goldLabel?: string
   platinumLabel?: string
+  showBoothAddOns?: boolean
 }
 
 function PhotographySubsection({
@@ -71,6 +72,29 @@ function PhotographySubsection({
   )
 }
 
+function BoothAddOnsSubsection() {
+  return (
+    <div className="rounded-xl border border-white/15 bg-white/[0.05] p-3.5 mt-4">
+      <div className="flex items-center gap-2 mb-2.5">
+        <FiPlus className="w-3.5 h-3.5 text-white/60" />
+        <p className="text-[10px] font-black uppercase tracking-widest text-white/50">
+          Add on: Extra Booths
+        </p>
+      </div>
+      <div className="flex flex-wrap gap-1.5">
+        {boothAddOns.map((booth) => (
+          <span
+            key={booth.name}
+            className="inline-flex items-center rounded-full border border-white/15 bg-white/[0.04] px-2.5 py-1 text-[10px] font-semibold text-white/70"
+          >
+            {booth.name}
+          </span>
+        ))}
+      </div>
+    </div>
+  )
+}
+
 function RobotCountBadge({ label, variant }: { label: string; variant: PackageTierId }) {
   const styles = {
     bronze: 'bg-white/10 text-white/70 border-white/10',
@@ -97,6 +121,7 @@ export default function PackageCardsGrid({
   platinumLabel = 'Platinum Package',
   insertAfterBronze,
   maxWidth = 'max-w-5xl',
+  showBoothAddOns = true,
 }: PackageCardsGridProps & {
   insertAfterBronze?: React.ReactNode
   maxWidth?: string
@@ -208,21 +233,11 @@ export default function PackageCardsGrid({
                     💎 {platinumLabel}
                   </span>
                 </div>
-                <div className="flex flex-wrap justify-center gap-2 mb-3">
+                <div className="flex justify-center mb-3">
                   <RobotCountBadge label={tiers.platinum.robotLabel} variant="platinum" />
-                  {tiers.platinum.boothAddOn && (
-                    <span className="inline-flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-wider px-3 py-1 rounded-full border bg-white/5 text-white/60 border-white/15">
-                      + Add-On Booth
-                    </span>
-                  )}
                 </div>
                 <h3 className="text-lg md:text-xl font-black text-center mb-2">{tiers.platinum.title}</h3>
-                <p className="text-white/60 text-xs text-center mb-1">{tiers.platinum.desc}</p>
-                {tiers.platinum.boothAddOn && (
-                  <p className="text-white/40 text-[10px] text-center mb-4 italic">
-                    Choose: {tiers.platinum.boothAddOn}
-                  </p>
-                )}
+                <p className="text-white/60 text-xs text-center mb-4">{tiers.platinum.desc}</p>
                 <div className="space-y-2.5 flex-1">
                   {tiers.platinum.robotBenefits.map((b, i) => (
                     <div key={i} className="flex items-start gap-3">
@@ -230,6 +245,7 @@ export default function PackageCardsGrid({
                       <p className="text-white/70 text-xs leading-relaxed">{b}</p>
                     </div>
                   ))}
+                  <BoothAddOnsSubsection />
                   <PhotographySubsection benefits={tiers.platinum.photographyBenefits} variant="platinum" />
                 </div>
                 <div className="text-center mt-6">
@@ -247,6 +263,46 @@ export default function PackageCardsGrid({
             </div>
           </Reveal>
         </div>
+
+        {showBoothAddOns && (
+          <Reveal className="mt-10 md:mt-12" delay={0.15}>
+            <div className="rounded-3xl border border-white/15 bg-white/[0.03] p-6 md:p-8">
+              <div className="text-center mb-6">
+                <div className="inline-flex items-center gap-2 bg-white/10 text-white/70 text-[11px] font-black tracking-widest uppercase px-4 py-1.5 rounded-full mb-3">
+                  <FiPlus className="w-3.5 h-3.5" />
+                  Add-On Booths
+                </div>
+                <h3 className="text-xl md:text-2xl font-black mb-2">
+                  Pair Any Package with an <span className="text-[#fce4a6]">Extra Booth</span>
+                </h3>
+                <p className="text-white/50 text-sm max-w-xl mx-auto">
+                  Layer on a second activation for more coverage, more content, and more guest moments.
+                </p>
+              </div>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
+                {boothAddOns.map((booth) => (
+                  <div
+                    key={booth.name}
+                    className="rounded-2xl border border-white/10 bg-black/40 p-4 hover:border-[#fce4a6]/40 transition-colors"
+                  >
+                    <p className="text-sm font-bold text-white mb-1.5">{booth.name}</p>
+                    <p className="text-white/45 text-[11px] leading-relaxed">{booth.desc}</p>
+                  </div>
+                ))}
+              </div>
+              <div className="text-center mt-6">
+                <motion.button
+                  whileHover={{ scale: 1.04 }}
+                  whileTap={{ scale: 0.97 }}
+                  onClick={onBookPlatinum}
+                  className="border border-[#fce4a6]/40 text-[#fce4a6] px-5 py-2.5 rounded-full font-bold text-xs md:text-sm hover:bg-[#fce4a6]/10 transition-all group"
+                >
+                  Ask About Add-On Booths <FiArrowRight className="inline ml-1 group-hover:translate-x-1 transition-transform" />
+                </motion.button>
+              </div>
+            </div>
+          </Reveal>
+        )}
       </div>
     </section>
   )

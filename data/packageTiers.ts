@@ -11,6 +11,25 @@ export type PackageTierContent = {
   photographyBenefits: string[]
 }
 
+export const boothAddOns = [
+  {
+    name: 'Portrait Booth',
+    desc: 'Studio-quality portraits with flattering lighting and professional backdrops.',
+  },
+  {
+    name: 'Aerial Booth',
+    desc: 'Elevated overhead shots that capture your venue and guests from above.',
+  },
+  {
+    name: 'Premium Booth',
+    desc: 'A classic enclosed photobooth with instant prints and custom branding.',
+  },
+  {
+    name: '360 Booth',
+    desc: 'Cinematic spinning video content guests can share instantly to social.',
+  },
+] as const
+
 export const defaultPhotographyBenefits = {
   bronze: [
     'Key moment coverage throughout your event',
@@ -70,17 +89,16 @@ export function getDefaultPackageTiers(context?: {
     },
     platinum: {
       badge: 'Platinum Package',
-      title: '3 Robots + Additional Booths',
-      desc: context?.platinumDesc ?? 'The ultimate setup — three robots plus your choice of add-on booth for maximum coverage.',
+      title: 'Multiple Robots',
+      desc: context?.platinumDesc ?? 'The ultimate setup — multiple robot photobooths for maximum coverage across your venue.',
       robotCount: 3,
-      robotLabel: '3 Robots',
-      boothAddOn: '360 Booth, Premium Photobooth, or Aerial Booth',
+      robotLabel: 'Multiple Robots',
       robotBenefits: context?.platinumBenefits ?? [
-        'Three Robot Photobooths for large-scale events',
-        'Add-on booth: 360, Premium Photobooth, or Aerial',
+        'Multiple Robot Photobooths for large-scale events',
         'Multiple activations running simultaneously',
         'Maximum guest engagement across your venue',
         'One coordinated team managing everything',
+        'Instant digital delivery and on-site prints',
       ],
       photographyBenefits: defaultPhotographyBenefits.platinum,
     },
@@ -104,13 +122,13 @@ export const weddingPackageTiers = getDefaultPackageTiers({
     'Physical prints with your names & wedding date',
     'Dedicated attendants managing both activations',
   ],
-  platinumDesc: 'The ultimate wedding experience — three robots plus your choice of add-on booth.',
+  platinumDesc: 'The ultimate wedding experience — multiple robots for maximum coverage across your celebration.',
   platinumBenefits: [
-    'Three Robot Photobooths for large-scale wedding receptions',
-    'Add-on booth: Premium Photobooth, Aerial Booth, or 360 Booth',
+    'Multiple Robot Photobooths for large-scale wedding receptions',
     'Multiple activations running throughout your celebration',
     'Maximum guest engagement across your venue',
     'One coordinated team managing everything seamlessly',
+    'Instant digital delivery and on-site prints',
   ],
 })
 
@@ -131,13 +149,13 @@ export const birthdayPackageTiers = getDefaultPackageTiers({
     'Physical prints and instant digital delivery',
     'Dedicated attendants managing both robots',
   ],
-  platinumDesc: 'The ultimate birthday setup — three robots plus an add-on booth for maximum fun.',
+  platinumDesc: 'The ultimate birthday setup — multiple robots for maximum fun across your party.',
   platinumBenefits: [
-    'Three Robot Photobooths for large birthday celebrations',
-    'Add-on: 360 Booth, Premium Photobooth, or Aerial Booth',
+    'Multiple Robot Photobooths for large birthday celebrations',
     'Multiple activations running simultaneously',
     'Maximum guest engagement for larger parties',
     'One team coordinating everything seamlessly',
+    'Instant digital delivery and on-site prints',
   ],
 })
 
@@ -158,13 +176,13 @@ export const corporatePackageTiers = getDefaultPackageTiers({
     'Dedicated attendants managing both activations',
     'Instant digital delivery and on-site prints',
   ],
-  platinumDesc: 'The ultimate corporate activation — three robots plus your choice of add-on booth.',
+  platinumDesc: 'The ultimate corporate activation — multiple robots for maximum coverage and brand reach.',
   platinumBenefits: [
-    'Three Robot Photobooths for large-scale corporate events',
-    'Add-on: 360 Booth, Premium Photobooth, or Aerial Booth',
+    'Multiple Robot Photobooths for large-scale corporate events',
     'Multiple branded touchpoints across your venue',
     'Maximum guest engagement and content volume',
     'One team coordinating everything seamlessly',
+    'Instant digital delivery and on-site prints',
   ],
 })
 
@@ -185,12 +203,12 @@ export const brandActivationsPackageTiers = getDefaultPackageTiers({
     'Lead capture and instant sharing built in',
     'Dedicated operators managing both activations',
   ],
-  platinumDesc: 'The ultimate brand activation — three robots plus an add-on booth for maximum impact.',
+  platinumDesc: 'The ultimate brand activation — multiple robots for maximum impact and content volume.',
   platinumBenefits: [
-    'Three Robot Photobooths for large-scale brand activations',
-    'Add-on: 360 Booth, Premium Photobooth, or Aerial Booth',
+    'Multiple Robot Photobooths for large-scale brand activations',
     'Multiple branded touchpoints across your venue',
     'Maximum content volume and guest engagement',
     'White-glove coordination across every activation',
+    'Instant digital delivery and on-site prints',
   ],
 })

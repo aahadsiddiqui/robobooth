@@ -7,9 +7,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   }
 
   try {
-    const { phone, code } = req.body
+    const body = typeof req.body === 'string' ? JSON.parse(req.body || '{}') : (req.body || {})
+    const { phone, code } = body
 
-    if (!phone || typeof phone !== 'string') {
+    if (!phone || typeof phone !== 'string' || !phone.trim()) {
       return res.status(400).json({ error: 'Phone number is required' })
     }
 
