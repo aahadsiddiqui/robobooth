@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react'
+import { useState, useCallback, useRef } from 'react'
 import { isValidNorthAmericanPhone, toE164Phone } from '@/lib/phoneUtils'
 
 const API_TIMEOUT_MS = 20000
@@ -20,8 +20,11 @@ export function usePhoneVerification() {
   const [codeSent, setCodeSent] = useState(false)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
+  // Sync lock — prevents double-send from rapid double-clicks before React re-renders
+  const inFlightRef = useRef(false)
 
   const reset = useCallback(() => {
+    inFlightRef.current = false
     setIsVerified(false)
     setVerifiedPhone('')
     setOtp(['', '', '', '', '', ''])
@@ -31,12 +34,14 @@ export function usePhoneVerification() {
   }, [])
 
   const sendCode = useCallback(async (phone: string) => {
+    if (inFlightRef.current) return false
     setError('')
     if (!isValidNorthAmericanPhone(phone)) {
       setError('Please enter a valid 10-digit phone number.')
       return false
     }
 
+    inFlightRef.current = true
     setLoading(true)
     try {
       const res = await fetchWithTimeout('/api/verify/send', {
@@ -57,11 +62,13 @@ export function usePhoneVerification() {
       }
       return false
     } finally {
+      inFlightRef.current = false
       setLoading(false)
     }
   }, [])
 
   const verifyCode = useCallback(async (phone: string, code: string) => {
+    if (inFlightRef.current) return false
     setError('')
     const e164 = toE164Phone(phone)
     if (!e164 || !isValidNorthAmericanPhone(phone)) {
@@ -73,6 +80,7 @@ export function usePhoneVerification() {
       return false
     }
 
+    inFlightRef.current = true
     setLoading(true)
     try {
       const res = await fetchWithTimeout('/api/verify/check', {
@@ -93,6 +101,7 @@ export function usePhoneVerification() {
       }
       return false
     } finally {
+      inFlightRef.current = false
       setLoading(false)
     }
   }, [])

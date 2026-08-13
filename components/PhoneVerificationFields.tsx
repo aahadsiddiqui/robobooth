@@ -68,6 +68,7 @@ export default function PhoneVerificationFields({
   }
 
   const handleSend = async () => {
+    if (loading) return
     const value = phone.trim() || phoneInputRef.current?.value?.trim() || ''
     if (value && value !== phone) onPhoneChange?.(value)
     const sent = await sendCode(value || phone)
@@ -75,6 +76,7 @@ export default function PhoneVerificationFields({
   }
 
   const handleVerify = async () => {
+    if (loading) return
     const value = phone.trim() || phoneInputRef.current?.value?.trim() || ''
     if (value && value !== phone) onPhoneChange?.(value)
     await verifyCode(value || phone, otp.join(''))

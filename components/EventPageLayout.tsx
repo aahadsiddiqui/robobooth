@@ -567,6 +567,8 @@ export default function EventPageLayout(props: EventPageProps) {
         eventType={eventTypeName}
         packageLabel={packageLabelResolved}
         source={formSource ?? `${eventTypeName} Page`}
+        packageTier={packageType === 'aerial' ? '' : packageType}
+        pricingContext="standard"
       />
 
       {/* Sticky */}

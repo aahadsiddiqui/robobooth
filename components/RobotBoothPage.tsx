@@ -431,11 +431,8 @@ export default function RobotBoothPage() {
         eventType={"Robot Photobooth"}
         packageLabel={packageLabel}
         source={"Robot Photobooth Page"}
-        budgetOptions={[
-          { value: '$1000-$1500', label: '$1,000–$1,500' },
-          { value: '$1500-$2500', label: '$1,500–$2,500' },
-          { value: '$2500+', label: '$2,500+' },
-        ]}
+        packageTier={packageType}
+        pricingContext="standard"
       />
 
       {/* ── Sticky CTA ── */}

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { motion } from 'framer-motion'
 import { FiArrowRight, FiCheck, FiCamera, FiPlus } from 'react-icons/fi'
 import { PackageTierContent, PackageTierId, boothAddOns } from '@/data/packageTiers'
@@ -24,7 +24,6 @@ type PackageCardsGridProps = {
   bronzeLabel?: string
   goldLabel?: string
   platinumLabel?: string
-  showBoothAddOns?: boolean
 }
 
 function PhotographySubsection({
@@ -72,24 +71,98 @@ function PhotographySubsection({
   )
 }
 
-function BoothAddOnsSubsection() {
+function BoothAddOnsSubsection({ variant }: { variant: PackageTierId }) {
+  const [activeId, setActiveId] = useState<string | null>(null)
+  const activeBooth = boothAddOns.find((b) => b.id === activeId) ?? null
+
+  const styles = {
+    bronze: 'border-white/10 bg-white/[0.03]',
+    gold: 'border-[#fce4a6]/20 bg-[#fce4a6]/5',
+    platinum: 'border-white/15 bg-white/[0.05]',
+  }
+  const iconColor = {
+    bronze: 'text-white/40',
+    gold: 'text-[#fce4a6]',
+    platinum: 'text-white/60',
+  }
+  const chipIdle = {
+    bronze: 'border-white/15 bg-white/[0.04] text-white/55 hover:border-white/30 hover:text-white/85',
+    gold: 'border-white/15 bg-black/30 text-white/55 hover:border-[#fce4a6]/40 hover:text-[#fce4a6]/90',
+    platinum: 'border-white/15 bg-white/[0.04] text-white/55 hover:border-white/30 hover:text-white/85',
+  }
+  const chipActive = {
+    bronze: 'border-white/55 bg-white/15 text-white shadow-[0_0_0_1px_rgba(255,255,255,0.15)]',
+    gold: 'border-[#fce4a6] bg-[#fce4a6]/20 text-[#fce4a6] shadow-[0_0_0_1px_rgba(252,228,166,0.35)]',
+    platinum: 'border-white/55 bg-white/15 text-white shadow-[0_0_0_1px_rgba(255,255,255,0.15)]',
+  }
+
   return (
-    <div className="rounded-xl border border-white/15 bg-white/[0.05] p-3.5 mt-4">
-      <div className="flex items-center gap-2 mb-2.5">
-        <FiPlus className="w-3.5 h-3.5 text-white/60" />
-        <p className="text-[10px] font-black uppercase tracking-widest text-white/50">
-          Add on: Extra Booths
-        </p>
+    <div
+      className={`rounded-xl border p-3.5 mt-4 ${styles[variant]}`}
+      onMouseLeave={() => setActiveId(null)}
+    >
+      <div className="flex items-center justify-between gap-2 mb-2.5">
+        <div className="flex items-center gap-2">
+          <FiPlus className={`w-3.5 h-3.5 ${iconColor[variant]}`} />
+          <p className={`text-[10px] font-black uppercase tracking-widest ${variant === 'gold' ? 'text-[#fce4a6]/80' : 'text-white/50'}`}>
+            Add on: Extra Booths
+          </p>
+        </div>
+        <p className="text-[9px] text-white/30 hidden sm:block">Hover to preview</p>
       </div>
       <div className="flex flex-wrap gap-1.5">
-        {boothAddOns.map((booth) => (
-          <span
-            key={booth.name}
-            className="inline-flex items-center rounded-full border border-white/15 bg-white/[0.04] px-2.5 py-1 text-[10px] font-semibold text-white/70"
-          >
-            {booth.name}
-          </span>
-        ))}
+        {boothAddOns.map((booth) => {
+          const isActive = activeId === booth.id
+          return (
+            <button
+              key={booth.id}
+              type="button"
+              onMouseEnter={() => setActiveId(booth.id)}
+              onFocus={() => setActiveId(booth.id)}
+              onClick={() => setActiveId((prev) => (prev === booth.id ? null : booth.id))}
+              className={`inline-flex items-center rounded-full border px-2.5 py-1 text-[10px] font-semibold transition-all cursor-pointer outline-none focus-visible:ring-1 focus-visible:ring-white/40 ${
+                isActive ? chipActive[variant] : chipIdle[variant]
+              }`}
+              aria-pressed={isActive}
+              aria-label={`Preview ${booth.name}`}
+            >
+              {booth.name}
+            </button>
+          )
+        })}
+      </div>
+
+      <div
+        className={`grid transition-[grid-template-rows] duration-200 ease-out ${
+          activeBooth ? 'grid-rows-[1fr] mt-3' : 'grid-rows-[0fr] mt-0'
+        }`}
+      >
+        <div className="overflow-hidden min-h-0">
+          <div className="rounded-lg border border-white/10 bg-black/55 overflow-hidden">
+            <div className="relative h-[140px] w-full bg-black">
+              {boothAddOns.map((booth) => (
+                <img
+                  key={booth.id}
+                  src={booth.image}
+                  alt={booth.name}
+                  className={`absolute inset-0 h-full w-full object-contain p-1.5 transition-opacity duration-200 ${
+                    activeId === booth.id ? 'opacity-100' : 'opacity-0 pointer-events-none'
+                  }`}
+                  style={{ objectPosition: booth.objectPosition }}
+                  loading="lazy"
+                />
+              ))}
+            </div>
+            <div className="px-2.5 py-2 border-t border-white/10 bg-black/40 min-h-[52px]">
+              <p className="text-white text-[11px] font-bold leading-tight">
+                {activeBooth?.name ?? '\u00A0'}
+              </p>
+              <p className="text-white/60 text-[10px] leading-snug mt-0.5">
+                {activeBooth?.desc ?? '\u00A0'}
+              </p>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   )
@@ -121,7 +194,6 @@ export default function PackageCardsGrid({
   platinumLabel = 'Platinum Package',
   insertAfterBronze,
   maxWidth = 'max-w-5xl',
-  showBoothAddOns = true,
 }: PackageCardsGridProps & {
   insertAfterBronze?: React.ReactNode
   maxWidth?: string
@@ -161,6 +233,7 @@ export default function PackageCardsGrid({
                     <p className="text-white/60 text-xs leading-relaxed">{b}</p>
                   </div>
                 ))}
+                <BoothAddOnsSubsection variant="bronze" />
                 <PhotographySubsection benefits={tiers.bronze.photographyBenefits} variant="bronze" />
               </div>
               <div className="text-center mt-6">
@@ -203,6 +276,7 @@ export default function PackageCardsGrid({
                       <p className="text-white/70 text-xs leading-relaxed">{b}</p>
                     </div>
                   ))}
+                  <BoothAddOnsSubsection variant="gold" />
                   <PhotographySubsection benefits={tiers.gold.photographyBenefits} variant="gold" />
                 </div>
                 <div className="text-center mt-6">
@@ -245,7 +319,7 @@ export default function PackageCardsGrid({
                       <p className="text-white/70 text-xs leading-relaxed">{b}</p>
                     </div>
                   ))}
-                  <BoothAddOnsSubsection />
+                  <BoothAddOnsSubsection variant="platinum" />
                   <PhotographySubsection benefits={tiers.platinum.photographyBenefits} variant="platinum" />
                 </div>
                 <div className="text-center mt-6">
@@ -263,46 +337,6 @@ export default function PackageCardsGrid({
             </div>
           </Reveal>
         </div>
-
-        {showBoothAddOns && (
-          <Reveal className="mt-10 md:mt-12" delay={0.15}>
-            <div className="rounded-3xl border border-white/15 bg-white/[0.03] p-6 md:p-8">
-              <div className="text-center mb-6">
-                <div className="inline-flex items-center gap-2 bg-white/10 text-white/70 text-[11px] font-black tracking-widest uppercase px-4 py-1.5 rounded-full mb-3">
-                  <FiPlus className="w-3.5 h-3.5" />
-                  Add-On Booths
-                </div>
-                <h3 className="text-xl md:text-2xl font-black mb-2">
-                  Pair Any Package with an <span className="text-[#fce4a6]">Extra Booth</span>
-                </h3>
-                <p className="text-white/50 text-sm max-w-xl mx-auto">
-                  Layer on a second activation for more coverage, more content, and more guest moments.
-                </p>
-              </div>
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
-                {boothAddOns.map((booth) => (
-                  <div
-                    key={booth.name}
-                    className="rounded-2xl border border-white/10 bg-black/40 p-4 hover:border-[#fce4a6]/40 transition-colors"
-                  >
-                    <p className="text-sm font-bold text-white mb-1.5">{booth.name}</p>
-                    <p className="text-white/45 text-[11px] leading-relaxed">{booth.desc}</p>
-                  </div>
-                ))}
-              </div>
-              <div className="text-center mt-6">
-                <motion.button
-                  whileHover={{ scale: 1.04 }}
-                  whileTap={{ scale: 0.97 }}
-                  onClick={onBookPlatinum}
-                  className="border border-[#fce4a6]/40 text-[#fce4a6] px-5 py-2.5 rounded-full font-bold text-xs md:text-sm hover:bg-[#fce4a6]/10 transition-all group"
-                >
-                  Ask About Add-On Booths <FiArrowRight className="inline ml-1 group-hover:translate-x-1 transition-transform" />
-                </motion.button>
-              </div>
-            </div>
-          </Reveal>
-        )}
       </div>
     </section>
   )

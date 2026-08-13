@@ -392,6 +392,8 @@ export default function Wedding() {
         eventType={"Wedding"}
         packageLabel={packageLabel}
         source={"Wedding Page"}
+        packageTier={packageType}
+        pricingContext="standard"
       />
 
       {/* ── Sticky CTA ── */}

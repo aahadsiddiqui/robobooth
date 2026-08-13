@@ -452,6 +452,8 @@ export default function Corporate() {
         eventType="Corporate Event"
         packageLabel={packageLabel}
         source="Corporate Page"
+        packageTier={packageType}
+        pricingContext="corporate"
       />
 
       {/* ── Sticky CTA ── */}

@@ -388,6 +388,8 @@ export default function Birthday() {
         eventType={"Birthday"}
         packageLabel={packageLabel}
         source={"Birthday Page"}
+        packageTier={packageType}
+        pricingContext="standard"
       />
 
       {/* ── Sticky CTA ── */}

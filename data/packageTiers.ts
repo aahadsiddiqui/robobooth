@@ -13,20 +13,32 @@ export type PackageTierContent = {
 
 export const boothAddOns = [
   {
+    id: 'portrait',
     name: 'Portrait Booth',
     desc: 'Studio-quality portraits with flattering lighting and professional backdrops.',
+    image: '/images/portraitbooth2.jpg',
+    objectPosition: 'center top',
   },
   {
+    id: 'aerial',
     name: 'Aerial Booth',
     desc: 'Elevated overhead shots that capture your venue and guests from above.',
+    image: '/images/aerial-booth-1.png',
+    objectPosition: 'center center',
   },
   {
+    id: 'premium',
     name: 'Premium Booth',
     desc: 'A classic enclosed photobooth with instant prints and custom branding.',
+    image: '/images/premium-booth.jpg',
+    objectPosition: 'center center',
   },
   {
+    id: '360',
     name: '360 Booth',
     desc: 'Cinematic spinning video content guests can share instantly to social.',
+    image: '/images/360-booth-main.jpg',
+    objectPosition: 'center center',
   },
 ] as const
 

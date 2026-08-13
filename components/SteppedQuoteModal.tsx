@@ -1,8 +1,14 @@
-import React, { useState, useEffect, useCallback } from 'react'
+import React, { useState, useEffect, useCallback, useMemo, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { FiArrowLeft, FiArrowRight, FiX } from 'react-icons/fi'
 import PhoneVerificationFields from './PhoneVerificationFields'
 import { appendUtmParams } from '@/lib/utmParams'
+import {
+  getPackageBudgetOptions,
+  getTodayDateString,
+  type PricingContext,
+  type QuotePackageTier,
+} from '@/lib/quoteBudgets'
 
 export type QuoteFormData = {
   firstName: string
@@ -21,15 +27,12 @@ type SteppedQuoteModalProps = {
   eventType: string
   packageLabel: string
   source: string
-  budgetOptions?: { value: string; label: string }[]
+  /** Selected package — drives budget dropdown ranges */
+  packageTier?: QuotePackageTier
+  /** corporate = corporate page pricing; standard = robot/event pages */
+  pricingContext?: PricingContext
   formspreeUrl?: string
 }
-
-const DEFAULT_BUDGETS = [
-  { value: '$1500-$2500', label: '$1,500–$2,500' },
-  { value: '$2500-$4000', label: '$2,500–$4,000' },
-  { value: '$4000+', label: '$4,000+' },
-]
 
 const STEPS = ['name', 'phone', 'email', 'date', 'budget'] as const
 type Step = (typeof STEPS)[number]
@@ -42,7 +45,6 @@ const STEP_LABELS: Record<Step, { short: string; full: string }> = {
   budget: { short: 'Budget', full: 'Budget' },
 }
 
-// 16px on mobile avoids iOS zooming into inputs
 const inputClass =
   'w-full px-4 py-3.5 md:py-3 border border-gray-200 rounded-xl text-base md:text-sm focus:ring-2 focus:ring-[#fce4a6] focus:border-transparent outline-none text-black'
 
@@ -55,7 +57,8 @@ export default function SteppedQuoteModal({
   eventType,
   packageLabel,
   source,
-  budgetOptions = DEFAULT_BUDGETS,
+  packageTier = '',
+  pricingContext = 'standard',
   formspreeUrl = 'https://formspree.io/f/xkgoedyp',
 }: SteppedQuoteModalProps) {
   const [stepIndex, setStepIndex] = useState(0)
@@ -70,8 +73,21 @@ export default function SteppedQuoteModal({
   const [stepError, setStepError] = useState('')
   const [submitting, setSubmitting] = useState(false)
   const [success, setSuccess] = useState(false)
+  const [viewport, setViewport] = useState({ height: 0, offsetTop: 0 })
+  const scrollRef = useRef<HTMLDivElement>(null)
 
   const step = STEPS[stepIndex]
+  const today = useMemo(() => getTodayDateString(), [])
+  const budgetOptions = useMemo(
+    () => getPackageBudgetOptions(packageTier, pricingContext),
+    [packageTier, pricingContext]
+  )
+
+  useEffect(() => {
+    if (form.budget && !budgetOptions.some((o) => o.value === form.budget)) {
+      setForm((prev) => ({ ...prev, budget: '' }))
+    }
+  }, [budgetOptions, form.budget])
 
   const resetModal = useCallback(() => {
     setStepIndex(0)
@@ -91,6 +107,44 @@ export default function SteppedQuoteModal({
     }
     return () => document.body.classList.remove('overflow-hidden')
   }, [open, resetModal])
+
+  // Keep modal inside the visible viewport above the iOS/Android keyboard
+  useEffect(() => {
+    if (!open || typeof window === 'undefined') return
+
+    const syncViewport = () => {
+      const vv = window.visualViewport
+      if (vv) {
+        setViewport({ height: vv.height, offsetTop: vv.offsetTop })
+      } else {
+        setViewport({ height: window.innerHeight, offsetTop: 0 })
+      }
+    }
+
+    syncViewport()
+    const vv = window.visualViewport
+    vv?.addEventListener('resize', syncViewport)
+    vv?.addEventListener('scroll', syncViewport)
+    window.addEventListener('resize', syncViewport)
+
+    return () => {
+      vv?.removeEventListener('resize', syncViewport)
+      vv?.removeEventListener('scroll', syncViewport)
+      window.removeEventListener('resize', syncViewport)
+    }
+  }, [open])
+
+  // When keyboard opens / step changes, keep the active field visible
+  useEffect(() => {
+    if (!open) return
+    const id = window.setTimeout(() => {
+      const active = document.activeElement
+      if (active instanceof HTMLElement && scrollRef.current?.contains(active)) {
+        active.scrollIntoView({ block: 'center', behavior: 'smooth' })
+      }
+    }, 80)
+    return () => window.clearTimeout(id)
+  }, [open, stepIndex, viewport.height])
 
   const handleClose = () => {
     onClose()
@@ -123,6 +177,10 @@ export default function SteppedQuoteModal({
     if (step === 'date') {
       if (!form.eventDate) {
         setStepError('Please select your event date.')
+        return false
+      }
+      if (form.eventDate < today) {
+        setStepError('Event date cannot be in the past.')
         return false
       }
     }
@@ -182,6 +240,15 @@ export default function SteppedQuoteModal({
     }
   }
 
+  const overlayStyle =
+    viewport.height > 0
+      ? {
+          top: viewport.offsetTop,
+          height: viewport.height,
+          bottom: 'auto' as const,
+        }
+      : undefined
+
   return (
     <AnimatePresence>
       {open && (
@@ -189,7 +256,8 @@ export default function SteppedQuoteModal({
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          className="fixed inset-0 z-[60] flex items-end sm:items-center justify-center bg-black/70 backdrop-blur-md p-0 sm:p-4"
+          className="fixed inset-x-0 z-[60] flex items-end sm:items-center justify-center bg-black/70 backdrop-blur-md p-0 sm:p-4"
+          style={overlayStyle ?? { top: 0, bottom: 0 }}
           onClick={(e) => {
             if (e.target === e.currentTarget) handleClose()
           }}
@@ -199,31 +267,34 @@ export default function SteppedQuoteModal({
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 80 }}
             transition={{ type: 'spring', stiffness: 320, damping: 30 }}
-            className="bg-white rounded-t-3xl sm:rounded-2xl w-full sm:max-w-md shadow-2xl relative flex flex-col max-h-[min(92dvh,920px)] sm:max-h-[90vh]"
+            className="bg-white rounded-t-3xl sm:rounded-2xl w-full sm:max-w-md shadow-2xl relative flex flex-col max-h-full sm:max-h-[min(90vh,920px)]"
             role="dialog"
             aria-modal="true"
             aria-labelledby="quote-modal-title"
           >
-            {/* Mobile drag handle */}
-            <div className="sm:hidden flex justify-center pt-2.5 pb-1 flex-shrink-0">
+            <div className="sm:hidden flex justify-center pt-2.5 pb-0.5 flex-shrink-0">
               <div className="w-10 h-1 rounded-full bg-gray-300" />
             </div>
 
-            <button
-              onClick={handleClose}
-              className="absolute top-3 right-3 sm:top-4 sm:right-4 z-10 w-9 h-9 sm:w-8 sm:h-8 flex items-center justify-center rounded-full bg-gray-100 sm:bg-transparent text-black/50 hover:text-black hover:bg-gray-200 transition-colors"
-              aria-label="Close"
+            {/* Banner + close share one row so the X never overlaps content */}
+            <div className="flex-shrink-0 flex items-start gap-2 px-4 pt-2 sm:px-6 sm:pt-4">
+              <div className="flex-1 min-w-0 [&_>div]:mb-0">{packageBanner}</div>
+              <button
+                onClick={handleClose}
+                className="w-9 h-9 flex-shrink-0 flex items-center justify-center rounded-full bg-gray-100 text-black/50 hover:text-black hover:bg-gray-200 transition-colors"
+                aria-label="Close"
+              >
+                <FiX className="w-5 h-5" />
+              </button>
+            </div>
+
+            <div
+              ref={scrollRef}
+              className="flex-1 overflow-y-auto overscroll-contain px-4 pt-3 pb-3 sm:px-8 sm:pt-3 sm:pb-4"
             >
-              <FiX className="w-5 h-5" />
-            </button>
-
-            {/* Scrollable body */}
-            <div className="flex-1 overflow-y-auto overscroll-contain px-4 pt-2 pb-3 sm:px-8 sm:pt-8 sm:pb-4">
-              {packageBanner}
-
               <h2
                 id="quote-modal-title"
-                className="text-lg sm:text-xl md:text-2xl font-black text-black mb-1 text-center pr-8"
+                className="text-lg sm:text-xl md:text-2xl font-black text-black mb-1 text-center"
               >
                 {title}
               </h2>
@@ -237,7 +308,6 @@ export default function SteppedQuoteModal({
                 </div>
               ) : (
                 <>
-                  {/* Progress — short labels on mobile */}
                   <div className="flex items-center gap-1 sm:gap-1.5 mb-4 sm:mb-5">
                     {STEPS.map((s, i) => (
                       <div key={s} className="flex-1 min-w-0 flex flex-col items-center gap-1">
@@ -330,8 +400,18 @@ export default function SteppedQuoteModal({
                           <input
                             type="date"
                             autoFocus
+                            min={today}
                             value={form.eventDate}
-                            onChange={(e) => setForm((prev) => ({ ...prev, eventDate: e.target.value }))}
+                            onChange={(e) => {
+                              const value = e.target.value
+                              if (value && value < today) {
+                                setStepError('Event date cannot be in the past.')
+                                setForm((prev) => ({ ...prev, eventDate: '' }))
+                                return
+                              }
+                              setStepError('')
+                              setForm((prev) => ({ ...prev, eventDate: value }))
+                            }}
                             onKeyDown={(e) => e.key === 'Enter' && (e.preventDefault(), goNext())}
                             className={`${inputClass} min-h-[48px]`}
                           />
@@ -367,7 +447,6 @@ export default function SteppedQuoteModal({
               )}
             </div>
 
-            {/* Sticky footer actions — always visible above home indicator / keyboard */}
             {!success && (
               <div className="flex-shrink-0 border-t border-gray-100 px-4 pt-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] sm:px-8 sm:pt-4 sm:pb-6 bg-white">
                 <div className="flex gap-2">

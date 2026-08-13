@@ -452,6 +452,8 @@ export default function BrandActivations() {
         eventType={"Brand Activation"}
         packageLabel={packageLabel}
         source={"Brand Activations Page"}
+        packageTier={packageType}
+        pricingContext="standard"
       />
 
       {/* ── Sticky CTA ── */}
