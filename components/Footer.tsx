@@ -67,6 +67,8 @@ const footerLinks = [
   { href: '/', label: 'Home' },
   { href: '/about', label: 'About' },
   { href: '/packages', label: 'Packages' },
+  { href: '/aerial-corporate', label: 'Aerial Booth — Corporate' },
+  { href: '/aerial-private', label: 'Aerial Booth — Private Events' },
   { href: '/contact', label: 'Contact' },
   { href: '/privacy-policy', label: 'Privacy Policy' }
 ]

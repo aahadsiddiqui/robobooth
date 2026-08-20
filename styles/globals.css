@@ -139,6 +139,15 @@
   animation: marquee 30s linear infinite;
 } 
 
+/* Safari: hide the big center play button on muted autoplay heroes */
+.hero-autoplay-video::-webkit-media-controls-start-playback-button {
+  display: none !important;
+  -webkit-appearance: none;
+}
+.hero-autoplay-video::-webkit-media-controls {
+  display: none !important;
+}
+
 /* Safe area padding for iPhones with home indicator */
 .safe-area-pb {
   padding-bottom: max(0.75rem, env(safe-area-inset-bottom));
