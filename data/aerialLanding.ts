@@ -158,7 +158,7 @@ export const aerialCorporateCopy: AerialLandingCopy = {
   path: '/aerial-corporate',
   seoTitle: 'Corporate Aerial Booth Toronto | Luxury Brand Activations | RoboBooth',
   seoDescription:
-    'Toronto’s first luxury Aerial Booth for corporate events and brand activations. High-angle branded content, white-label customization, and white-glove service across the GTA and Texas.',
+    'Toronto’s first luxury Aerial Booth for corporate events and brand activations. High-angle branded content, white-label customization, and white-glove service across the GTA.',
   seoKeywords:
     'corporate aerial booth Toronto, luxury aerial photo booth, brand activation Toronto, high angle photo booth GTA, branded photo booth corporate',
   ogTitle: 'Elevate Your Brand. Toronto’s First Luxury Aerial Booth.',
@@ -175,7 +175,7 @@ export const aerialCorporateCopy: AerialLandingCopy = {
   microCopy: 'Responses in <15 mins | No credit card required.',
   heroVideo: '/videos/corporateaerial.MOV',
   heroPoster: '/images/aerial-corporate-poster.png',
-  marqueeLabel: 'Trusted by leading companies across the GTA and Texas',
+  marqueeLabel: 'Trusted by leading companies across the GTA',
   marqueeMode: 'logos',
   featuresTitleLead: 'Not Just a Photo Booth.',
   featuresTitleAccent: 'A Complete Brand Experience.',
