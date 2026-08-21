@@ -148,7 +148,7 @@ export type AerialLandingCopy = {
   stickyCta: string
   eventType: string
   source: string
-  pricingContext: 'corporate' | 'standard' | 'aerial-private'
+  pricingContext: 'corporate' | 'standard' | 'aerial-private' | 'aerial-corporate'
   packageLabels: Record<'bronze' | 'gold' | 'platinum', string>
   packageBannerSubtitles: Record<'bronze' | 'gold' | 'platinum', string>
 }
@@ -182,7 +182,7 @@ export const aerialCorporateCopy: AerialLandingCopy = {
   features: [
     {
       title: 'High-Angle Impact',
-      desc: 'Capture stunning overhead photos, videos, and GIFs that dominate social feeds.',
+      desc: 'Capture stunning overhead photos, videos, GIFs, and physical print-outs that dominate social feeds and leave guests with a keepable memento.',
     },
     {
       title: 'White-Label Customization',
@@ -202,11 +202,11 @@ export const aerialCorporateCopy: AerialLandingCopy = {
   steps: [
     {
       title: 'You Book the Activation',
-      desc: 'Tell us your campaign goals and event footprint. We handle the logistics.',
+      desc: 'Tell us your campaign goals and event footprint. You’re assigned a dedicated event coordinator who handles the logistics.',
     },
     {
-      title: 'Rapid Setup',
-      desc: 'Our professional team arrives early, setting up the complete experience in 30 minutes.',
+      title: 'We Handle Setup',
+      desc: 'Our professional team arrives early and handles the complete setup so your space is ready before guests arrive.',
     },
     {
       title: 'High-Volume Engagement',
@@ -219,11 +219,13 @@ export const aerialCorporateCopy: AerialLandingCopy = {
     {
       id: 'bronze',
       badge: 'Bronze · Brand Activation',
-      title: 'Aerial Booth Only',
+      title: 'Aerial Booth Experience',
       desc: 'The flagship high-angle experience — fully branded and fully staffed.',
       benefits: [
-        'Aerial Booth only',
+        'Aerial Booth Experience',
+        'Physical prints for every guest',
         'Fully branded digital overlays and instant sharing',
+        'Red carpet and gold stanchions included for a complete luxurious setup',
         'Dedicated on-site attendant',
       ],
       cta: 'Book Bronze Package',
@@ -294,14 +296,14 @@ export const aerialCorporateCopy: AerialLandingCopy = {
   stickyCta: 'Get a Corporate Quote',
   eventType: 'Corporate Event - Aerial Booth',
   source: 'Aerial Corporate Page',
-  pricingContext: 'corporate',
+  pricingContext: 'aerial-corporate',
   packageLabels: {
-    bronze: 'Bronze Package (Aerial Booth Only — Brand Activation)',
+    bronze: 'Bronze Package (Aerial Booth Experience — Brand Activation)',
     gold: 'Gold Package (Aerial Booth + 1 Additional Booth)',
     platinum: 'Platinum Package (Aerial Booth + 2 Additional Booths)',
   },
   packageBannerSubtitles: {
-    bronze: 'Aerial Booth Only',
+    bronze: 'Aerial Booth Experience',
     gold: 'Aerial + 1 Additional Booth',
     platinum: 'Aerial + 2 Additional Booths',
   },
@@ -375,11 +377,13 @@ export const aerialPrivateCopy: AerialLandingCopy = {
     {
       id: 'bronze',
       badge: 'Bronze · The Party Starter',
-      title: 'Aerial Booth Only',
+      title: 'Aerial Booth Experience',
       desc: 'The luxury high-angle experience your guests will talk about all night.',
       benefits: [
-        'Aerial Booth only',
+        'Aerial Booth Experience',
+        'Physical prints for every guest',
         'Unlimited digital captures and a dedicated attendant',
+        'Red carpet and gold stanchions included for a complete luxurious setup',
       ],
       cta: 'Book Bronze Package',
     },
@@ -452,13 +456,13 @@ export const aerialPrivateCopy: AerialLandingCopy = {
   source: 'Aerial Private Page',
   pricingContext: 'aerial-private',
   packageLabels: {
-    bronze: 'Bronze Package (Aerial Booth Only — Party Starter)',
+    bronze: 'Bronze Package (Aerial Booth Experience — Party Starter)',
     gold: 'Gold Package (Aerial Booth + 1 Additional Booth — Double Feature)',
     platinum: 'Platinum Package (Aerial Booth + 2 Additional Booths — Showstopper)',
   },
   packageBannerSubtitles: {
-    bronze: 'Aerial Booth Only · $1,500–$2,000',
-    gold: 'Aerial + 1 Additional Booth · from $2,500',
+    bronze: 'Aerial Booth Experience · from $2,000',
+    gold: 'Aerial + 1 Additional Booth · from $3,000',
     platinum: 'Aerial + 2 Additional Booths · from $4,000',
   },
 }

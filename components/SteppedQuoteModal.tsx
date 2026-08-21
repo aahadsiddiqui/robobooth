@@ -395,26 +395,58 @@ export default function SteppedQuoteModal({
                       {step === 'date' && (
                         <div>
                           <label className="block text-[10px] sm:text-xs font-semibold text-black/50 mb-1.5 uppercase tracking-wider">
-                            Step 4 of {STEPS.length}
+                            Step 4 of {STEPS.length} · Event Date
                           </label>
-                          <input
-                            type="date"
-                            autoFocus
-                            min={today}
-                            value={form.eventDate}
-                            onChange={(e) => {
-                              const value = e.target.value
-                              if (value && value < today) {
-                                setStepError('Event date cannot be in the past.')
-                                setForm((prev) => ({ ...prev, eventDate: '' }))
-                                return
-                              }
-                              setStepError('')
-                              setForm((prev) => ({ ...prev, eventDate: value }))
-                            }}
-                            onKeyDown={(e) => e.key === 'Enter' && (e.preventDefault(), goNext())}
-                            className={`${inputClass} min-h-[48px]`}
-                          />
+                          <div className="relative">
+                            <div
+                              className={`${inputClass} min-h-[48px] flex items-center bg-white pointer-events-none ${
+                                form.eventDate ? 'text-black font-semibold' : 'text-black/70'
+                              }`}
+                              aria-hidden
+                            >
+                              {form.eventDate
+                                ? new Date(`${form.eventDate}T12:00:00`).toLocaleDateString('en-US', {
+                                    weekday: 'short',
+                                    month: 'long',
+                                    day: 'numeric',
+                                    year: 'numeric',
+                                  })
+                                : 'Select your event date'}
+                            </div>
+                            <input
+                              type="date"
+                              autoFocus
+                              min={today}
+                              value={form.eventDate}
+                              onChange={(e) => {
+                                const value = e.target.value
+                                if (value && value < today) {
+                                  setStepError('Event date cannot be in the past.')
+                                  setForm((prev) => ({ ...prev, eventDate: '' }))
+                                  return
+                                }
+                                setStepError('')
+                                setForm((prev) => ({ ...prev, eventDate: value }))
+                              }}
+                              onKeyDown={(e) => e.key === 'Enter' && (e.preventDefault(), goNext())}
+                              className="absolute inset-0 z-10 h-full w-full cursor-pointer opacity-0"
+                              style={{ colorScheme: 'light' }}
+                              aria-label="Event date"
+                            />
+                          </div>
+                          {form.eventDate ? (
+                            <p className="mt-2 text-sm font-semibold text-black">
+                              Selected:{' '}
+                              {new Date(`${form.eventDate}T12:00:00`).toLocaleDateString('en-US', {
+                                weekday: 'long',
+                                month: 'long',
+                                day: 'numeric',
+                                year: 'numeric',
+                              })}
+                            </p>
+                          ) : (
+                            <p className="mt-2 text-sm text-black/55">Tap the field to open the calendar</p>
+                          )}
                         </div>
                       )}
 
