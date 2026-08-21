@@ -143,8 +143,17 @@
 .hero-autoplay-video::-webkit-media-controls-start-playback-button {
   display: none !important;
   -webkit-appearance: none;
+  opacity: 0 !important;
+  pointer-events: none !important;
+  width: 0 !important;
+  height: 0 !important;
 }
 .hero-autoplay-video::-webkit-media-controls {
+  display: none !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+.hero-autoplay-video::-webkit-media-controls-enclosure {
   display: none !important;
 }
 

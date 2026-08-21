@@ -56,11 +56,9 @@ function HeroSideVideo({
   autoPlayOnMount?: boolean
 }) {
   const videoRef = useRef<HTMLVideoElement>(null)
+  const [isPlaying, setIsPlaying] = useState(false)
 
-  // Set muted BEFORE paint — React's `muted` prop alone is unreliable in Safari
-  useLayoutEffect(() => {
-    const video = videoRef.current
-    if (!video) return
+  const armMuted = useCallback((video: HTMLVideoElement) => {
     video.defaultMuted = true
     video.muted = true
     video.volume = 0
@@ -68,7 +66,27 @@ function HeroSideVideo({
     video.setAttribute('muted', '')
     video.setAttribute('playsinline', '')
     video.setAttribute('webkit-playsinline', 'true')
-  }, [src])
+  }, [])
+
+  const tryPlay = useCallback(() => {
+    const video = videoRef.current
+    if (!video) return
+    armMuted(video)
+    const attempt = video.play()
+    if (attempt) {
+      attempt
+        .then(() => setIsPlaying(true))
+        .catch(() => setIsPlaying(false))
+    }
+  }, [armMuted])
+
+  // Set muted BEFORE paint — React's `muted` prop alone is unreliable in Safari
+  useLayoutEffect(() => {
+    const video = videoRef.current
+    if (!video) return
+    armMuted(video)
+    if (autoPlayOnMount) tryPlay()
+  }, [src, autoPlayOnMount, armMuted, tryPlay])
 
   useEffect(() => {
     const video = videoRef.current
@@ -77,70 +95,109 @@ function HeroSideVideo({
     let cancelled = false
     let tries = 0
 
+    const markPlaying = () => {
+      if (!cancelled && !video.paused) setIsPlaying(true)
+    }
+
     const play = () => {
       if (cancelled || !video) return
-      video.muted = true
-      video.volume = 0
+      armMuted(video)
       const attempt = video.play()
       if (attempt) {
-        attempt.catch(() => {
-          if (cancelled || tries >= 8) return
-          tries += 1
-          window.setTimeout(play, 200 * tries)
-        })
+        attempt
+          .then(() => {
+            if (!cancelled) setIsPlaying(true)
+          })
+          .catch(() => {
+            if (cancelled || tries >= 12) return
+            tries += 1
+            window.setTimeout(play, Math.min(80 * tries, 400))
+          })
       }
     }
 
+    video.addEventListener('playing', markPlaying)
+    video.addEventListener('play', markPlaying)
+
     if (autoPlayOnMount) {
       play()
+      video.addEventListener('loadedmetadata', play)
       video.addEventListener('loadeddata', play)
       video.addEventListener('canplay', play)
-      // Safari often needs a tick after layout/fonts
-      const t1 = window.setTimeout(play, 100)
-      const t2 = window.setTimeout(play, 500)
-      const t3 = window.setTimeout(play, 1200)
+      const t1 = window.setTimeout(play, 0)
+      const t2 = window.setTimeout(play, 50)
+      const t3 = window.setTimeout(play, 150)
+
+      // iOS Low Power Mode / flaky autoplay: resume on first user gesture anywhere
+      const onGesture = () => play()
+      window.addEventListener('touchstart', onGesture, { once: true, passive: true })
+      window.addEventListener('click', onGesture, { once: true })
 
       return () => {
         cancelled = true
         window.clearTimeout(t1)
         window.clearTimeout(t2)
         window.clearTimeout(t3)
+        window.removeEventListener('touchstart', onGesture)
+        window.removeEventListener('click', onGesture)
+        video.removeEventListener('loadedmetadata', play)
         video.removeEventListener('loadeddata', play)
         video.removeEventListener('canplay', play)
+        video.removeEventListener('playing', markPlaying)
+        video.removeEventListener('play', markPlaying)
       }
     }
 
     const io = new IntersectionObserver(
       ([entry]) => {
         if (entry?.isIntersecting) play()
-        else video.pause()
+        else {
+          video.pause()
+          setIsPlaying(false)
+        }
       },
-      { threshold: 0.4 }
+      { threshold: 0.35 }
     )
     io.observe(video)
     return () => {
       cancelled = true
       io.disconnect()
+      video.removeEventListener('playing', markPlaying)
+      video.removeEventListener('play', markPlaying)
     }
-  }, [src, autoPlayOnMount])
+  }, [src, autoPlayOnMount, armMuted])
 
   return (
-    <video
-      ref={videoRef}
-      className={`hero-autoplay-video w-full h-auto max-h-[50vh] md:max-h-none md:h-[480px] lg:h-[520px] object-contain bg-black ${className}`}
-      style={{ display: 'block' }}
-      autoPlay={autoPlayOnMount}
-      muted
-      loop
-      playsInline
-      preload="auto"
-      poster={poster}
-      controls={false}
-      disablePictureInPicture
-      aria-label="Aerial Booth demo video"
+    <div
+      className="relative bg-black"
+      onClick={tryPlay}
+      onTouchStart={tryPlay}
+      role="presentation"
     >
-      <source src={src} type="video/mp4" />
-    </video>
+      {!isPlaying && (
+        <img
+          src={poster}
+          alt=""
+          aria-hidden
+          className="absolute inset-0 z-[1] h-full w-full object-contain bg-black pointer-events-none"
+        />
+      )}
+      <video
+        ref={videoRef}
+        className={`hero-autoplay-video w-full h-auto max-h-[50vh] md:max-h-none md:h-[480px] lg:h-[520px] object-contain bg-black ${className}`}
+        style={{ display: 'block' }}
+        src={src}
+        autoPlay={autoPlayOnMount}
+        muted
+        loop
+        playsInline
+        preload="auto"
+        poster={poster}
+        controls={false}
+        disablePictureInPicture
+        aria-label="Aerial Booth demo video"
+      />
+    </div>
   )
 }
 
@@ -165,7 +222,13 @@ function logoFilterClass(logo: string) {
   return 'filter brightness-0 invert'
 }
 
-function BoothChoicePreview({ variant }: { variant: 'gold' | 'platinum' }) {
+function BoothChoicePreview({
+  variant,
+  landingVariant,
+}: {
+  variant: 'gold' | 'platinum'
+  landingVariant: 'corporate' | 'private'
+}) {
   const border =
     variant === 'gold' ? 'border-[#fce4a6]/20 bg-[#fce4a6]/5' : 'border-white/15 bg-white/[0.04]'
   const label = variant === 'gold' ? 'text-[#fce4a6]/80' : 'text-white/50'
@@ -176,24 +239,32 @@ function BoothChoicePreview({ variant }: { variant: 'gold' | 'platinum' }) {
         Choose from these additional booths
       </p>
       <div className="grid grid-cols-2 gap-2">
-        {additionalBooths.map((booth) => (
-          <div
-            key={booth.id}
-            className="rounded-lg overflow-hidden border border-white/10 bg-black/50"
-          >
-            <div className="relative aspect-[4/3] bg-black">
-              <img
-                src={booth.image}
-                alt={booth.name}
-                className="absolute inset-0 h-full w-full object-cover"
-                loading="lazy"
-              />
+        {additionalBooths.map((booth) => {
+          const image =
+            booth.id === 'vogue'
+              ? landingVariant === 'private'
+                ? '/images/aerial-private/vogue-booth.jpg'
+                : '/images/aerial-corporate/vogue-booth.jpg'
+              : booth.image
+          return (
+            <div
+              key={booth.id}
+              className="rounded-lg overflow-hidden border border-white/10 bg-black/50"
+            >
+              <div className="relative aspect-[4/3] bg-black">
+                <img
+                  src={image}
+                  alt={booth.name}
+                  className="absolute inset-0 h-full w-full object-cover"
+                  loading="lazy"
+                />
+              </div>
+              <p className="px-2 py-1.5 text-[10px] font-semibold text-white/80 leading-tight text-center">
+                {booth.name}
+              </p>
             </div>
-            <p className="px-2 py-1.5 text-[10px] font-semibold text-white/80 leading-tight text-center">
-              {booth.name}
-            </p>
-          </div>
-        ))}
+          )
+        })}
       </div>
     </div>
   )
@@ -244,10 +315,12 @@ function PackageCard({
   pkg,
   index,
   onBook,
+  landingVariant,
 }: {
   pkg: AerialPackage
   index: number
   onBook: () => void
+  landingVariant: 'corporate' | 'private'
 }) {
   const isGold = pkg.highlight
   const isPlatinum = pkg.id === 'platinum'
@@ -290,7 +363,7 @@ function PackageCard({
               </div>
             ))}
             {pkg.showBoothChoice && (pkg.id === 'gold' || pkg.id === 'platinum') && (
-              <BoothChoicePreview variant={pkg.id} />
+              <BoothChoicePreview variant={pkg.id} landingVariant={landingVariant} />
             )}
             {pkg.photographyAddOn && (pkg.id === 'gold' || pkg.id === 'platinum') && (
               <MediaAddOnBlock variant={pkg.id} />
@@ -416,6 +489,7 @@ export default function AerialConversionLanding({ copy }: { copy: AerialLandingC
         <meta property="og:url" content={`https://robobooth.ca${copy.path}`} />
         <link rel="canonical" href={`https://robobooth.ca${copy.path}`} />
         <link rel="preload" href={copy.heroPoster} as="image" />
+        <link rel="preload" href={copy.heroVideo} as="video" type="video/mp4" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
 
@@ -654,6 +728,7 @@ export default function AerialConversionLanding({ copy }: { copy: AerialLandingC
                     key={pkg.id}
                     pkg={pkg}
                     index={i}
+                    landingVariant={copy.variant}
                     onBook={pkg.id === 'bronze' ? openBronze : pkg.id === 'gold' ? openGold : openPlatinum}
                   />
                 ))}
