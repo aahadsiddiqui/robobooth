@@ -222,13 +222,7 @@ function logoFilterClass(logo: string) {
   return 'filter brightness-0 invert'
 }
 
-function BoothChoicePreview({
-  variant,
-  landingVariant,
-}: {
-  variant: 'gold' | 'platinum'
-  landingVariant: 'corporate' | 'private'
-}) {
+function BoothChoicePreview({ variant }: { variant: 'gold' | 'platinum' }) {
   const border =
     variant === 'gold' ? 'border-[#fce4a6]/20 bg-[#fce4a6]/5' : 'border-white/15 bg-white/[0.04]'
   const label = variant === 'gold' ? 'text-[#fce4a6]/80' : 'text-white/50'
@@ -241,11 +235,7 @@ function BoothChoicePreview({
       <div className="grid grid-cols-2 gap-2">
         {additionalBooths.map((booth) => {
           const image =
-            booth.id === 'vogue'
-              ? landingVariant === 'private'
-                ? '/images/aerial-private/vogue-booth.jpg'
-                : '/images/aerial-corporate/vogue-booth.jpg'
-              : booth.image
+            booth.id === 'vogue' ? '/images/aerial-corporate/vogue-booth.jpg' : booth.image
           return (
             <div
               key={booth.id}
@@ -315,12 +305,10 @@ function PackageCard({
   pkg,
   index,
   onBook,
-  landingVariant,
 }: {
   pkg: AerialPackage
   index: number
   onBook: () => void
-  landingVariant: 'corporate' | 'private'
 }) {
   const isGold = pkg.highlight
   const isPlatinum = pkg.id === 'platinum'
@@ -363,7 +351,7 @@ function PackageCard({
               </div>
             ))}
             {pkg.showBoothChoice && (pkg.id === 'gold' || pkg.id === 'platinum') && (
-              <BoothChoicePreview variant={pkg.id} landingVariant={landingVariant} />
+              <BoothChoicePreview variant={pkg.id} />
             )}
             {pkg.photographyAddOn && (pkg.id === 'gold' || pkg.id === 'platinum') && (
               <MediaAddOnBlock variant={pkg.id} />
@@ -728,7 +716,6 @@ export default function AerialConversionLanding({ copy }: { copy: AerialLandingC
                     key={pkg.id}
                     pkg={pkg}
                     index={i}
-                    landingVariant={copy.variant}
                     onBook={pkg.id === 'bronze' ? openBronze : pkg.id === 'gold' ? openGold : openPlatinum}
                   />
                 ))}
