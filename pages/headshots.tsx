@@ -4,8 +4,6 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { FiArrowRight, FiPhone, FiChevronDown, FiChevronUp, FiClock, FiX, FiUsers, FiStar, FiShield, FiZap, FiCamera, FiVideo } from 'react-icons/fi'
 import Navbar from '../components/Navbar'
 import { appendUtmParams } from '../lib/utmParams'
-import PhoneVerificationFields, { requirePhoneVerified } from '../components/PhoneVerificationFields'
-
 /* ─── Reveal ─── */
 const Reveal = ({ children, className, delay = 0 }: { children: React.ReactNode; className?: string; delay?: number }) => (
   <motion.div initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: '-40px' }} transition={{ duration: 0.5, delay }} className={className}>
@@ -50,10 +48,6 @@ export default function HeadshotsPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    if (!requirePhoneVerified(e.currentTarget as HTMLElement)) {
-      alert('Please verify your phone number before submitting.')
-      return
-    }
     setSubmitting(true)
     try {
       const fd = new FormData()
@@ -355,11 +349,8 @@ export default function HeadshotsPage() {
                 <form onSubmit={handleSubmit} className="space-y-2.5 md:space-y-3">
                   <input type="text" name="firstName" value={form.firstName} onChange={handleInput} required placeholder="First Name *"
                     className="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm focus:ring-2 focus:ring-[#fce4a6] focus:border-transparent outline-none text-black" />
-                  <PhoneVerificationFields
-                    phone={form.phone}
-                    onPhoneChange={(phone) => setForm({ ...form, phone })}
-                    variant="light"
-                  />
+                  <input type="tel" name="phone" value={form.phone} onChange={handleInput} required placeholder="Phone Number *"
+                    className="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm focus:ring-2 focus:ring-[#fce4a6] focus:border-transparent outline-none text-black" />
                   <input type="email" name="email" value={form.email} onChange={handleInput} required placeholder="Email *"
                     className="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm focus:ring-2 focus:ring-[#fce4a6] focus:border-transparent outline-none text-black" />
                   <input type="date" name="eventDate" value={form.eventDate} onChange={handleInput} required

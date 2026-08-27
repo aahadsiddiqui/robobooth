@@ -5,8 +5,6 @@ import { FiArrowRight, FiCheck, FiPhone, FiChevronDown, FiChevronUp, FiClock, Fi
 import { useRouter } from 'next/router'
 import { useMetaPixel } from '../hooks/useMetaPixel'
 import { useUTM } from '../hooks/useUTM'
-import PhoneVerificationFields, { requirePhoneVerified } from '../components/PhoneVerificationFields'
-
 /* ─── Lazy Video ─── */
 const LazyVideo = ({ src, className, onPlay }: { src: string; className: string; onPlay?: () => void }) => {
   const [inView, setInView] = useState(false)
@@ -84,10 +82,6 @@ export default function CorporateHeadshots() {
 
   const handleLeadSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    if (!requirePhoneVerified(e.currentTarget as HTMLElement)) {
-      alert('Please verify your phone number before submitting.')
-      return
-    }
     setLeadSubmitting(true)
     try {
       trackLead('Corporate Headshots Lead', 'Toronto', { fn: leadForm.firstName, em: leadForm.email, ph: leadForm.phone, ct: 'Toronto', country: 'CA', ...utmData })
@@ -480,11 +474,8 @@ export default function CorporateHeadshots() {
                 <form onSubmit={handleLeadSubmit} className="space-y-2.5 md:space-y-3">
                   <input type="text" name="firstName" value={leadForm.firstName} onChange={handleLeadInput} required placeholder="First Name *"
                     className="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm focus:ring-2 focus:ring-[#fce4a6] focus:border-transparent outline-none" />
-                  <PhoneVerificationFields
-                    phone={leadForm.phone}
-                    onPhoneChange={(phone) => setLeadForm({ ...leadForm, phone })}
-                    variant="light"
-                  />
+                  <input type="tel" name="phone" value={leadForm.phone} onChange={handleLeadInput} required placeholder="Phone Number *"
+                    className="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm focus:ring-2 focus:ring-[#fce4a6] focus:border-transparent outline-none text-black" />
                   <input type="email" name="email" value={leadForm.email} onChange={handleLeadInput} required placeholder="Work Email *"
                     className="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm focus:ring-2 focus:ring-[#fce4a6] focus:border-transparent outline-none" />
                   <select name="teamSize" value={leadForm.teamSize} onChange={handleLeadInput} required

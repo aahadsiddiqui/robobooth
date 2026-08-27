@@ -5,8 +5,6 @@ import { FiArrowRight, FiCheck, FiPhone, FiChevronDown, FiChevronUp, FiClock, Fi
 import Navbar from '../components/Navbar'
 import { Reveal, SubtleCTA, companyLogos } from '../components/EventPageLayout'
 import { appendUtmParams } from '../lib/utmParams'
-import PhoneVerificationFields, { requirePhoneVerified } from '../components/PhoneVerificationFields'
-
 export default function CorporateVogueBooth() {
   const [showModal, setShowModal] = useState(false)
   const [packageType, setPackageType] = useState<'bronze' | 'gold' | 'platinum' | ''>('')
@@ -35,10 +33,6 @@ export default function CorporateVogueBooth() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    if (!requirePhoneVerified(e.currentTarget as HTMLElement)) {
-      alert('Please verify your phone number before submitting.')
-      return
-    }
     setSubmitting(true)
     try {
       const fd = new FormData()
@@ -523,11 +517,8 @@ export default function CorporateVogueBooth() {
                     <input type="text" name="lastName" value={form.lastName} onChange={handleInput} required placeholder="Last Name *"
                       className="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm focus:ring-2 focus:ring-[#fce4a6] focus:border-transparent outline-none text-black" />
                   </div>
-                  <PhoneVerificationFields
-                    phone={form.phone}
-                    onPhoneChange={(phone) => setForm({ ...form, phone })}
-                    variant="light"
-                  />
+                  <input type="tel" name="phone" value={form.phone} onChange={handleInput} required placeholder="Phone Number *"
+                    className="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm focus:ring-2 focus:ring-[#fce4a6] focus:border-transparent outline-none text-black" />
                   <input type="email" name="email" value={form.email} onChange={handleInput} required placeholder="Email *"
                     className="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm focus:ring-2 focus:ring-[#fce4a6] focus:border-transparent outline-none text-black" />
                   <div>

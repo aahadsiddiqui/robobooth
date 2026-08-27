@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useCallback, useMemo, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { FiArrowLeft, FiArrowRight, FiX } from 'react-icons/fi'
-import PhoneVerificationFields from './PhoneVerificationFields'
 import { appendUtmParams } from '@/lib/utmParams'
 import {
   getPackageBudgetOptions,
@@ -39,7 +38,7 @@ type Step = (typeof STEPS)[number]
 
 const STEP_LABELS: Record<Step, { short: string; full: string }> = {
   name: { short: 'Name', full: 'Your name' },
-  phone: { short: 'Phone', full: 'Verify phone' },
+  phone: { short: 'Phone', full: 'Your phone' },
   email: { short: 'Email', full: 'Your email' },
   date: { short: 'Date', full: 'Event date' },
   budget: { short: 'Budget', full: 'Budget' },
@@ -69,7 +68,6 @@ export default function SteppedQuoteModal({
     eventDate: '',
     budget: '',
   })
-  const [phoneVerified, setPhoneVerified] = useState(false)
   const [stepError, setStepError] = useState('')
   const [submitting, setSubmitting] = useState(false)
   const [success, setSuccess] = useState(false)
@@ -92,7 +90,6 @@ export default function SteppedQuoteModal({
   const resetModal = useCallback(() => {
     setStepIndex(0)
     setForm({ firstName: '', email: '', phone: '', eventDate: '', budget: '' })
-    setPhoneVerified(false)
     setStepError('')
     setSubmitting(false)
     setSuccess(false)
@@ -163,10 +160,6 @@ export default function SteppedQuoteModal({
         setStepError('Please enter your phone number.')
         return false
       }
-      if (!phoneVerified) {
-        setStepError('Please verify your phone number before continuing.')
-        return false
-      }
     }
     if (step === 'email') {
       if (!form.email.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) {
@@ -205,10 +198,6 @@ export default function SteppedQuoteModal({
 
   const handleSubmit = async () => {
     if (!validateStep()) return
-    if (!phoneVerified) {
-      setStepError('Please verify your phone number before submitting.')
-      return
-    }
 
     setSubmitting(true)
     try {
@@ -358,17 +347,21 @@ export default function SteppedQuoteModal({
                       {step === 'phone' && (
                         <div>
                           <label className="block text-[10px] sm:text-xs font-semibold text-black/50 mb-1.5 uppercase tracking-wider">
-                            Step 2 of {STEPS.length} — Verify to continue
+                            Step 2 of {STEPS.length}
                           </label>
-                          <PhoneVerificationFields
-                            phone={form.phone}
-                            onPhoneChange={(phone) => {
-                              setForm((prev) => ({ ...prev, phone }))
+                          <input
+                            type="tel"
+                            autoFocus
+                            autoComplete="tel"
+                            inputMode="tel"
+                            value={form.phone}
+                            onChange={(e) => {
+                              setForm((prev) => ({ ...prev, phone: e.target.value }))
                               setStepError('')
-                              setPhoneVerified(false)
                             }}
-                            onVerifiedChange={setPhoneVerified}
-                            variant="light"
+                            onKeyDown={(e) => e.key === 'Enter' && (e.preventDefault(), goNext())}
+                            placeholder="Phone Number *"
+                            className={inputClass}
                           />
                         </div>
                       )}
@@ -495,7 +488,6 @@ export default function SteppedQuoteModal({
                     <button
                       type="button"
                       onClick={goNext}
-                      disabled={step === 'phone' && !phoneVerified}
                       className="flex-[2] min-h-[48px] bg-[#fce4a6] text-black py-3 rounded-xl font-bold text-sm hover:bg-[#e8d08e] transition-colors disabled:opacity-50 flex items-center justify-center gap-1.5 active:scale-[0.98]"
                     >
                       Continue <FiArrowRight className="w-4 h-4" />

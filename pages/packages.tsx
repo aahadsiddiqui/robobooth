@@ -8,8 +8,6 @@ import { FiChevronLeft, FiChevronRight, FiCheck } from 'react-icons/fi'
 import { useRouter } from 'next/router'
 import { useMetaPixel } from '../hooks/useMetaPixel'
 import { useUTM } from '../hooks/useUTM'
-import PhoneVerificationFields, { requirePhoneVerified } from '../components/PhoneVerificationFields'
-
 // Testimonials Data
 const testimonials = [
   {
@@ -178,10 +176,6 @@ export default function Packages() {
 
   const handleOfferSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    if (!requirePhoneVerified(e.currentTarget as HTMLElement)) {
-      alert('Please verify your phone number before submitting.')
-      return
-    }
     setOfferSubmitting(true)
 
     // Track form submission with user data
@@ -769,10 +763,15 @@ export default function Packages() {
                         />
                       </div>
                     <div className="col-span-2">
-                        <PhoneVerificationFields
-                          phone={offerForm.phone}
-                          onPhoneChange={(phone) => setOfferForm({ ...offerForm, phone })}
-                          variant="dark"
+                        <label className="block text-xs font-medium text-white/40 mb-1 uppercase tracking-wider">Phone</label>
+                        <input
+                          type="tel"
+                          name="phone"
+                          value={offerForm.phone}
+                          onChange={handleOfferInput}
+                          required
+                          className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white focus:ring-2 focus:ring-[#fce4a6] focus:border-transparent outline-none transition-all"
+                          placeholder="289-301-4039"
                         />
                       </div>
                     </div>

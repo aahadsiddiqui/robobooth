@@ -3,7 +3,6 @@ import Head from 'next/head'
 import { motion, AnimatePresence } from 'framer-motion'
 import Navbar from '../components/Navbar'
 import EventDatePicker from '../components/EventDatePicker'
-import PhoneVerificationFields, { requirePhoneVerified } from '../components/PhoneVerificationFields'
 import { useMetaPixel } from '../hooks/useMetaPixel'
 import { useUTM } from '../hooks/useUTM'
 
@@ -140,10 +139,6 @@ export default function Contact() {
                       alert('Please select an event date.')
                       return
                     }
-                    if (!requirePhoneVerified(e.currentTarget as HTMLElement)) {
-                      alert('Please verify your phone number before submitting.')
-                      return
-                    }
                     setIsSubmitting(true)
 
                     const form = e.target as HTMLFormElement
@@ -221,11 +216,18 @@ export default function Contact() {
                       className="w-full px-4 py-2 rounded-lg border border-[#fce4a6]/30 bg-black text-white focus:ring-2 focus:ring-[#fce4a6] focus:border-[#fce4a6] placeholder:text-white/50"
                     />
                   </div>
-                  <PhoneVerificationFields
-                    phone={phone}
-                    onPhoneChange={setPhone}
-                    variant="dark"
-                  />
+                  <div>
+                    <label className="block text-sm font-medium text-[#fce4a6] mb-1">
+                      Phone Number
+                    </label>
+                    <input
+                      type="tel"
+                      required
+                      value={phone}
+                      onChange={(e) => setPhone(e.target.value)}
+                      className="w-full px-4 py-2 rounded-lg border border-[#fce4a6]/30 bg-black text-white focus:ring-2 focus:ring-[#fce4a6] focus:border-[#fce4a6] placeholder:text-white/50"
+                    />
+                  </div>
                   <input type="hidden" name="phone-number" value={phone} />
                   <div>
                     <label className="block text-sm font-medium text-[#fce4a6] mb-1">
