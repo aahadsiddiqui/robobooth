@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback, useMemo } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { appendUtmParams } from '@/lib/utmParams'
+import { trackPhotoboothEvents } from '@/utils/metaPixel'
 import {
   getPackageBudgetOptions,
   getTodayDateString,
@@ -142,6 +143,12 @@ export default function SteppedQuoteModal({
         headers: { Accept: 'application/json' },
       })
       if (res.ok) {
+        trackPhotoboothEvents.formSubmitted(source, 'Toronto', {
+          fn: form.firstName,
+          em: form.email,
+          ph: form.phone,
+          country: 'CA',
+        })
         setSuccess(true)
       } else {
         setFormError('Failed to submit. Please try again.')
