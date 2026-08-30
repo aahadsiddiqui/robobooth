@@ -4,7 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import Navbar from '../components/Navbar'
 import EventDatePicker from '../components/EventDatePicker'
 import { useMetaPixel } from '../hooks/useMetaPixel'
-import { useUTM } from '../hooks/useUTM'
+import { appendUtmParams } from '../lib/utmParams'
 
 /* ── Budget options per product ── */
 const budgetsByProduct: Record<string, { value: string; label: string }[]> = {
@@ -84,7 +84,6 @@ export default function Contact() {
   const [eventDate, setEventDate] = useState('')
   const [phone, setPhone] = useState('')
   const { trackFormSubmission } = useMetaPixel()
-  const utmData = useUTM()
 
   const budgetOptions = selectedProduct ? (budgetsByProduct[selectedProduct] || []) : []
 
@@ -144,29 +143,13 @@ export default function Contact() {
                     const form = e.target as HTMLFormElement
                     const formDataObj = new FormData(form)
 
-                    // Track form submission
-                    trackFormSubmission('Contact Page Form', 'Toronto', {
-                      fn: formDataObj.get('full-name')?.toString().split(' ')[0],
-                      ln: formDataObj.get('full-name')?.toString().split(' ').slice(1).join(' '),
-                      em: formDataObj.get('_replyto')?.toString(),
-                      ph: formDataObj.get('phone-number')?.toString(),
-                      ct: 'Toronto',
-                      country: 'CA',
-                      ...utmData
-                    })
-
                     try {
                       const formData = new FormData(form)
                       formData.set('phone-number', phone)
 
-                      // Add UTM parameters to Formspree submission
-                      console.log('Adding UTM parameters to form:', utmData)
-                      Object.entries(utmData).forEach(([key, value]) => {
-                        if (value) {
-                          formData.append(key, value)
-                          console.log(`Added UTM param: ${key} = ${value}`)
-                        }
-                      })
+                      const email = formData.get('_replyto')?.toString() || ''
+                      formData.set('email', email)
+                      appendUtmParams(formData)
 
                       const response = await fetch('https://formspree.io/f/xkgoedyp', {
                         method: 'POST',
@@ -176,6 +159,15 @@ export default function Contact() {
                         }
                       })
                       if (response.ok) {
+                        const fullName = formDataObj.get('full-name')?.toString() || ''
+                        trackFormSubmission('Contact Page Form', 'Toronto', {
+                          fn: fullName.split(' ')[0],
+                          ln: fullName.split(' ').slice(1).join(' '),
+                          em: email,
+                          ph: phone,
+                          ct: 'Toronto',
+                          country: 'CA',
+                        })
                         setShowToast(true)
                         form.reset()
                         setSelectedProduct('')
