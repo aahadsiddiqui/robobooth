@@ -22,12 +22,23 @@ function isValidValue(value: unknown): value is string {
   return typeof value === 'string' && value.length > 0 && !isUnresolvedToken(value)
 }
 
-function readJson(storage: Storage, key: string): AttributionData {
+let memoryAttribution: AttributionData = {}
+
+function readJson(kind: 'localStorage' | 'sessionStorage', key: string): AttributionData {
   try {
-    const value = storage.getItem(key)
-    return value ? JSON.parse(value) : {}
+    const value = window[kind].getItem(key)
+    const parsed = value ? JSON.parse(value) : {}
+    return parsed && typeof parsed === 'object' && !Array.isArray(parsed) ? parsed : {}
   } catch {
     return {}
+  }
+}
+
+function writeJson(kind: 'localStorage' | 'sessionStorage', key: string, value: string): void {
+  try {
+    window[kind].setItem(key, value)
+  } catch {
+    // Each storage target is independent; memory remains available for this page.
   }
 }
 
@@ -37,7 +48,7 @@ function isFresh(data: AttributionData): boolean {
   return Number.isFinite(capturedAt) && Date.now() - capturedAt <= MAX_AGE_MS
 }
 
-/** Capture the most recent paid-marketing visit and retain it for 90 days. */
+/** Capture the most recent tagged visit as one complete touch, for 90 days. */
 export function storeUtmParams(): void {
   if (typeof window === 'undefined') return
 
@@ -56,35 +67,34 @@ export function storeUtmParams(): void {
   if (captured.adset_id && !captured.hsa_grp) captured.hsa_grp = captured.adset_id
   if (captured.ad_id && !captured.hsa_ad) captured.hsa_ad = captured.ad_id
 
-  const existing = readJson(localStorage, STORAGE_KEY)
   const next: AttributionData = {
-    ...(isFresh(existing) ? existing : {}),
     ...captured,
     landing_page: `${window.location.pathname}${window.location.search}`,
-    initial_referrer: existing.initial_referrer || document.referrer || undefined,
+    initial_referrer: document.referrer || undefined,
     attribution_captured_at: new Date().toISOString(),
   }
 
-  try {
-    const serialized = JSON.stringify(next)
-    localStorage.setItem(STORAGE_KEY, serialized)
-    sessionStorage.setItem(STORAGE_KEY, serialized)
-    sessionStorage.setItem(LEGACY_STORAGE_KEY, serialized)
-  } catch {
-    // Storage can be unavailable in private browsing; never disrupt the page.
-  }
+  // Never merge IDs from an older ad with a different visit's UTM labels.
+  memoryAttribution = next
+  const serialized = JSON.stringify(next)
+  writeJson('localStorage', STORAGE_KEY, serialized)
+  writeJson('sessionStorage', STORAGE_KEY, serialized)
+  writeJson('sessionStorage', LEGACY_STORAGE_KEY, serialized)
 }
 
 export function getStoredAttribution(): AttributionData {
   if (typeof window === 'undefined') return {}
 
   const candidates = [
-    readJson(sessionStorage, STORAGE_KEY),
-    readJson(localStorage, STORAGE_KEY),
-    readJson(sessionStorage, LEGACY_STORAGE_KEY),
+    memoryAttribution,
+    readJson('sessionStorage', STORAGE_KEY),
+    readJson('localStorage', STORAGE_KEY),
+    readJson('sessionStorage', LEGACY_STORAGE_KEY),
   ]
 
-  return candidates.find((candidate) => Object.keys(candidate).length > 0 && isFresh(candidate)) || {}
+  return candidates
+    .filter((candidate) => Object.keys(candidate).length > 0 && isFresh(candidate))
+    .sort((a, b) => Date.parse(b.attribution_captured_at || '1970-01-01') - Date.parse(a.attribution_captured_at || '1970-01-01'))[0] || {}
 }
 
 /** Add stored attribution to a Formspree submission without duplicate fields. */
