@@ -17,6 +17,11 @@ const nextConfig = {
           destination: '/birthday',
           permanent: true,
         },
+        {
+          source: '/products/video-booth',
+          destination: '/video-booth',
+          permanent: true,
+        },
       ]
     },
 }

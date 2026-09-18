@@ -60,6 +60,33 @@ export const products: ProductData[] = [
     ],
   },
   {
+    slug: 'video-booth',
+    name: 'Video Booth',
+    tagline: 'Roaming video messages captured against your venue.',
+    summary: 'Guests record a special video message for the birthday person, newlyweds, or guest of honor while the robot roams — so every clip has the atmosphere of your event.',
+    productImage: '/images/videobooth-poster.jpg',
+    videoUrl: '/videos/videobooth1.mp4',
+    priceLabel: 'Custom Quote',
+    priceNote: 'Perfect for weddings, birthdays & milestones',
+    badges: ['Roaming robot capture', 'Compiled video guestbook'],
+    usp: [
+      { title: 'Personal Video Messages', description: 'Guests speak from the heart — a keepsake the guest of honor will watch for years.' },
+      { title: 'The Venue Is the Backdrop', description: 'The robot roams, so every clip captures your lighting, décor, and atmosphere.' },
+      { title: 'White-Glove Attendant', description: 'We prompt guests, handle the robot, and deliver a compiled guestbook after the event.' }
+    ],
+    faqData: [
+      { question: 'What is the Video Booth?', answer: 'Our Robot Photobooth in video mode — guests record personal messages while the robot moves through your venue.' },
+      { question: 'Who receives the videos?', answer: 'We compile every message into a video guestbook and deliver it after the event.' },
+      { question: 'Does it need a backdrop?', answer: 'No. The robot roams, so the atmosphere of your event becomes the background of every message.' }
+    ],
+    testimonials: [
+      { name: 'Priya S.', role: 'Wedding Host', text: 'The video messages were the most emotional gift we received.' },
+      { name: 'Marcus T.', role: 'Birthday Celebration', text: 'Having the robot come to people instead of a booth made all the difference.' },
+      { name: 'Elena R.', role: 'Event Planner', text: 'Clients want atmosphere in the footage. The roaming Video Booth delivers that.' }
+    ],
+    linkOverride: '/video-booth',
+  },
+  {
     slug: 'aerial-booth',
     name: 'Aerial Booth',
     linkOverride: '/aerial',

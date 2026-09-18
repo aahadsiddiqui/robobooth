@@ -34,6 +34,17 @@ export const hardwareFleet: HardwareItem[] = [
     link: '/360-booth',
   },
   {
+    id: 'video-booth',
+    name: 'Roaming Video Booth',
+    tagline: 'Heartfelt video messages with your venue as the backdrop',
+    description:
+      'Guests record a special video message for the guest of honor while the Robot Photobooth roams the room — capturing birthdays, weddings, and every milestone against the real atmosphere of your event.',
+    image: '/images/videobooth-poster.jpg',
+    features: ['Roaming robot capture', 'Personal video messages', 'Custom name overlays', 'Compiled video guestbook'],
+    badge: 'New',
+    link: '/video-booth',
+  },
+  {
     id: 'aerial-booth',
     name: 'High-Angle Aerial Capture Enclosures',
     tagline: 'Enclosed luxury with flawless consistency',

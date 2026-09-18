@@ -40,6 +40,13 @@ export const boothAddOns = [
     image: '/images/360-booth-main.jpg',
     objectPosition: 'center center',
   },
+  {
+    id: 'video',
+    name: 'Video Booth',
+    desc: 'Roaming video messages filmed against the real atmosphere of your event.',
+    image: '/images/videobooth-poster.jpg',
+    objectPosition: 'center center',
+  },
 ] as const
 
 export const defaultPhotographyBenefits = {
@@ -67,14 +74,20 @@ export function getDefaultPackageTiers(context?: {
   bronzeBenefits?: string[]
   goldBenefits?: string[]
   platinumBenefits?: string[]
+  bronzeTitle?: string
+  goldTitle?: string
+  platinumTitle?: string
+  bronzeRobotLabel?: string
+  goldRobotLabel?: string
+  platinumRobotLabel?: string
 }): Record<PackageTierId, PackageTierContent> {
   return {
     bronze: {
       badge: 'Bronze Package',
-      title: '1 Robot Photobooth',
+      title: context?.bronzeTitle ?? '1 Robot Photobooth',
       desc: context?.bronzeDesc ?? 'Perfect for intimate events — one roaming robot photobooth, fully set up and managed by our team.',
       robotCount: 1,
-      robotLabel: '1 Robot',
+      robotLabel: context?.bronzeRobotLabel ?? '1 Robot',
       robotBenefits: context?.bronzeBenefits ?? [
         "Canada's First Robot Photobooth roaming guest-to-guest",
         'Physical prints delivered on the spot',
@@ -86,10 +99,10 @@ export function getDefaultPackageTiers(context?: {
     },
     gold: {
       badge: 'Most Popular · Gold',
-      title: '2 Robot Photobooths',
+      title: context?.goldTitle ?? '2 Robot Photobooths',
       desc: context?.goldDesc ?? 'Ideal for mid-size events — two robots keep lines short and guests fully engaged.',
       robotCount: 2,
-      robotLabel: '2 Robots',
+      robotLabel: context?.goldRobotLabel ?? '2 Robots',
       robotBenefits: context?.goldBenefits ?? [
         'Two Robot Photobooths roaming simultaneously',
         'Double the throughput — shorter wait times for guests',
@@ -101,10 +114,10 @@ export function getDefaultPackageTiers(context?: {
     },
     platinum: {
       badge: 'Platinum Package',
-      title: 'Multiple Robots',
+      title: context?.platinumTitle ?? 'Multiple Robots',
       desc: context?.platinumDesc ?? 'The ultimate setup — multiple robot photobooths for maximum coverage across your venue.',
       robotCount: 3,
-      robotLabel: 'Multiple Robots',
+      robotLabel: context?.platinumRobotLabel ?? 'Multiple Robots',
       robotBenefits: context?.platinumBenefits ?? [
         'Multiple Robot Photobooths for large-scale events',
         'Multiple activations running simultaneously',
@@ -222,5 +235,40 @@ export const brandActivationsPackageTiers = getDefaultPackageTiers({
     'Maximum content volume and guest engagement',
     'White-glove coordination across every activation',
     'Instant digital delivery and on-site prints',
+  ],
+})
+
+export const videoBoothPackageTiers = getDefaultPackageTiers({
+  bronzeTitle: 'Video Booth Only',
+  bronzeRobotLabel: '1 Video Booth',
+  goldTitle: 'Video Booth + Robot Photobooth',
+  goldRobotLabel: 'Video + Robot',
+  platinumTitle: 'Multiple Video Booths + Robot Photobooths',
+  platinumRobotLabel: 'Multiple Booths',
+  bronzeDesc: 'The standalone roaming Video Booth — guests record messages while the robot moves through your venue.',
+  bronzeBenefits: [
+    '1 Video Booth roaming guest-to-guest capturing video messages',
+    'Custom overlay with names, date, or event branding',
+    'Beautiful venue backgrounds in every clip — no static backdrop',
+    'Dedicated on-site attendant handling everything',
+    'Full video guestbook compiled and delivered after the event',
+  ],
+  goldDesc: 'Video messages plus photos — the Video Booth captures the words, the Robot Photobooth captures the night.',
+  goldBenefits: [
+    'Video Booth roaming the venue for personal guest messages',
+    'Robot Photobooth roaming simultaneously for studio-quality photos',
+    'Custom overlays on every video and photo',
+    'Instant digital delivery of photos to guest phones',
+    'Compiled video guestbook delivered after the event',
+    'Dedicated attendants managing both activations',
+  ],
+  platinumDesc: 'The ultimate memory setup — multiple Video Booths and Robot Photobooths covering the full venue.',
+  platinumBenefits: [
+    'Multiple Video Booths capturing messages across your event',
+    'Robot Photobooths roaming simultaneously for photos',
+    'Maximum coverage so no guest, toast, or moment is missed',
+    'Custom overlays on every video and photo',
+    'One coordinated team managing every activation',
+    'Compiled video guestbook plus instant photo delivery',
   ],
 })

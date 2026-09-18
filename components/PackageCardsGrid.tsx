@@ -24,6 +24,7 @@ type PackageCardsGridProps = {
   bronzeLabel?: string
   goldLabel?: string
   platinumLabel?: string
+  excludeAddOnIds?: string[]
 }
 
 function PhotographySubsection({
@@ -71,9 +72,10 @@ function PhotographySubsection({
   )
 }
 
-function BoothAddOnsSubsection({ variant }: { variant: PackageTierId }) {
+function BoothAddOnsSubsection({ variant, excludeAddOnIds = [] }: { variant: PackageTierId; excludeAddOnIds?: string[] }) {
   const [activeId, setActiveId] = useState<string | null>(null)
-  const activeBooth = boothAddOns.find((b) => b.id === activeId) ?? null
+  const addOns = boothAddOns.filter((b) => !excludeAddOnIds.includes(b.id))
+  const activeBooth = addOns.find((b) => b.id === activeId) ?? null
 
   const styles = {
     bronze: 'border-white/10 bg-white/[0.03]',
@@ -111,7 +113,7 @@ function BoothAddOnsSubsection({ variant }: { variant: PackageTierId }) {
         <p className="text-[9px] text-white/30 hidden sm:block">Hover to preview</p>
       </div>
       <div className="flex flex-wrap gap-1.5">
-        {boothAddOns.map((booth) => {
+        {addOns.map((booth) => {
           const isActive = activeId === booth.id
           return (
             <button
@@ -140,7 +142,7 @@ function BoothAddOnsSubsection({ variant }: { variant: PackageTierId }) {
         <div className="overflow-hidden min-h-0">
           <div className="rounded-lg border border-white/10 bg-black/55 overflow-hidden">
             <div className="relative h-[140px] w-full bg-black">
-              {boothAddOns.map((booth) => (
+              {addOns.map((booth) => (
                 <img
                   key={booth.id}
                   src={booth.image}
@@ -192,6 +194,7 @@ export default function PackageCardsGrid({
   bronzeLabel = 'Bronze Package',
   goldLabel = 'Gold Package',
   platinumLabel = 'Platinum Package',
+  excludeAddOnIds,
   insertAfterBronze,
   maxWidth = 'max-w-5xl',
 }: PackageCardsGridProps & {
@@ -233,7 +236,7 @@ export default function PackageCardsGrid({
                     <p className="text-white/60 text-xs leading-relaxed">{b}</p>
                   </div>
                 ))}
-                <BoothAddOnsSubsection variant="bronze" />
+                <BoothAddOnsSubsection variant="bronze" excludeAddOnIds={excludeAddOnIds} />
                 <PhotographySubsection benefits={tiers.bronze.photographyBenefits} variant="bronze" />
               </div>
               <div className="text-center mt-6">
@@ -276,7 +279,7 @@ export default function PackageCardsGrid({
                       <p className="text-white/70 text-xs leading-relaxed">{b}</p>
                     </div>
                   ))}
-                  <BoothAddOnsSubsection variant="gold" />
+                  <BoothAddOnsSubsection variant="gold" excludeAddOnIds={excludeAddOnIds} />
                   <PhotographySubsection benefits={tiers.gold.photographyBenefits} variant="gold" />
                 </div>
                 <div className="text-center mt-6">
@@ -319,7 +322,7 @@ export default function PackageCardsGrid({
                       <p className="text-white/70 text-xs leading-relaxed">{b}</p>
                     </div>
                   ))}
-                  <BoothAddOnsSubsection variant="platinum" />
+                  <BoothAddOnsSubsection variant="platinum" excludeAddOnIds={excludeAddOnIds} />
                   <PhotographySubsection benefits={tiers.platinum.photographyBenefits} variant="platinum" />
                 </div>
                 <div className="text-center mt-6">
