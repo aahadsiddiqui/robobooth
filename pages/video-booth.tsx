@@ -24,47 +24,67 @@ const SubtleCTA = ({ label, onQuote }: { label: string; onQuote: () => void }) =
   </div>
 )
 
-/* Hero video — autoplay with sound on load */
+/* Hero video — the guestbook clip itself, no poster thumbnail */
 const HeroAutoplayVideo = ({ className }: { className: string }) => {
   const videoRef = useRef<HTMLVideoElement>(null)
+  const [soundOn, setSoundOn] = useState(false)
 
   useEffect(() => {
     const video = videoRef.current
     if (!video) return
     let cancelled = false
 
-    const startWithSound = () => {
+    const start = () => {
       if (cancelled) return
-      video.muted = false
-      video.defaultMuted = false
-      video.volume = 1
+      video.defaultMuted = true
+      video.muted = true
+      video.volume = 0
       const attempt = video.play()
       if (attempt) attempt.catch(() => {})
     }
 
-    if (video.readyState >= 2) startWithSound()
-    else video.addEventListener('canplay', startWithSound)
+    if (video.readyState >= 2) start()
+    else video.addEventListener('canplay', start)
 
     return () => {
       cancelled = true
-      video.removeEventListener('canplay', startWithSound)
+      video.removeEventListener('canplay', start)
     }
   }, [])
 
+  const toggleSound = () => {
+    const video = videoRef.current
+    if (!video) return
+    const next = !soundOn
+    video.muted = !next
+    video.volume = next ? 1 : 0
+    setSoundOn(next)
+    const attempt = video.play()
+    if (attempt) attempt.catch(() => {})
+  }
+
   return (
-    <video
-      ref={videoRef}
-      className={className}
-      autoPlay
-      loop
-      playsInline
-      controls
-      preload="auto"
-      poster="/images/videobooth-poster.jpg"
-      style={{ display: 'block' }}
-    >
-      <source src="/videos/robot-video-guestbook-hero.mp4" type="video/mp4" />
-    </video>
+    <div className="relative">
+      <video
+        ref={videoRef}
+        className={className}
+        autoPlay
+        muted
+        loop
+        playsInline
+        preload="auto"
+        style={{ display: 'block' }}
+      >
+        <source src="/videos/robot-video-guestbook-hero.mp4" type="video/mp4" />
+      </video>
+      <button
+        type="button"
+        onClick={toggleSound}
+        className="absolute bottom-3 right-3 z-10 rounded-full bg-black/70 px-3 py-1.5 text-[11px] font-semibold text-white border border-white/20 hover:bg-black"
+      >
+        {soundOn ? 'Sound on' : 'Tap for sound'}
+      </button>
+    </div>
   )
 }
 
@@ -145,7 +165,6 @@ export default function VideoBoothPage() {
         <meta property="og:url" content="https://robobooth.ca/video-booth" />
         <meta property="og:image" content="https://robobooth.ca/images/videobooth-poster.jpg" />
         <link rel="canonical" href="https://robobooth.ca/video-booth" />
-        <link rel="preload" href="/images/videobooth-poster.jpg" as="image" />
         <link rel="dns-prefetch" href="//formspree.io" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
