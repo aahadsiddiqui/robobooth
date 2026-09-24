@@ -233,17 +233,14 @@ function BoothChoicePreview({ variant }: { variant: 'gold' | 'platinum' }) {
         Choose from these additional booths
       </p>
       <div className="grid grid-cols-2 gap-2">
-        {additionalBooths.map((booth) => {
-          const image =
-            booth.id === 'vogue' ? '/images/aerial-corporate/vogue-booth.jpg' : booth.image
-          return (
+        {additionalBooths.map((booth) => (
             <div
               key={booth.id}
               className="rounded-lg overflow-hidden border border-white/10 bg-black/50"
             >
               <div className="relative aspect-[4/3] bg-black">
                 <img
-                  src={image}
+                  src={booth.image}
                   alt={booth.name}
                   className="absolute inset-0 h-full w-full object-cover"
                   loading="lazy"
@@ -253,8 +250,7 @@ function BoothChoicePreview({ variant }: { variant: 'gold' | 'platinum' }) {
                 {booth.name}
               </p>
             </div>
-          )
-        })}
+        ))}
       </div>
     </div>
   )

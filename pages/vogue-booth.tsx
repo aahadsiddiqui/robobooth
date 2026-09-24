@@ -76,7 +76,7 @@ export default function VogueBooth() {
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://robobooth.ca/vogue-booth" />
         <link rel="canonical" href="https://robobooth.ca/vogue-booth" />
-        <link rel="preload" href="/images/voguebooth1.png" as="image" />
+        <link rel="preload" href="/images/vogue-booth.jpg" as="image" />
         <link rel="dns-prefetch" href="//formspree.io" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
@@ -132,12 +132,12 @@ export default function VogueBooth() {
 
                 {/* Hero image — desktop */}
                 <motion.div initial={{ opacity: 0, x: 30 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.7, delay: 0.15 }} className="hidden md:flex items-center justify-center">
-                  <img src="/images/voguebooth1.png" alt="Vogue Booth" className="w-full h-auto max-h-[540px] object-contain rounded-2xl shadow-2xl" loading="eager" fetchPriority="high" />
+                  <img src="/images/vogue-booth.jpg" alt="Vogue Booth" className="w-full h-auto max-h-[540px] object-contain rounded-2xl shadow-2xl" loading="eager" fetchPriority="high" />
                 </motion.div>
 
                 {/* Hero image — mobile */}
                 <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.1 }} className="md:hidden w-full flex items-center justify-center px-2">
-                  <img src="/images/voguebooth1.png" alt="Vogue Booth" className="w-full h-auto max-h-[320px] object-contain rounded-xl" loading="eager" fetchPriority="high" />
+                  <img src="/images/vogue-booth.jpg" alt="Vogue Booth" className="w-full h-auto max-h-[320px] object-contain rounded-xl" loading="eager" fetchPriority="high" />
                 </motion.div>
               </div>
             </div>

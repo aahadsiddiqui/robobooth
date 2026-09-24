@@ -112,7 +112,7 @@ export default function Packages() {
   const [activePremiumImage, setActivePremiumImage] = useState(0)
 
   const roboImages = ['robo-booth-1.jpg', 'robo-booth-2.jpg']
-  const booth360Images = ['360-booth-main.jpg']
+  const booth360Images = ['360-booth.jpg']
   const aerialImages = ['aerial-booth-1.png', 'aerial-booth-2.png']
   const premiumImages = ['premium-booth.jpg']
 

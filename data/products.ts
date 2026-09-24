@@ -38,7 +38,7 @@ export const products: ProductData[] = [
     name: 'Robot Photobooth',
     tagline: 'Our signature robot photobooth that wows guests.',
     summary: 'Interactive, elegant, and designed to keep guests engaged from the first photo.',
-    productImage: '/images/robo-booth-1.jpg',
+    productImage: '/images/robot-photobooth.jpg',
     videoUrl: '/videos/robobooth.mp4',
     priceLabel: 'Custom Quote',
     priceNote: 'Most events book 4–6 hours',
@@ -61,11 +61,11 @@ export const products: ProductData[] = [
   },
   {
     slug: 'video-booth',
-    name: 'Video Booth',
+    name: 'Robot Video Guestbook',
     tagline: 'Roaming video messages captured against your venue.',
     summary: 'Guests record a special video message for the birthday person, newlyweds, or guest of honor while the robot roams — so every clip has the atmosphere of your event.',
-    productImage: '/images/videobooth-poster.jpg',
-    videoUrl: '/videos/videobooth1.mp4',
+    productImage: '/images/robot-video-guestbook.jpg',
+    videoUrl: '/videos/robot-video-guestbook-hero.mp4',
     priceLabel: 'Custom Quote',
     priceNote: 'Perfect for weddings, birthdays & milestones',
     badges: ['Roaming robot capture', 'Compiled video guestbook'],
@@ -75,14 +75,14 @@ export const products: ProductData[] = [
       { title: 'White-Glove Attendant', description: 'We prompt guests, handle the robot, and deliver a compiled guestbook after the event.' }
     ],
     faqData: [
-      { question: 'What is the Video Booth?', answer: 'Our Robot Photobooth in video mode — guests record personal messages while the robot moves through your venue.' },
+      { question: 'What is the Robot Video Guestbook?', answer: 'Our Robot Photobooth in video mode — guests record personal messages while the robot moves through your venue.' },
       { question: 'Who receives the videos?', answer: 'We compile every message into a video guestbook and deliver it after the event.' },
       { question: 'Does it need a backdrop?', answer: 'No. The robot roams, so the atmosphere of your event becomes the background of every message.' }
     ],
     testimonials: [
       { name: 'Priya S.', role: 'Wedding Host', text: 'The video messages were the most emotional gift we received.' },
       { name: 'Marcus T.', role: 'Birthday Celebration', text: 'Having the robot come to people instead of a booth made all the difference.' },
-      { name: 'Elena R.', role: 'Event Planner', text: 'Clients want atmosphere in the footage. The roaming Video Booth delivers that.' }
+      { name: 'Elena R.', role: 'Event Planner', text: 'Clients want atmosphere in the footage. The roaming Robot Video Guestbook delivers that.' }
     ],
     linkOverride: '/video-booth',
   },
@@ -145,7 +145,7 @@ export const products: ProductData[] = [
     name: '360 Booth',
     tagline: 'The cinematic, slow‑motion booth that creates viral content.',
     summary: 'Guests step in, we spin the camera, and they walk away with cinematic content in seconds.',
-    productImage: '/images/360-booth-main.jpg',
+    productImage: '/images/360-booth.jpg',
     videoUrl: '/videos/vid.mp4',
     priceLabel: 'Custom Quote',
     priceNote: 'Pricing based on hours + add-ons',
@@ -253,7 +253,7 @@ export const products: ProductData[] = [
     name: 'Vogue Booth',
     tagline: 'Step inside the GTA\'s most iconic photo experience.',
     summary: 'A fully illuminated enclosed booth with custom magazine cover overlays, studio lighting, and instant prints. The most talked-about activation at every event.',
-    productImage: '/images/voguebooth1.png',
+    productImage: '/images/vogue-booth.jpg',
     videoUrl: '/videos/premiumphoto.mov',
     priceLabel: 'Custom Quote',
     priceNote: 'Perfect for weddings, galas & brand activations',

@@ -63,7 +63,7 @@ const HeroAutoplayVideo = ({ className }: { className: string }) => {
       poster="/images/videobooth-poster.jpg"
       style={{ display: 'block' }}
     >
-      <source src="/videos/videobooth1.mp4" type="video/mp4" />
+      <source src="/videos/robot-video-guestbook-hero.mp4" type="video/mp4" />
     </video>
   )
 }
@@ -102,12 +102,12 @@ export default function VideoBoothPage() {
     packageType === 'gold' ? 'Book Gold Package' :
     packageType === 'bronze' ? 'Book Bronze Package' :
     packageType === 'platinum' ? 'Book Platinum Package' :
-    'Reserve the Video Booth'
+    'Reserve the Robot Video Guestbook'
 
   const packageLabel =
-    packageType === 'gold' ? 'Gold Package (Video Booth + Robot Photobooth)' :
-    packageType === 'platinum' ? 'Platinum Package (Multiple Video Booths + Robot Photobooths)' :
-    packageType === 'bronze' ? 'Bronze Package (Video Booth Only)' :
+    packageType === 'gold' ? 'Gold Package (Robot Video Guestbook + Robot Photobooth)' :
+    packageType === 'platinum' ? 'Platinum Package (Multiple Robot Video Guestbooks + Robot Photobooths)' :
+    packageType === 'bronze' ? 'Bronze Package (Robot Video Guestbook Only)' :
     'General Inquiry'
 
   const packageBanner = (
@@ -115,19 +115,19 @@ export default function VideoBoothPage() {
       {packageType === 'bronze' && (
         <div className="bg-white/90 border border-black/10 rounded-xl px-4 py-2.5 mb-3 flex items-center justify-center gap-2 flex-wrap">
           <span className="text-black text-xs font-black">🥉 Bronze Package Selected</span>
-          <span className="text-black/60 text-[10px]">Video Booth Only</span>
+          <span className="text-black/60 text-[10px]">Robot Video Guestbook Only</span>
         </div>
       )}
       {packageType === 'gold' && (
         <div className="bg-[#fce4a6] rounded-xl px-4 py-2.5 mb-3 flex items-center justify-center gap-2 flex-wrap">
           <span className="text-black text-xs font-black">⭐ Gold Package Selected</span>
-          <span className="text-black/60 text-[10px]">Video Booth + Robot Photobooth</span>
+          <span className="text-black/60 text-[10px]">Robot Video Guestbook + Robot Photobooth</span>
         </div>
       )}
       {packageType === 'platinum' && (
         <div className="bg-gradient-to-r from-white/95 to-gray-100 border border-gray-300 rounded-xl px-4 py-2.5 mb-3 flex items-center justify-center gap-2 flex-wrap">
           <span className="text-black text-xs font-black">💎 Platinum Package Selected</span>
-          <span className="text-black/60 text-[10px]">Multiple Video Booths + Robot Photobooths</span>
+          <span className="text-black/60 text-[10px]">Multiple Robot Video Guestbooks + Robot Photobooths</span>
         </div>
       )}
     </>
@@ -136,10 +136,10 @@ export default function VideoBoothPage() {
   return (
     <>
       <Head>
-        <title>Video Booth Rental Toronto GTA | Roaming Robot Video Messages | Robo Booth</title>
-        <meta name="description" content="Toronto's roaming Video Booth — the Robot Photobooth that moves through your venue so guests can record heartfelt video messages for birthdays, weddings, and every milestone. Beautiful backgrounds. Instant keepsakes." />
-        <meta name="keywords" content="video booth Toronto, video guestbook GTA, robot video booth, wedding video messages, birthday video booth, roaming video booth Toronto" />
-        <meta property="og:title" content="Video Booth Rental Toronto GTA | Robo Booth" />
+        <title>Robot Video Guestbook Rental Toronto GTA | Roaming Robot Video Messages | Robo Booth</title>
+        <meta name="description" content="Toronto's roaming Robot Video Guestbook — guests record heartfelt video messages while the robot moves through your venue for birthdays, weddings, and every milestone. Beautiful backgrounds. Instant keepsakes." />
+        <meta name="keywords" content="robot video guestbook Toronto, video guestbook GTA, robot video booth, wedding video messages, birthday video guestbook, roaming video guestbook Toronto" />
+        <meta property="og:title" content="Robot Video Guestbook Rental Toronto GTA | Robo Booth" />
         <meta property="og:description" content="Guests record special video messages while the robot roams your venue — capturing the atmosphere, not a static backdrop." />
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://robobooth.ca/video-booth" />
@@ -176,10 +176,10 @@ export default function VideoBoothPage() {
                 <motion.div initial={{ opacity: 0, x: -30 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.7 }}>
                   <div className="flex items-center gap-2 mb-3">
                     <div className="flex text-yellow-400 text-sm">★★★★★</div>
-                    <span className="text-white/60 text-xs font-medium">5.0 Rating · Toronto&apos;s Roaming Video Booth</span>
+                    <span className="text-white/60 text-xs font-medium">5.0 Rating · Toronto&apos;s Robot Video Guestbook</span>
                   </div>
                   <h1 className="text-[1.65rem] leading-[1.15] md:text-4xl lg:text-5xl font-black md:leading-[1.1] mb-4">
-                    The Video Booth That Roams Your Event and{' '}
+                    The Robot Video Guestbook That Roams Your Event and{' '}
                     <span className="text-[#fce4a6]">Captures Every Memory.</span>
                   </h1>
                   <p className="text-white/80 text-sm md:text-base lg:text-lg leading-relaxed mb-5 max-w-xl">
@@ -199,9 +199,9 @@ export default function VideoBoothPage() {
                   <p className="text-white/40 text-[11px] md:text-xs">Responses in &lt;15 mins&ensp;|&ensp;No credit card required</p>
                 </motion.div>
 
-                <motion.div initial={{ opacity: 0, x: 30 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.7, delay: 0.15 }} className="-mx-4 md:mx-0">
-                  <div className="rounded-none md:rounded-2xl overflow-hidden border-y md:border border-white/10 shadow-2xl bg-black">
-                    <HeroAutoplayVideo className="w-full h-auto max-h-[50vh] md:max-h-none md:h-[480px] lg:h-[520px] object-cover" />
+                <motion.div initial={{ opacity: 0, x: 30 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.7, delay: 0.15 }} className="flex justify-center">
+                  <div className="rounded-2xl overflow-hidden border border-white/10 shadow-2xl bg-black w-full max-w-[280px] sm:max-w-[340px] lg:max-w-[380px]">
+                    <HeroAutoplayVideo className="w-full h-auto object-contain" />
                   </div>
                 </motion.div>
               </div>
@@ -228,7 +228,7 @@ export default function VideoBoothPage() {
           <section className="py-8 md:py-10 px-4">
             <div className="max-w-5xl mx-auto">
               <Reveal className="text-center mb-5">
-                <h2 className="text-xl md:text-2xl lg:text-3xl font-black mb-1.5">See &amp; Hear the Video Booth <span className="text-[#fce4a6]">in Action</span></h2>
+                <h2 className="text-xl md:text-2xl lg:text-3xl font-black mb-1.5">See &amp; Hear the Robot Video Guestbook <span className="text-[#fce4a6]">in Action</span></h2>
                 <p className="text-white/50 text-xs md:text-sm">Turn the sound on — these are real guest messages recorded at a live event</p>
               </Reveal>
               <Reveal delay={0.1}>
@@ -294,7 +294,7 @@ export default function VideoBoothPage() {
             <div className="max-w-5xl mx-auto">
               <Reveal className="text-center mb-6">
                 <h2 className="text-xl md:text-2xl lg:text-3xl font-black mb-1.5">Why Guests <span className="text-[#fce4a6]">Love It</span></h2>
-                <p className="text-white/50 text-xs md:text-sm">Six reasons the Video Booth becomes the most meaningful moment of the night</p>
+                <p className="text-white/50 text-xs md:text-sm">Six reasons the Robot Video Guestbook becomes the most meaningful moment of the night</p>
               </Reveal>
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4">
                 {whyGuestsLove.map((item, i) => (
@@ -404,7 +404,7 @@ export default function VideoBoothPage() {
                 Give Them Messages They&apos;ll <span className="text-[#fce4a6]">Watch for Years.</span>
               </h2>
               <p className="text-white/60 text-xs md:text-sm lg:text-base mb-5 max-w-lg mx-auto">
-                The Video Booth turns your venue into the backdrop and your guests into the storytellers. Birthdays, weddings, anniversaries — lock in your date.
+                The Robot Video Guestbook turns your venue into the backdrop and your guests into the storytellers. Birthdays, weddings, anniversaries — lock in your date.
               </p>
               <div className="flex flex-col sm:flex-row gap-3 justify-center items-center">
                 <motion.button whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.97 }} onClick={openQuote}
@@ -429,9 +429,9 @@ export default function VideoBoothPage() {
         title={modalTitle}
         subtitle="Tell us your event date and we'll confirm availability within 15 minutes."
         packageBanner={packageBanner}
-        eventType="Video Booth"
+        eventType="Robot Video Guestbook"
         packageLabel={packageLabel}
-        source="Video Booth Page"
+        source="Robot Video Guestbook Page"
         packageTier={packageType}
         pricingContext="standard"
       />
@@ -488,16 +488,16 @@ const customizations = [
 const testimonials = [
   { name: 'Priya S.', role: 'Wedding Host, Toronto', text: 'The video messages were the most emotional gift we received. Guests recorded at their tables — the room, the lighting, everything we designed is in the background of every clip.' },
   { name: 'Marcus T.', role: 'Birthday Celebration', text: 'Our dad watched the compiled video the next morning and cried. Having the robot come to people instead of a booth in the hallway made all the difference.' },
-  { name: 'Elena R.', role: 'Event Planner, GTA', text: 'I book this for milestone events now. Clients want atmosphere in the footage, not a curtain. The roaming Video Booth is the only setup that delivers that.' },
+  { name: 'Elena R.', role: 'Event Planner, GTA', text: 'I book this for milestone events now. Clients want atmosphere in the footage, not a curtain. The roaming Robot Video Guestbook is the only setup that delivers that.' },
 ]
 
 const faqs = [
-  { question: 'What is the Video Booth?', answer: 'It’s our Robot Photobooth in video mode. The robot roams the venue so guests can record a personal video message for the guest of honor — a birthday, wedding, anniversary, or any milestone — with your event as the backdrop.' },
+  { question: 'What is the Robot Video Guestbook?', answer: 'It’s our Robot Photobooth in video mode. The robot roams the venue so guests can record a personal video message for the guest of honor — a birthday, wedding, anniversary, or any milestone — with your event as the backdrop.' },
   { question: 'How do guests record a message?', answer: 'Our attendant brings the robot to guests at their tables or throughout the room. We prompt them, they speak, and we capture the clip. No app, no booth line, no leaving the celebration.' },
   { question: 'Who receives the videos?', answer: 'We compile every message into a video guestbook and deliver it after the event. You can share it privately with the person being celebrated or keep it as a family keepsake.' },
   { question: 'Does it need a backdrop or a dedicated space?', answer: 'No. That’s the point. The robot moves through the venue, so the atmosphere you already created — lights, décor, city views — becomes the background of every message.' },
   { question: 'Does the robot need power or WiFi?', answer: 'No. The robot runs on battery and its own connectivity. No cables, no outlets, no venue WiFi required.' },
-  { question: 'What events is the Video Booth best for?', answer: 'Weddings, birthdays, anniversaries, retirements, bar and bat mitzvahs, and any milestone where guests would want to leave a spoken message for someone special.' },
+  { question: 'What events is the Robot Video Guestbook best for?', answer: 'Weddings, birthdays, anniversaries, retirements, bar and bat mitzvahs, and any milestone where guests would want to leave a spoken message for someone special.' },
   { question: 'How far in advance should I book?', answer: 'We recommend booking at least 6 months in advance. Weekends and holidays fill quickly. Contact us now to lock in your date.' },
 ]
 

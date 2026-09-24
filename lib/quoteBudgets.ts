@@ -2,7 +2,7 @@ export type BudgetOption = { value: string; label: string }
 
 export type QuotePackageTier = 'bronze' | 'gold' | 'platinum' | ''
 
-export type PricingContext = 'corporate' | 'standard' | 'aerial-private' | 'aerial-corporate'
+export type PricingContext = 'corporate' | 'standard' | 'aerial-private' | 'aerial-corporate' | 'private-bundle'
 
 const BRONZE_STANDARD: BudgetOption[] = [
   { value: '$1000-$2000', label: '$1,000–$2,000' },
@@ -71,11 +71,24 @@ const DEFAULT_CORPORATE: BudgetOption[] = GOLD_CORPORATE
 const DEFAULT_AERIAL_PRIVATE: BudgetOption[] = BRONZE_AERIAL_PRIVATE
 const DEFAULT_AERIAL_CORPORATE: BudgetOption[] = GOLD_AERIAL_CORPORATE
 
+/** Private bundle page: 2-booth mixes and the general Check Your Date CTA */
+const PRIVATE_BUNDLE_TWO_BOOTH: BudgetOption[] = [
+  { value: '$2500-$3000', label: '$2,500–$3,000' },
+  { value: '$3000-$3500', label: '$3,000–$3,500' },
+  { value: '$3500-$4000+', label: '$3,500–$4,000+' },
+]
+
 /** Budget dropdown options based on selected package + page pricing context */
 export function getPackageBudgetOptions(
   packageTier: QuotePackageTier,
   pricingContext: PricingContext = 'standard'
 ): BudgetOption[] {
+  if (pricingContext === 'private-bundle') {
+    if (packageTier === 'gold') return GOLD_AERIAL_PRIVATE
+    if (packageTier === 'platinum') return PLATINUM_AERIAL_PRIVATE
+    return PRIVATE_BUNDLE_TWO_BOOTH
+  }
+
   if (pricingContext === 'aerial-private') {
     if (packageTier === 'bronze') return BRONZE_AERIAL_PRIVATE
     if (packageTier === 'gold') return GOLD_AERIAL_PRIVATE

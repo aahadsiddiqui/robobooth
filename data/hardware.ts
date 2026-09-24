@@ -28,14 +28,14 @@ export const hardwareFleet: HardwareItem[] = [
     tagline: 'Cinematic slow-motion content in seconds',
     description:
       'Guests step onto the platform while our camera orbits 360°, capturing premium slow-motion clips they receive instantly via SMS or AirDrop.',
-    image: '/images/360-booth-main.jpg',
+    image: '/images/360-booth.jpg',
     features: ['4K slow-motion capture', 'Instant sharing', 'Custom brand overlays', 'Under 30-min setup'],
     badge: 'Most Popular',
     link: '/360-booth',
   },
   {
     id: 'video-booth',
-    name: 'Roaming Video Booth',
+    name: 'Robot Video Guestbook',
     tagline: 'Heartfelt video messages with your venue as the backdrop',
     description:
       'Guests record a special video message for the guest of honor while the Robot Photobooth roams the room — capturing birthdays, weddings, and every milestone against the real atmosphere of your event.',

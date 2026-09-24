@@ -40,7 +40,7 @@ export const additionalBooths = [
     id: 'vogue',
     name: 'Vogue Booth',
     desc: 'Magazine-cover portraits with custom editorial overlays and studio lighting.',
-    image: '/images/voguebooth1.png',
+    image: '/images/vogue-booth.jpg',
   },
   {
     id: 'premium',
@@ -52,7 +52,7 @@ export const additionalBooths = [
     id: '360',
     name: '360 Booth',
     desc: 'Cinematic spinning video content guests share instantly to social.',
-    image: '/images/360-booth-main.jpg',
+    image: '/images/360-booth.jpg',
   },
 ] as const
 

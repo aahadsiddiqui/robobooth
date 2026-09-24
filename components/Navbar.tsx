@@ -22,7 +22,9 @@ const eventSlugToPath = (slug: string): string => {
 }
 
 const featuredEvents = [
-  { name: 'Corporate', href: '/corporate', emoji: '🏢' },
+  { name: 'Private Event Bundles', href: '/private-bundle', emoji: '🎉' },
+  { name: 'Corporate Event Bundles', href: '/corporate-bundle', emoji: '🏢' },
+  { name: 'Corporate', href: '/corporate', emoji: '💼' },
   { name: 'Birthday', href: '/birthday', emoji: '🎂' },
   { name: 'Brand Activations', href: '/brand-activations', emoji: '🚀' },
   { name: 'Wedding', href: '/wedding', emoji: '👫' },

@@ -77,7 +77,7 @@ export default function ThreeSixtyBoothPage() {
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://robobooth.ca/360-booth" />
         <link rel="canonical" href="https://robobooth.ca/360-booth" />
-        <link rel="preload" href="/images/360-booth-main.jpg" as="image" />
+        <link rel="preload" href="/images/360-booth.jpg" as="image" />
         <link rel="dns-prefetch" href="//formspree.io" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
@@ -132,13 +132,13 @@ export default function ThreeSixtyBoothPage() {
                 </motion.div>
 
                 {/* Hero image */}
-                <motion.div initial={{ opacity: 0, x: 30 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.7, delay: 0.15 }} className="hidden md:block">
-                  <img src="/images/360-booth-main.jpg" alt="360 Photo Booth" className="w-full h-[480px] lg:h-[520px] object-cover rounded-2xl shadow-2xl" loading="eager" fetchPriority="high" />
+                <motion.div initial={{ opacity: 0, x: 30 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.7, delay: 0.15 }} className="hidden md:flex justify-center">
+                  <img src="/images/360-booth.jpg" alt="360 Photo Booth with red carpet and platform" className="w-full max-w-[380px] h-auto max-h-[520px] object-contain rounded-2xl shadow-2xl" loading="eager" fetchPriority="high" />
                 </motion.div>
 
                 {/* Mobile hero */}
-                <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.1 }} className="md:hidden -mx-4">
-                  <img src="/images/360-booth-main.jpg" alt="360 Photo Booth" className="w-full h-60 object-cover" loading="eager" fetchPriority="high" />
+                <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.1 }} className="md:hidden flex justify-center">
+                  <img src="/images/360-booth.jpg" alt="360 Photo Booth with red carpet and platform" className="w-full max-w-[320px] h-auto object-contain rounded-xl" loading="eager" fetchPriority="high" />
                 </motion.div>
               </div>
             </div>
