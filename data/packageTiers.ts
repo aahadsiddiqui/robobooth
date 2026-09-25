@@ -211,6 +211,50 @@ export const corporatePackageTiers = getDefaultPackageTiers({
   ],
 })
 
+export const holidayTierLabels = {
+  bronze: 'Winter Essentials',
+  gold: 'Year-End Signature',
+  platinum: 'Executive Gala',
+}
+
+const holidayCorporateBaseTiers = getDefaultPackageTiers({
+  bronzeTitle: 'The Holiday Snapshot',
+  bronzeRobotLabel: '1 Robot Photobooth',
+  bronzeDesc: 'The standalone holiday activation — one roaming Robot Photobooth dressed for the season and fully managed by our team.',
+  bronzeBenefits: [
+    'One Robot Photobooth roaming your holiday party table-to-table',
+    'Custom holiday overlay with your company logo & theme',
+    'Physical prints your team takes home as a keepsake',
+    'Instant digital delivery straight to every guest\'s phone',
+    'Dedicated on-site attendant — zero work for your team',
+  ],
+  goldTitle: 'The Year-End Celebration',
+  goldRobotLabel: '1 Photobooth + 1 Video Guestbook',
+  goldDesc: 'Photos and heartfelt video messages — capture the fun of the night and the year-end thank-yous your team shares.',
+  goldBenefits: [
+    'Robot Photobooth roaming with branded prints',
+    'Robot Video Guestbook capturing team shout-outs and year-end wishes',
+    'Compiled year-end video delivered after the party — perfect for internal comms',
+    'Custom holiday overlay with your company logo & theme',
+    'Dedicated attendants managing both robots',
+  ],
+  platinumTitle: 'The Grand Winter Soirée',
+  platinumRobotLabel: 'Multi-Robot Experience',
+  platinumDesc: 'For large company parties — multiple robots across your venue so every department, table, and dance floor is covered.',
+  platinumBenefits: [
+    'Multiple Robot Photobooths and Robot Video Guestbooks',
+    'Coverage across ballrooms, lounges, and multi-room venues',
+    'Short lines even with hundreds of employees',
+    'Custom holiday overlay with your company logo & theme',
+    'One coordinated team managing everything seamlessly',
+  ],
+})
+
+export const holidayCorporatePackageTiers: Record<PackageTierId, PackageTierContent> = {
+  ...holidayCorporateBaseTiers,
+  gold: { ...holidayCorporateBaseTiers.gold, badge: `Most Popular · ${holidayTierLabels.gold}` },
+}
+
 export const brandActivationsPackageTiers = getDefaultPackageTiers({
   bronzeDesc: 'The standalone brand activation — one robot photobooth drawing crowds and generating shareable content.',
   bronzeBenefits: [

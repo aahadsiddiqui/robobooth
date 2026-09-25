@@ -71,6 +71,7 @@ const footerLinks = [
   { href: '/aerial-private', label: 'Aerial Booth — Private Events' },
   { href: '/private-bundle', label: 'Private Event Bundles' },
   { href: '/corporate-bundle', label: 'Corporate Event Bundles' },
+  { href: '/holiday-corporate', label: 'Corporate Holiday Parties' },
   { href: '/contact', label: 'Contact' },
   { href: '/privacy-policy', label: 'Privacy Policy' }
 ]
