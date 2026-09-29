@@ -19,7 +19,7 @@ const Reveal = ({ children, className, delay = 0 }: { children: React.ReactNode;
 const SubtleCTA = ({ label, onQuote }: { label: string; onQuote: () => void }) => (
   <div className="relative z-10 flex justify-center pt-4 pb-2">
     <motion.button whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.97 }} onClick={onQuote}
-      className="bg-[#fce4a6] text-black px-6 py-2.5 rounded-full font-bold text-sm shadow-md shadow-[#fce4a6]/20 hover:shadow-lg transition-all group">
+      className="bg-[#c4313d] text-white px-6 py-2.5 rounded-full font-bold text-sm shadow-md shadow-[#c4313d]/25 hover:bg-[#d24a55] transition-all group">
       {label} <FiArrowRight className="inline ml-1.5 group-hover:translate-x-1 transition-transform" />
     </motion.button>
   </div>
@@ -116,9 +116,9 @@ export default function HolidayCorporate() {
         </div>
       )}
       {packageType === 'gold' && selectedTier && (
-        <div className="bg-[#fce4a6] rounded-xl px-4 py-2.5 mb-3 flex items-center justify-center gap-2 flex-wrap">
-          <span className="text-black text-xs font-black">⭐ {holidayTierLabels.gold}</span>
-          <span className="text-black/60 text-[10px]">{selectedTier.title} · {selectedTier.robotLabel}</span>
+        <div className="bg-[#c4313d] rounded-xl px-4 py-2.5 mb-3 flex items-center justify-center gap-2 flex-wrap">
+          <span className="text-white text-xs font-black">⭐ {holidayTierLabels.gold}</span>
+          <span className="text-white/75 text-[10px]">{selectedTier.title} · {selectedTier.robotLabel}</span>
         </div>
       )}
       {packageType === 'platinum' && selectedTier && (
@@ -151,7 +151,13 @@ export default function HolidayCorporate() {
       </Head>
 
       <div className={showModal ? 'blur-sm pointer-events-none select-none' : ''}>
-        <div className="relative min-h-screen bg-gradient-to-b from-[#06101f] via-black to-[#04130d] text-white overflow-x-hidden">
+        <div className="relative min-h-screen bg-gradient-to-b from-[#0c2418] via-[#0a0a0a] to-[#1a0c10] text-white overflow-x-hidden">
+
+          <div aria-hidden="true" className="pointer-events-none fixed inset-0 z-0">
+            <div className="absolute -top-24 -left-16 h-[34rem] w-[34rem] rounded-full bg-[#9b2033]/25 blur-3xl" />
+            <div className="absolute top-[42%] -right-20 h-[30rem] w-[30rem] rounded-full bg-[#145c38]/30 blur-3xl" />
+            <div className="absolute bottom-0 left-1/4 h-[20rem] w-[36rem] rounded-full bg-[#9b2033]/18 blur-3xl" />
+          </div>
 
           {/* Page-wide snowfall behind content */}
           <Snowfall count={50} className="fixed inset-0 z-0" />
@@ -161,10 +167,10 @@ export default function HolidayCorporate() {
 
           {/* ── Urgency Banner ── */}
           {!urgencyDismissed && (
-            <div className="fixed top-16 md:top-[4.5rem] left-0 right-0 z-40 bg-gradient-to-r from-[#0f2440] via-[#1e3a5f] to-[#0f2440] border-b border-[#8ec5ff]/20 text-white text-center py-2 px-4">
+            <div className="fixed top-16 md:top-[4.5rem] left-0 right-0 z-40 bg-gradient-to-r from-[#7a1a28] via-[#a32032] to-[#145c38] border-b border-white/20 text-white text-center py-2 px-4">
               <div className="flex items-center justify-center gap-2 text-xs md:text-sm font-semibold">
                 <FiClock className="w-3.5 h-3.5 flex-shrink-0" />
-                <span>{urgencyCopy} <button onClick={openQuote} className="underline font-bold text-[#fce4a6]">Check your date</button></span>
+                <span>{urgencyCopy} <button onClick={openQuote} className="underline font-bold text-white">Check your date</button></span>
                 <button onClick={() => setUrgencyDismissed(true)} className="ml-2 text-white/60 hover:text-white" aria-label="Dismiss"><FiX className="w-3.5 h-3.5" /></button>
               </div>
             </div>
@@ -174,23 +180,24 @@ export default function HolidayCorporate() {
               HERO
              ═══════════════════════════════════════ */}
           <section className={`relative ${urgencyDismissed ? 'pt-20 md:pt-24' : 'pt-[7rem] md:pt-[8rem]'} pb-24 md:pb-40 px-4`}>
-            <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_left,_#1e3a5f40_0%,_transparent_55%)] pointer-events-none" />
-            <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_#fce4a61a_0%,_transparent_45%)] pointer-events-none" />
+            <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_left,_#145c3848_0%,_transparent_55%)] pointer-events-none" />
+            <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_#ffffff14_0%,_transparent_42%)] pointer-events-none" />
+            <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_left,_#9b203348_0%,_transparent_52%)] pointer-events-none" />
             <Snowfall count={70} className="absolute inset-0" />
             <TreeLine />
 
             <div className="relative z-10 max-w-7xl mx-auto">
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-10 items-center">
                 <motion.div initial={{ opacity: 0, x: -30 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.7 }}>
-                  <div className="inline-flex items-center gap-2 bg-[#1e3a5f]/40 border border-[#8ec5ff]/30 text-[#d6ebff] text-[10px] md:text-xs font-black tracking-[0.2em] uppercase px-3 py-1.5 rounded-full mb-3">
+                  <div className="inline-flex items-center gap-2 bg-[#145c38]/45 border border-[#e23d4a]/45 text-white text-[10px] md:text-xs font-black tracking-[0.2em] uppercase px-3 py-1.5 rounded-full mb-3">
                     ❄️ Corporate Holiday Parties 2026
                   </div>
                   <div className="flex items-center gap-2 mb-3">
-                    <div className="flex text-yellow-400 text-sm">★★★★★</div>
+                    <div className="flex text-white text-sm">★★★★★</div>
                     <span className="text-white/60 text-xs font-medium">5.0 Rating · Trusted by TD, BMO, Bell, KPMG &amp; PwC</span>
                   </div>
                   <h1 className="text-[1.65rem] leading-[1.15] md:text-4xl lg:text-5xl font-black md:leading-[1.1] mb-4">
-                    The Holiday Party Moment Your Team <span className="text-[#fce4a6]">Talks About All Year</span>
+                    The <span className="text-[#e23d4a]">Holiday Party</span> Moment Your Team <span className="text-[#6dce93]">Talks About All Year</span>
                   </h1>
                   <p className="text-white/80 text-sm md:text-base lg:text-lg leading-relaxed mb-4 max-w-xl">
                     Canada&apos;s first Robot Photobooth roams your holiday party, brings every department together, and hands out festive branded prints on the spot.{' '}
@@ -199,16 +206,16 @@ export default function HolidayCorporate() {
                   <ul className="space-y-1.5 mb-5">
                     {heroBullets.map((b, i) => (
                       <li key={i} className="flex items-start gap-2 text-white/80 text-xs md:text-sm">
-                        <FiCheck className="w-4 h-4 text-[#8ec5ff] mt-0.5 flex-shrink-0" /> {b}
+                        <FiCheck className="w-4 h-4 text-[#6dce93] mt-0.5 flex-shrink-0" /> {b}
                       </li>
                     ))}
                   </ul>
                   <div className="flex flex-col sm:flex-row gap-3 mb-3">
                     <motion.button whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.97 }} onClick={openQuote}
-                      className="w-full sm:w-auto bg-[#fce4a6] text-black px-6 py-3.5 rounded-full font-bold text-sm md:text-base shadow-lg shadow-[#fce4a6]/30 hover:shadow-xl transition-all group text-center">
+                      className="w-full sm:w-auto bg-[#c4313d] text-white px-6 py-3.5 rounded-full font-bold text-sm md:text-base shadow-lg shadow-[#c4313d]/30 hover:bg-[#d24a55] transition-all group text-center">
                       Check My Holiday Date <FiArrowRight className="inline ml-2 group-hover:translate-x-1 transition-transform" />
                     </motion.button>
-                    <a href="tel:289-301-4039" className="w-full sm:w-auto flex items-center justify-center gap-2 border-2 border-[#fce4a6]/40 text-[#fce4a6] px-6 py-3 rounded-full font-bold text-sm hover:bg-[#fce4a6]/10 transition-all text-center">
+                    <a href="tel:289-301-4039" className="w-full sm:w-auto flex items-center justify-center gap-2 border-2 border-white/55 text-white px-6 py-3 rounded-full font-bold text-sm hover:bg-white/10 transition-all text-center">
                       <FiPhone className="w-4 h-4" /> Call 289-301-4039
                     </a>
                   </div>
@@ -217,7 +224,7 @@ export default function HolidayCorporate() {
 
                 {/* Hero video — desktop */}
                 <motion.div initial={{ opacity: 0, x: 30 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.7, delay: 0.15 }} className="hidden md:block">
-                  <div className="relative rounded-2xl overflow-hidden shadow-2xl shadow-[#1e3a5f]/30 border border-[#fce4a6]/20 bg-black">
+                  <div className="relative rounded-2xl overflow-hidden shadow-2xl shadow-[#9b2033]/25 border border-[#e23d4a]/35 bg-black">
                     <video className="w-full h-[480px] lg:h-[520px] object-contain" controls loop playsInline preload="metadata" poster="/images/robot1.jpg" style={{ display: 'block' }}>
                       <source src="/videos/equifaxrobot.mov" type="video/quicktime" />
                       <source src="/videos/equifaxrobot.mov" type="video/mp4" />
@@ -239,9 +246,9 @@ export default function HolidayCorporate() {
           </section>
 
           {/* ── Logo Marquee ── */}
-          <section className="relative z-10 py-4 md:py-6 border-y border-[#fce4a6]/10 bg-black/60 overflow-hidden">
+          <section className="relative z-10 py-4 md:py-6 border-y border-[#e23d4a]/25 bg-black/60 overflow-hidden">
             <div className="max-w-7xl mx-auto px-4 mb-3">
-              <p className="text-center text-[#fce4a6]/60 text-[10px] md:text-xs font-semibold tracking-[0.2em] uppercase">Trusted by leading companies across Canada</p>
+              <p className="text-center text-white/55 text-[10px] md:text-xs font-semibold tracking-[0.2em] uppercase">Trusted by leading companies across Canada</p>
             </div>
             <div className="relative w-full overflow-hidden">
               <div className="animate-marquee flex items-center gap-10 md:gap-14 px-4">
@@ -258,20 +265,20 @@ export default function HolidayCorporate() {
           <section className="relative z-10 py-8 md:py-10 px-4">
             <div className="max-w-5xl mx-auto">
               <Reveal className="text-center mb-6">
-                <h2 className="text-xl md:text-2xl lg:text-3xl font-black mb-1.5">How It <span className="text-[#fce4a6]">Works</span></h2>
+                <h2 className="text-xl md:text-2xl lg:text-3xl font-black mb-1.5">How It <span className="text-[#e23d4a]">Works</span></h2>
                 <p className="text-white/50 text-xs md:text-sm">Three steps to the easiest win of your holiday planning</p>
               </Reveal>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
                 {howItWorks.map((step, i) => (
                   <Reveal key={i} delay={i * 0.12} className="relative">
-                    <div className="bg-white/[0.04] backdrop-blur-sm border border-white/10 rounded-2xl p-5 md:p-6 text-center hover:border-[#8ec5ff]/40 transition-colors group h-full">
-                      <div className="w-12 h-12 md:w-14 md:h-14 rounded-full bg-[#1e3a5f]/40 border border-[#8ec5ff]/30 flex items-center justify-center mx-auto mb-4 group-hover:bg-[#1e3a5f]/60 transition-colors">
-                        <span className="text-[#fce4a6] font-black text-lg md:text-xl">{i + 1}</span>
+                    <div className={`bg-white/[0.04] backdrop-blur-sm border border-white/10 rounded-2xl p-5 md:p-6 text-center transition-colors group h-full ${i === 1 ? 'hover:border-[#6dce93]/45' : 'hover:border-[#e23d4a]/45'}`}>
+                      <div className={`w-12 h-12 md:w-14 md:h-14 rounded-full flex items-center justify-center mx-auto mb-4 border ${['bg-[#9b2033]/40 border-[#e23d4a]/50', 'bg-[#145c38]/45 border-[#6dce93]/50', 'bg-white/10 border-white/40'][i]}`}>
+                        <span className={`font-black text-lg md:text-xl ${['text-[#ff8a96]', 'text-[#6dce93]', 'text-white'][i]}`}>{i + 1}</span>
                       </div>
                       <h3 className="font-bold text-sm md:text-base mb-1.5 text-white">{step.title}</h3>
                       <p className="text-white/50 text-xs md:text-sm leading-relaxed">{step.desc}</p>
                     </div>
-                    {i < 2 && <div className="hidden md:block absolute top-1/2 -right-3 w-6 text-[#fce4a6]/30 text-2xl">→</div>}
+                    {i < 2 && <div className="hidden md:block absolute top-1/2 -right-3 w-6 text-[#e23d4a]/45 text-2xl">→</div>}
                   </Reveal>
                 ))}
               </div>
@@ -282,6 +289,7 @@ export default function HolidayCorporate() {
           <div className="relative z-10">
             <TwinkleLights className="max-w-5xl mx-auto mt-4" />
             <PackageCardsGrid
+              festive
               tiers={holidayCorporatePackageTiers}
               subtitle="Three festive packages — every one fully set up, branded, and managed by our team."
               onBookBronze={openBronzePackage}
@@ -301,15 +309,15 @@ export default function HolidayCorporate() {
             <div className="max-w-5xl mx-auto">
               <Reveal>
                 <div className="relative overflow-hidden rounded-[28px] border border-white/10 bg-white/[0.03] backdrop-blur-xl px-5 py-9 sm:px-8 md:p-12">
-                  <div className="absolute inset-x-12 top-0 h-px bg-gradient-to-r from-transparent via-[#fce4a6]/60 to-transparent" />
-                  <div className="absolute -top-40 left-1/2 -translate-x-1/2 w-[560px] h-[280px] rounded-full bg-[#8ec5ff]/10 blur-3xl pointer-events-none" />
+                  <div className="absolute inset-x-12 top-0 h-px bg-gradient-to-r from-transparent via-[#e23d4a]/70 to-transparent" />
+                  <div className="absolute -top-40 left-1/2 -translate-x-1/2 w-[560px] h-[280px] rounded-full bg-[#145c38]/20 blur-3xl pointer-events-none" />
 
                   <div className="relative text-center">
                     <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.05] px-3 py-1 text-[10px] font-bold uppercase tracking-[0.25em] text-white/70">
-                      <FiCalendar className="w-3 h-3 text-[#fce4a6]" /> Booking Timeline
+                      <FiCalendar className="w-3 h-3 text-[#6dce93]" /> Booking Timeline
                     </div>
                     <h2 className="mt-4 text-2xl md:text-4xl font-black tracking-tight">
-                      December Fridays Go <span className="text-[#fce4a6]">First</span>
+                      December Fridays Go <span className="text-[#e23d4a]">First</span>
                     </h2>
                     <p className="mt-2 text-white/55 text-sm md:text-base max-w-md mx-auto leading-relaxed">
                       Every company wants the same few weekends. Here&apos;s how the season typically books up.
@@ -317,8 +325,8 @@ export default function HolidayCorporate() {
                   </div>
 
                   <div className="relative mt-10 md:mt-12">
-                    <div aria-hidden="true" className="hidden md:block absolute top-3 left-[calc(16.66%+12px)] right-[calc(16.66%+12px)] h-px bg-gradient-to-r from-[#8ec5ff]/70 via-[#fce4a6]/70 to-[#ff8a8a]/70" />
-                    <div aria-hidden="true" className="md:hidden absolute left-3 top-3 bottom-8 w-px bg-gradient-to-b from-[#8ec5ff]/70 via-[#fce4a6]/70 to-[#ff8a8a]/70" />
+                    <div aria-hidden="true" className="hidden md:block absolute top-3 left-[calc(16.66%+12px)] right-[calc(16.66%+12px)] h-px bg-gradient-to-r from-[#6dce93]/80 via-white/70 to-[#e23d4a]/80" />
+                    <div aria-hidden="true" className="md:hidden absolute left-3 top-3 bottom-8 w-px bg-gradient-to-b from-[#6dce93]/80 via-white/70 to-[#e23d4a]/80" />
                     <ol className="relative grid grid-cols-1 md:grid-cols-3 md:gap-6">
   
                       {bookingTimeline.map((t, i) => {
@@ -365,7 +373,7 @@ export default function HolidayCorporate() {
 
                   <div className="relative mt-10 pt-8 border-t border-white/10 flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-5">
                     <motion.button whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }} onClick={openQuote}
-                      className="w-full sm:w-auto bg-[#fce4a6] text-black px-7 py-3.5 rounded-full font-bold text-sm md:text-base shadow-lg shadow-[#fce4a6]/20 hover:shadow-xl transition-all group">
+                      className="w-full sm:w-auto bg-[#c4313d] text-white px-7 py-3.5 rounded-full font-bold text-sm md:text-base shadow-lg shadow-[#c4313d]/25 hover:bg-[#d24a55] transition-all group">
                       Lock In My Date <FiArrowRight className="inline ml-2 group-hover:translate-x-1 transition-transform" />
                     </motion.button>
                     <p className="flex items-center gap-1.5 text-white/45 text-xs">
@@ -382,10 +390,10 @@ export default function HolidayCorporate() {
             <div className="max-w-6xl mx-auto">
               <Reveal className="text-center mb-6 md:mb-8 px-4">
                 <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.05] px-3 py-1 text-[10px] font-bold uppercase tracking-[0.25em] text-white/70">
-                  <FiImage className="w-3 h-3 text-[#fce4a6]" /> Last Holiday Season
+                  <FiImage className="w-3 h-3 text-[#6dce93]" /> Last Holiday Season
                 </div>
                 <h2 className="mt-4 text-2xl md:text-4xl font-black tracking-tight">
-                  Real Prints From <span className="text-[#fce4a6]">Real Holiday Parties</span>
+                  Real Prints From <span className="text-[#e23d4a]">Real Holiday Parties</span>
                 </h2>
                 <p className="mt-2 text-white/55 text-sm md:text-base max-w-lg mx-auto leading-relaxed">
                   Every one of these was taken by our robot and printed on the spot, with each company&apos;s own logo &amp; theme.
@@ -434,13 +442,13 @@ export default function HolidayCorporate() {
           <section className="relative z-10 py-8 md:py-10 px-4 border-t border-white/5">
             <div className="max-w-5xl mx-auto">
               <Reveal className="text-center mb-6">
-                <h2 className="text-xl md:text-2xl lg:text-3xl font-black mb-1.5">Why HR &amp; Event Teams <span className="text-[#fce4a6]">Book Us for the Holidays</span></h2>
+                <h2 className="text-xl md:text-2xl lg:text-3xl font-black mb-1.5">Why HR &amp; Event Teams <span className="text-[#6dce93]">Book Us for the Holidays</span></h2>
                 <p className="text-white/50 text-xs md:text-sm">The one part of the party that plans itself — and gets all the credit</p>
               </Reveal>
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4">
                 {whyClientsLove.map((item, i) => (
-                  <Reveal key={i} delay={i * 0.06} className="bg-white/[0.04] backdrop-blur-sm border border-white/10 rounded-xl p-4 md:p-5 hover:border-[#8ec5ff]/40 transition-colors group">
-                    <div className="text-[#8ec5ff] mb-2 md:mb-3 group-hover:scale-110 transition-transform inline-block">{item.icon}</div>
+                  <Reveal key={i} delay={i * 0.06} className="bg-white/[0.04] backdrop-blur-sm border border-white/10 rounded-xl p-4 md:p-5 hover:border-[#e23d4a]/40 transition-colors group">
+                    <div className={`${['text-[#e23d4a]', 'text-[#6dce93]', 'text-white'][i % 3]} mb-2 md:mb-3 group-hover:scale-110 transition-transform inline-block`}>{item.icon}</div>
                     <h3 className="font-bold text-sm md:text-base mb-1">{item.title}</h3>
                     <p className="text-white/50 text-[11px] md:text-xs leading-relaxed">{item.desc}</p>
                   </Reveal>
@@ -473,10 +481,10 @@ export default function HolidayCorporate() {
           <section className="relative z-10 py-8 md:py-10 px-4 border-t border-white/5">
             <div className="max-w-4xl mx-auto">
               <Reveal className="text-center">
-                <div className="inline-flex items-center gap-2 bg-[#fce4a6]/10 border border-[#fce4a6]/30 text-[#fce4a6] text-[10px] md:text-xs font-black tracking-[0.2em] uppercase px-3 py-1.5 rounded-full mb-3">
+                <div className="inline-flex items-center gap-2 bg-[#145c38]/35 border border-[#6dce93]/40 text-[#6dce93] text-[10px] md:text-xs font-black tracking-[0.2em] uppercase px-3 py-1.5 rounded-full mb-3">
                   <FiVideo className="w-3.5 h-3.5" /> Most Popular Upgrade
                 </div>
-                <h2 className="text-2xl md:text-4xl font-black tracking-tight mb-3">Capture the Year-End <span className="text-[#fce4a6]">Thank-Yous</span></h2>
+                <h2 className="text-2xl md:text-4xl font-black tracking-tight mb-3">Capture the Year-End <span className="text-[#e23d4a]">Thank-Yous</span></h2>
                 <p className="text-white/65 text-sm md:text-base leading-relaxed max-w-2xl mx-auto">
                   The Robot Video Guestbook rolls up to your team and records short video messages — shout-outs to colleagues, holiday wishes, and highlights from the year. We compile them into one video you can play at the next all-hands or share internally.
                 </p>
@@ -484,8 +492,8 @@ export default function HolidayCorporate() {
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mt-6 md:mt-8">
                 {guestbookBullets.map((b, i) => (
                   <Reveal key={i} delay={i * 0.08} className="flex items-start gap-3 rounded-2xl border border-white/10 bg-white/[0.03] p-4">
-                    <span className="flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-full bg-[#fce4a6]/10 border border-[#fce4a6]/30">
-                      <FiCheck className="w-3.5 h-3.5 text-[#fce4a6]" />
+                    <span className="flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-full bg-[#145c38]/40 border border-[#6dce93]/40">
+                      <FiCheck className="w-3.5 h-3.5 text-[#6dce93]" />
                     </span>
                     <p className="text-white/75 text-xs md:text-sm leading-relaxed">{b}</p>
                   </Reveal>
@@ -493,7 +501,7 @@ export default function HolidayCorporate() {
               </div>
               <div className="flex justify-center mt-6 md:mt-8">
                 <motion.button whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.97 }} onClick={openGoldPackage}
-                  className="w-full sm:w-auto bg-[#fce4a6] text-black px-7 py-3.5 rounded-full font-bold text-sm md:text-base shadow-lg shadow-[#fce4a6]/20 hover:shadow-xl transition-all group">
+                  className="w-full sm:w-auto bg-[#c4313d] text-white px-7 py-3.5 rounded-full font-bold text-sm md:text-base shadow-lg shadow-[#c4313d]/25 hover:bg-[#d24a55] transition-all group">
                   Book {holidayTierLabels.gold} <FiArrowRight className="inline ml-1.5 group-hover:translate-x-1 transition-transform" />
                 </motion.button>
               </div>
@@ -504,14 +512,14 @@ export default function HolidayCorporate() {
           <section className="relative z-10 py-8 md:py-10 px-4 border-t border-white/5">
             <div className="max-w-5xl mx-auto">
               <Reveal className="text-center mb-6">
-                <h2 className="text-xl md:text-2xl lg:text-3xl font-black mb-1.5">Dressed for the Season, <span className="text-[#fce4a6]">Built for Your Brand</span></h2>
+                <h2 className="text-xl md:text-2xl lg:text-3xl font-black mb-1.5">Dressed for the Season, <span className="text-[#6dce93]">Built for Your Brand</span></h2>
                 <p className="text-white/50 text-xs md:text-sm">Every detail is tailored to your company&apos;s holiday theme</p>
               </Reveal>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 {customizations.map((item, i) => (
                   <Reveal key={i} delay={i * 0.1}>
-                    <div className="bg-gradient-to-br from-[#1e3a5f]/30 to-transparent border border-[#8ec5ff]/20 rounded-2xl p-5 md:p-6 h-full hover:border-[#fce4a6]/40 transition-colors group">
-                      <div className="w-12 h-12 rounded-xl bg-[#fce4a6]/10 border border-[#fce4a6]/30 flex items-center justify-center mb-4 text-[#fce4a6] group-hover:bg-[#fce4a6]/20 transition-colors">
+                    <div className={`bg-gradient-to-br ${['from-[#9b2033]/35', 'from-[#145c38]/40', 'from-white/10'][i]} to-transparent border ${['border-[#e23d4a]/35', 'border-[#6dce93]/35', 'border-white/25'][i]} rounded-2xl p-5 md:p-6 h-full hover:border-white/40 transition-colors group`}>
+                      <div className={`w-12 h-12 rounded-xl flex items-center justify-center mb-4 border ${['bg-[#e23d4a]/15 border-[#e23d4a]/40 text-[#ff8a96]', 'bg-[#145c38]/40 border-[#6dce93]/40 text-[#6dce93]', 'bg-white/10 border-white/30 text-white'][i]}`}>
                         {item.icon}
                       </div>
                       <h3 className="font-bold text-base md:text-lg text-white mb-2">{item.title}</h3>
@@ -547,22 +555,22 @@ export default function HolidayCorporate() {
           <section className="relative z-10 py-8 md:py-10 px-4 border-t border-white/5">
             <div className="max-w-5xl mx-auto">
               <Reveal className="text-center mb-5">
-                <h2 className="text-xl md:text-2xl lg:text-3xl font-black mb-1.5">What Clients <span className="text-[#fce4a6]">Are Saying</span></h2>
+                <h2 className="text-xl md:text-2xl lg:text-3xl font-black mb-1.5">What Clients <span className="text-[#e23d4a]">Are Saying</span></h2>
                 <div className="flex items-center justify-center gap-2 mt-2">
-                  <a href="https://g.co/kgs/v9p1CzT" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-[#fce4a6] hover:text-white transition-colors text-xs md:text-sm">
+                  <a href="https://g.co/kgs/v9p1CzT" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-[#6dce93] hover:text-white transition-colors text-xs md:text-sm">
                     <svg className="w-4 h-4 md:w-5 md:h-5" viewBox="0 0 24 24" fill="currentColor"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
-                    <span className="text-yellow-400">★★★★★</span>
+                    <span className="text-white">★★★★★</span>
                     <span className="text-white/50 text-[10px] md:text-xs">5.0 on Google</span>
                   </a>
                 </div>
               </Reveal>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
                 {testimonials.map((t, i) => (
-                  <Reveal key={i} delay={i * 0.08} className="bg-white/[0.04] backdrop-blur-sm border border-white/10 rounded-xl p-4 md:p-5 hover:border-[#fce4a6]/20 transition-colors">
-                    <div className="flex text-[#fce4a6]/60 text-xs mb-3">★★★★★</div>
+                  <Reveal key={i} delay={i * 0.08} className="bg-white/[0.04] backdrop-blur-sm border border-white/10 rounded-xl p-4 md:p-5 hover:border-[#e23d4a]/30 transition-colors">
+                    <div className="flex text-[#e23d4a]/80 text-xs mb-3">★★★★★</div>
                     <p className="text-white/80 text-xs md:text-sm leading-relaxed mb-3">&ldquo;{t.text}&rdquo;</p>
                     <div className="flex items-center gap-2">
-                      <div className="w-7 h-7 rounded-full bg-[#1e3a5f]/60 flex items-center justify-center text-[#fce4a6] text-[10px] font-bold">{t.name[0]}</div>
+                      <div className={`w-7 h-7 rounded-full flex items-center justify-center text-white text-[10px] font-bold ${i % 2 === 0 ? 'bg-[#c4313d]' : 'bg-[#145c38]'}`}>{t.name[0]}</div>
                       <div>
                         <div className="text-white text-[10px] md:text-xs font-bold">{t.name}</div>
                         <div className="text-white/40 text-[10px]">{t.role}</div>
@@ -604,16 +612,16 @@ export default function HolidayCorporate() {
           <section className="relative z-10 py-8 md:py-10 px-4">
             <div className="max-w-3xl mx-auto">
               <Reveal className="text-center mb-5">
-                <h2 className="text-xl md:text-2xl lg:text-3xl font-black mb-1.5">Holiday Party <span className="text-[#fce4a6]">Questions</span></h2>
+                <h2 className="text-xl md:text-2xl lg:text-3xl font-black mb-1.5">Holiday Party <span className="text-[#e23d4a]">Questions</span></h2>
               </Reveal>
               <div className="space-y-2">
                 {faqs.map((faq, i) => (
                   <Reveal key={i} delay={i * 0.04}>
                     <button onClick={() => setExpandedFaq(expandedFaq === i ? null : i)}
-                      className="w-full text-left bg-white/[0.04] backdrop-blur-sm border border-white/10 rounded-xl p-3.5 md:p-4 hover:border-[#fce4a6]/30 transition-colors">
+                      className="w-full text-left bg-white/[0.04] backdrop-blur-sm border border-white/10 rounded-xl p-3.5 md:p-4 hover:border-[#e23d4a]/40 transition-colors">
                       <div className="flex items-center justify-between">
                         <h3 className="font-bold text-xs md:text-base text-white/90 pr-4">{faq.question}</h3>
-                        {expandedFaq === i ? <FiChevronUp className="text-[#fce4a6] w-4 h-4 flex-shrink-0" /> : <FiChevronDown className="text-[#fce4a6] w-4 h-4 flex-shrink-0" />}
+                        {expandedFaq === i ? <FiChevronUp className="text-[#e23d4a] w-4 h-4 flex-shrink-0" /> : <FiChevronDown className="text-[#6dce93] w-4 h-4 flex-shrink-0" />}
                       </div>
                       <AnimatePresence>
                         {expandedFaq === i && (
@@ -631,22 +639,24 @@ export default function HolidayCorporate() {
 
           {/* ── Final CTA ── */}
           <section className="relative z-10 pt-10 md:pt-14 pb-28 md:pb-40 px-4 border-t border-white/5 overflow-hidden">
-            <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom,_#1e3a5f50_0%,_transparent_60%)] pointer-events-none" />
+            <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom,_#9b203340_0%,_transparent_58%)] pointer-events-none" />
+            <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_right,_#145c3840_0%,_transparent_50%)] pointer-events-none" />
+            <TwinkleLights count={20} className="absolute top-6 left-0 right-0 opacity-80" />
             <TreeLine />
             <Reveal className="relative z-10 max-w-3xl mx-auto text-center">
               <div className="text-3xl md:text-4xl mb-2" aria-hidden="true">❄️</div>
               <h2 className="text-xl md:text-2xl lg:text-4xl font-black mb-2 md:mb-3">
-                Give Your Team a Holiday Party <span className="text-[#fce4a6]">Worth Remembering.</span>
+                Give Your Team a Holiday Party <span className="text-[#e23d4a]">Worth Remembering.</span>
               </h2>
               <p className="text-white/60 text-xs md:text-sm lg:text-base mb-5 max-w-lg mx-auto">
                 December weekends are limited and they go first. Tell us your date — we&apos;ll confirm availability and send your holiday package options within 15 minutes.
               </p>
               <div className="flex flex-col sm:flex-row gap-3 justify-center items-center">
                 <motion.button whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.97 }} onClick={openQuote}
-                  className="w-full sm:w-auto bg-[#fce4a6] text-black px-7 py-3.5 md:px-8 md:py-4 rounded-full font-bold text-sm md:text-base shadow-lg shadow-[#fce4a6]/20 hover:shadow-xl transition-all group">
+                  className="w-full sm:w-auto bg-[#c4313d] text-white px-7 py-3.5 md:px-8 md:py-4 rounded-full font-bold text-sm md:text-base shadow-lg shadow-[#c4313d]/25 hover:bg-[#d24a55] transition-all group">
                   Check Availability &amp; Get a Quote <FiArrowRight className="inline ml-2 group-hover:translate-x-1 transition-transform" />
                 </motion.button>
-                <a href="tel:289-301-4039" className="flex items-center gap-2 text-[#fce4a6] text-sm font-semibold hover:text-white transition-colors">
+                <a href="tel:289-301-4039" className="flex items-center gap-2 text-white text-sm font-semibold hover:text-[#6dce93] transition-colors">
                   <FiPhone className="w-4 h-4" /> 289-301-4039
                 </a>
               </div>
@@ -677,19 +687,19 @@ export default function HolidayCorporate() {
         {!showModal && showSticky && (
           <>
             <motion.div initial={{ y: 100 }} animate={{ y: 0 }} exit={{ y: 100 }} transition={{ type: 'spring', stiffness: 300, damping: 30 }}
-              className="md:hidden fixed bottom-0 left-0 right-0 z-40 bg-black/95 backdrop-blur-md border-t border-[#fce4a6]/30 px-3 py-3 safe-area-pb">
+              className="md:hidden fixed bottom-0 left-0 right-0 z-40 bg-black/95 backdrop-blur-md border-t border-[#e23d4a]/45 px-3 py-3 safe-area-pb">
               <div className="flex gap-2">
-                <a href="tel:289-301-4039" className="flex-1 flex items-center justify-center gap-2 bg-white/10 border border-[#fce4a6]/30 text-[#fce4a6] py-3 rounded-full font-bold text-sm">
+                <a href="tel:289-301-4039" className="flex-1 flex items-center justify-center gap-2 bg-white/10 border border-white/40 text-white py-3 rounded-full font-bold text-sm">
                   <FiPhone className="w-4 h-4" /> Call Now
                 </a>
-                <button onClick={openQuote} className="flex-[2] flex items-center justify-center gap-2 bg-[#fce4a6] text-black py-3 rounded-full font-bold text-sm shadow-lg shadow-[#fce4a6]/20">
+                <button onClick={openQuote} className="flex-[2] flex items-center justify-center gap-2 bg-[#c4313d] text-white py-3 rounded-full font-bold text-sm shadow-lg shadow-[#c4313d]/25">
                   Check My Date <FiArrowRight className="w-4 h-4" />
                 </button>
               </div>
             </motion.div>
             <motion.button initial={{ opacity: 0, y: 40, scale: 0.9 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: 40, scale: 0.9 }}
               transition={{ type: 'spring', stiffness: 300, damping: 25 }} whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} onClick={openQuote}
-              className="hidden md:flex fixed bottom-6 right-6 z-40 bg-[#fce4a6] text-black font-bold px-6 py-3.5 rounded-full shadow-xl shadow-black/40 hover:bg-white transition-colors text-sm items-center gap-2">
+              className="hidden md:flex fixed bottom-6 right-6 z-40 bg-[#c4313d] text-white font-bold px-6 py-3.5 rounded-full shadow-xl shadow-[#c4313d]/30 hover:bg-[#d24a55] transition-colors text-sm items-center gap-2">
               ❄️ Check My Holiday Date <FiArrowRight className="w-4 h-4" />
             </motion.button>
           </>
@@ -725,9 +735,9 @@ const holidayPrints = [
 ]
 
 const bookingTimeline = [
-  { period: 'Sep – Oct', status: 'Best Selection', accent: '#8ec5ff', level: 4, desc: 'Most December Fridays and Saturdays are still open. This is when the best-organized teams lock in their date.' },
-  { period: 'November', status: 'Limited', accent: '#fce4a6', level: 2, desc: 'Peak weekends are usually taken. Weeknights and early-December dates are still possible.' },
-  { period: 'December', status: 'Waitlist Only', accent: '#ff8a8a', level: 1, desc: 'Last-minute requests are first-come, first-served. We regularly turn teams away — don\'t leave it this late.' },
+  { period: 'Sep – Oct', status: 'Best Selection', accent: '#6dce93', level: 4, desc: 'Most December Fridays and Saturdays are still open. This is when the best-organized teams lock in their date.' },
+  { period: 'November', status: 'Limited', accent: '#ffffff', level: 2, desc: 'Peak weekends are usually taken. Weeknights and early-December dates are still possible.' },
+  { period: 'December', status: 'Waitlist Only', accent: '#e23d4a', level: 1, desc: 'Last-minute requests are first-come, first-served. We regularly turn teams away — don\'t leave it this late.' },
 ]
 
 const whyClientsLove = [

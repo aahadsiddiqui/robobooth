@@ -229,7 +229,7 @@ const holidayCorporateBaseTiers = getDefaultPackageTiers({
     'Dedicated on-site attendant — zero work for your team',
   ],
   goldTitle: 'The Year-End Celebration',
-  goldRobotLabel: '1 Photobooth + 1 Video Guestbook',
+  goldRobotLabel: '1 Robot Photobooth & 1 Robot Video Guestbook',
   goldDesc: 'Photos and heartfelt video messages — capture the fun of the night and the year-end thank-yous your team shares.',
   goldBenefits: [
     'Robot Photobooth roaming with branded prints',

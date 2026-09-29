@@ -59,6 +59,14 @@ export function PineTree({ className = '', color = '#0f3d2e', snow = true }: { c
           <path d="M6,122 Q18,114 30,120 Q42,112 54,120 Q68,112 80,120 Q88,116 94,122 Z" />
         </g>
       )}
+      <g>
+        <circle cx="60" cy="40" r="2.6" fill="#e23d4a" />
+        <circle cx="59" cy="38.8" r="0.7" fill="#fff" opacity="0.8" />
+        <circle cx="38" cy="68" r="2.8" fill="#c4313d" />
+        <circle cx="66" cy="82" r="2.4" fill="#ffffff" />
+        <circle cx="30" cy="104" r="2.6" fill="#e23d4a" />
+        <circle cx="72" cy="100" r="2.2" fill="#c4313d" />
+      </g>
     </svg>
   )
 }
@@ -86,7 +94,7 @@ export function TreeLine({ className = '' }: { className?: string }) {
   )
 }
 
-const lightColors = ['#fce4a6', '#ffffff', '#8ec5ff', '#fce4a6', '#d6ebff', '#ffffff']
+const lightColors = ['#e23d4a', '#ffffff', '#3d9a62', '#ffffff', '#c4313d', '#6dce93', '#ffffff', '#e23d4a']
 
 export function TwinkleLights({ count = 24, className = '' }: { count?: number; className?: string }) {
   return (
