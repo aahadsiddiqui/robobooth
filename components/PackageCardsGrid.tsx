@@ -26,6 +26,7 @@ type PackageCardsGridProps = {
   platinumLabel?: string
   excludeAddOnIds?: string[]
   festive?: boolean
+  hideBronze?: boolean
 }
 
 function PhotographySubsection({
@@ -232,13 +233,16 @@ export default function PackageCardsGrid({
   insertAfterBronze,
   maxWidth = 'max-w-5xl',
   festive = false,
+  hideBronze = false,
 }: PackageCardsGridProps & {
   insertAfterBronze?: React.ReactNode
   maxWidth?: string
 }) {
-  const gridCols = insertAfterBronze
-    ? 'md:grid-cols-2 xl:grid-cols-4'
-    : 'md:grid-cols-3'
+  const gridCols = hideBronze
+    ? 'md:grid-cols-2'
+    : insertAfterBronze
+      ? 'md:grid-cols-2 xl:grid-cols-4'
+      : 'md:grid-cols-3'
 
   return (
     <section className="py-10 md:py-14 px-4">
@@ -252,7 +256,7 @@ export default function PackageCardsGrid({
 
         <div className={`grid grid-cols-1 gap-4 md:gap-5 items-stretch ${gridCols}`}>
           {/* Bronze */}
-          <Reveal>
+          {!hideBronze && <Reveal>
             <div className={`relative rounded-3xl border p-6 md:p-7 h-full flex flex-col ${festive ? 'border-[#3d9a62]/45 bg-[#145c38]/10' : 'border-white/20 bg-white/[0.04]'}`}>
               <div className="flex justify-center mb-3">
                 <span className={`inline-flex items-center gap-2 text-[11px] font-black tracking-widest uppercase px-4 py-1.5 rounded-full ${festive ? 'bg-[#145c38]/70 text-[#b7ebc9]' : 'bg-white/10 text-white/70'}`}>
@@ -286,9 +290,9 @@ export default function PackageCardsGrid({
                 <p className="text-white/30 text-[10px] mt-2">Responses in &lt;15 mins · No credit card required</p>
               </div>
             </div>
-          </Reveal>
+          </Reveal>}
 
-          {insertAfterBronze}
+          {!hideBronze && insertAfterBronze}
 
           {/* Gold */}
           <Reveal delay={0.1}>

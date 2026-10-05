@@ -2,7 +2,7 @@ export type BudgetOption = { value: string; label: string }
 
 export type QuotePackageTier = 'bronze' | 'gold' | 'platinum' | ''
 
-export type PricingContext = 'corporate' | 'standard' | 'aerial-private' | 'aerial-corporate' | 'private-bundle'
+export type PricingContext = 'corporate' | 'standard' | 'aerial-private' | 'aerial-corporate' | 'private-bundle' | 'photo-guestbook-bundle'
 
 const BRONZE_STANDARD: BudgetOption[] = [
   { value: '$1000-$2000', label: '$1,000–$2,000' },
@@ -78,11 +78,25 @@ const PRIVATE_BUNDLE_TWO_BOOTH: BudgetOption[] = [
   { value: '$3500-$4000+', label: '$3,500–$4,000+' },
 ]
 
+/** Photobooth + guestbook bundle: Gold and general quote CTAs */
+const PHOTO_GUESTBOOK_BUNDLE: BudgetOption[] = PRIVATE_BUNDLE_TWO_BOOTH
+
+const PHOTO_GUESTBOOK_BUNDLE_PLATINUM: BudgetOption[] = [
+  { value: '$3500-$4000', label: '$3,500–$4,000' },
+  { value: '$4000-$4500', label: '$4,000–$4,500' },
+  { value: '$4500-$5000+', label: '$4,500–$5,000+' },
+]
+
 /** Budget dropdown options based on selected package + page pricing context */
 export function getPackageBudgetOptions(
   packageTier: QuotePackageTier,
   pricingContext: PricingContext = 'standard'
 ): BudgetOption[] {
+  if (pricingContext === 'photo-guestbook-bundle') {
+    if (packageTier === 'platinum') return PHOTO_GUESTBOOK_BUNDLE_PLATINUM
+    return PHOTO_GUESTBOOK_BUNDLE
+  }
+
   if (pricingContext === 'private-bundle') {
     if (packageTier === 'gold') return GOLD_AERIAL_PRIVATE
     if (packageTier === 'platinum') return PLATINUM_AERIAL_PRIVATE

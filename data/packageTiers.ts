@@ -316,3 +316,37 @@ export const videoBoothPackageTiers = getDefaultPackageTiers({
     'Compiled video guestbook plus instant photo delivery',
   ],
 })
+
+export const photoGuestbookBundleTiers = getDefaultPackageTiers({
+  bronzeTitle: 'Robot Photobooth Only',
+  bronzeRobotLabel: '1 Robot Photobooth',
+  goldTitle: 'Robot Photobooth + Video Guestbook',
+  goldRobotLabel: 'Photobooth + Guestbook',
+  platinumTitle: 'Multiple Photobooths + Guestbooks',
+  platinumRobotLabel: 'Multiple Robots',
+  bronzeDesc: 'The standalone roaming Robot Photobooth — studio photos, instant prints, and a robot that comes to your guests.',
+  bronzeBenefits: [
+    '1 Robot Photobooth roaming guest-to-guest',
+    'Studio-quality photos anywhere in the venue',
+    'Physical prints on the spot and instant digital delivery',
+    'Branded photo overlays and custom filters',
+    'Dedicated on-site attendant — no power or WiFi required',
+  ],
+  goldDesc: 'Both products, one booking. The Robot Photobooth captures the night. The Robot Video Guestbook keeps the words.',
+  goldBenefits: [
+    'Robot Photobooth roaming for studio-quality photos and instant prints',
+    'Robot Video Guestbook collecting personal messages against your venue',
+    'Custom overlays on every photo and every video',
+    'Digital photos on guest phones that night',
+    'Compiled video messages sent to you after the event',
+    'Dedicated attendants managing both robots',
+  ],
+  platinumDesc: 'For larger celebrations — multiple Robot Photobooths and Robot Video Guestbooks so photos and messages never bottleneck.',
+  platinumBenefits: [
+    'Multiple Robot Photobooths and Robot Video Guestbooks',
+    'Coverage across large rooms, receptions, and multi-space venues',
+    'Custom overlays on every photo and video',
+    'Instant prints, digital photos, and compiled video messages sent to you',
+    'One coordinated team managing every robot',
+  ],
+})
